@@ -2,24 +2,35 @@
 // Only Bubbles — Markenschicht (Brand-Layer)
 // Wird NACH @Storefront geladen und überschreibt nur Marke/Optik.
 // Struktur, Layout & Komponenten kommen aus dem Storefront / Eltern-Theme.
+// Werte 1:1 abgeleitet aus den Design-Prototypen (.dc.html).
 // ===========================================================================
 
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap');
 
 // --- Marken-Tokens ----------------------------------------------------------
-$ob-gold:       #b0883c;
-$ob-gold-dark:  #9a7531;
-$ob-gold-soft:  #f4ead4;
-$ob-ink:        #26221d;
-$ob-green:      #81ba00;
-$ob-text:       #191919;
-$ob-gray:       #897e6e;
-$ob-border:     #e2ddd3;
+$ob-gold:        #b0883c; // Akzent (Preis, aktive Links, Such-Button)
+$ob-gold-dark:   #9a7531; // Hover / Preis-Variante
+$ob-gold-light:  #c9a14a; // Bläschen, Badges
+$ob-gold-pale:   #d6c39a; // Topbar-Akzent
+$ob-gold-soft:   #f4ead4; // warme Flächen
+$ob-creme:       #fbf9f4; // Seitenhintergrund
+$ob-ink:         #26221d; // Text / Dunkel / Topbar
+$ob-footer:      #1d1a16; // Footer (etwas dunkler als Ink)
+$ob-card:        #f4f2ec; // Produktkachel / Panel
+$ob-section:     #f7f5f0; // alternierende Sektion
+$ob-green:       #81ba00; // Lagerstatus
+$ob-text:        #26221d; // Fließtext
+$ob-muted:       #897e6e; // gedämpfter Text
+$ob-border:      #e2ddd3; // Trennlinien / Rahmen
+$ob-neutral-btn: #f1efe9; // neutrale Header-Buttons
 
-// --- Typografie -------------------------------------------------------------
+// ===========================================================================
+// Grundlagen
+// ===========================================================================
 body {
     font-family: 'Jost', sans-serif;
     color: $ob-text;
+    background: $ob-creme;
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -35,7 +46,57 @@ h1, h2, h3, h4, h5, h6,
 a { transition: color .2s ease; }
 a:hover { color: $ob-gold; }
 
-// --- Buttons ----------------------------------------------------------------
+// ===========================================================================
+// Topbar (eigene Markup in header.html.twig)
+// ===========================================================================
+.ob-topbar {
+    background: $ob-ink;
+    color: #e9e3d6;
+    font-size: 12.5px;
+    letter-spacing: .04em;
+
+    .ob-topbar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 26px;
+        padding: 9px 56px;
+
+        @media (max-width: 767px) {
+            justify-content: center;
+            gap: 16px;
+            padding: 8px 16px;
+            text-align: center;
+        }
+    }
+
+    .ob-topbar-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .ob-topbar-accent { color: $ob-gold-pale; }
+
+    .ob-topbar-icon {
+        width: 15px;
+        height: 15px;
+        flex: none;
+        color: $ob-gold-pale;
+    }
+
+    .ob-topbar-sep {
+        width: 1px;
+        height: 14px;
+        background: rgba(233, 227, 214, .25);
+
+        @media (max-width: 767px) { display: none; }
+    }
+}
+
+// ===========================================================================
+// Buttons
+// ===========================================================================
 .btn.btn-primary {
     background: $ob-ink;
     border-color: $ob-ink;
@@ -64,39 +125,104 @@ a:hover { color: $ob-gold; }
     }
 }
 
-// --- Topbar / Bar-Links -----------------------------------------------------
-.bar-links {
+// Kauf-Button: dunkel, Pill, Gold-Hover (Listen, Slider, Detail)
+.btn-buy,
+.product-action .btn-buy,
+.cms-element-product-slider .btn-buy,
+.cms-element-product-listing .btn-buy {
     background: $ob-ink;
+    border-color: $ob-ink;
+    color: #fbf9f4;
+    border-radius: 30px;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background: $ob-gold;
+        border-color: $ob-gold;
+        color: #fff;
+    }
 }
 
-// --- Header -----------------------------------------------------------------
+// ===========================================================================
+// Header
+// ===========================================================================
 header.header-main {
-    // Such-Button: im Design der goldene Kreis
-    .header-actions-col .col-auto.d-sm-none {
-        background: $ob-gold;
+    background: #fff;
+    border-bottom: 1px solid $ob-border;
 
-        &:hover { border-color: $ob-gold-dark; }
+    .icon.icon-search { color: #fff; }
+
+    // Runde Action-Buttons (Suche, Account, Wunschliste, Warenkorb)
+    .header-actions .header-actions-col {
+        .btn,
+        button {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: $ob-neutral-btn;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: $ob-ink;
+        }
     }
 
-    // Warenkorb-/Wishlist-Badge in Gold statt Schwarz
+    // Such-Button hervorgehoben in Gold
+    .header-search-toggle .btn,
+    .header-actions-col.d-sm-none {
+        background: $ob-gold;
+
+        .icon { color: #fff; }
+        &:hover { background: $ob-gold-dark; }
+    }
+
+    // Warenkorb-/Wunschlisten-Badge in Gold
     .header-wishlist-badge:not(:empty),
     .header-cart-badge:not(:empty) {
         background: $ob-gold;
+        color: #fff;
+    }
+}
+
+// Hauptnavigation
+.nav-main {
+    .main-navigation-menu .main-navigation-link.root {
+        letter-spacing: .02em;
+
+        &.active { color: $ob-gold-dark; }
     }
 
-    .icon.icon-search { color: #fff; }
+    .navigation-flyout-link:hover { color: $ob-gold; }
 }
 
-// Aktiver Navigationspunkt in Gold
-.nav-main .main-navigation-menu .main-navigation-link.root.active {
-    color: $ob-gold-dark;
-}
-.nav-main .navigation-flyout-link:hover { color: $ob-gold; }
-
-// --- Produktkachel ----------------------------------------------------------
+// ===========================================================================
+// Produktkachel
+// ===========================================================================
 .product-box {
+    background: $ob-card;
+    border: none;
+    border-radius: 8px;
+    transition: box-shadow .25s ease, transform .25s ease;
+
+    &:hover {
+        box-shadow: 0 14px 34px rgba(40, 34, 26, .13);
+        transform: translateY(-3px);
+    }
+
     .product-badge,
-    .badge.badge-danger { background: $ob-gold; color: #fff; }
+    .badge.badge-danger {
+        background: $ob-gold-light;
+        color: #3a2f12;
+        border-radius: 4px;
+        letter-spacing: .08em;
+    }
+
+    .product-name {
+        font-family: 'Cormorant Garamond', serif;
+        font-weight: 600;
+    }
 
     .product-price,
     .product-detail-price {
@@ -113,16 +239,21 @@ header.header-main {
 
 // Lagerstatus „auf Lager" im Theme-Grün
 .product-box-stock-status .stock-available:before,
-.bg-success { background-color: $ob-green; }
+.delivery-information .delivery-status-indicator,
+.bg-success {
+    background-color: $ob-green;
+}
 
-// --- Sektionen / Flächen ----------------------------------------------------
+// ===========================================================================
+// Sektionen / Flächen
+// ===========================================================================
 .section-slider-grid,
-.section-icon-tiles { background: #faf8f3; }
+.section-icon-tiles { background: $ob-section; }
 
 .section-icon-tiles .icon-tiles a:hover,
 .section-icon-tiles .icon-tiles div:hover { background: $ob-gold-soft; }
 
-// „Wein des Moments"-Kreisfläche im warmen Goldton
+// „Wein/Schaumwein des Moments"-Fläche im warmen Goldton
 .section-wine-moment { background-color: $ob-gold-soft; }
 
 // Abschnitts-Trennlinien & Rahmen
@@ -130,14 +261,51 @@ hr,
 .line-item,
 .card { border-color: $ob-border; }
 
-// --- Newsletter / dunkle Bänder --------------------------------------------
+// ===========================================================================
+// Newsletter / dunkle Bänder
+// ===========================================================================
 .cms-element-form .newsletter-form,
 .footer-main {
-    .btn.btn-primary { background: $ob-gold; border-color: $ob-gold; color: $ob-ink;
-        &:hover { background: $ob-gold-dark; color: #fff; } }
+    .btn.btn-primary {
+        background: $ob-gold;
+        border-color: $ob-gold;
+        color: $ob-ink;
+
+        &:hover { background: $ob-gold-dark; color: #fff; }
+    }
 }
 
-// --- Animiertes Logo (Inline-SVG im Header) ---------------------------------
+// ===========================================================================
+// Footer (Optik; Struktur/Inhalte bleiben aus Shopware)
+// ===========================================================================
+.footer-main {
+    background: $ob-footer;
+    color: rgba(243, 238, 227, .62);
+
+    .footer-link,
+    .footer-contact-link,
+    a {
+        color: rgba(243, 238, 227, .62);
+
+        &:hover { color: $ob-gold; }
+    }
+
+    .footer-column .footer-headline,
+    .footer-headline {
+        color: #f3eee3;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        font-family: 'Jost', sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    hr { border-color: rgba(243, 238, 227, .12); }
+}
+
+// ===========================================================================
+// Animiertes Logo (Inline-SVG im Header, siehe logo.html.twig)
+// ===========================================================================
 .ob-logo {
     display: block;
     height: 52px;
@@ -165,23 +333,4 @@ hr,
 
 @media (prefers-reduced-motion: reduce) {
     .ob-logo .ob-b1, .ob-logo .ob-b2, .ob-logo .ob-b3, .ob-logo .ob-b4 { animation: none; }
-}
-
-// --- Kauf-Button: dunkel, Pill, Gold-Hover (Listen, Slider, Detail) ---------
-.btn-buy,
-.product-action .btn-buy,
-.cms-element-product-slider .btn-buy,
-.cms-element-product-listing .btn-buy {
-    background: $ob-ink;
-    border-color: $ob-ink;
-    color: #fbf9f4;
-    border-radius: 30px;
-
-    &:hover,
-    &:focus,
-    &:active {
-        background: $ob-gold;
-        border-color: $ob-gold;
-        color: #fff;
-    }
 }
