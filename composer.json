@@ -1,0 +1,31 @@
+{
+    "name": "onlybubbles/theme",
+    "description": "Only Bubbles Theme for Shopware 6",
+    "version": "1.0.0",
+    "type": "shopware-platform-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Christian Fenske"
+        }
+    ],
+    "require": {
+        "shopware/core": "~6.6.0"
+    },
+    "extra": {
+        "shopware-plugin-class": "OnlyBubbles\\Theme\\OnlyBubblesTheme",
+        "label": {
+            "de-DE": "Only Bubbles Theme",
+            "en-GB": "Only Bubbles Theme"
+        },
+        "description": {
+            "de-DE": "Theme für den Only Bubbles Verkaufskanal.",
+            "en-GB": "Theme for the Only Bubbles sales channel."
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "OnlyBubbles\\Theme\\": "src/"
+        }
+    }
+}

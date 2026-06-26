@@ -1,0 +1,22 @@
+{
+    "name": "OnlyBubblesTheme",
+    "author": "Christian Fenske",
+    "previewMedia": "app/storefront/src/assets/preview.png",
+    "views": [
+        "@Storefront",
+        "@Plugins",
+        "@OnlyBubblesTheme"
+    ],
+    "style": [
+        "app/storefront/src/scss/overrides.scss",
+        "@Storefront",
+        "app/storefront/src/scss/base.scss"
+    ],
+    "script": [
+        "@Storefront"
+    ],
+    "asset": [
+        "@Storefront",
+        "app/storefront/src/assets"
+    ]
+}

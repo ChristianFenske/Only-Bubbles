@@ -1,0 +1,24 @@
+/*
+ * overrides.scss
+ * ------------------------------------------------------------------
+ * Wird VOR dem Shopware-Storefront geladen.
+ * Hier werden Bootstrap-/Shopware-SCSS-Variablen ueberschrieben,
+ * BEVOR die Storefront-Styles damit kompiliert werden.
+ *
+ * >>> Hier kommt der Inhalt deiner Fenskes-"overrides.scss" rein,
+ *     angepasst auf die Only-Bubbles-Farben/Fonts. <<<
+ *
+ * Die Werte unten sind PLATZHALTER und muessen durch die echten
+ * Only-Bubbles-Designwerte ersetzt werden.
+ */
+
+// === Markenfarben (PLATZHALTER – bitte ersetzen) ===
+$sw-color-brand-primary:   #1b2a4a; // z.B. dunkles Blau/Nacht
+$sw-color-brand-secondary: #c9a14a; // z.B. Champagner-Gold
+
+// === Bootstrap-Variablen (PLATZHALTER) ===
+$primary:   $sw-color-brand-primary;
+$secondary: $sw-color-brand-secondary;
+
+// === Typografie (PLATZHALTER) ===
+// $font-family-base: 'DeineSchrift', sans-serif;

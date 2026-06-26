@@ -1,0 +1,13 @@
+# Dependencies
+/node_modules/
+/vendor/
+
+# Kompilierte Assets (werden beim Theme-Build erzeugt)
+src/Resources/app/storefront/dist/
+*.map
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
