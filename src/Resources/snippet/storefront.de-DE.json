@@ -1,0 +1,19 @@
+{
+    "onlyBubbles": {
+        "topbar": {
+            "shipping": "Kostenloser Versand ab 12 Flaschen",
+            "claim": "Drink Better Bubbles"
+        },
+        "pdp": {
+            "toWine": "Zum Wein",
+            "toMaker": "Zum Winzer",
+            "toFacts": "Steckbrief",
+            "toGrape": "Zur Rebsorte",
+            "description": "Detailbeschreibung",
+            "allWines": "Alle Weine des Winzers",
+            "trustShipping": "Versand in 24 h",
+            "trustPay": "Sicher bezahlen",
+            "trustGift": "Geschenkverpackung"
+        }
+    }
+}

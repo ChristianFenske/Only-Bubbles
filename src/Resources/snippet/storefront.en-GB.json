@@ -1,0 +1,19 @@
+{
+    "onlyBubbles": {
+        "topbar": {
+            "shipping": "Free shipping from 12 bottles",
+            "claim": "Drink Better Bubbles"
+        },
+        "pdp": {
+            "toWine": "The wine",
+            "toMaker": "The maker",
+            "toFacts": "Fact sheet",
+            "toGrape": "The grape",
+            "description": "Detailed description",
+            "allWines": "All wines by this maker",
+            "trustShipping": "Ships within 24 h",
+            "trustPay": "Secure payment",
+            "trustGift": "Gift wrapping"
+        }
+    }
+}

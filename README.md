@@ -77,6 +77,41 @@ Admin → Produkt → Reiter **Verkaufskanäle** → „Only Bubbles" aktivieren
   `views/storefront/layout/header/logo.html.twig` löschen und das Logo klassisch
   über die Medien-Konfiguration setzen.
 
+## Umsetzungsstand
+
+Umgesetzt (Optik nach Design-Prototyp, Funktion aus Shopware erhalten):
+
+- **Marken-Rahmen:** Topbar + Header-Styling (runde Gold-Buttons), animiertes
+  Bläschen-Logo, dunkler Footer — `layout/header/header.html.twig`, `logo.html.twig`, `base.scss`
+- **Produktdetailseite:** Anker-Navi + Sektionen *Zum Wein / Zum Winzer /
+  Steckbrief / Zur Rebsorte* + Trust-Leiste — `page/product-detail/index.html.twig`,
+  `buy-widget.html.twig`. Wein-Daten via Custom Fields (`only_bubbles_*`),
+  zentrales Mapping oben im Template.
+- **Homepage:** Styling im Theme; redaktionelle Blöcke als Copy-&-Paste für die
+  Erlebniswelten — siehe `docs/homepage-cms-blocks.html`.
+- **Übersetzungen:** `src/Resources/snippet/storefront.{de-DE,en-GB}.json`.
+
+### Benötigte Custom Fields (Produkt)
+
+Set z. B. `only_bubbles`, zugeordnet zu *Produkten*:
+`only_bubbles_style`, `_vintage`, `_region`, `_country`, `_flag`, `_alcohol`,
+`_grapes`, `_aging`, `_cru`, `_dosage`, `_type`, `_energy`, `_bio` (Ja/Nein),
+`_grape_info` (HTML, optional). Andere Feldnamen? → Mapping in
+`page/product-detail/index.html.twig` anpassen.
+
+### Homepage in der Erlebniswelt
+
+Reihenfolge: (HTML) *Finde deine Blase* → Produkt-Slider *Empfehlungen* →
+Produkt-Slider *Schaumwein des Moments* → (HTML) *Über uns* → (HTML)
+*Newsletter* → (HTML) *Icon-Leiste*. Fertige HTML-Blöcke in
+`docs/homepage-cms-blocks.html` (Bild-URLs/Links anpassen).
+
+### Offen / nächste Schritte
+
+- Hero-Spec-Box (Jahr/Region/Alkohol/Inhalt) *im* Kauf-Widget — sauber ergänzbar,
+  sobald das gerenderte Markup der konkreten SW-Version vorliegt.
+- Hersteller-/Winzer-Übersichtsseite (braucht Controller/Route — eigenes Modul).
+
 ## Hinweis
 
 Diese Dateien sind das **Quellcode-Gerüst** des Themes. Das Bauen/Kompilieren

@@ -1,0 +1,154 @@
+<!--
+  Only Bubbles — Homepage-Bausteine für die Erlebniswelten (Shopping Experiences)
+  ================================================================================
+
+  Die Startseite wird in Shopware über eine Erlebniswelt zusammengestellt. Die
+  REDAKTIONELLEN Sektionen unten fügst du als CMS-Element "HTML" (Custom HTML)
+  ein. Die PRODUKT-Reihen ("Unsere Empfehlungen", "Schaumwein des Moments")
+  baust du mit Standard-Elementen, damit echte Produkte + Warenkorb funktionieren:
+
+    Empfohlene Reihenfolge der Blöcke in der Erlebniswelt:
+      1. (HTML)            "Finde deine Blase" — Stil-Kacheln           ← unten Block A
+      2. (Produkt-Slider)  "Unsere Empfehlungen für dich"              ← Standard-Element
+      3. (Produkt-Slider)  "Schaumwein des Moments"  (1 Produkt, groß) ← Standard-Element
+      4. (HTML)            "Aus Leidenschaft für Schaumwein" (Über uns) ← unten Block B
+      5. (HTML)            Newsletter-Band                              ← unten Block C
+      6. (HTML)            Icon-Leiste (Trust)                          ← unten Block D
+
+  Die Optik (Farben, Fonts, Hover) kommt aus dem Theme (base.scss). Bild-URLs und
+  Links unten bitte an deine Medien/Kategorien anpassen.
+-->
+
+
+<!-- ============================================================= -->
+<!-- BLOCK A — "Finde deine Blase" (Stil-Kacheln)                  -->
+<!-- ============================================================= -->
+<section class="ob-wrap" style="padding-top:80px;padding-bottom:40px;">
+    <div class="ob-section-bar">
+        <div>
+            <span class="ob-eyebrow">Stöbern nach Stil</span>
+            <h2 class="ob-display">Finde deine Blase</h2>
+        </div>
+        <a class="ob-more-link" href="/champagne">
+            Alle Kategorien
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+    </div>
+
+    <div class="ob-style-tiles">
+        <a class="ob-style-tile" href="/champagne">
+            <img src="/media/onlybubbles/cat_champagne.jpg" alt="Champagne">
+            <div class="ob-style-tile-text">
+                <div class="ob-style-tile-title">Champagne</div>
+                <div class="ob-style-tile-sub">Grand Cru &amp; Winzer</div>
+            </div>
+        </a>
+        <a class="ob-style-tile" href="/cremant">
+            <img src="/media/onlybubbles/cat_cremant.jpg" alt="Crémant">
+            <div class="ob-style-tile-text">
+                <div class="ob-style-tile-title">Crémant</div>
+                <div class="ob-style-tile-sub">Lese von Hand</div>
+            </div>
+        </a>
+        <a class="ob-style-tile" href="/prosecco">
+            <img src="/media/onlybubbles/cat_prosecco.jpg" alt="Prosecco">
+            <div class="ob-style-tile-text">
+                <div class="ob-style-tile-title">Prosecco</div>
+                <div class="ob-style-tile-sub">Zeit zu feiern</div>
+            </div>
+        </a>
+        <a class="ob-style-tile" href="/cava">
+            <img src="/media/onlybubbles/cat_cava.jpg" alt="Cava & Rosé">
+            <div class="ob-style-tile-text">
+                <div class="ob-style-tile-title">Cava &amp; Rosé</div>
+                <div class="ob-style-tile-sub">Flaschengärung</div>
+            </div>
+        </a>
+    </div>
+</section>
+
+
+<!-- ============================================================= -->
+<!-- BLOCK B — "Aus Leidenschaft für Schaumwein" (Über uns)        -->
+<!-- ============================================================= -->
+<section class="ob-about">
+    <div class="ob-wrap ob-about-inner">
+        <div class="ob-about-media">
+            <img src="/media/onlybubbles/cellar.jpg" alt="Schaumwein-Keller">
+            <div class="ob-about-badge">
+                <div class="ob-about-badge-num">25+</div>
+                <div class="ob-about-badge-label">Jahre Erfahrung</div>
+            </div>
+        </div>
+        <div class="ob-about-body">
+            <span class="ob-eyebrow">Über uns</span>
+            <h2 class="ob-display">Aus Leidenschaft<br>für Schaumwein.</h2>
+            <p class="ob-prose" style="margin-top:18px;">
+                Only Bubbles ist die Schaumwein-Welt von Fenske’s Weine &amp; Feinkost.
+                Was uns antreibt: die Überzeugung, dass Prickelndes nicht nur an
+                Festtagen ins Glas gehört. Wir reisen zu kleinen Häusern und Winzern,
+                probieren, wählen aus — und bringen dir nur, was uns selbst begeistert.
+            </p>
+            <p class="ob-prose">
+                Vom Grand-Cru-Champagner bis zum unkomplizierten Crémant:
+                handverlesen, fair bewertet, schnell geliefert.
+            </p>
+            <div class="ob-about-actions">
+                <a class="btn btn-primary" href="/ueber-uns">Mehr über uns</a>
+                <a class="ob-more-link" href="/winzer">Unsere Winzer kennenlernen
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ============================================================= -->
+<!-- BLOCK C — Newsletter-Band                                     -->
+<!-- (Hinweis: für echten Versand das Shopware-Newsletter-Element  -->
+<!--  nutzen; dieser Block ist die reine Optik.)                   -->
+<!-- ============================================================= -->
+<section class="ob-newsletter">
+    <div class="ob-wrap ob-newsletter-inner">
+        <div>
+            <span class="ob-eyebrow" style="color:#d6c39a;">Newsletter</span>
+            <h2 class="ob-newsletter-title">Keine Blase mehr verpassen.</h2>
+            <p class="ob-newsletter-text">Neue Cuvées, limitierte Magnums und exklusive Angebote — direkt ins Postfach.</p>
+        </div>
+        <div class="ob-newsletter-form">
+            <div class="ob-newsletter-row">
+                <input type="email" placeholder="deine@email.de" aria-label="E-Mail-Adresse">
+                <button type="button">Abonnieren</button>
+            </div>
+            <div class="ob-newsletter-hint">Jederzeit abbestellbar. Wir trinken keine Daten.</div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ============================================================= -->
+<!-- BLOCK D — Icon-Leiste (Trust)                                 -->
+<!-- ============================================================= -->
+<section class="ob-wrap ob-icon-strip">
+    <div class="ob-icon-strip-item">
+        <span class="ob-icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7M5.5 19a2 2 0 1 0 4 0 2 2 0 1 0-4 0M16.5 19a2 2 0 1 0 4 0 2 2 0 1 0-4 0"/></svg></span>
+        <div class="ob-icon-strip-title">Schnell geliefert</div>
+        <div class="ob-icon-strip-sub">Versand in 24 h, frei ab 12 Flaschen</div>
+    </div>
+    <div class="ob-icon-strip-item">
+        <span class="ob-icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></span>
+        <div class="ob-icon-strip-title">Persönliche Beratung</div>
+        <div class="ob-icon-strip-sub">Schaumwein-Expertise per Telefon &amp; Mail</div>
+    </div>
+    <div class="ob-icon-strip-item">
+        <span class="ob-icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+        <div class="ob-icon-strip-title">Sicher bezahlen</div>
+        <div class="ob-icon-strip-sub">Rechnung, PayPal, Apple Pay &amp; Karte</div>
+    </div>
+    <div class="ob-icon-strip-item">
+        <span class="ob-icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M8.5 13.5L7 22l5-3 5 3-1.5-8.5"/></svg></span>
+        <div class="ob-icon-strip-title">Ausgezeichnet</div>
+        <div class="ob-icon-strip-sub">wein.plus Premium-Mitglied</div>
+    </div>
+</section>
