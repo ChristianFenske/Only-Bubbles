@@ -3,9 +3,11 @@
 // Wird NACH @Storefront geladen und überschreibt nur Marke/Optik.
 // Struktur, Layout & Komponenten kommen aus dem Storefront / Eltern-Theme.
 // Werte 1:1 abgeleitet aus den Design-Prototypen (.dc.html).
+//
+// HINWEIS: Die Google-Fonts werden NICHT hier per @import geladen (Shopwares
+// Theme-Compiler kann an Remote-@import-url scheitern), sondern per <link> im
+// <head> ueber views/storefront/layout/meta.html.twig.
 // ===========================================================================
-
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap');
 
 // --- Marken-Tokens ----------------------------------------------------------
 $ob-gold:        #b0883c; // Akzent (Preis, aktive Links, Such-Button)
