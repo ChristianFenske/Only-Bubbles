@@ -1,0 +1,140 @@
+{# Only Bubbles — Kauf-Widget (rechte Hero-Spalte der Produktseite).
+   Wir bauen die Spalte im Design-Aufbau nach: Hersteller + Artikelnr., Titel,
+   Untertitel + BIO, Spec-Grid (Jahr/Region/Alkohol/Inhalt), dann die FUNKTIONALEN
+   Original-Bausteine (Preis, MwSt., Lieferinfo, Konfigurator, Kauf-Formular,
+   Merkzettel) via sw_include, plus Trust-Leiste.
+
+   Wein-Daten via Custom Fields — zentrales Mapping unten (an deine Feldnamen
+   anpassbar). #}
+{% sw_extends '@Storefront/storefront/component/buy-widget/buy-widget.html.twig' %}
+
+{% block buy_widget %}
+    {% set cf = product.translated.customFields ?? product.customFields ?? {} %}
+    {% set ob = {
+        style:   cf.only_bubbles_style|default(''),
+        vintage: cf.only_bubbles_vintage|default(''),
+        region:  cf.only_bubbles_region|default(''),
+        flag:    cf.only_bubbles_flag|default(''),
+        alcohol: cf.only_bubbles_alcohol|default(''),
+        volume:  cf.only_bubbles_volume|default(''),
+        bio:     cf.only_bubbles_bio|default(false)
+    } %}
+
+    <div class="product-detail-buy{% if elementId %}-{{ elementId }}{% endif %} js-magnifier-zoom-image-container ob-buy">
+
+        {# Kopf: Hersteller + Artikelnummer #}
+        <div class="ob-buy-head">
+            {% if product.manufacturer %}
+                <span class="ob-buy-maker">{{ product.manufacturer.translated.name }}</span>
+            {% endif %}
+            {% if product.productNumber %}
+                <span class="ob-buy-sku">{{ product.productNumber }}</span>
+            {% endif %}
+        </div>
+
+        {# Titel #}
+        <h1 class="ob-buy-title">{{ product.translated.name }}</h1>
+
+        {# Untertitel + BIO #}
+        {% if ob.style or ob.bio %}
+            <div class="ob-buy-subtitle">
+                {% if ob.style %}<span>{{ ob.style }}</span>{% endif %}
+                {% if ob.bio %}
+                    <span class="ob-bio">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg>
+                        {{ 'onlyBubbles.pdp.bio'|trans|default('BIO') }}
+                    </span>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {# Spec-Grid: Jahr / Region / Alkohol / Inhalt #}
+        {% set specs = [
+            { k: 'Jahr',    v: ob.vintage },
+            { k: 'Region',  v: ob.region, flag: ob.flag },
+            { k: 'Alkohol', v: ob.alcohol },
+            { k: 'Inhalt',  v: ob.volume }
+        ] %}
+        {% if specs|filter(s => s.v)|length > 0 %}
+            <div class="ob-spec-grid">
+                {% for s in specs|filter(s => s.v) %}
+                    <div class="ob-spec-cell">
+                        <div class="ob-spec-cell-k">{{ s.k }}</div>
+                        <div class="ob-spec-cell-v">{{ s.v }}{% if s.flag %} <span class="ob-flag">{{ s.flag }}</span>{% endif %}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {# ===== Funktionale Original-Bausteine (NICHT verändern) ===== #}
+        <div class="ob-buy-functional">
+            {# Preis #}
+            <div class="product-detail-price-container">
+                {% sw_include '@Storefront/storefront/component/buy-widget/buy-widget-price.html.twig' %}
+            </div>
+
+            {# MwSt.-Hinweis #}
+            <div class="product-detail-tax-container">
+                {% if context.taxState == 'gross' %}
+                    {% set taxText = 'general.grossTaxInformation'|trans|sw_sanitize %}
+                {% else %}
+                    {% set taxText = 'general.netTaxInformation'|trans|sw_sanitize %}
+                {% endif %}
+                <p class="product-detail-tax">
+                    {% set cmsPath = path('frontend.cms.page', { id: config('core.basicInformation.shippingPaymentInfoPage') }) %}
+                    <button class="btn btn-link-inline product-detail-tax-link"
+                            type="button"
+                            data-ajax-modal="true"
+                            data-url="{{ cmsPath }}"
+                            aria-haspopup="dialog">
+                        {{ taxText }}
+                    </button>
+                </p>
+            </div>
+
+            {# Lieferinfo / Lagerstatus #}
+            <div class="product-detail-delivery-information">
+                {% sw_include '@Storefront/storefront/component/delivery-information.html.twig' %}
+            </div>
+
+            {# Konfigurator (Varianten) #}
+            {% if product.parentId and configuratorSettings|length > 0 %}
+                <div class="product-detail-configurator-container">
+                    {% sw_include '@Storefront/storefront/component/buy-widget/configurator.html.twig' %}
+                </div>
+            {% endif %}
+
+            {# Menge + In den Warenkorb #}
+            {% if product.active %}
+                <div class="product-detail-form-container">
+                    {% sw_include '@Storefront/storefront/component/buy-widget/buy-widget-form.html.twig' %}
+                </div>
+            {% endif %}
+
+            {# Merkzettel #}
+            {% if config('core.cart.wishlistEnabled') %}
+                {% sw_include '@Storefront/storefront/component/product/card/wishlist.html.twig' with {
+                    showText: true,
+                    size: 'sm',
+                    productId: product.id
+                } %}
+            {% endif %}
+        </div>
+
+        {# Trust-Leiste #}
+        <div class="ob-buy-trust">
+            <span class="ob-buy-trust-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7M5.5 19a2 2 0 1 0 4 0 2 2 0 1 0-4 0M16.5 19a2 2 0 1 0 4 0 2 2 0 1 0-4 0"/></svg>
+                {{ 'onlyBubbles.pdp.trustShipping'|trans|default('Versand in 24 h') }}
+            </span>
+            <span class="ob-buy-trust-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+                {{ 'onlyBubbles.pdp.trustPay'|trans|default('Sicher bezahlen') }}
+            </span>
+            <span class="ob-buy-trust-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                {{ 'onlyBubbles.pdp.trustGift'|trans|default('Geschenkverpackung') }}
+            </span>
+        </div>
+    </div>
+{% endblock %}

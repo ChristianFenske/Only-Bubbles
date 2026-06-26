@@ -376,6 +376,92 @@ hr,
     }
 }
 
+// --- Hero-Kaufspalte (Design-Aufbau) ---
+.ob-buy {
+    .ob-buy-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+    }
+
+    .ob-buy-maker { font-size: 14px; color: $ob-muted; }
+    .ob-buy-sku { font-size: 13px; font-weight: 600; color: $ob-muted; letter-spacing: .04em; }
+
+    .ob-buy-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-weight: 600;
+        font-size: 44px;
+        line-height: 1.04;
+        margin: 6px 0 8px;
+        color: $ob-ink;
+    }
+
+    .ob-buy-subtitle {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 15px;
+        color: $ob-muted;
+        margin-bottom: 4px;
+    }
+
+    .ob-bio {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: .06em;
+        color: #4f8a2e;
+        border: 1px solid rgba(#4f8a2e, .45);
+        border-radius: 5px;
+        padding: 3px 8px;
+
+        svg { width: 14px; height: 14px; }
+    }
+
+    .ob-spec-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 40px;
+        margin: 28px 0;
+        border-top: 1px solid $ob-border;
+    }
+
+    .ob-spec-cell {
+        padding: 16px 0;
+        border-bottom: 1px solid $ob-border;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .ob-spec-cell-k {
+        font-size: 12px;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        color: $ob-muted;
+    }
+
+    .ob-spec-cell-v {
+        font-size: 16px;
+        color: $ob-ink;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    // Preis groß & gold (greift auf die Standard-Preisklasse)
+    .product-detail-price {
+        font-size: 38px;
+        color: $ob-gold;
+        font-weight: 600;
+    }
+
+    .ob-buy-functional { margin-top: 4px; }
+}
+
 // --- Anker-Navigation ---
 .ob-anchor-nav {
     border-top: 1px solid $ob-border;

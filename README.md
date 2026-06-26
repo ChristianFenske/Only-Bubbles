@@ -95,9 +95,14 @@ Umgesetzt (Optik nach Design-Prototyp, Funktion aus Shopware erhalten):
 
 Set z. B. `only_bubbles`, zugeordnet zu *Produkten*:
 `only_bubbles_style`, `_vintage`, `_region`, `_country`, `_flag`, `_alcohol`,
-`_grapes`, `_aging`, `_cru`, `_dosage`, `_type`, `_energy`, `_bio` (Ja/Nein),
-`_grape_info` (HTML, optional). Andere Feldnamen? → Mapping in
-`page/product-detail/index.html.twig` anpassen.
+`_volume` (z. B. „0,75 l"), `_grapes`, `_aging`, `_cru`, `_dosage`, `_type`,
+`_energy`, `_bio` (Ja/Nein), `_grape_info` (HTML, optional). Andere Feldnamen?
+→ Mapping in `component/buy-widget/buy-widget.html.twig` und
+`element/cms-element-product-description-reviews.html.twig` anpassen.
+
+> Produktseite = CMS-Layout (Shopware 6.7). Angepasst werden die CMS-Element-
+> Templates `cms-element-buy-box` (über `buy-widget`) und
+> `cms-element-product-description-reviews`.
 
 ### Homepage in der Erlebniswelt
 
