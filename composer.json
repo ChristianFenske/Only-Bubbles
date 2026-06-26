@@ -1,31 +1,30 @@
 {
-    "name": "onlybubbles/theme",
-    "description": "Only Bubbles Theme for Shopware 6",
+    "name": "onlybubbles/only-bubbles-theme",
+    "description": "Only Bubbles — Sales-Channel-Theme für Schaumweine (Brand-Layer über @Storefront)",
     "version": "1.0.0",
     "type": "shopware-platform-plugin",
     "license": "MIT",
     "authors": [
-        {
-            "name": "Christian Fenske"
-        }
+        { "name": "Only Bubbles" }
     ],
     "require": {
-        "shopware/core": "~6.6.0"
+        "shopware/core": "~6.7.0",
+        "shopware/storefront": "~6.7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "OnlyBubblesTheme\\": "src/"
+        }
     },
     "extra": {
-        "shopware-plugin-class": "OnlyBubbles\\Theme\\OnlyBubblesTheme",
+        "shopware-plugin-class": "OnlyBubblesTheme\\OnlyBubblesTheme",
         "label": {
             "de-DE": "Only Bubbles Theme",
             "en-GB": "Only Bubbles Theme"
         },
         "description": {
-            "de-DE": "Theme für den Only Bubbles Verkaufskanal.",
-            "en-GB": "Theme for the Only Bubbles sales channel."
-        }
-    },
-    "autoload": {
-        "psr-4": {
-            "OnlyBubbles\\Theme\\": "src/"
+            "de-DE": "Gold-Markenschicht für den Verkaufskanal Only Bubbles.",
+            "en-GB": "Gold brand layer for the Only Bubbles sales channel."
         }
     }
 }

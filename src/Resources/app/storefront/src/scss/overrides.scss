@@ -1,24 +1,18 @@
-/*
- * overrides.scss
- * ------------------------------------------------------------------
- * Wird VOR dem Shopware-Storefront geladen.
- * Hier werden Bootstrap-/Shopware-SCSS-Variablen ueberschrieben,
- * BEVOR die Storefront-Styles damit kompiliert werden.
- *
- * >>> Hier kommt der Inhalt deiner Fenskes-"overrides.scss" rein,
- *     angepasst auf die Only-Bubbles-Farben/Fonts. <<<
- *
- * Die Werte unten sind PLATZHALTER und muessen durch die echten
- * Only-Bubbles-Designwerte ersetzt werden.
- */
+// ---------------------------------------------------------------------------
+// Only Bubbles — Bootstrap-/SCSS-Variablen
+// Wird laut theme.json VOR @Storefront geladen, damit Kern-Variablen greifen.
+// Die $sw-color-* Variablen werden aus der theme.json-Config injiziert.
+// ---------------------------------------------------------------------------
 
-// === Markenfarben (PLATZHALTER – bitte ersetzen) ===
-$sw-color-brand-primary:   #1b2a4a; // z.B. dunkles Blau/Nacht
-$sw-color-brand-secondary: #c9a14a; // z.B. Champagner-Gold
+$primary:   $sw-color-brand-primary;   // Gold
+$secondary: $sw-color-brand-secondary; // Ink
 
-// === Bootstrap-Variablen (PLATZHALTER) ===
-$primary:   $sw-color-brand-primary;
-$secondary: $sw-color-brand-secondary;
+// Kauf-Button ("In den Warenkorb") in Listen/Slidern: dunkel statt Bootstrap-Blau.
+// Shopware nutzt dafür EIGENE Variablen, nicht $primary.
+$sw-color-buy-button:      #26221d; // Ink
+$sw-color-buy-button-text: #fbf9f4; // Creme
 
-// === Typografie (PLATZHALTER) ===
-// $font-family-base: 'DeineSchrift', sans-serif;
+// Etwas weichere Radien wie im Design (Pill-Buttons macht base.scss)
+$border-radius:    4px;
+$border-radius-sm: 3px;
+$border-radius-lg: 8px;

@@ -1,10 +1,187 @@
-/*
- * base.scss
- * ------------------------------------------------------------------
- * Wird NACH dem Shopware-Storefront geladen.
- * Hier kommt dein eigenes, zusaetzliches Styling obendrauf
- * (Header, Footer, Buttons, Produktkacheln, etc.).
- *
- * >>> Hier kommt der Inhalt deiner Fenskes-"base.scss" rein,
- *     angepasst auf das Only-Bubbles-Design. <<<
- */
+// ===========================================================================
+// Only Bubbles — Markenschicht (Brand-Layer)
+// Wird NACH @Storefront geladen und überschreibt nur Marke/Optik.
+// Struktur, Layout & Komponenten kommen aus dem Storefront / Eltern-Theme.
+// ===========================================================================
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap');
+
+// --- Marken-Tokens ----------------------------------------------------------
+$ob-gold:       #b0883c;
+$ob-gold-dark:  #9a7531;
+$ob-gold-soft:  #f4ead4;
+$ob-ink:        #26221d;
+$ob-green:      #81ba00;
+$ob-text:       #191919;
+$ob-gray:       #897e6e;
+$ob-border:     #e2ddd3;
+
+// --- Typografie -------------------------------------------------------------
+body {
+    font-family: 'Jost', sans-serif;
+    color: $ob-text;
+}
+
+h1, h2, h3, h4, h5, h6,
+.card-title,
+.product-name,
+.product-detail-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    letter-spacing: .005em;
+    color: $ob-ink;
+}
+
+a { transition: color .2s ease; }
+a:hover { color: $ob-gold; }
+
+// --- Buttons ----------------------------------------------------------------
+.btn.btn-primary {
+    background: $ob-ink;
+    border-color: $ob-ink;
+    border-radius: 30px;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background: $ob-gold;
+        border-color: $ob-gold;
+        color: #fff;
+    }
+}
+
+.btn.btn-outline-primary,
+.btn.btn-secondary {
+    border-radius: 30px;
+    border-color: $ob-border;
+    color: $ob-ink;
+    background: transparent;
+
+    &:hover {
+        border-color: $ob-gold;
+        color: $ob-gold;
+        background: transparent;
+    }
+}
+
+// --- Topbar / Bar-Links -----------------------------------------------------
+.bar-links {
+    background: $ob-ink;
+}
+
+// --- Header -----------------------------------------------------------------
+header.header-main {
+    // Such-Button: im Design der goldene Kreis
+    .header-actions-col .col-auto.d-sm-none {
+        background: $ob-gold;
+
+        &:hover { border-color: $ob-gold-dark; }
+    }
+
+    // Warenkorb-/Wishlist-Badge in Gold statt Schwarz
+    .header-wishlist-badge:not(:empty),
+    .header-cart-badge:not(:empty) {
+        background: $ob-gold;
+    }
+
+    .icon.icon-search { color: #fff; }
+}
+
+// Aktiver Navigationspunkt in Gold
+.nav-main .main-navigation-menu .main-navigation-link.root.active {
+    color: $ob-gold-dark;
+}
+.nav-main .navigation-flyout-link:hover { color: $ob-gold; }
+
+// --- Produktkachel ----------------------------------------------------------
+.product-box {
+    .product-badge,
+    .badge.badge-danger { background: $ob-gold; color: #fff; }
+
+    .product-price,
+    .product-detail-price {
+        color: $ob-gold-dark;
+        font-family: 'Jost', sans-serif;
+        font-weight: 600;
+    }
+
+    .product-wishlist .icon:hover,
+    .product-wishlist.product-wishlist-added .icon {
+        color: $ob-gold;
+    }
+}
+
+// Lagerstatus „auf Lager" im Theme-Grün
+.product-box-stock-status .stock-available:before,
+.bg-success { background-color: $ob-green; }
+
+// --- Sektionen / Flächen ----------------------------------------------------
+.section-slider-grid,
+.section-icon-tiles { background: #faf8f3; }
+
+.section-icon-tiles .icon-tiles a:hover,
+.section-icon-tiles .icon-tiles div:hover { background: $ob-gold-soft; }
+
+// „Wein des Moments"-Kreisfläche im warmen Goldton
+.section-wine-moment { background-color: $ob-gold-soft; }
+
+// Abschnitts-Trennlinien & Rahmen
+hr,
+.line-item,
+.card { border-color: $ob-border; }
+
+// --- Newsletter / dunkle Bänder --------------------------------------------
+.cms-element-form .newsletter-form,
+.footer-main {
+    .btn.btn-primary { background: $ob-gold; border-color: $ob-gold; color: $ob-ink;
+        &:hover { background: $ob-gold-dark; color: #fff; } }
+}
+
+// --- Animiertes Logo (Inline-SVG im Header) ---------------------------------
+.ob-logo {
+    display: block;
+    height: 52px;
+    width: auto;
+    max-width: 100%;
+    overflow: visible;
+}
+.ob-logo .ob-b1,
+.ob-logo .ob-b2,
+.ob-logo .ob-b3,
+.ob-logo .ob-b4 {
+    transform-box: fill-box;
+    transform-origin: center;
+    will-change: transform, opacity;
+}
+.ob-logo .ob-b1 { animation: ob-float-1 3.2s ease-in-out infinite alternate; }
+.ob-logo .ob-b2 { animation: ob-float-2 3.9s ease-in-out infinite alternate; }
+.ob-logo .ob-b3 { animation: ob-float-3 2.7s ease-in-out infinite alternate; }
+.ob-logo .ob-b4 { animation: ob-float-4 4.4s ease-in-out infinite alternate; }
+
+@keyframes ob-float-1 { from { transform: translateY(2px);  opacity: .85; } to { transform: translateY(-3px); opacity: 1; } }
+@keyframes ob-float-2 { from { transform: translateY(3px);  opacity: .9;  } to { transform: translateY(-4px); opacity: 1; } }
+@keyframes ob-float-3 { from { transform: translateY(2px);  opacity: .8;  } to { transform: translateY(-2px); opacity: 1; } }
+@keyframes ob-float-4 { from { transform: translateY(3px);  opacity: .95; } to { transform: translateY(-3px); opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+    .ob-logo .ob-b1, .ob-logo .ob-b2, .ob-logo .ob-b3, .ob-logo .ob-b4 { animation: none; }
+}
+
+// --- Kauf-Button: dunkel, Pill, Gold-Hover (Listen, Slider, Detail) ---------
+.btn-buy,
+.product-action .btn-buy,
+.cms-element-product-slider .btn-buy,
+.cms-element-product-listing .btn-buy {
+    background: $ob-ink;
+    border-color: $ob-ink;
+    color: #fbf9f4;
+    border-radius: 30px;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background: $ob-gold;
+        border-color: $ob-gold;
+        color: #fff;
+    }
+}

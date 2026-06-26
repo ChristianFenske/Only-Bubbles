@@ -1,7 +1,6 @@
 {
     "name": "OnlyBubblesTheme",
-    "author": "Christian Fenske",
-    "previewMedia": "app/storefront/src/assets/preview.png",
+    "author": "Only Bubbles",
     "views": [
         "@Storefront",
         "@Plugins",
@@ -18,5 +17,59 @@
     "asset": [
         "@Storefront",
         "app/storefront/src/assets"
-    ]
+    ],
+    "config": {
+        "blocks": {
+            "onlyBubblesColors": {
+                "label": { "de-DE": "Only Bubbles — Farben", "en-GB": "Only Bubbles — Colors" }
+            },
+            "onlyBubblesFonts": {
+                "label": { "de-DE": "Only Bubbles — Schriften", "en-GB": "Only Bubbles — Fonts" }
+            }
+        },
+        "fields": {
+            "sw-color-brand-primary": {
+                "label": { "de-DE": "Akzent (Gold)", "en-GB": "Accent (Gold)" },
+                "type": "color",
+                "value": "#b0883c",
+                "editable": true,
+                "block": "onlyBubblesColors"
+            },
+            "sw-color-brand-secondary": {
+                "label": { "de-DE": "Dunkel (Ink)", "en-GB": "Dark (Ink)" },
+                "type": "color",
+                "value": "#26221d",
+                "editable": true,
+                "block": "onlyBubblesColors"
+            },
+            "ob-color-gold-dark": {
+                "label": { "de-DE": "Gold dunkel (Hover)", "en-GB": "Gold dark (hover)" },
+                "type": "color",
+                "value": "#9a7531",
+                "editable": true,
+                "block": "onlyBubblesColors"
+            },
+            "ob-color-stock": {
+                "label": { "de-DE": "Lagerstatus Grün", "en-GB": "Stock green" },
+                "type": "color",
+                "value": "#81ba00",
+                "editable": true,
+                "block": "onlyBubblesColors"
+            },
+            "sw-font-family-base": {
+                "label": { "de-DE": "Fließtext", "en-GB": "Body font" },
+                "type": "fontFamily",
+                "value": "'Jost', sans-serif",
+                "editable": true,
+                "block": "onlyBubblesFonts"
+            },
+            "sw-font-family-headline": {
+                "label": { "de-DE": "Überschriften", "en-GB": "Headline font" },
+                "type": "fontFamily",
+                "value": "'Cormorant Garamond', serif",
+                "editable": true,
+                "block": "onlyBubblesFonts"
+            }
+        }
+    }
 }

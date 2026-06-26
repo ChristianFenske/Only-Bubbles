@@ -1,11 +1,8 @@
-// main.js
-// ------------------------------------------------------------------
-// Entry-Point fuer eigenes Storefront-JavaScript.
-// Aktuell nutzt das Theme nur das Standard-Shopware-JS
-// (siehe theme.json -> "script": ["@Storefront"]).
+// Only Bubbles — Storefront JS-Einstiegspunkt.
+// Aktuell keine eigene Logik nötig (reines Brand-Theme).
+// Plugins/Verhalten werden vom Storefront geerbt.
 //
-// Eigene Plugins koennen hier registriert werden, z.B.:
-//
-// import OnlyBubblesExample from './plugin/example/onlybubbles-example.plugin';
+// Beispiel für späteres eigenes Plugin:
+// import OnlyBubblesExample from './plugin/example.plugin';
 // const PluginManager = window.PluginManager;
-// PluginManager.register('OnlyBubblesExample', OnlyBubblesExample, '[data-onlybubbles-example]');
+// PluginManager.register('OnlyBubblesExample', OnlyBubblesExample, '[data-only-bubbles-example]');
