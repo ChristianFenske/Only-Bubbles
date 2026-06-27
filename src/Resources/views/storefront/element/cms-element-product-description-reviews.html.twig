@@ -68,12 +68,9 @@
                         <span class="ob-section-rule"></span>
                     </div>
                     <div class="ob-winzer">
-                        {% if m.media %}
+                        {% if m.media and m.media.url %}
                             <div class="ob-winzer-img">
-                                {% sw_thumbnails 'ob-winzer-img-thumb' with {
-                                    media: m.media,
-                                    sizes: { default: '380px' }
-                                } %}
+                                <img src="{{ m.media.url }}" alt="{{ m.translated.name }}" loading="lazy">
                             </div>
                         {% endif %}
                         <div class="ob-winzer-body">
@@ -142,16 +139,6 @@
                         <span class="ob-section-rule"></span>
                     </div>
                     <div class="ob-prose">{{ ob.grapeInfo|raw }}</div>
-                </section>
-            {% endif %}
-
-            {# ===== Bewertungen (Funktion erhalten) ===== #}
-            {% if config('core.listing.showReview') %}
-                <section class="ob-pdp-section">
-                    {% sw_include '@Storefront/storefront/component/review/review.html.twig' with {
-                        reviews: element.data.reviews,
-                        product: product
-                    } %}
                 </section>
             {% endif %}
 
