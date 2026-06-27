@@ -2,7 +2,12 @@
    durch die Design-Sektionen: Anker-Navi + Zum Wein / Zum Winzer / Steckbrief /
    Zur Rebsorte. Bewertungen werden am Ende weiterhin eingebunden.
 
-   Wein-Daten via Custom Fields — zentrales Mapping unten (anpassbar). #}
+   Wein-Daten via Custom Fields — zentrales Mapping unten (anpassbar).
+
+   WICHTIG: sw_extends (wie beim buy-widget) — nur so greift der Override bei
+   per sw_include eingebundenen CMS-Element-Templates zuverlaessig. #}
+{% sw_extends '@Storefront/storefront/element/cms-element-product-description-reviews.html.twig' %}
+
 {% block element_product_description_reviews %}
     {% set product = element.data.product %}
 
