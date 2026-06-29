@@ -187,11 +187,11 @@ header.header-main {
     }
 
     // Such-Button hervorgehoben in Gold
-    .header-actions-col .search-toggle .btn {
+    .header-search-toggle .btn,
+    .header-actions-col.d-sm-none {
         background: $ob-gold;
-        border: none;
 
-        .icon, svg { color: #fff; }
+        .icon { color: #fff; }
         &:hover { background: $ob-gold-dark; }
     }
 
@@ -203,43 +203,15 @@ header.header-main {
     }
 }
 
-// Hauptnavigation — in die Header-Zeile integriert
-.header-nav-col {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.ob-header-nav {
-    width: 100%;
-
-    .container { max-width: none; padding: 0; }
-    .navbar { padding: 0; }
-    .navbar-collapse { justify-content: center; }
-    .main-navigation-menu-list { flex-wrap: nowrap; gap: 2px; }
-}
-
-.main-navigation-menu {
-    .main-navigation-link.root {
+// Hauptnavigation
+.nav-main {
+    .main-navigation-menu .main-navigation-link.root {
         letter-spacing: .02em;
-        font-size: 15px;
-        color: $ob-ink;
 
-        &.active,
-        &:hover { color: $ob-gold-dark; }
+        &.active { color: $ob-gold-dark; }
     }
 
     .navigation-flyout-link:hover { color: $ob-gold; }
-}
-
-// Aufklappbares Suchfeld (Overlay unter der Header-Zeile)
-.ob-search-row {
-    .header-search {
-        max-width: 760px;
-        margin: 0 auto;
-        padding: 0 clamp(16px, 4vw, 56px) 14px;
-    }
-    #searchCollapse { width: 100%; }
 }
 
 // ===========================================================================
