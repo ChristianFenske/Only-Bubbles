@@ -62,7 +62,7 @@ a:hover { color: $ob-gold; }
         align-items: center;
         justify-content: flex-end;
         gap: 26px;
-        padding: 9px 56px;
+        padding: 9px clamp(16px, 4vw, 56px);
 
         @media (max-width: 767px) {
             justify-content: center;
@@ -149,6 +149,21 @@ a:hover { color: $ob-gold; }
 // ===========================================================================
 // Header
 // ===========================================================================
+
+// Header & Hauptnavigation ueber die volle Bildschirmbreite (randlos, gepolstert)
+.header-main .container,
+.nav-main .container {
+    max-width: 100%;
+    padding-left: clamp(16px, 4vw, 56px);
+    padding-right: clamp(16px, 4vw, 56px);
+}
+
+// Produktbeschreibungs-Element ist im Layout per d-none versteckt -> einblenden,
+// damit unsere PDP-Sektionen an der richtigen Stelle (vor Cross-Selling) erscheinen.
+.cms-block-product-description-reviews.d-none {
+    display: block !important;
+}
+
 header.header-main {
     background: #fff;
     border-bottom: 1px solid $ob-border;
