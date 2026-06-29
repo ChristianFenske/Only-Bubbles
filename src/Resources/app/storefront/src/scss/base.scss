@@ -353,10 +353,12 @@ hr,
 // ===========================================================================
 .ob-logo {
     display: block;
-    height: 52px;
+    height: 72px;
     width: auto;
     max-width: 100%;
     overflow: visible;
+
+    @media (max-width: 767px) { height: 58px; }
 }
 .ob-logo .ob-b1,
 .ob-logo .ob-b2,
