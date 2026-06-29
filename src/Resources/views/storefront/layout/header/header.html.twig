@@ -27,10 +27,12 @@
                 {% sw_icon 'stack' %}
             </button>
         </div>
-        {# Desktop (lg+): Hauptnavigation #}
-        <div class="d-none d-lg-block ob-header-nav">
-            {% sw_include '@Storefront/storefront/layout/navbar/navbar.html.twig' with { header: header } %}
-        </div>
+        {# Desktop (lg+): Hauptnavigation (defensiv: nur wenn vorhanden) #}
+        {% if header.navigation %}
+            <div class="d-none d-lg-block ob-header-nav">
+                {% sw_include '@Storefront/storefront/layout/navbar/navbar.html.twig' with { header: header } %}
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
 
