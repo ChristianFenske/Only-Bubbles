@@ -21,3 +21,8 @@
 
     {{ parent() }}
 {% endblock %}
+
+{# Separate Navigations-Leiste entfernen – die Navigation wandert in die
+   Header-Zeile (siehe layout/header/header.html.twig). Das Mobile-Offcanvas-Menü
+   (base_offcanvas_navigation) bleibt erhalten. #}
+{% block base_navigation %}{% endblock %}
