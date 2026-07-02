@@ -243,6 +243,77 @@ header.header-main {
 }
 
 // ===========================================================================
+// Feinschliff
+// ===========================================================================
+
+// Header-Band kompakter + Logo exakt vertikal zentriert (gleicher Abstand o/u)
+.header-main {
+    .header-row { margin-top: 0; margin-bottom: 0; }
+
+    .header-logo-col {
+        margin: 0 !important;
+        padding: 6px 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .header-logo-main,
+    .header-logo-main-link { line-height: 0; margin: 0; }
+}
+
+// Action-Buttons einheitlich (Suche/Account/Wunschliste/Warenkorb = gleiche Kreise)
+header.header-main {
+    .header-cart-total { display: none; }   // Preis-Text neben Warenkorb ausblenden
+    .header-btn-title { display: none; }     // "Mein Konto"/"Warenkorb"/"Favoriten" ausblenden
+
+    .header-actions-col .icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        svg { width: 20px; height: 20px; }
+    }
+}
+
+// Mengen-Auswahl als Pille (Design)
+.product-detail-quantity-group,
+.quantity-selector-group {
+    border: 1.5px solid $ob-border;
+    border-radius: 30px;
+    background: #fff;
+    padding: 3px 6px;
+
+    .btn {
+        background: transparent;
+        border: none;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        color: $ob-ink;
+
+        &:hover { background: $ob-neutral-btn; }
+    }
+
+    .form-control,
+    input {
+        border: none;
+        background: transparent;
+        box-shadow: none;
+        text-align: center;
+        font-weight: 600;
+        color: $ob-ink;
+    }
+}
+
+// PDP-Sektionen (Zum Wein/Winzer/Steckbrief/Anker-Navi) über die volle Seitenbreite
+.ob-pdp {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    overflow-x: hidden;
+}
+
+// ===========================================================================
 // Produktkachel
 // ===========================================================================
 .product-box {
