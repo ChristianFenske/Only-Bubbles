@@ -170,26 +170,25 @@ header.header-main {
 
     .icon.icon-search { color: #fff; }
 
-    // Runde Action-Buttons (Suche, Account, Wunschliste, Warenkorb)
-    .header-actions .header-actions-col {
-        .btn,
-        button {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: $ob-neutral-btn;
-            border: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            color: $ob-ink;
-        }
+    // Runde Action-Buttons (Suche, Account, Wunschliste, Warenkorb) — alle gleich
+    .header-actions-col .btn {
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        border-radius: 50%;
+        background: $ob-neutral-btn;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: $ob-ink;
+
+        &:hover { background: darken($ob-neutral-btn, 4%); }
     }
 
-    // Such-Button hervorgehoben in Gold
+    // Such-Button hervorgehoben in Gold (staerkerer Selektor -> gewinnt)
     .header-actions-col .search-toggle .btn {
         background: $ob-gold;
-        border: none;
 
         .icon, svg { color: #fff; }
         &:hover { background: $ob-gold-dark; }
