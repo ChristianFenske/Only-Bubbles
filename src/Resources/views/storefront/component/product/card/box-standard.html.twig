@@ -1,0 +1,45 @@
+{# Only Bubbles — Produktkachel im Design (Bild, Hersteller, Name, Wein-Attribute,
+   Preis, Lagerstatus + Warenkorb). Datenlogik wie Fenskes, Optik = Gold-Design.
+   Bild + Wunschliste + Badges bleiben Standard (nur Info-Block ersetzt). #}
+{% sw_extends '@Storefront/storefront/component/product/card/box-standard.html.twig' %}
+
+{% block component_product_box_info %}
+    <div class="product-info ob-card-info">
+        {% block component_product_box_rating %}{% endblock %}
+
+        <div class="manufacturer-box">
+            {% if product.manufacturer %}
+                <span class="manufacturer-link">{{ product.manufacturer.translated.name }}</span>
+            {% endif %}
+        </div>
+
+        {% block component_product_box_name %}
+            <a href="{{ seoUrl('frontend.detail.page', routeArguments) }}"
+               title="{{ name }}"
+               class="product-name stretched-link">
+                {{ name }}
+            </a>
+        {% endblock %}
+
+        {% sw_include '@Storefront/storefront/component/product/product-attributes.html.twig' with {
+            product: product,
+            isListingCard: true
+        } only %}
+
+        {% block component_product_box_price %}
+            {% sw_include '@Storefront/storefront/component/product/card/price-unit.html.twig' %}
+        {% endblock %}
+
+        {% block component_product_box_action %}
+            <div class="ob-card-foot">
+                <span class="ob-card-stock">
+                    <span class="ob-stock-dot{% if not product.available %} is-out{% endif %}"></span>
+                    {{ product.available ? 'listing.stock.available'|trans : 'listing.stock.notAvailable'|trans }}
+                </span>
+                <div class="ob-card-buy">
+                    {% sw_include '@Storefront/storefront/component/product/card/action.html.twig' %}
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}
