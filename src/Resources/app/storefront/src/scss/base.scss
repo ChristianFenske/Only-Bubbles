@@ -521,15 +521,20 @@ hr,
 .footer-main {
     background: $ob-footer;
     color: rgba(243, 238, 227, .62);
+    padding-top: 40px;
 
     .footer-link,
     .footer-contact-link,
     a {
         color: rgba(243, 238, 227, .62);
+        text-decoration: none;
 
         &:hover { color: $ob-gold; }
     }
 
+    .footer-link-item { padding: 3px 0; }
+
+    .footer-column-headline,
     .footer-column .footer-headline,
     .footer-headline {
         color: #f3eee3;
@@ -538,9 +543,42 @@ hr,
         font-family: 'Jost', sans-serif;
         font-size: 13px;
         font-weight: 600;
+        margin-bottom: 14px;
     }
 
+    // Auf-/Zuklapp-Icons dezent
+    .footer-column-toggle { color: rgba(243, 238, 227, .55); }
+
     hr { border-color: rgba(243, 238, 227, .12); }
+
+    // Untere Leiste (Service-Menü, Copyright)
+    .footer-bottom {
+        border-top: 1px solid rgba(243, 238, 227, .12);
+        margin-top: 10px;
+        color: rgba(243, 238, 227, .45);
+
+        .footer-service-menu-list a { color: rgba(243, 238, 227, .55); &:hover { color: $ob-gold; } }
+    }
+
+    // Zahlungs-/Versand-Logos auf hellen Chips (bleiben lesbar auf dunklem Grund)
+    .footer-logo.is-payment,
+    .footer-img-links img,
+    .footer-logos img {
+        background: #fff;
+        border-radius: 6px;
+        padding: 6px 8px;
+    }
+
+    // Newsletter im Footer (falls vorhanden)
+    .footer-newsletter,
+    .cms-element-form {
+        .btn.btn-primary {
+            background: $ob-gold;
+            border-color: $ob-gold;
+            color: $ob-ink;
+            &:hover { background: $ob-gold-dark; color: #fff; }
+        }
+    }
 }
 
 // ===========================================================================
