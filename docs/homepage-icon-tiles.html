@@ -1,0 +1,79 @@
+<!--
+  Only Bubbles — Icon-Kacheln für die Landingpage (CMS-Element "HTML")
+  Fix: "clac" -> "calc" war der Anzeige-Bug. Layout jetzt via Flexbox + gap.
+  TODO: href-Links auf deine echten Kategorien setzen und ggf. die Bild-URLs
+        (img src) über den Medien-Manager austauschen (v. a. Alkoholfrei).
+-->
+<div class="ob-icon-tiles">
+    <a href="#ROSE-LINK" title="Rosé">
+        <img src="/media/4e/e0/23/1775658644/rosewein.png?ts=1775658644" alt="Rosé">
+        <span>Rosé</span>
+    </a>
+    <a href="#WEISS-LINK" title="Weiß">
+        <img src="/media/72/2c/e2/1775658644/weisswein.png?ts=1775658644" alt="Weiß">
+        <span>Weiß</span>
+    </a>
+    <a href="#ROT-LINK" title="Rot">
+        <img src="/media/08/1c/46/1775658644/rotwein.png?ts=1775658644" alt="Rot">
+        <span>Rot</span>
+    </a>
+    <a href="#ALKOHOLFREI-LINK" title="Alkoholfrei">
+        <img src="BILD-URL-ERSETZEN" alt="Alkoholfrei">
+        <span>Alkoholfrei</span>
+    </a>
+    <a href="#CHAMPAGNER-LINK" title="Champagner">
+        <img src="/media/02/a3/ef/1775658645/schaumwein.png?ts=1775658645" alt="Champagner">
+        <span>Champagner</span>
+    </a>
+    <a href="#CAVA-LINK" title="Cava">
+        <img src="/media/02/a3/ef/1775658645/schaumwein.png?ts=1775658645" alt="Cava">
+        <span>Cava</span>
+    </a>
+    <a href="#WINZERSEKT-LINK" title="Deutscher Winzersekt">
+        <img src="/media/02/a3/ef/1775658645/schaumwein.png?ts=1775658645" alt="Deutscher Winzersekt">
+        <span>Deutscher Winzersekt</span>
+    </a>
+</div>
+
+<style>
+    .ob-icon-tiles {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 18px;
+    }
+    .ob-icon-tiles a {
+        width: 150px;
+        aspect-ratio: 1;
+        background: #fff;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        text-decoration: none;
+        color: #26221d;
+        padding: 10px;
+        box-shadow: 0 8px 20px rgba(40, 34, 26, .10);
+        transition: transform .2s ease, box-shadow .2s ease, color .2s ease;
+    }
+    .ob-icon-tiles a:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 26px rgba(40, 34, 26, .15);
+        color: #b0883c;
+    }
+    .ob-icon-tiles img {
+        max-height: 34px;
+        margin-bottom: 10px;
+        object-fit: contain;
+    }
+    .ob-icon-tiles span {
+        font-family: 'Jost', sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.2;
+    }
+    @media (max-width: 1100px) { .ob-icon-tiles a { width: 120px; } }
+    @media (max-width: 575px)  { .ob-icon-tiles a { width: 44%; } }
+</style>
