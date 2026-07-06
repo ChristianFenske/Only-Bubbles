@@ -329,6 +329,55 @@ header.header-main {
     overflow-x: hidden;
 }
 
+// Landingpage-Icon-Kacheln (CSS im Theme, damit es die CMS-Bereinigung überlebt;
+// ins CMS-HTML-Element kommt nur <div class="ob-icon-tiles">…</div>)
+.ob-icon-tiles {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 18px;
+
+    a {
+        width: 150px;
+        aspect-ratio: 1;
+        background: #fff;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        text-decoration: none;
+        color: $ob-ink;
+        padding: 10px;
+        box-shadow: 0 8px 20px rgba(40, 34, 26, .10);
+        transition: transform .2s ease, box-shadow .2s ease, color .2s ease;
+
+        &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 26px rgba(40, 34, 26, .15);
+            color: $ob-gold;
+        }
+    }
+
+    img {
+        max-height: 34px;
+        width: auto;
+        margin-bottom: 10px;
+        object-fit: contain;
+    }
+
+    span {
+        font-family: 'Jost', sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.2;
+    }
+
+    @media (max-width: 1100px) { a { width: 120px; } }
+    @media (max-width: 575px)  { a { width: 44%; } }
+}
+
 // ===========================================================================
 // Produktkachel
 // ===========================================================================
