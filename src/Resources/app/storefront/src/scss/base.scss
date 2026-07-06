@@ -172,6 +172,7 @@ header.header-main {
 
     // Runde Action-Buttons (Suche, Account, Wunschliste, Warenkorb) — alle gleich
     .header-actions-col .btn {
+        position: relative;
         width: 44px;
         height: 44px;
         padding: 0;
@@ -181,9 +182,25 @@ header.header-main {
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        line-height: 1;
         color: $ob-ink;
 
         &:hover { background: darken($ob-neutral-btn, 4%); }
+
+        // Icon exakt mittig
+        .icon,
+        .header-cart-icon,
+        .header-wishlist-icon,
+        .header-search-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: auto;
+            height: auto;
+            margin: 0;
+        }
+
+        svg { width: 20px; height: 20px; display: block; }
     }
 
     // Such-Button hervorgehoben in Gold (staerkerer Selektor -> gewinnt)
