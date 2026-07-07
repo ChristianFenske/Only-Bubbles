@@ -82,8 +82,19 @@
             {{ imageElement }}
         {% endif %}
 
-        {% if image.ariaLabel %}
-            {% set parts = image.ariaLabel|split('|') %}
+        {# Beschriftung: aria-Label des Slides, sonst Medien-Titel/Alt als Fallback.
+           Format: „Titel | Untertitel" #}
+        {% set obLabel = image.ariaLabel|default('') %}
+        {% if obLabel is empty and image.media is defined and image.media %}
+            {% set obLabel = image.media.translated.title
+                ?? image.media.title
+                ?? image.media.translated.alt
+                ?? image.media.alt
+                ?? '' %}
+        {% endif %}
+
+        {% if obLabel is not empty %}
+            {% set parts = obLabel|split('|') %}
             {% set obTitle = parts[0]|trim %}
             {% set obSub   = parts[1] is defined ? parts[1]|trim : null %}
             <div class="image-title-box ob-slide-caption">

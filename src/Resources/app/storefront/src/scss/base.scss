@@ -1402,9 +1402,6 @@ hr,
 // Bild-Beschriftung (aria-Label) im Format:  Champagne | Grand Cru & Winzer
 // ===========================================================================
 .ob-style-slider {
-    // Slider soll die volle Sektionsbreite nutzen
-    > .cms-section-default { max-width: unset; }
-
     .base-slider { position: relative; }
 
     // Jede Kachel: abgerundet, Bild formatfüllend
