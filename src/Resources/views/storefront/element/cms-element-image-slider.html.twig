@@ -54,7 +54,7 @@
     } %}
 
     <div
-        class="base-slider image-slider{% if obStyle %} ob-style-slider-el{% endif %}"
+        class="base-slider image-slider{% if sliderConfig.navigationArrows.value == 'outside' %} has-nav-outside{% endif %}{% if sliderConfig.navigationDots.value == 'outside' %} has-dots-outside{% endif %}{% if obStyle %} ob-style-slider-el{% endif %}"
         data-base-slider="true"
         data-base-slider-options='{% if obStyle %}{{ obStyleOptions|json_encode }}{% else %}{{ defaultSliderOptions|json_encode }}{% endif %}'
         role="region"
