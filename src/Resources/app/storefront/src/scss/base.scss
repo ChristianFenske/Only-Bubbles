@@ -1299,3 +1299,90 @@ hr,
 @media (max-width: 767px) {
     .ob-sec-pad { padding-top: 48px; padding-bottom: 24px; }
 }
+
+// ===========================================================================
+// Hero-Slider — stylt den Standard-Shopware „Bild-Slider" zum OnlyBubbles-Hero.
+// Aktivierung: am Slider-BLOCK unter „CSS-Klasse" -> ob-hero-slider eintragen.
+// ===========================================================================
+.ob-hero-slider {
+    // randlos über die volle Fensterbreite
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+
+    .cms-element-image-slider,
+    .base-slider,
+    .image-slider,
+    .gallery-slider { position: relative; }
+
+    // Bilder formatfüllend, feste Hero-Höhe
+    .image-slider-image,
+    .image-slider-image-container img,
+    img.image-slider-image {
+        width: 100%;
+        height: clamp(360px, 56vh, 640px);
+        object-fit: cover;
+    }
+    .image-slider-image-container { height: 100%; }
+
+    // dezenter Verlauf unten (Lesbarkeit falls Text darüber liegt)
+    .image-slider-item,
+    .image-slider-image-container { position: relative; }
+    .image-slider-image-container::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(38, 34, 29, 0) 55%, rgba(38, 34, 29, .45) 100%);
+        pointer-events: none;
+    }
+
+    // Navigations-Punkte -> goldene Kreise
+    .base-slider-controls,
+    .tns-nav {
+        position: absolute;
+        left: 0; right: 0;
+        bottom: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        z-index: 3;
+
+        button {
+            width: 9px; height: 9px;
+            padding: 0;
+            border: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .55);
+            transition: background .2s ease, transform .2s ease;
+
+            &.tns-nav-active,
+            &.active { background: $ob-gold; transform: scale(1.25); }
+        }
+    }
+
+    // Pfeile -> runde, halbtransparente Buttons mit Goldrand
+    .base-slider-arrow,
+    [data-controls] button,
+    .tns-controls button {
+        width: 46px; height: 46px;
+        border-radius: 50%;
+        background: rgba(38, 34, 29, .35);
+        border: 1px solid rgba(255, 255, 255, .55);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 3;
+        transition: background .2s ease, border-color .2s ease;
+
+        &:hover { background: $ob-gold; border-color: $ob-gold; }
+        svg, .icon { color: #fff; width: 18px; height: 18px; }
+    }
+
+    @media (max-width: 767px) {
+        .image-slider-image,
+        .image-slider-image-container img { height: clamp(240px, 42vh, 380px); }
+        .base-slider-arrow,
+        .tns-controls button { width: 38px; height: 38px; }
+    }
+}
