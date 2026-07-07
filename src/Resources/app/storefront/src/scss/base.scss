@@ -1320,7 +1320,7 @@ hr,
     .image-slider-image-container img,
     img.image-slider-image {
         width: 100%;
-        height: clamp(360px, 56vh, 640px);
+        height: 560px;
         object-fit: cover;
     }
     .image-slider-image-container { height: 100%; }
@@ -1379,9 +1379,13 @@ hr,
         svg, .icon { color: #fff; width: 18px; height: 18px; }
     }
 
+    @media (max-width: 1199px) {
+        .image-slider-image,
+        .image-slider-image-container img { height: 460px; }
+    }
     @media (max-width: 767px) {
         .image-slider-image,
-        .image-slider-image-container img { height: clamp(240px, 42vh, 380px); }
+        .image-slider-image-container img { height: 320px; }
         .base-slider-arrow,
         .tns-controls button { width: 38px; height: 38px; }
     }
