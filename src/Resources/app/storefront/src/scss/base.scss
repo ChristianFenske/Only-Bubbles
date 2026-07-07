@@ -1244,7 +1244,9 @@ hr,
     justify-content: center;
     flex-wrap: wrap;
     gap: 40px 30px;
-    padding: 10px 0;
+    padding: 56px 0;
+
+    @media (max-width: 767px) { padding: 36px 0; }
 
     a {
         display: flex;
