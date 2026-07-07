@@ -1311,26 +1311,26 @@ hr,
     width: 100vw;
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
+    overflow: hidden;
 
-    .cms-element-image-slider,
     .base-slider,
-    .image-slider,
-    .gallery-slider { position: relative; }
+    .image-slider { position: relative; }
 
-    // Bilder formatfüllend, feste Hero-Höhe
-    .image-slider-image,
-    .image-slider-image-container img,
-    img.image-slider-image {
+    // Bilder formatfüllend, feste Hero-Höhe (echte Core-Klassen)
+    .image-slider-container,
+    .image-slider-item,
+    .tns-item { height: 560px; }
+
+    .image-slider-image {
         width: 100%;
         height: 560px;
         object-fit: cover;
+        display: block;
     }
-    .image-slider-image-container { height: 100%; }
 
     // dezenter Verlauf unten (Lesbarkeit falls Text darüber liegt)
-    .image-slider-item,
-    .image-slider-image-container { position: relative; }
-    .image-slider-image-container::after {
+    .image-slider-container { position: relative; }
+    .image-slider-container::after {
         content: '';
         position: absolute;
         inset: 0;
@@ -1339,7 +1339,6 @@ hr,
     }
 
     // Navigations-Punkte -> goldene Kreise
-    .base-slider-controls,
     .tns-nav {
         position: absolute;
         left: 0; right: 0;
@@ -1354,22 +1353,22 @@ hr,
             padding: 0;
             border: 0;
             border-radius: 50%;
-            background: rgba(255, 255, 255, .55);
+            background: rgba(255, 255, 255, .6);
             transition: background .2s ease, transform .2s ease;
 
-            &.tns-nav-active,
-            &.active { background: $ob-gold; transform: scale(1.25); }
+            &.tns-nav-active { background: $ob-gold; transform: scale(1.3); }
         }
     }
 
-    // Pfeile -> runde, halbtransparente Buttons mit Goldrand
-    .base-slider-arrow,
-    [data-controls] button,
-    .tns-controls button {
+    // Pfeile -> runde, halbtransparente Buttons mit Goldrand (echte Core-Klassen)
+    .base-slider-controls-prev,
+    .base-slider-controls-next,
+    .image-slider-controls-prev,
+    .image-slider-controls-next {
         width: 46px; height: 46px;
         border-radius: 50%;
         background: rgba(38, 34, 29, .35);
-        border: 1px solid rgba(255, 255, 255, .55);
+        border: 1px solid rgba(255, 255, 255, .6);
         color: #fff;
         display: flex;
         align-items: center;
@@ -1382,13 +1381,17 @@ hr,
     }
 
     @media (max-width: 1199px) {
-        .image-slider-image,
-        .image-slider-image-container img { height: 460px; }
+        .image-slider-container,
+        .image-slider-item,
+        .tns-item,
+        .image-slider-image { height: 460px; }
     }
     @media (max-width: 767px) {
-        .image-slider-image,
-        .image-slider-image-container img { height: 320px; }
-        .base-slider-arrow,
-        .tns-controls button { width: 38px; height: 38px; }
+        .image-slider-container,
+        .image-slider-item,
+        .tns-item,
+        .image-slider-image { height: 320px; }
+        .base-slider-controls-prev,
+        .base-slider-controls-next { width: 38px; height: 38px; }
     }
 }
