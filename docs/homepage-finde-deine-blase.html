@@ -1,0 +1,52 @@
+<!--
+  Only Bubbles — "Finde deine Blase" (Stöbern nach Stil / Stil-Kacheln)
+  =====================================================================
+  Ins CMS-Element "HTML" kommt NUR das HTML unten. CSS + Hover + Verlauf +
+  der "Alle Kategorien →"-Pfeil liegen im THEME (base.scss). Voraussetzung:
+  OnlyBubblesTheme aktualisiert + theme:compile ausgeführt.
+
+  TODO:
+    - href-Links auf deine echten Kategorien setzen.
+    - Bild-URLs (img src) aus dem Medien-Manager einsetzen
+      (Querformat, mind. ~600×720 px, wird formatfüllend beschnitten).
+-->
+<section class="ob-wrap ob-sec-pad">
+    <div class="ob-section-bar">
+        <div>
+            <span class="ob-eyebrow">Stöbern nach Stil</span>
+            <h2 class="ob-display">Finde deine Blase</h2>
+        </div>
+        <a class="ob-more-link" href="#ALLE-KATEGORIEN">Alle Kategorien</a>
+    </div>
+
+    <div class="ob-style-tiles">
+        <a class="ob-style-tile" href="#CHAMPAGNE">
+            <img src="BILD-URL-CHAMPAGNE" alt="Champagne">
+            <div class="ob-style-tile-text">
+                <div class="ob-style-tile-title">Champagne</div>
+                <div class="ob-style-tile-sub">Grand Cru &amp; Winzer</div>
+            </div>
+        </a>
+        <a class="ob-style-tile" href="#CREMANT">
+            <img src="BILD-URL-CREMANT" alt="Crémant">
+            <div class="ob-style-tile-text">
+                <div class="ob-style-tile-title">Crémant</div>
+                <div class="ob-style-tile-sub">Lese von Hand</div>
+            </div>
+        </a>
+        <a class="ob-style-tile" href="#PROSECCO">
+            <img src="BILD-URL-PROSECCO" alt="Prosecco">
+            <div class="ob-style-tile-text">
+                <div class="ob-style-tile-title">Prosecco</div>
+                <div class="ob-style-tile-sub">Zeit zu feiern</div>
+            </div>
+        </a>
+        <a class="ob-style-tile" href="#CAVA-ROSE">
+            <img src="BILD-URL-CAVA-ROSE" alt="Cava & Rosé">
+            <div class="ob-style-tile-text">
+                <div class="ob-style-tile-title">Cava &amp; Rosé</div>
+                <div class="ob-style-tile-sub">Flaschengärung</div>
+            </div>
+        </a>
+    </div>
+</section>
