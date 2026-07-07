@@ -1395,3 +1395,100 @@ hr,
         .base-slider-controls-next { width: 38px; height: 38px; }
     }
 }
+
+// ===========================================================================
+// „Finde deine Blase"-Slider — Bild-Slider im Kachel-Look, mehrere sliden.
+// Aktivierung: an der SECTION unter „CSS-Klasse" -> ob-style-slider eintragen.
+// Bild-Beschriftung (aria-Label) im Format:  Champagne | Grand Cru & Winzer
+// ===========================================================================
+.ob-style-slider {
+    // Slider soll die volle Sektionsbreite nutzen
+    > .cms-section-default { max-width: unset; }
+
+    .base-slider { position: relative; }
+
+    // Jede Kachel: abgerundet, Bild formatfüllend
+    .image-slider-item-container {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .image-slider-container,
+    .image-slider-link,
+    .image-slider-item-container { height: 100%; }
+
+    .image-slider-image {
+        width: 100%;
+        height: 360px;
+        object-fit: cover;
+        display: block;
+        transition: transform .45s ease;
+    }
+
+    .image-slider-item-container:hover .image-slider-image { transform: scale(1.05); }
+
+    // dunkler Verlauf unten
+    .image-slider-item-container::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(38, 34, 29, 0) 45%, rgba(38, 34, 29, .72) 100%);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    // Titel/Untertitel-Overlay
+    .image-title-box.ob-slide-caption {
+        position: absolute;
+        left: 22px;
+        bottom: 20px;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        color: #fff;
+        padding: 0;
+    }
+
+    .ob-slide-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-weight: 600;
+        font-size: 26px;
+        line-height: 1.1;
+        color: #fff;
+    }
+
+    .ob-slide-sub {
+        font-size: 13px;
+        color: rgba(255, 255, 255, .82);
+        margin-top: 2px;
+    }
+
+    // Pfeile -> weiße runde Buttons, mittig an den Seitenkanten
+    .base-slider-controls-prev,
+    .base-slider-controls-next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 44px; height: 44px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, .92);
+        border: 1px solid $ob-border;
+        color: $ob-ink;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 4;
+        box-shadow: 0 4px 14px rgba(38, 34, 29, .18);
+        transition: background .2s ease, border-color .2s ease, color .2s ease;
+
+        &:hover { background: $ob-gold; border-color: $ob-gold; color: #fff; }
+        .icon, svg { width: 16px; height: 16px; }
+    }
+    .base-slider-controls-prev { left: 10px; right: auto; }
+    .base-slider-controls-next { right: 10px; left: auto; }
+
+    @media (max-width: 767px) {
+        .image-slider-image { height: 300px; }
+    }
+}

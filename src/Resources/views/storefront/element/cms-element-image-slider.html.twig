@@ -1,0 +1,95 @@
+{# Only Bubbles — Bild-Slider.
+   Standard bleibt unangetastet. Bekommt die SECTION die CSS-Klasse
+   „ob-style-slider", wird der Slider zum „Finde deine Blase"-Kachel-Slider:
+   mehrere Bilder nebeneinander, scrollbar, mit Titel/Untertitel-Overlay.
+   Titel/Untertitel kommen aus dem Bild-Feld „Beschriftung"/aria-Label
+   im Format:  Champagne | Grand Cru & Winzer
+#}
+{% sw_extends '@Storefront/storefront/element/cms-element-image-slider.html.twig' %}
+
+{% block element_image_slider_alignment %}
+    {% set obStyle = sectionClasses is defined and sectionClasses is iterable and 'ob-style-slider' in sectionClasses %}
+
+    {% if config.verticalAlign.value %}
+        <div class="cms-element-alignment{% if sliderConfig.verticalAlign.value == 'center' %} align-self-center{% elseif sliderConfig.verticalAlign.value == 'flex-end' %} align-self-end{% else %} align-self-start{% endif %}">
+    {% endif %}
+
+    {% set defaultSliderOptions = {
+        slider: {
+            controls: sliderConfig.navigationArrows.value in visibleValues,
+            nav: sliderConfig.navigationDots.value in visibleValues,
+            navPosition: 'bottom',
+            mouseDrag: true,
+            autoplay: sliderConfig.autoSlide.value,
+            autoplayButtonOutput: false,
+            autoplayTimeout: sliderConfig.autoplayTimeout.value,
+            speed: sliderConfig.speed.value,
+            ariaLive: sliderConfig.autoSlide.value ? false : true,
+            autoHeight: (sliderConfig.displayMode.value == 'standard') ? true : false
+        }
+    } %}
+
+    {% set obStyleOptions = {
+        slider: {
+            items: 1.15,
+            gutter: 22,
+            responsive: {
+                sm: { items: 1.6 },
+                md: { items: 2.4 },
+                lg: { items: 3.2 },
+                xl: { items: 4 },
+                xxl: { items: 4 }
+            },
+            controls: true,
+            nav: false,
+            navPosition: 'bottom',
+            mouseDrag: true,
+            autoplay: sliderConfig.autoSlide.value,
+            autoplayButtonOutput: false,
+            autoplayTimeout: sliderConfig.autoplayTimeout.value,
+            speed: sliderConfig.speed.value,
+            ariaLive: sliderConfig.autoSlide.value ? false : true,
+            autoHeight: false
+        }
+    } %}
+
+    <div
+        class="base-slider image-slider{% if obStyle %} ob-style-slider-el{% endif %}"
+        data-base-slider="true"
+        data-base-slider-options='{% if obStyle %}{{ obStyleOptions|json_encode }}{% else %}{{ defaultSliderOptions|json_encode }}{% endif %}'
+        role="region"
+        aria-label="{{ 'component.cms.imageGallery.ariaLabel'|trans({ '%total%': element.data.sliderItems|length })|sw_sanitize }}"
+        tabindex="0"
+    >
+        {{ block('element_image_slider_inner') }}
+    </div>
+
+    {% if config.verticalAlign.value %}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block element_image_slider_inner_item %}
+    <div class="image-slider-item-container">
+        {% if image.url %}
+            <a href="{{ image.url }}"
+               {% if image.ariaLabel %}aria-label="{{ image.ariaLabel }}"{% endif %}
+               class="image-slider-link"
+               {% if image.newTab %}target="_blank" rel="noopener"{% endif %}>
+                {{ imageElement }}
+            </a>
+        {% else %}
+            {{ imageElement }}
+        {% endif %}
+
+        {% if image.ariaLabel %}
+            {% set parts = image.ariaLabel|split('|') %}
+            {% set obTitle = parts[0]|trim %}
+            {% set obSub   = parts[1] is defined ? parts[1]|trim : null %}
+            <div class="image-title-box ob-slide-caption">
+                {% if obTitle %}<span class="ob-slide-title">{{ obTitle }}</span>{% endif %}
+                {% if obSub %}<span class="ob-slide-sub">{{ obSub }}</span>{% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
