@@ -1,0 +1,157 @@
+{% sw_extends '@Framework/documents/base.html.twig' %}
+
+{% block document_sender_address %}
+	<table>
+		{% for part in addressParts %}
+			{% if loop.first and config.companyName %}
+				<tr>
+					<td class="bold">{{ part|sw_sanitize(null, true) }}</td>
+				</tr>
+			{% elseif config.displayCompanyAddress %}
+				<tr>
+					<td>{{ part|sw_sanitize(null, true) }}</td>
+				</tr>
+			{% endif %}
+		{% endfor %}
+
+
+		{% if config.companyPhone %}
+			{% block document_side_info_phone_number %}
+				<tr>
+					<td>
+						{{ 'document.telLabel'|trans|sw_sanitize(null, true) }}: {{ 'document.telText'|trans|sw_sanitize(null, true) }}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						{{ 'document.faxLabel'|trans|sw_sanitize(null, true) }}: {{ 'document.faxText'|trans|sw_sanitize(null, true) }}
+					</td>
+				</tr>
+			{% endblock %}
+		{% endif %}
+
+		{% if config.companyEmail %}
+			{% block document_side_info_email %}
+				<tr>
+					<td>{{ config.companyEmail|sw_sanitize(null, true) }}</td>
+				</tr>
+			{% endblock %}
+		{% endif %}
+
+		{% if config.companyUrl %}
+			{% block document_side_company_url %}
+				<tr>
+					<td>{{ config.companyUrl|sw_sanitize(null, true) }}</td>
+				</tr>
+			{% endblock %}
+		{% endif %}
+	</table><br>
+{% endblock %}
+
+{% block document_side_info %}
+	<table>
+		{% block document_side_info_contents %}
+			{% block document_side_info_customer_number %}
+				<tr>
+					<td>
+						{{ 'document.customerNumber'|trans({'%customerNumber%': customer.customerNumber})|sw_sanitize(null, true) }}
+					</td>
+				</tr>
+			{% endblock %}
+
+			{% block document_side_info_order_number %}
+				<tr>
+					<td>
+						{{ 'document.orderNumber'|trans({'%orderNumber%': order.orderNumber })|sw_sanitize(null, true) }}
+					</td>
+				</tr>
+			{% endblock %}
+
+			{% block document_side_info_order_date %}
+				<tr>
+					<td>
+						{{ 'document.orderDate'|trans({'%orderDate%': order.orderDateTime|format_date('medium', locale=locale)})|sw_sanitize(null, true) }}
+					</td>
+				</tr>
+			{% endblock %}
+
+			{% block document_side_info_date %}
+				<tr>
+					<td>
+						{{ 'document.date'|trans({'%date%': config.documentDate|format_date('medium', locale=locale)})|sw_sanitize(null, true) }}
+					</td>
+				</tr>
+			{% endblock %}
+		{% endblock %}
+	</table>
+{% endblock %}
+
+{% block document_line_item_table_head_position %}
+	{% if config.displayLineItemPosition %}
+		<th class="line-item-product-position">{{ 'document.lineItems.header.position'|trans|sw_sanitize(null, true) }}</th>
+	{% endif %}
+{% endblock %}
+
+{% block document_line_item_table_row_position %}
+	{% if config.displayLineItemPosition %}
+		<td class="line-item-product-position">{% block document_line_item_table_column_position %}{{ prefix ~ position }}{% endblock %}</td>
+	{% endif %}
+{% endblock %}
+
+{% block document_payment_shipping_service_date_notice %}
+{% endblock %}
+
+{% block document_footer %}
+	{% block document_footer_first_column %}
+		<ul>
+			{% block document_footer_bank_account %}
+			{% endblock %}
+			{% block document_footer_bank_name %}
+				{% if config.bankName %}<li>{{ config.bankName|sw_sanitize(null, true) }}</li>{% endif %}
+			{% endblock %}
+			<li>{{ 'document.kontoinhaberTitle'|trans|sw_sanitize(null, true) }}: {{ 'document.kontoinhaberName'|trans|sw_sanitize(null, true) }}</li>
+			{% block document_footer_bank_iban %}
+				{% if config.bankIban %}<li>{{ 'document.bankIban'|trans({'%bankIban%': config.bankIban})|sw_sanitize(null, true) }}</li>{% endif %}
+			{% endblock %}
+			{% block document_footer_bank_bic %}
+				{% if config.bankBic %}<li>{{ 'document.bankBic'|trans({'%bankBic%': config.bankBic})|sw_sanitize(null, true) }}</li>{% endif %}
+			{% endblock %}
+		</ul>		
+	{% endblock %}
+
+	{% block document_footer_second_column %}
+		<ul>
+			{% block document_footer_company_name %}
+			{% endblock %}
+			<li>{{ 'document.agbText'|trans|sw_sanitize(null, true) }}</li>
+			{% block document_footer_tax_number %}
+				{% if config.taxNumber %}<li>{{ 'document.taxNumber'|trans({'%taxNumber%': config.taxNumber})|sw_sanitize(null, true) }}</li>{% endif %}
+			{% endblock %}
+			{% block document_footer_vat_id %}
+				{% if config.vatId %}<li>{{ 'document.vatId'|trans({'%vatId%': config.vatId})|sw_sanitize(null, true) }}</li>{% endif %}
+			{% endblock %}
+			{% block document_footer_tax_office %}
+			{% endblock %}
+			<li>{{ 'document.deOekoText'|trans|sw_sanitize(null, true) }}</li>
+		</ul>
+	{% endblock %}
+
+	{% block document_footer_third_column %}
+		<ul>
+			<li>{{ 'document.telLabel'|trans|sw_sanitize(null, true) }}: {{ 'document.telText'|trans|sw_sanitize(null, true) }}</li>
+			<li>{{ 'document.faxLabel'|trans|sw_sanitize(null, true) }}: {{ 'document.faxText'|trans|sw_sanitize(null, true) }}</li>
+			<li>{{ 'document.internetLabel'|trans|sw_sanitize(null, true) }}: <a href="{{ 'document.internetText'|trans|sw_sanitize(null, true) }}">{{ 'document.internetText'|trans|sw_sanitize(null, true) }}</a></li>
+			<li>{{ 'document.emailLabel'|trans|sw_sanitize(null, true) }}: <a href="mailto:{{ 'document.emailText'|trans|sw_sanitize(null, true) }}">{{ 'document.emailText'|trans|sw_sanitize(null, true) }}</a></li>
+		</ul>
+	{% endblock %}
+
+	{% if config.displayPageCount %}
+		<div class="page-count">
+			{% block document_page_count %}
+			{% endblock %}
+		</div>
+	{% endif %}
+{% endblock %}
+
+{% block document_footer_fourth_column %}
+{% endblock %}

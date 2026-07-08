@@ -1,45 +1,86 @@
-{# Only Bubbles — Produktkachel im Design (Bild, Hersteller, Name, Wein-Attribute,
-   Preis, Lagerstatus + Warenkorb). Datenlogik wie Fenskes, Optik = Gold-Design.
-   Bild + Wunschliste + Badges bleiben Standard (nur Info-Block ersetzt). #}
 {% sw_extends '@Storefront/storefront/component/product/card/box-standard.html.twig' %}
 
+{% block component_product_box_image %}
+	<a class="image-link-box" href="{{ seoUrl('frontend.detail.page', routeArguments) }}" title="{{ name }}">
+		{{ parent() }}
+	</a>
+
+    <div class="product-box-stock-status">
+        {% if product.available %}
+            <span class="stock-available">
+                {{ 'listing.stock.available'|trans }}
+            </span>
+        {% else %}
+            <span class="stock-unavailable">
+                {{ 'listing.stock.notAvailable'|trans }}
+            </span>
+        {% endif %}
+    </div>
+{% endblock %}
+
 {% block component_product_box_info %}
-    <div class="product-info ob-card-info">
+    {# Wichtig: product auf Slot-Produkt mappen #}
+    {% set product = element.data.product ?? product %}
+
+    <div class="product-info">
         {% block component_product_box_rating %}{% endblock %}
 
-        <div class="manufacturer-box">
-            {% if product.manufacturer %}
-                <span class="manufacturer-link">{{ product.manufacturer.translated.name }}</span>
-            {% endif %}
-        </div>
+		<div class="manufacturer-box">
+			{% if product.manufacturer %}
+				<a href="{{ seoUrl('frontend.biloba_product_manufacturer', {
+					productManufacturerId: product.manufacturer.id
+				}) }}" class="manufacturer-link">
+					{{ product.manufacturer.translated.name }}
+				</a>
+			{% endif %}
+		</div>
 
         {% block component_product_box_name %}
-            <a href="{{ seoUrl('frontend.detail.page', routeArguments) }}"
-               title="{{ name }}"
-               class="product-name stretched-link">
-                {{ name }}
-            </a>
+            {% if headlineLevel is not empty %}
+                {{ "<h#{headlineLevel} class=\"#{headlineClasses}\">"|raw }}
+                    <a href="{{ seoUrl('frontend.detail.page', routeArguments) }}"
+                       title="{{ name }}"
+                       class="product-name stretched-link">
+                        {{ name }}
+                    </a>
+                {{ "</h#{headlineLevel}>"|raw }}
+            {% else %}
+                <a href="{{ seoUrl('frontend.detail.page', routeArguments) }}"
+                   title="{{ name }}"
+                   class="product-name stretched-link">
+                    {{ name }}
+                </a>
+            {% endif %}
         {% endblock %}
 
-        {% sw_include '@Storefront/storefront/component/product/product-attributes.html.twig' with {
-            product: product,
-            isListingCard: true
-        } only %}
+        {% block component_product_box_variant_characteristics %}{% endblock %}
+
+		{% block component_product_box_description %}
+			<p class="product-description mb-0">
+				{# {{ product.translated.description|striptags|raw }} #}
+				{% set description = product.translated.description|striptags|raw %}
+
+				{% if description|length > 750 %}
+					{{ description|slice(0, 750) }}
+					<a href="{{ path('frontend.detail.page', { productId: product.id }) }}#product-section" class="more-link">… mehr anzeigen</a>
+				{% else %}
+					{{ description }}
+				{% endif %}
+			</p>
+		{% endblock %}		
+
+		{% sw_include '@Storefront/storefront/component/product/product-attributes.html.twig' with {
+			product: product,
+			isListingCard: true,
+			routeArguments: routeArguments
+		} only %}
 
         {% block component_product_box_price %}
             {% sw_include '@Storefront/storefront/component/product/card/price-unit.html.twig' %}
         {% endblock %}
 
         {% block component_product_box_action %}
-            <div class="ob-card-foot">
-                <span class="ob-card-stock">
-                    <span class="ob-stock-dot{% if not product.available %} is-out{% endif %}"></span>
-                    {{ product.available ? 'listing.stock.available'|trans : 'listing.stock.notAvailable'|trans }}
-                </span>
-                <div class="ob-card-buy">
-                    {% sw_include '@Storefront/storefront/component/product/card/action.html.twig' %}
-                </div>
-            </div>
+            {% sw_include '@Storefront/storefront/component/product/card/action.html.twig' %}
         {% endblock %}
     </div>
 {% endblock %}

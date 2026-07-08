@@ -1,0 +1,32 @@
+<div class="bar-links">
+	<div class="container">
+		<div class="services-links"></div>
+		<div class="blog-link">
+			{% set blogUrl = 'header.topBarBlogLink'|trans %}
+			<a href="{{ blogUrl == 'header.topBarBlogLink' ? 'https://www.weine-feinkost.de/unterwegs/' : blogUrl }}" title="BLOG" target="_blank">
+				<span class="icon-edit"></span>
+				<span class="blog-label">BLOG</span>
+				{% set blogText = 'header.topBarBlogText'|trans %}
+				<span class="is--hidden-phone">{{ blogText == 'header.topBarBlogText' ? ': Weine &amp; Feinkost - Unterwegs' : blogText }}</span>
+			</a>
+		</div>
+		<div class="some-links">
+			{% set facebookUrl = 'some.facebookUrl'|trans %}
+			{% set xUrl = 'some.xUrl'|trans %}
+			{% set instagramUrl = 'some.instagramUrl'|trans %}
+			{% set linkedinUrl = 'some.linkedinUrl'|trans %}
+			<a class="btn btn-primary" href="{{ facebookUrl == 'some.facebookUrl' ? 'https://www.facebook.com/WeineFeinkostChristianFenske' : facebookUrl }}" title="Facebook" target="_blank">
+				<span class="icon-facebook"></span>
+			</a>
+			<a class="btn btn-primary" href="{{ xUrl == 'some.xUrl' ? 'https://x.com/WeineFeinkost' : xUrl }}" title="X" target="_blank">
+				<span class="icon-x"></span>
+			</a>
+			<a class="btn btn-primary" href="{{ instagramUrl == 'some.instagramUrl' ? 'https://www.instagram.com/weine_und_feinkost/' : instagramUrl }}" title="Instagram" target="_blank">
+				<span class="icon-instagram"></span>
+			</a>
+			<a class="btn btn-primary" href="{{ linkedinUrl == 'some.linkedinUrl' ? 'https://www.linkedin.com/uas/login?session_redirect=%2Fcompany%2F105995195' : linkedinUrl }}" title="LinkedIn" target="_blank">
+				<span class="icon-linkedin"></span>
+			</a>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'Roboto Serif';
+    src: url('RobotoSerif-Regular.woff2') format('woff2'),
+        url('RobotoSerif-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto Serif';
+    src: url('RobotoSerif-Medium.woff2') format('woff2'),
+        url('RobotoSerif-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto Serif';
+    src: url('RobotoSerif-Light.woff2') format('woff2'),
+        url('RobotoSerif-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+

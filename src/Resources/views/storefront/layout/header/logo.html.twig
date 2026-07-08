@@ -1,7 +1,5 @@
-{# Only Bubbles — animiertes Header-Logo.
-   Das SVG wird INLINE ausgegeben (nicht als <img>), damit Shopware es nicht
-   "säubert" und die Bläschen-Animation erhalten bleibt. Die Bewegung kommt aus
-   base.scss (@keyframes ob-float-*). Schrift erbt Cormorant/Jost vom Theme. #}
+{# Only Bubbles — animiertes Header-Logo (inline-SVG, damit die Bläschen-
+   Animation aus base.scss erhalten bleibt). Nur für den Only-Bubbles-Channel. #}
 {% sw_extends '@Storefront/storefront/layout/header/logo.html.twig' %}
 
 {% block layout_header_logo_link %}
@@ -14,8 +12,8 @@
             <circle class="ob-b2" cx="11" cy="33" r="9" fill="#b0883c"></circle>
             <circle class="ob-b3" cx="33" cy="41" r="5" fill="none" stroke="#b0883c" stroke-width="2"></circle>
             <circle class="ob-b4" cx="22" cy="58" r="13" fill="#9a7531"></circle>
-            <text x="62" y="45" font-family="'Cormorant Garamond', Georgia, serif" font-size="30" font-weight="600" letter-spacing="4" fill="#26221d">ONLY BUBBLES</text>
-            <text x="63" y="66" font-family="'Jost', Arial, sans-serif" font-size="9" letter-spacing="3" fill="#897e6e">DIE WELT DER SCHAUMWEINE</text>
+            <text x="62" y="45" font-family="'Roboto Serif', Georgia, serif" font-size="30" font-weight="600" letter-spacing="4" fill="#26221d">ONLY BUBBLES</text>
+            <text x="63" y="66" font-family="Arial, sans-serif" font-size="9" letter-spacing="3" fill="#897e6e">DIE WELT DER SCHAUMWEINE</text>
         </svg>
     </a>
 {% endblock %}

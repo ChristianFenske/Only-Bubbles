@@ -1,28 +1,7 @@
-{# Only Bubbles — Topbar VOLLE BREITE oberhalb des Headers.
-   Wird vor das <header> gesetzt (ausserhalb des .container), damit der dunkle
-   Balken randlos ueber den ganzen Bildschirm laeuft. Die volle Header-Breite
-   selbst kommt aus base.scss (.header-main .container / .nav-main .container). #}
 {% sw_extends '@Storefront/storefront/layout/header.html.twig' %}
 
-{% block base_header %}
-    <div class="ob-topbar">
-        <div class="ob-topbar-inner">
-            <span class="ob-topbar-item ob-topbar-accent">
-                <svg class="ob-topbar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                     stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6z"></path>
-                </svg>
-                {{ 'onlyBubbles.topbar.shipping'|trans|default('Kostenloser Versand ab 12 Flaschen') }}
-            </span>
-            <span class="ob-topbar-sep" aria-hidden="true"></span>
-            <span class="ob-topbar-item">{{ 'onlyBubbles.topbar.claim'|trans|default('Drink Better Bubbles') }}</span>
-        </div>
-    </div>
+{% block base_header_inner %}
+	{% sw_include '@Storefront/storefront/layout/barLinks.html.twig' %}
 
-    {{ parent() }}
+	{{ parent() }}
 {% endblock %}
-
-{# Separate Navigations-Leiste entfernen – die Navigation wandert in die
-   Header-Zeile (siehe layout/header/header.html.twig). Das Mobile-Offcanvas-Menü
-   (base_offcanvas_navigation) bleibt erhalten. #}
-{% block base_navigation %}{% endblock %}

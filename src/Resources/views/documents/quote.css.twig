@@ -1,0 +1,68 @@
+{% sw_extends '@PickwareQuotesBundle/documents/quote.css.twig' %}
+
+<style type="text/css">
+
+{# right side header #}
+.right-header {
+	position: absolute;
+	margin-top: 0;
+	top: 0;
+	right: 0;
+}
+.right-header > div {
+    margin-top: 15px;
+}
+
+{# title #}
+.document-title-container {
+    margin: 150px 0 20px 0 !important;
+}
+
+main {
+    float: unset !important;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 20px !important;
+}
+
+.price-note {
+	font-size: 16px;
+}
+
+{# document comment #}
+.document-comment {
+    margin: 0 0 20px 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+{# price summary #}
+.price-summary {
+    margin-top: 20px;
+    float: right;
+}
+
+.price-summary-table {
+    border-spacing: 0;
+}
+
+.price-summary-table td {
+    padding: 2px 0;
+}
+
+.price-summary-table td:first-child {
+    padding-right: 30px;
+}
+
+.price-total td {
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    padding-top: 5px;
+}
+
+{# revert shopware styling #}
+footer {
+    bottom: 10px !important;
+}
+</style>

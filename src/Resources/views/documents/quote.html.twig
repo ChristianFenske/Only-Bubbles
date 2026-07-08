@@ -1,0 +1,356 @@
+{% sw_extends '@Framework/documents/base.html.twig' %}
+
+{% block document_title_tag %}
+    {{ 'pickware-quotes.quote-document.title' | trans | sw_sanitize(null, true) }} {{ quote.number }}
+{% endblock %}
+
+{% block document_sender_address %}
+{% endblock %}
+
+
+{% block document_body %}
+    {{ block('logo') }}
+
+    {# left side document header (customer address) #}
+    <div class="left-header">
+        <span style="font-size: 10px;">
+			{% set addressParts = config.getAddressParts() %}
+			{% if addressParts is not empty %}
+				{{ addressParts | join(' - ') | sw_sanitize(null, true) }}<br>
+			{% elseif config.companyAddress is defined and config.companyAddress is not empty %}
+				{{ config.companyAddress | sw_sanitize(null, true) }}<br>
+			{% endif %}
+			<br>
+		</span>
+
+        {# Use live customer data if available, fall back to snapshot if customer was deleted #}
+        {% if quote.customer is not null %}
+            {% set customerCompany = quote.customer.company %}
+            {% set customerFirstName = quote.customer.firstName %}
+            {% set customerLastName = quote.customer.lastName %}
+        {% else %}
+            {% set customerCompany = quote.customerSnapshot.company ?? null %}
+            {% set customerFirstName = quote.customerSnapshot.firstName %}
+            {% set customerLastName = quote.customerSnapshot.lastName %}
+        {% endif %}
+
+        {% if customerCompany is not empty %}
+            <b>{{ customerCompany | sw_sanitize(null, true) }}</b><br>
+        {% endif %}
+        {{ customerFirstName | sw_sanitize(null, true) }} {{ customerLastName | sw_sanitize(null, true) }}<br>
+
+        {# Use live customer billing address if available, fall back to snapshot if customer was deleted #}
+        {% if quote.customer is not null and quote.customer.defaultBillingAddress is not null %}
+            {% set billingAddress = quote.customer.defaultBillingAddress %}
+            {% set billingAddressCountryName = billingAddress.country is not null ? billingAddress.country.translated.name : null %}
+        {% elseif quote.customerSnapshot.billingAddress is defined and quote.customerSnapshot.billingAddress is not null %}
+            {% set billingAddress = quote.customerSnapshot.billingAddress %}
+            {% set billingAddressCountryName = billingAddress.countryName ?? null %}
+        {% else %}
+            {% set billingAddress = null %}
+            {% set billingAddressCountryName = null %}
+        {% endif %}
+
+        {% if billingAddress is not null %}
+            {{ billingAddress.street | sw_sanitize(null, true) }}<br>
+            {% if billingAddress.additionalAddressLine1 is not empty %}
+                {{ billingAddress.additionalAddressLine1 | sw_sanitize(null, true) }}<br>
+            {% endif %}
+            {{ billingAddress.zipcode | sw_sanitize(null, true) }} {{ billingAddress.city | sw_sanitize(null, true) }}<br>
+            {% if billingAddressCountryName is not empty %}
+                {{ billingAddressCountryName | sw_sanitize(null, true) }}<br>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    {# right side document header (company info, document metadata) #}
+    <div class="right-header" style="position: absolute; right: 0; margin-top: 0; top: 0;">
+		<table style="margin-left: -2px; padding-left: 0; list-style: none;">
+			{% for part in addressParts %}
+				{% if loop.first and config.companyName %}
+					<tr>
+						<td class="bold">{{ part|sw_sanitize(null, true) }}</td>
+					</tr>
+				{% elseif config.displayCompanyAddress %}
+					<tr>
+						<td>{{ part|sw_sanitize(null, true) }}</td>
+					</tr>
+				{% endif %}
+			{% endfor %}
+
+
+			{% if config.companyPhone %}
+				{% block document_side_info_phone_number %}
+					<tr>
+						<td>
+							Tel: 0202 / 879 66
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Fax: 0202 / 868 80
+						</td>
+					</tr>
+				{% endblock %}
+			{% endif %}
+
+			{% if config.companyUrl %}
+				{% block document_side_company_url %}
+					<tr>
+						<td>Internet: {{ config.companyUrl|sw_sanitize(null, true) }}</td>
+					</tr>
+				{% endblock %}
+			{% endif %}
+
+			{% if config.companyEmail %}
+				{% block document_side_info_email %}
+					<tr>
+						<td>E-Mail: {{ config.companyEmail|sw_sanitize(null, true) }}</td>
+					</tr>
+				{% endblock %}
+			{% endif %}
+		</table><br>
+
+        <div>
+            {{ 'pickware-quotes.quote-document.summary.quote-number' | trans | sw_sanitize(null, true) }}: {{ quote.number }}<br>
+            {% if quote.customer is not null %}
+                {{ 'pickware-quotes.quote-document.summary.customer-number' | trans | sw_sanitize(null, true) }}: {{ quote.customer.customerNumber }}<br>
+            {% else %}
+                {{ 'pickware-quotes.quote-document.summary.customer-number' | trans | sw_sanitize(null, true) }}: {{ quote.customerSnapshot.customerNumber }}<br>
+            {% endif %}
+            {{ 'document.date' | trans({'%date%': config.documentDate | format_date(pattern="Y/MM/dd", locale=localeCode)}) | sw_sanitize(null, true) }}<br>
+            {% if quote.validUntil is not null %}
+                {{ 'pickware-quotes.quote-document.summary.valid-until' | trans | sw_sanitize(null, true) }}: {{ quote.validUntil | format_date(pattern="Y/MM/dd", locale=localeCode) }}<br>
+            {% endif %}
+            {% if quote.paymentMethod is not null %}
+                {# {{ 'pickware-quotes.quote-document.summary.payment-method' | trans | sw_sanitize(null, true) }}: {{ quote.paymentMethod.translated.name | sw_sanitize(null, true) }}<br> #}
+            {% elseif quote.paymentMethodSnapshot.name is defined and quote.paymentMethodSnapshot.name is not empty %}
+                {# {{ 'pickware-quotes.quote-document.summary.payment-method' | trans | sw_sanitize(null, true) }}: {{ quote.paymentMethodSnapshot.name | sw_sanitize(null, true) }}<br> #}
+            {% endif %}
+        </div>
+    </div>
+
+    {# document title #}
+    <div class="document-title-container" style="margin-top: 80px;">
+        <h1>
+            {{ 'pickware-quotes.quote-document.title' | trans | sw_sanitize(null, true) }} {{ quote.number }}
+        </h1>
+        <p class="price-note" style="font-size: 14px;">
+            {% if quote.taxStatus == 'gross' %}
+                {{ 'pickware-quotes.quote-document.price-note.gross' | trans | sw_sanitize(null, true) }}
+            {% elseif quote.taxStatus == 'net' %}
+                {{ 'pickware-quotes.quote-document.price-note.net' | trans | sw_sanitize(null, true) }}
+            {% else %}
+                {{ 'pickware-quotes.quote-document.price-note.tax-free' | trans | sw_sanitize(null, true) }}
+            {% endif %}
+        </p>
+    </div>
+
+    {% if showDocumentComment|default(false) and quote.documentComment is not empty %}
+        <div class="document-comment">
+            {{ quote.documentComment | nl2br | sw_sanitize(null, true) }}
+        </div>
+    {% endif %}
+
+    {# line items table #}
+    <div class="line-item-container">
+        <table class="line-item-table">
+            <thead>
+            <tr class="line-item-table-header">
+                <th class="line-item-product-position">{{ 'document.lineItems.header.position'|trans|sw_sanitize(null, true) }}</th>
+				<th>{{ 'pickware-quotes.quote-document.line-items.product-number' | trans | sw_sanitize(null, true) }}</th>
+                <th style="width: 28%">{{ 'pickware-quotes.quote-document.line-items.name' | trans | sw_sanitize(null, true) }}</th>
+                <th style="text-align: right;">{{ 'pickware-quotes.quote-document.line-items.quantity' | trans | sw_sanitize(null, true) }}</th>
+                {% if quote.taxStatus == 'gross' %}
+                    <th style="text-align: right;">{{ 'pickware-quotes.quote-document.line-items.unit-price-gross' | trans | sw_sanitize(null, true) }}</th>
+                {% elseif quote.taxStatus == 'net' %}
+                    <th style="text-align: right;">{{ 'pickware-quotes.quote-document.line-items.unit-price-net' | trans | sw_sanitize(null, true) }}</th>
+                {% else %}
+                    <th style="text-align: right;">{{ 'pickware-quotes.quote-document.line-items.unit-price-tax-free' | trans | sw_sanitize(null, true) }}</th>
+                {% endif %}
+                <th style="text-align: right;">{{ 'pickware-quotes.quote-document.line-items.total-price' | trans | sw_sanitize(null, true) }}</th>
+            </tr>
+            </thead>
+
+            {% for key, lineItem in quote.lineItems %}
+                {# Use live product data if available, fall back to snapshot if product was deleted #}
+                {% if lineItem.type.value == 'custom' %}
+                    {% set productName = lineItem.label | sw_sanitize(null, true) %}
+                    {% set productNumber = '' %}
+                    {% set isDeletedProduct = false %}
+                    {% set isCredit = false %}
+                {% elseif lineItem.type.value == 'credit' %}
+                    {% set productName = lineItem.label | sw_sanitize(null, true) %}
+                    {% set productNumber = '' %}
+                    {% set isDeletedProduct = false %}
+                    {% set isCredit = true %}
+                {% elseif lineItem.product is not null %}
+                    {% set productName = lineItem.product.translated.name | sw_sanitize(null, true) %}
+                    {% set productNumber = lineItem.product.productNumber | sw_sanitize(null, true) %}
+                    {% set isDeletedProduct = false %}
+                    {% set isCredit = false %}
+                {% else %}
+                    {% set productName = lineItem.productSnapshot.name | sw_sanitize(null, true) %}
+                    {% set productNumber = lineItem.productSnapshot.productNumber | sw_sanitize(null, true) %}
+                    {% set isDeletedProduct = true %}
+                    {% set isCredit = false %}
+                {% endif %}
+
+                <tr class="line-item{% if isDeletedProduct %} deleted-product{% endif %}{% if isCredit %} credit{% endif %}">
+                    <td class="line-item-product-position">{{ loop.index }}</td>
+					<td>{{ productNumber }}</td>
+                    <td style="width: 28%">
+                        {{ productName }}
+                        {% if isDeletedProduct %}
+                            ({{ 'pickware-quotes.quote-document.line-items.deleted' | trans | sw_sanitize(null, true) }})
+                        {% endif %}
+                    </td>
+                    <td style="text-align: right;">{% if isCredit %}&mdash;{% else %}{{ lineItem.quantity }}{% endif %}</td>
+                    <td style="text-align: right;">{{ lineItem.unitPrice | currency(quote.currency.isoCode) }}</td>
+                    <td style="text-align: right;">{{ lineItem.totalPrice | currency(quote.currency.isoCode) }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    {# price summary #}
+    <div class="price-summary" style="float: right;">
+        <table class="price-summary-table">
+            {% if quote.taxStatus == 'net' %}
+                <tr>
+                    <td>
+                        {{ 'pickware-quotes.quote-document.price.shipping-costs' | trans | sw_sanitize(null, true) }}
+                        {% if quote.shippingMethod is not null %}
+                            ({{ quote.shippingMethod.translated.name | sw_sanitize(null, true) }})
+                        {% elseif quote.shippingMethodSnapshot.name is defined and quote.shippingMethodSnapshot.name is not empty %}
+                            ({{ quote.shippingMethodSnapshot.name | sw_sanitize(null, true) }})
+                        {% endif %}
+                    </td>
+                    <td style="text-align: right;">{{ quote.effectiveShippingCosts.totalPrice | currency(quote.currency.isoCode) }}</td>
+                </tr>
+                <tr>
+                    <td>{{ 'pickware-quotes.quote-document.price.net-total' | trans | sw_sanitize(null, true) }}</td>
+                    <td style="text-align: right;">{{ quote.price.netPrice | currency(quote.currency.isoCode) }}</td>
+                </tr>
+                {% for tax in quote.price.calculatedTaxes %}
+                    <tr>
+                        <td>{{ 'pickware-quotes.quote-document.price.tax' | trans({'%rate%': tax.taxRate}) | sw_sanitize(null, true) }}</td>
+                        <td style="text-align: right;">{{ tax.tax | currency(quote.currency.isoCode) }}</td>
+                    </tr>
+                {% endfor %}
+                <tr class="price-total">
+                    <td><b>{{ 'pickware-quotes.quote-document.price.total-incl-vat' | trans | sw_sanitize(null, true) }}</b></td>
+                    <td style="text-align: right;"><b>{{ quote.price.totalPrice | currency(quote.currency.isoCode) }}</b></td>
+                </tr>
+            {% elseif quote.taxStatus == 'gross' %}
+                <tr>
+                    <td>
+                        {{ 'pickware-quotes.quote-document.price.shipping-costs' | trans | sw_sanitize(null, true) }}
+                        {% if quote.shippingMethod is not null %}
+                            ({{ quote.shippingMethod.translated.name | sw_sanitize(null, true) }})
+                        {% elseif quote.shippingMethodSnapshot.name is defined and quote.shippingMethodSnapshot.name is not empty %}
+                            ({{ quote.shippingMethodSnapshot.name | sw_sanitize(null, true) }})
+                        {% endif %}
+                    </td>
+                    <td style="text-align: right;">{{ quote.effectiveShippingCosts.totalPrice | currency(quote.currency.isoCode) }}</td>
+                </tr>
+                <tr class="price-total">
+                    <td><b>{{ 'pickware-quotes.quote-document.price.total' | trans | sw_sanitize(null, true) }}</b></td>
+                    <td style="text-align: right;"><b>{{ quote.price.totalPrice | currency(quote.currency.isoCode) }}</b></td>
+                </tr>
+                {% for tax in quote.price.calculatedTaxes %}
+                    <tr>
+                        <td>{{ 'pickware-quotes.quote-document.price.includes-tax' | trans({'%rate%': tax.taxRate}) | sw_sanitize(null, true) }}</td>
+                        <td style="text-align: right;">{{ tax.tax | currency(quote.currency.isoCode) }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td>
+                        {{ 'pickware-quotes.quote-document.price.shipping-costs' | trans | sw_sanitize(null, true) }}
+                        {% if quote.shippingMethod is not null %}
+                            ({{ quote.shippingMethod.translated.name | sw_sanitize(null, true) }})
+                        {% elseif quote.shippingMethodSnapshot.name is defined and quote.shippingMethodSnapshot.name is not empty %}
+                            ({{ quote.shippingMethodSnapshot.name | sw_sanitize(null, true) }})
+                        {% endif %}
+                    </td>
+                    <td style="text-align: right;">{{ quote.effectiveShippingCosts.totalPrice | currency(quote.currency.isoCode) }}</td>
+                </tr>
+                <tr class="price-total">
+                    <td><b>{{ 'pickware-quotes.quote-document.price.total' | trans | sw_sanitize(null, true) }}</b></td>
+                    <td style="text-align: right;"><b>{{ quote.price.totalPrice | currency(quote.currency.isoCode) }}</b></td>
+                </tr>
+                <tr>
+                    <td>{{ 'pickware-quotes.quote-document.price.no-vat-charged' | trans | sw_sanitize(null, true) }}</td>
+                    <td></td>
+                </tr>
+            {% endif %}
+        </table>
+    </div>
+	
+	<div class="note-texts" style="margin-top: 100px; font-size: 12px;">
+		<p>
+			Das Angebot ist freibleibend.<br>
+			Die Ware bleibt bis zur vollständigen Bezahlung unser Eigentum<br><br>
+			Bitte kontrollieren Sie bei Erhalt die Vollständigkeit und den Zustand der Ware.<br>
+			Beschädigungen müssen dem Lieferdienst unverzüglich angezeigt werden.<br>
+			Spätere Reklamationen können nicht berücksichtigt werden.<br>
+		</p>
+	</div>
+{% endblock %}
+
+
+{% block document_footer %}
+	{% block document_footer_first_column %}
+		<ul>
+			{% block document_footer_bank_account %}
+			{% endblock %}
+			{% block document_footer_bank_name %}
+				{% if config.bankName %}<li>{{ config.bankName|sw_sanitize(null, true) }}</li>{% endif %}
+			{% endblock %}
+			<li>{{ 'document.kontoinhaberTitle'|trans|sw_sanitize(null, true) }}: {{ 'document.kontoinhaberName'|trans|sw_sanitize(null, true) }}</li>
+			{% block document_footer_bank_iban %}
+				{% if config.bankIban %}<li>{{ 'document.bankIban'|trans({'%bankIban%': config.bankIban})|sw_sanitize(null, true) }}</li>{% endif %}
+			{% endblock %}
+			{% block document_footer_bank_bic %}
+				{% if config.bankBic %}<li>{{ 'document.bankBic'|trans({'%bankBic%': config.bankBic})|sw_sanitize(null, true) }}</li>{% endif %}
+			{% endblock %}
+		</ul>		
+	{% endblock %}
+
+	{% block document_footer_second_column %}
+		<ul>
+			{% block document_footer_company_name %}
+			{% endblock %}
+			<li>{{ 'document.agbText'|trans|sw_sanitize(null, true) }}</li>
+			{% block document_footer_tax_number %}
+				{% if config.taxNumber %}<li>{{ 'document.taxNumber'|trans({'%taxNumber%': config.taxNumber})|sw_sanitize(null, true) }}</li>{% endif %}
+			{% endblock %}
+			{% block document_footer_vat_id %}
+				{% if config.vatId %}<li>{{ 'document.vatId'|trans({'%vatId%': config.vatId})|sw_sanitize(null, true) }}</li>{% endif %}
+			{% endblock %}
+			{% block document_footer_tax_office %}
+			{% endblock %}
+			<li>{{ 'document.deOekoText'|trans|sw_sanitize(null, true) }}</li>
+		</ul>
+	{% endblock %}
+
+	{% block document_footer_third_column %}
+		<ul>
+			<li>Tel: 0202 / 879 66</li>
+			<li>Fax: 0202 / 868 80</li>
+			<li>Internet: <a href="{{ 'document.internetText'|trans|sw_sanitize(null, true) }}">{{ 'document.internetText'|trans|sw_sanitize(null, true) }}</a></li>
+			<li>E-Mail: <a href="mailto:{{ 'document.emailText'|trans|sw_sanitize(null, true) }}">{{ 'document.emailText'|trans|sw_sanitize(null, true) }}</a></li>
+		</ul>
+	{% endblock %}
+
+	{% if config.displayPageCount %}
+		<div class="page-count">
+			{% block document_page_count %}
+			{% endblock %}
+		</div>
+	{% endif %}
+{% endblock %}
+
+{% block document_footer_fourth_column %}
+{% endblock %}

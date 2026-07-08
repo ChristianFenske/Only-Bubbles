@@ -1,18 +1,8 @@
-// ---------------------------------------------------------------------------
-// Only Bubbles — Bootstrap-/SCSS-Variablen
-// Wird laut theme.json VOR @Storefront geladen, damit Kern-Variablen greifen.
-// Die $sw-color-* Variablen werden aus der theme.json-Config injiziert.
-// ---------------------------------------------------------------------------
+/*
+Override variable defaults
+==================================================
+This file is used to override default SCSS variables from the Shopware Storefront or Bootstrap.
 
-$primary:   $sw-color-brand-primary;   // Gold
-$secondary: $sw-color-brand-secondary; // Ink
-
-// Kauf-Button ("In den Warenkorb") in Listen/Slidern: dunkel statt Bootstrap-Blau.
-// Shopware nutzt dafür EIGENE Variablen, nicht $primary.
-$sw-color-buy-button:      #26221d; // Ink
-$sw-color-buy-button-text: #fbf9f4; // Creme
-
-// Etwas weichere Radien wie im Design (Pill-Buttons macht base.scss)
-$border-radius:    4px;
-$border-radius-sm: 3px;
-$border-radius-lg: 8px;
+Because of the !default flags, theme variable overrides have to be declared beforehand.
+https://getbootstrap.com/docs/5.3/customize/sass/#variable-defaults
+*/

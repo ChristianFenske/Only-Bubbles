@@ -1,0 +1,14 @@
+{% sw_extends '@Storefront/storefront/component/checkout/offcanvas-cart.html.twig' %}
+
+{% block component_offcanvas_cart_flashbags %}
+    {% set flashes = app.flashes %}
+
+    <div class="flashbags{% if flashes|length > 0 %} has-alert{% endif %}">
+        {% for type, messages in flashes %}
+            {% sw_include '@Storefront/storefront/utilities/alert.html.twig' with {
+                type: type,
+                list: messages
+            } %}
+        {% endfor %}
+    </div>
+{% endblock %}

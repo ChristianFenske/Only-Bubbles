@@ -1,0 +1,12 @@
+{% sw_extends '@Storefront/storefront/layout/navbar/navbar.html.twig' %}
+
+{% block layout_navbar_menu_item_link_content %}
+	{% set categoryIconClassname = category.customFields.custom_category_icon_class %}
+	{% set categoryIconMediaId = category.customFields.custom_category_icon_media %}
+
+	{% if categoryIconClassname %}
+		<span class="category-icon {{ categoryIconClassname }}"></span>
+	{% endif %}
+
+	{{ parent() }}
+{% endblock %}

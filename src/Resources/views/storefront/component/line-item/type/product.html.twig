@@ -1,0 +1,87 @@
+{% sw_extends '@Storefront/storefront/component/line-item/type/product.html.twig' %}
+
+{% block component_line_item_type_product_number %}
+	<div class="line-item-product-number">
+		{{ lineItem.payload.productNumber }}
+	</div>
+{% endblock %}
+
+{% block component_line_item_type_product_label %}
+	{% if displayMode !== 'offcanvas' %}
+		{{ parent() }}
+	{% else %}
+		<div class="item-qty-label">
+			<span class="item-qty">{{ lineItem.quantity }}<span class="icon-clear"></span></span>
+			{% sw_include '@Storefront/storefront/component/line-item/element/label.html.twig' with {
+				lineItemLink: displayMode !== 'order' or lineItem.productId ? seoUrl('frontend.detail.page', { productId: lineItem.referencedId }) : null,
+				lineItemModalLink: showLineItemModal ? path('widgets.quickview.minimal', { productId: lineItem.referencedId }) : false,
+			} %}
+		</div>
+	{% endif %}
+{% endblock %}
+
+
+{% block component_line_item_type_product_details_container %}
+	{{ parent() }}
+	
+	{% if displayMode === 'offcanvas' %}
+		<div class="line-item-total-price line-item-price">
+			{% sw_include '@Storefront/storefront/component/line-item/element/unit-price.html.twig' %}
+		
+			{% sw_include '@Storefront/storefront/component/line-item/element/total-price.html.twig' with {
+				currency: lineItem.order.currency.isoCode
+			} %}
+		</div>
+	{% else %}
+		{% if lineItem.payload.productProperties is defined and lineItem.payload.productProperties|length > 0 %}
+
+			{% set groupedProperties = {} %}
+
+			{# Properties nach Gruppe sammeln #}
+			{% for property in lineItem.payload.productProperties %}
+				{% set group = property.group %}
+
+				{% if groupedProperties[group] is not defined %}
+					{% set groupedProperties = groupedProperties|merge({
+						(group): [property.name]
+					}) %}
+				{% else %}
+					{% set groupedProperties = groupedProperties|merge({
+						(group): groupedProperties[group]|merge([property.name])
+					}) %}
+				{% endif %}
+			{% endfor %}
+
+			<div class="line-item-product-properties">
+				{% for group, values in groupedProperties %}
+					<div class="line-item-product-property">
+						<span class="property-label">{{ group }}</span>
+
+						{% if group|lower not in ['bio', 'vegan'] %}
+							<span class="property-label">:</span>
+							<span class="property-value">{{ values|join(', ') }}</span>
+						{% endif %}
+					</div>
+				{% endfor %}
+			</div>
+		{% endif %}
+		
+		{% if lineItem.payload.customFields is defined and lineItem.payload.customFields.inhaltsangaben_content is not empty %}
+			<div class="line-item-product-custom-field d-none">
+				{{ lineItem.payload.customFields.inhaltsangaben_content }}
+			</div>
+		{% endif %}
+	{% endif %}
+{% endblock %}
+
+{% block component_line_item_type_product_col_total_price %}
+	{% if displayMode !== 'offcanvas' %}
+		{{ parent() }}
+	{% endif %}
+{% endblock %}
+
+{% block component_line_item_type_product_col_unit_price %}
+	{% if displayMode !== 'offcanvas' %}
+		{{ parent() }}
+	{% endif %}
+{% endblock %}

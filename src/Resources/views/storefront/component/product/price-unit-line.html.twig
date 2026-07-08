@@ -1,0 +1,22 @@
+{# Price is based on the purchase unit #}
+{% set unit_name = referencePrice.unitName %}
+
+{% if shortForm and unit_name == "Liter" %}
+	{% set unit_name = "l" %}
+{% endif %}
+
+{% if referencePrice and referencePrice.unitName %}
+	<span class="product-unit-label">
+		{{ 'listing.boxUnitLabel'|trans|sw_sanitize }}
+	</span>
+	<span class="price-unit-content">
+		{{ referencePrice.purchaseUnit }} {{ unit_name }}
+	</span>
+{% endif %}
+
+{# Item price is based on a reference unit #}
+{% if referencePrice is not null %}
+	<span class="price-unit-reference">
+		({{ referencePrice.price|currency }} / {{ referencePrice.referenceUnit }} {{ unit_name }})
+	</span>
+{% endif %}

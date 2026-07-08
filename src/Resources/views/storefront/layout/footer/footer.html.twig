@@ -1,0 +1,250 @@
+{% sw_extends '@Storefront/storefront/layout/footer/footer.html.twig' %}
+
+{% block layout_footer_vat %}
+{% endblock %}
+
+{% block layout_footer_navigation_hotline %}
+	{% set footerCategories = ['Weine', 'Länder/Regionen', 'Rebsorten', 'Feinkost', 'Spirituosen'] %}
+	{% set footerNoSubCategories = ['Fruchtsäfte', 'Probierpakete', 'Geschenkeservice', 'Veranstaltungen'] %}
+	
+	{# Get main navigation tree with al #}
+	{% set mainTree = footer.extensions.mainNavigation.tree ?? [] %}
+	{# {{ dump() }} #}
+	{% for cat in mainTree %}
+		{% if cat.category.name in footerCategories %}
+			<div class="col-md-2 footer-column js-footer-column">
+				<div class="footer-column-headline footer-headline js-footer-column-headline"
+				 id="collapseFooterCatTitle{{ loop.index }}"
+				 role="listitem">
+					<a href="{{ cat.category.seoUrl }}"
+					   {% if cat.category.shouldOpenInNewTab %}target="_blank"{% endif %}
+					   title="{{ cat.category.translated.name }}">
+						{{ cat.category.translated.name }}
+					</a>
+					{% if cat.children|length > 0 %}
+						<button class="footer-column-toggle btn btn-link btn-link-inline js-collapse-footer-column-trigger"
+								data-bs-target="#collapseFooterCat{{ loop.index }}"
+								data-bs-toggle="collapse"
+								aria-controls="collapseFooterCat{{ loop.index }}"
+								aria-labelledby="collapseFooterCatTitle{{ loop.index }}"
+								aria-expanded="true">
+
+							{% sw_icon 'plus' style {
+								class: 'footer-plus'
+							} %}
+
+							{% sw_icon 'minus' style {
+								class: 'footer-minus'
+							} %}
+						</button>					
+					{% endif %}
+				</div>
+				<div id="collapseFooterCat{{ loop.index }}"
+					 class="footer-column-content collapse js-footer-column-content"
+					 aria-labelledby="collapseFooterCatTitle{{ loop.index }}"
+					 role="listitem">
+
+					<div class="footer-column-content-inner">
+						<ul class="list-unstyled">
+							{% for treeItem in cat.children %}
+								{% set category = treeItem.category %}
+								{% set name = category.translated.name %}
+
+								<li class="footer-link-item">
+									{% if category.type == 'folder' %}
+										<div>{{ name }}</div>
+									{% else %}
+										<a class="footer-link"
+										   href="{{ category.seoUrl }}"
+										   {% if category.shouldOpenInNewTab %}target="_blank"{% endif %}
+										   title="{{ name }}">
+											{{ name }}
+										</a>
+									{% endif %}
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+					
+					{# Set NoSubCategories #}
+					{#
+					{% set nextPrintedExists = false %}
+					{% for rest in mainTree|slice(loop.index) %}
+						{% if rest.category.translated.name in footerCategories %}
+							{% set nextPrintedExists = true %}
+							{% break %}
+						{% endif %}
+					{% endfor %}
+
+					{% if not nextPrintedExists %}
+						<div class="no-sub-categories">
+							{% for noSubName in footerNoSubCategories %}
+								<a class="footer-link-item" href="{{ noSubName }}"
+								   title="{{ noSubName }}">
+									{{ noSubName }}
+								</a>
+							{% endfor %}
+						</div>
+					{% endif %}
+					#}
+				</div>
+			</div>
+		{% endif %}
+	{% endfor %}
+{% endblock %}
+
+{% block layout_footer_navigation_column %}
+	<div class="col-md-2 footer-column js-footer-column type-{{ root.category.type }}">
+		{% block layout_footer_navigation_information_headline %}
+			{{ parent() }}
+		{% endblock %}
+
+		{% block layout_footer_navigation_information_content %}
+			{{ parent() }}
+		{% endblock %}
+	</div>
+{% endblock %}
+
+{% block layout_footer_navigation_columns %}
+	{{ parent() }}
+	
+	<div class="col-md-2 footer-column js-footer-column partner-column">
+		<div class="footer-column-headline footer-headline js-footer-column-headline"
+			 id="collapseFooterTitlePartner"
+			 role="listitem">
+			<span>{{ 'footer.partnerLabel'|trans|sw_sanitize }}</span>
+			<button class="footer-column-toggle btn btn-link btn-link-inline js-collapse-footer-column-trigger"
+					data-bs-target="#collapseFooterPartner"
+					data-bs-toggle="collapse"
+					aria-controls="collapseFooterPartner"
+					aria-labelledby="collapseFooterTitlePartner"
+					aria-expanded="true">
+
+				{% sw_icon 'plus' style {
+					class: 'footer-plus'
+				} %}
+
+				{% sw_icon 'minus' style {
+					class: 'footer-minus'
+				} %}
+			</button>				
+		</div>
+		<div id="collapseFooterPartner"
+			 class="footer-column-content collapse js-footer-column-content"
+			 aria-labelledby="collapseFooterTitlePartner"
+			 role="listitem">
+			<div class="partner-links footer-img-links">
+				<a class="wein-plus-link" href="{{ 'footer.weinPlusLink'|trans }}" title="{{ 'footer.weinPlusImgAlt'|trans }}">
+					<img src="{{ asset('bundles/weinefeinkosttheme/assets/images/wein_plus-logo.svg', 'asset') }}" alt="{{ 'footer.weinPlusImgAlt'|trans }}">
+				</a>
+				<a class="wein-plus-fenske-link" href="{{ 'footer.weinPlusFenskeLink'|trans }}" title="{{ 'footer.weinPlusFenskeImgAlt'|trans }}">
+					<img src="{{ asset('bundles/weinefeinkosttheme/assets/images/membership-badge-rating_sprite-de.svg', 'asset') }}" alt="{{ 'footer.weinPlusFenskeImgAlt'|trans }}">
+				</a>
+			</div>
+		</div>
+	</div>
+	
+	<div class="col-md-2 footer-column js-footer-column payment-methods">
+		<div class="footer-column-headline footer-headline js-footer-column-headline"
+			 id="collapseFooterTitlePaymentMethods"
+			 role="listitem">
+			<span>{{ 'footer.paymentMethodsLabel'|trans|sw_sanitize }}</span>
+			<button class="footer-column-toggle btn btn-link btn-link-inline js-collapse-footer-column-trigger"
+					data-bs-target="#collapseFooterPaymentMethods"
+					data-bs-toggle="collapse"
+					aria-controls="collapseFooterPaymentMethods"
+					aria-labelledby="collapseFooterTitlePaymentMethods"
+					aria-expanded="true">
+
+				{% sw_icon 'plus' style {
+					class: 'footer-plus'
+				} %}
+
+				{% sw_icon 'minus' style {
+					class: 'footer-minus'
+				} %}
+			</button>				
+		</div>
+		<div id="collapseFooterPaymentMethods"
+			 class="footer-column-content collapse js-footer-column-content"
+			 aria-labelledby="collapseFooterTitlePaymentMethods"
+			 role="listitem">
+			<div class="partner-method-links footer-img-links">
+				<a class="payment-method-link" href="{{ path('frontend.navigation.page', { navigationId: '019c4d43f104704ba53f10c5df0eac11' }) }}" title="{{ 'footer.purchaseOnInvoice'|trans }}">
+					<img src="{{ asset('bundles/weinefeinkosttheme/assets/images/payment-rechnung.png', 'asset') }}" alt="{{ 'footer.purchaseOnInvoice'|trans }}">
+				</a>
+				<a class="payment-method-link" href="{{ path('frontend.navigation.page', { navigationId: '019c4d43f104704ba53f10c5df0eac11' }) }}" title="{{ 'footer.paypal'|trans }}">
+					<img src="{{ asset('bundles/weinefeinkosttheme/assets/images/payment-paypal.png', 'asset') }}" alt="{{ 'footer.paypal'|trans }}">
+				</a>
+				<a class="payment-method-link" href="{{ path('frontend.navigation.page', { navigationId: '019c4d43f104704ba53f10c5df0eac11' }) }}" title="{{ 'footer.applepay'|trans }}">
+					<img src="{{ asset('bundles/weinefeinkosttheme/assets/images/apple-pay.png', 'asset') }}" alt="{{ 'footer.applepay'|trans }}">
+				</a>
+				<a class="payment-method-link" href="{{ path('frontend.navigation.page', { navigationId: '019c4d43f104704ba53f10c5df0eac11' }) }}" title="{{ 'footer.creditcards'|trans }}">
+					<img src="{{ asset('bundles/weinefeinkosttheme/assets/images/credit-cards-logos.png', 'asset') }}" alt="{{ 'footer.creditcards'|trans }}">
+				</a>
+			</div>
+		</div>
+	</div>
+	
+	<div class="col-md-2 footer-column js-footer-column cartificates">
+		<div class="footer-column-headline footer-headline js-footer-column-headline"
+			 id="collapseFooterTitleCartificates"
+			 role="listitem">
+			<span>{{ 'footer.cartificatesLabel'|trans|sw_sanitize }}</span>
+			<button class="footer-column-toggle btn btn-link btn-link-inline js-collapse-footer-column-trigger"
+					data-bs-target="#collapseFooterCartificates"
+					data-bs-toggle="collapse"
+					aria-controls="collapseFooterCartificates"
+					aria-labelledby="collapseFooterTitleCartificates"
+					aria-expanded="true">
+
+				{% sw_icon 'plus' style {
+					class: 'footer-plus'
+				} %}
+
+				{% sw_icon 'minus' style {
+					class: 'footer-minus'
+				} %}
+			</button>				
+		</div>
+		<div id="collapseFooterCartificates"
+			 class="footer-column-content collapse js-footer-column-content"
+			 aria-labelledby="collapseFooterTitleCartificates"
+			 role="listitem">
+			<div class="cartificate-links footer-img-links">
+				<a class="cartificate-link" href="{{ asset('bundles/weinefeinkosttheme/assets/images/zertifikat-2024.png', 'asset') }}" title="zertifikat-2024.png" target="_blank">
+					<img src="{{ asset('bundles/weinefeinkosttheme/assets/images/zertifikat-2024.png', 'asset') }}" alt="zertifikat-2024.png">
+				</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block layout_footer_copyright %}
+	<div class="container copyright-box">
+		<div class="footer-copyright">
+			{{ 'footer.copyrightInfo'|trans|sw_sanitize }}
+		</div>
+		
+		{% sw_include '@Storefront/storefront/layout/barLinks.html.twig' %}
+	</div>
+{% endblock %}
+
+{% block layout_footer_navigation_information_link_item %}
+	{% set categoryName = category.translated.name|lower %}
+	
+	<li class="footer-link-item">
+		{% block layout_footer_navigation_information_link %}
+			{% if category.type == 'folder' %}
+				<div>{{ name }}</div>
+			{% else %}
+				<a class="footer-link{% if 'cookie' in categoryName %} js-cookie-trigger{% endif %}"
+				   href="{{ category.seoUrl }}"
+				   {% if category.shouldOpenInNewTab %}target="_blank"{% endif %}
+				   title="{{ name }}">
+					{{ name }}
+				</a>
+			{% endif %}
+		{% endblock %}
+	</li>
+{% endblock %}

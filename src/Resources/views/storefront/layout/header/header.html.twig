@@ -1,54 +1,41 @@
-{# Only Bubbles — Navigation in die Header-Zeile integriert.
-   Mitte = Hauptnavigation (Kategorien) statt Suchfeld. Such-Button (gold) oeffnet
-   das Suchfeld als aufklappbares Overlay (#searchCollapse). Warenkorb/Account/
-   Wunschliste bleiben unveraendert. Mobile/Tablet: Menue-Button -> Offcanvas. #}
 {% sw_extends '@Storefront/storefront/layout/header/header.html.twig' %}
 
-{# Header-Zeile + aufklappbares Suchfeld darunter #}
-{% block layout_header_navigation %}
-    {{ parent() }}
+{% block layout_header_actions %}
+	<div class="col-12 order-1 col-sm-auto order-sm-2 header-actions-col">
+		<div class="row g-0">
+			{% block layout_header_navigation_toggle %}
+				{{ parent() }}
+			{% endblock %}
 
-    {% block ob_header_search_row %}
-        <div class="ob-search-row">
-            {% sw_include '@Storefront/storefront/layout/header/search.html.twig' %}
-        </div>
-    {% endblock %}
-{% endblock %}
+			{% block layout_header_search_toggle %}
+				{{ parent() }}
+			{% endblock %}
 
-{# Mittlere Spalte: Tablet-Menue-Button + Desktop-Navigation #}
-{% block layout_header_search %}
-    <div class="col header-nav-col order-2 order-sm-1">
-        {# Tablet (sm..lg): Menue-Button #}
-        <div class="d-none d-sm-flex d-lg-none justify-content-center">
-            <button class="btn nav-main-toggle-btn header-actions-btn"
-                    type="button"
-                    data-off-canvas-menu="true"
-                    aria-label="{{ 'general.menuLink'|trans|striptags }}">
-                {% sw_icon 'stack' %}
-            </button>
-        </div>
-        {# Desktop (lg+): Hauptnavigation (defensiv: nur wenn vorhanden) #}
-        {% if header.navigation %}
-            <div class="d-none d-lg-block ob-header-nav">
-                {% sw_include '@Storefront/storefront/layout/navbar/navbar.html.twig' with { header: header } %}
-            </div>
-        {% endif %}
-    </div>
-{% endblock %}
+			{% block layout_header_actions_account %}
+				{{ parent() }}
+			{% endblock %}
 
-{# Such-Button (gold) auf allen Viewports sichtbar #}
-{% block layout_header_search_toggle %}
-    <div class="col-auto">
-        <div class="search-toggle">
-            <button class="btn header-actions-btn search-toggle-btn js-search-toggle-btn collapsed"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#searchCollapse"
-                    aria-expanded="false"
-                    aria-controls="searchCollapse"
-                    aria-label="{{ 'header.searchButton'|trans|striptags }}">
-                {% sw_icon 'search' %}
-            </button>
-        </div>
-    </div>
+			{% if config('core.cart.wishlistEnabled') %}
+				{% block layout_header_actions_wishlist %}
+					<div class="col-auto">
+						<div class="header-wishlist">
+							<a class="btn header-wishlist-btn header-actions-btn"
+							   href="{{ path('frontend.wishlist.page') }}"
+							   title="{{ 'header.wishlist'|trans|striptags }}"
+							   aria-labelledby="wishlist-basket-live-area"
+							>
+								{% sw_include '@Storefront/storefront/layout/header/actions/wishlist-widget.html.twig' %}
+								
+								<span class="wishlist-menu-title header-btn-title">{{ 'header.wishlist'|trans|striptags }}</span>
+							</a>
+						</div>
+					</div>
+				{% endblock %}
+			{% endif %}
+
+			{% block layout_header_actions_cart %}
+				{{ parent() }}
+			{% endblock %}
+		</div>
+	</div>
 {% endblock %}

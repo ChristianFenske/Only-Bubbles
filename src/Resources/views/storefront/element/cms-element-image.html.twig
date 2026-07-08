@@ -1,0 +1,47 @@
+{% sw_extends '@Storefront/storefront/element/cms-element-image.html.twig' %}
+
+{% block element_image_inner %}
+	{% set imageElement %}
+		{% block element_image_container %}
+			{{ parent() }}
+		{% endblock %}
+	{% endset %}
+
+	{% if element.translated.config.url.value %}
+		<a href="{{ element.translated.config.url.value }}"
+		   class="cms-image-link"
+		   {% if element.translated.config.ariaLabel.value %}aria-label="{{ element.translated.config.ariaLabel.value }}"{% endif %}
+		   {% if element.translated.config.newTab.value %}target="_blank" rel="noopener"{% endif %}>
+			{{ imageElement }}
+		</a>
+	{% else %}
+		{{ imageElement }}
+	{% endif %}
+	
+	{% if element.translated.config.ariaLabel.value %}
+		{% set t = element.translated.config.ariaLabel.value %}
+		
+		{# 1) Split title vs subtitle #}
+		{% set parts = t|split(' | ') %}
+		{% set main  = parts[0]|trim %}
+		{% set sub   = parts[1] is defined ? parts[1]|trim : null %}
+
+		{# 2) Split main into words #}
+		{% set words = main|split(' ') %}
+		{% set first = words[0] %}
+		{% set second = words|slice(1)|join(' ') %}
+
+		{# 3) Render #}
+		<div class="image-title-box">
+			{% if second is empty %}
+				<span class="image-title single-title">{{ first }}</span>
+			{% else %}
+				<span class="image-title title-first">{{ first }}</span><span class="image-title title-second">{{ second }}</span>
+			{% endif %}
+
+			{% if sub %}
+				<span class="image-subtitle subtitle">{{ sub }}</span>
+			{% endif %}
+		</div>
+	{% endif %}	
+{% endblock %}
