@@ -5,3 +5,9 @@
 	
 	<meta name="google-site-verification" content="WEHLSWl7MUamqD7WbpCys_WgNphTPYj_8NkJoqoUEew" />
 {% endblock %}
+
+{% block layout_head_stylesheet %}
+	{{ parent() }}
+
+	{% sw_include '@OnlyBubblesTheme/storefront/component/ob/inline-styles.html.twig' %}
+{% endblock %}
