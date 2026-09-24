@@ -1,0 +1,24 @@
+{% sw_extends '@WeineFeinkostTheme/storefront/layout/header/logo.html.twig' %}
+
+{% block layout_header_logo_image %}
+    <div class="ob-header-logo">
+        <div class="ob-header-logo-bubbles">
+            <div class="ob-bubble ob-bubble-1"></div>
+            <div class="ob-bubble ob-bubble-2"></div>
+            <div class="ob-bubble ob-bubble-3"></div>
+            <div class="ob-bubble ob-bubble-4"></div>
+        </div>
+
+        <div class="ob-header-logo-text">
+            <div class="ob-header-logo-title">
+				{% set onlyBubblesLogoTitle = 'header.onlyBubblesLogoTitle'|trans %}
+				{{ onlyBubblesLogoTitle == 'header.onlyBubblesLogoTitle' ? 'ONLY BUBBLES' : onlyBubblesLogoTitle }}
+            </div>
+
+            <div class="ob-header-logo-subtitle">
+				{% set onlyBubblesLogoSubtitle = 'header.onlyBubblesLogoSubtitle'|trans %}
+				{{ onlyBubblesLogoSubtitle == 'header.onlyBubblesLogoSubtitle' ? 'The World of Sparkling Wine' : onlyBubblesLogoSubtitle }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

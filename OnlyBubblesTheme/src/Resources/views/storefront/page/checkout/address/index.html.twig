@@ -1,0 +1,64 @@
+{% sw_extends '@Storefront/storefront/page/checkout/address/index.html.twig' %}
+
+{% block page_checkout %}
+    <div class="ob-checkout ob-checkout-address">
+        {% sw_include '@OnlyBubblesTheme/storefront/component/ob/checkout-steps.html.twig' with { obStep: 1 } %}
+        {{ parent() }}
+    </div>
+{% endblock %}
+
+{% block page_checkout_address_header %}
+    <p class="ob-eyebrow">{{ 'obTheme.checkout.eyebrow'|trans|sw_sanitize }}</p>
+    {{ parent() }}
+{% endblock %}
+
+{% block page_checkout_address_login_toggle %}
+    <div class="register-login-collapse-toogle ob-login-hint">
+        <span class="ob-login-hint-icon">{% sw_icon 'avatar' style { size: 'xs' } %}</span>
+        <span>
+            {{ 'obTheme.checkout.loginHint'|trans|sw_sanitize }}
+            <a href="#loginCollapse"
+               class="login-collapse-toggle"
+               data-bs-toggle="collapse"
+               aria-controls="loginCollapse"
+               aria-expanded="{{ loginError ? 'true' : 'false' }}">{{ 'obTheme.checkout.loginLink'|trans|sw_sanitize }}</a>
+        </span>
+        {% sw_icon 'arrow-right' style { size: 'xs' } %}
+    </div>
+{% endblock %}
+
+{# Seitenleiste: dunkle Warenkorb-Karte (Artikel oben, Summen darunter) + Trust-Box #}
+{% block page_checkout_aside_summary %}
+    <div class="checkout-aside-summary ob-summary-card">
+        <div class="ob-bubbles ob-bubbles-corner" aria-hidden="true"><span></span><span></span><span></span></div>
+
+        <h2 class="checkout-aside-summary-header">{{ 'obTheme.checkout.cart'|trans|sw_sanitize }}</h2>
+
+        {{ block('page_checkout_address_products_list') }}
+
+        <div class="checkout-aside-summary-list-container">
+            {{ block('page_checkout_summary_list_container') }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block page_checkout_aside_actions %}
+    {{ parent() }}
+    {% sw_include '@OnlyBubblesTheme/storefront/component/ob/trust-box.html.twig' %}
+{% endblock %}
+
+{# Kartentitel entfällt: Überschrift "Versandinformationen" steht bereits oben in der Karte #}
+{% block page_checkout_address_register_card %}
+    {% sw_include '@Storefront/storefront/page/checkout/address/register.html.twig' with {
+        cardTitle: null
+    } %}
+{% endblock %}
+
+{# Voller Shop-Header/-Footer wie im Design (Shopware nutzt im Checkout sonst die Minimal-Variante) #}
+{% block base_esi_header %}
+    {{ render_esi(path('frontend.header', { headerParameters: headerParameters }), { ignore_errors: false }) }}
+{% endblock %}
+
+{% block base_esi_footer %}
+    {{ render_esi(path('frontend.footer', { footerParameters: footerParameters }), { ignore_errors: false }) }}
+{% endblock %}

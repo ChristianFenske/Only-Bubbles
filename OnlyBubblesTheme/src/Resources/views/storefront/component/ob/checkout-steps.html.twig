@@ -1,0 +1,31 @@
+{# Schrittanzeige im Checkout. Parameter: obStep (1 = Adresse, 2 = Versand & Zahlung, 3 = Prüfen & Bestellen)
+   Shopware fasst Versand/Zahlung und Prüfen auf der Confirm-Seite zusammen -> dort ist Schritt 3 aktiv. #}
+{% set obSteps = [
+    'obTheme.steps.address',
+    'obTheme.steps.shippingPayment',
+    'obTheme.steps.confirm'
+] %}
+
+<nav class="ob-steps" aria-label="{{ 'obTheme.steps.label'|trans|striptags }}">
+    <ol class="ob-steps-list">
+        {% for snippet in obSteps %}
+            {% set obIndex = loop.index %}
+            {% set obState = obIndex < obStep ? 'is-done' : (obIndex == obStep ? 'is-active' : 'is-upcoming') %}
+            <li class="ob-step {{ obState }}"{% if obIndex == obStep %} aria-current="step"{% endif %}>
+                <span class="ob-step-dot" aria-hidden="true">
+                    {% if obIndex < obStep %}
+                        {% sw_icon 'checkmark' style { size: 'xs' } %}
+                    {% else %}
+                        {{ obIndex }}
+                    {% endif %}
+                </span>
+                <span class="ob-step-label">
+                    {{ snippet|trans|sw_sanitize }}
+                    {% if obIndex < obStep %}
+                        <span class="visually-hidden">({{ 'obTheme.steps.done'|trans|sw_sanitize }})</span>
+                    {% endif %}
+                </span>
+            </li>
+        {% endfor %}
+    </ol>
+</nav>

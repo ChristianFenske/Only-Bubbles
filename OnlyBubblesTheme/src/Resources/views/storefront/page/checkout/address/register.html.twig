@@ -1,0 +1,8 @@
+{% sw_extends '@Storefront/storefront/page/checkout/address/register.html.twig' %}
+
+{% block page_checkout_register_personal_guest_label %}
+    <label class="custom-control-label" for="personalGuest">
+        {{ 'checkout.registerCustomermodeLabel'|trans|sw_sanitize }}
+        <small class="ob-check-hint">{{ 'obTheme.register.guestHint'|trans|sw_sanitize }}</small>
+    </label>
+{% endblock %}

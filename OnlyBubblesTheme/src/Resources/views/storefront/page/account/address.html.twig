@@ -1,0 +1,21 @@
+{% sw_extends '@Storefront/storefront/page/account/address.html.twig' %}
+
+{% block page_account_overview_billing_address_title %}
+    <div class="ob-card-head">
+        <h2 class="card-title">
+            {% sw_icon 'file' style { size: 'xs' } %}
+            {{ 'account.overviewBillingHeader'|trans|sw_sanitize }}
+        </h2>
+        <a class="ob-card-link" href="{{ path('frontend.account.address.page') }}">{{ 'obTheme.general.change'|trans|sw_sanitize }}</a>
+    </div>
+{% endblock %}
+
+{% block page_account_overview_shipping_address_title %}
+    <div class="ob-card-head">
+        <h2 class="card-title">
+            {% sw_icon 'marker' style { size: 'xs' } %}
+            {{ 'account.overviewShippingHeader'|trans|sw_sanitize }}
+        </h2>
+        <a class="ob-card-link" href="{{ path('frontend.account.address.page') }}">{{ 'obTheme.general.change'|trans|sw_sanitize }}</a>
+    </div>
+{% endblock %}

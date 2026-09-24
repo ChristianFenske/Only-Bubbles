@@ -1,0 +1,24 @@
+{
+    "name": "bitbrew/only-bubbles-theme",
+    "description": "Only Bubbles Theme based on WeineFeinkostTheme",
+    "authors": [
+        {
+            "name": "Bitbrew"
+        }
+    ],
+    "type": "shopware-platform-plugin",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "OnlyBubblesTheme\\": "src/"
+        }
+    },
+    "extra": {
+        "shopware-plugin-class": "OnlyBubblesTheme\\OnlyBubblesTheme",
+		"plugin-icon": "plugin-icon.png",
+        "label": {
+            "de-DE": "Only Bubbles Theme",
+            "en-GB": "Only Bubbles Theme"
+        }
+    }
+}

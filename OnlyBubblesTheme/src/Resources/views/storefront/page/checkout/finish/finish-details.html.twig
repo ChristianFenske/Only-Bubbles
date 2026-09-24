@@ -1,0 +1,157 @@
+{% sw_extends '@Storefront/storefront/page/checkout/finish/finish-details.html.twig' %}
+
+{% block page_checkout_finish_data %}
+    <section class="ob-finish-hero">
+        <div class="ob-finish-bubbles" aria-hidden="true">
+            {% for i in 1..10 %}<span></span>{% endfor %}
+        </div>
+
+        <div class="ob-finish-hero-inner">
+            <div class="ob-finish-check" aria-hidden="true">{% sw_icon 'checkmark' %}</div>
+
+            <p class="ob-eyebrow">{{ 'obTheme.finish.eyebrow'|trans|sw_sanitize }}</p>
+
+            {% block page_checkout_finish_header %}
+                <h1 class="finish-header">
+                    {% if page.changedPayment == true %}
+                        {{ 'checkout.finishUpdateHeader'|trans|sw_sanitize }}
+                    {% else %}
+                        {{ 'obTheme.finish.title'|trans|sw_sanitize }}
+                    {% endif %}
+                </h1>
+            {% endblock %}
+
+            {% block page_checkout_finish_subtitle %}
+                {{ parent() }}
+            {% endblock %}
+
+            {% block page_checkout_finish_content %}
+                <div class="finish-content">
+                    {% block page_checkout_finish_teaser %}
+                        {% if page.changedPayment != true %}
+                            <p class="finish-teaser">{{ 'obTheme.finish.text'|trans|sw_sanitize }}</p>
+                        {% endif %}
+                    {% endblock %}
+
+                    {% block page_checkout_finish_ordernumber %}
+                        <div class="finish-ordernumber ob-order-number" data-order-number="{{ page.order.orderNumber }}">
+                            <span class="ob-order-number-label">{{ 'obTheme.finish.orderNumber'|trans|sw_sanitize }}</span>
+                            <strong class="ob-order-number-value">{{ page.order.orderNumber }}</strong>
+                            <button type="button"
+                                    class="ob-copy-btn"
+                                    data-ob-copy-text="true"
+                                    data-ob-copy-text-options="{{ { value: page.order.orderNumber, copiedLabel: 'obTheme.finish.copied'|trans|striptags }|json_encode }}">
+                                {% sw_icon 'duplicate' style { size: 'xs' } %}
+                                <span class="ob-copy-label">{{ 'obTheme.finish.copy'|trans|sw_sanitize }}</span>
+                            </button>
+                        </div>
+                    {% endblock %}
+
+                    {% if block('page_checkout_finish_create_account') is defined %}
+                        {{ block('page_checkout_finish_create_account') }}
+                    {% endif %}
+                </div>
+            {% endblock %}
+
+            {% if block('page_checkout_finish_enhanced_conversions') is defined %}
+                {{ block('page_checkout_finish_enhanced_conversions') }}
+            {% endif %}
+
+            {% block page_checkout_finish_hidden_information_line_items %}
+                {{ parent() }}
+            {% endblock %}
+        </div>
+    </section>
+
+    <ol class="ob-timeline list-unstyled" aria-hidden="true">
+        <li class="is-done">
+            <span class="ob-timeline-dot">{% sw_icon 'checkmark' style { size: 'xs' } %}</span>
+            <strong>{{ 'obTheme.finish.timelineOrdered'|trans|sw_sanitize }}</strong>
+            <small>{{ 'obTheme.finish.timelineOrderedSub'|trans|sw_sanitize }}</small>
+        </li>
+        <li>
+            <span class="ob-timeline-dot">{% sw_icon 'package-closed' style { size: 'xs' } %}</span>
+            <strong>{{ 'obTheme.finish.timelineProcessing'|trans|sw_sanitize }}</strong>
+            <small>{{ 'obTheme.finish.timelineProcessingSub'|trans|sw_sanitize }}</small>
+        </li>
+        <li>
+            <span class="ob-timeline-dot">{% sw_icon 'truck' style { size: 'xs' } %}</span>
+            <strong>{{ 'obTheme.finish.timelineShipped'|trans|sw_sanitize }}</strong>
+            <small>{{ 'obTheme.finish.timelineShippedSub'|trans|sw_sanitize }}</small>
+        </li>
+        <li>
+            <span class="ob-timeline-dot">{% sw_icon 'sparkles' style { size: 'xs' } %}</span>
+            <strong>{{ 'obTheme.finish.timelineEnjoy'|trans|sw_sanitize }}</strong>
+            <small>{{ 'obTheme.finish.timelineEnjoySub'|trans|sw_sanitize }}</small>
+        </li>
+    </ol>
+
+    {% set obPaymentMethod = feature('v6.8.0.0')
+        ? page.order.primaryOrderTransaction.paymentMethod
+        : page.order.transactions.last.paymentMethod %}
+    {% set obIsPrepayment = obPaymentMethod
+        and (obPaymentMethod.technicalName == 'payment_prepayment'
+            or obPaymentMethod.handlerIdentifier ends with 'PrePayment') %}
+
+    {% if obIsPrepayment %}
+        <div class="ob-notice" role="note">
+            <span class="ob-notice-icon">{% sw_icon 'money-cash' style { size: 'xs' } %}</span>
+            <p>
+                <strong>{{ 'obTheme.finish.prepaymentTitle'|trans|sw_sanitize }}</strong>
+                {{ 'obTheme.finish.prepaymentText'|trans({
+                    '%amount%': page.order.amountTotal|currency(page.order.currency.isoCode)
+                })|sw_sanitize }}
+            </p>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_finish_order %}
+    <div class="finish-info ob-finish-info">
+        {{ block('page_checkout_finish_order_address') }}
+        {{ block('page_checkout_finish_order_details') }}
+    </div>
+{% endblock %}
+
+{% block page_checkout_finish_order_address %}
+    <div class="finish-address">
+        {% sw_include '@Storefront/storefront/page/checkout/finish/finish-address.html.twig' %}
+    </div>
+{% endblock %}
+
+{% block page_checkout_finish_order_details %}
+    <div class="finish-order-details">
+        <div class="card checkout-card">
+            <div class="card-body">
+                {% block page_checkout_finish_order_title %}
+                    <div class="card-title">
+                        {% sw_icon 'info' style { size: 'xs' } %}
+                        {{ 'obTheme.finish.infoTitle'|trans|sw_sanitize }}
+                    </div>
+                {% endblock %}
+
+                {% block page_checkout_finish_order_payment_method %}
+                    {% set obPaymentMethod = feature('v6.8.0.0')
+                        ? page.order.primaryOrderTransaction.paymentMethod
+                        : page.order.transactions.last.paymentMethod %}
+                    <p class="ob-info-row">
+                        <span class="ob-info-label">{{ 'obTheme.finish.paymentLabel'|trans|sw_sanitize }}</span>
+                        {{ obPaymentMethod.translated.name ?? '' }}
+                    </p>
+                {% endblock %}
+
+                {% block page_checkout_finish_order_dispatch_method %}
+                    {% set obShippingMethod = feature('v6.8.0.0')
+                        ? (page.order.primaryOrderDelivery.shippingMethod ?? null)
+                        : (page.order.deliveries.first.shippingMethod ?? null) %}
+                    {% if obShippingMethod %}
+                        <p class="ob-info-row">
+                            <span class="ob-info-label">{{ 'obTheme.finish.shippingLabel'|trans|sw_sanitize }}</span>
+                            {{ obShippingMethod.translated.name }}
+                        </p>
+                    {% endif %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

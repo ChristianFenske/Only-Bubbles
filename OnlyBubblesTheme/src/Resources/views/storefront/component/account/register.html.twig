@@ -1,0 +1,71 @@
+{% sw_extends '@Storefront/storefront/component/account/register.html.twig' %}
+
+{% set obIsCheckout = activeRoute starts with 'frontend.checkout' %}
+
+{% block component_account_register_header %}
+    {% if obEyebrow is defined and obEyebrow %}
+        <p class="ob-eyebrow">{{ obEyebrow }}</p>
+    {% endif %}
+
+    {{ parent() }}
+
+    {% if obIntro is defined and obIntro %}
+        <p class="ob-card-intro">{{ obIntro }}</p>
+    {% endif %}
+{% endblock %}
+
+{% block component_account_register_form %}
+    <div class="ob-counter-scope">
+        {{ parent() }}
+    </div>
+{% endblock %}
+
+{% block component_account_register_personal_legend %}
+    {% sw_include '@OnlyBubblesTheme/storefront/component/ob/section-head.html.twig' with {
+        title: (obIsCheckout ? 'obTheme.register.sectionPersonal' : 'obTheme.register.sectionAccount')|trans|sw_sanitize
+    } %}
+{% endblock %}
+
+{% block component_account_register_address_billing_header %}
+    {% sw_include '@OnlyBubblesTheme/storefront/component/ob/section-head.html.twig' with {
+        title: 'obTheme.register.sectionAddress'|trans|sw_sanitize
+    } %}
+{% endblock %}
+
+{% block component_account_register_address_different_shipping_control %}
+    <div class="form-check register-different-shipping ob-check-row mb-3">
+        {{ block('component_account_register_address_different_shipping_input') }}
+        {{ block('component_account_register_address_different_shipping_label') }}
+    </div>
+{% endblock %}
+
+{% block component_account_register_privacy %}
+    {% if obIsCheckout %}
+        <div class="ob-privacy-section">
+            {% sw_include '@OnlyBubblesTheme/storefront/component/ob/section-head.html.twig' with {
+                title: 'obTheme.register.sectionPrivacy'|trans|sw_sanitize,
+                tag: 'div'
+            } %}
+            {{ parent() }}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block component_account_register_required_fields %}
+    {# Pflichtfeld-Hinweis wird in der Button-Zeile ausgegeben #}
+{% endblock %}
+
+{% block component_account_register_submit %}
+    <div class="register-submit ob-form-footer">
+        <p class="register-required-info">
+            {{ 'global.default.noteRequiredFields'|trans|sw_sanitize }}
+        </p>
+
+        <button type="submit" class="btn btn-primary btn-lg">
+            {{ (obIsCheckout ? 'obTheme.register.submitCheckout' : 'obTheme.register.submitAccount')|trans|sw_sanitize }}
+            {% sw_icon 'arrow-right' style { size: 'xs' } %}
+        </button>
+    </div>
+{% endblock %}

@@ -1,0 +1,54 @@
+// ===========================================================================
+// Only Bubbles — Tokens für Konto & Checkout (aus dem Design-Handoff)
+// ===========================================================================
+
+$ob-ink-2:        #3a352d;   // Labels, Hover dunkler Buttons
+$ob-cream:        #fbf9f4;   // Seitenhintergrund
+$ob-sand:         #f4f2ec;   // Flächen (Checkbox-Zeilen, Pills, Tabellenkopf)
+$ob-line:         #e8e4dc;   // Karten-Rahmen
+$ob-line-input:   #dcd7cd;   // Input-Rahmen
+$ob-muted:        #6f675b;   // Nebentext auf hell
+$ob-gold-600:     #9a763a;   // Gold (Buttons, Pflicht-Stern, Fokus)
+$ob-gold-700:     #8a6a32;   // Gold Hover
+$ob-gold-light:   #d2b37e;   // Gold-Akzent auf dunkel
+$ob-on-dark:      #f3eee3;   // Text auf dunkel
+$ob-on-dark-60:   rgba(243, 238, 227, .6);
+$ob-on-dark-line: rgba(243, 238, 227, .14);
+
+$ob-radius-card:  16px;
+$ob-radius-input: 8px;
+$ob-radius-pill:  30px;
+
+$ob-shadow-card:  0 14px 34px rgba(40, 34, 26, .08);
+$ob-font-serif:   'Cormorant Garamond', Georgia, serif;
+$ob-font-sans:    'Jost', Arial, sans-serif;
+
+@mixin ob-card {
+    background: #fff;
+    border: 1px solid $ob-line;
+    border-radius: $ob-radius-card;
+}
+
+@mixin ob-card-dark {
+    background: $ob-ink;
+    color: $ob-on-dark;
+    border: 0;
+    border-radius: $ob-radius-card;
+}
+
+@mixin ob-eyebrow {
+    font-family: $ob-font-sans;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: $ob-gold-600;
+}
+
+@mixin ob-serif-title($size: 24px) {
+    font-family: $ob-font-serif;
+    font-weight: 600;
+    font-size: $size;
+    line-height: 1.15;
+    color: $ob-ink;
+}

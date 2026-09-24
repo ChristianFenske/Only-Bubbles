@@ -1,0 +1,30 @@
+{
+    "document": {
+        "date": "Datum: %date%",
+        "bankIban": "IBAN. %bankIban%",
+        "bankBic": "BIC: %bankBic%",
+        "vatId": "USt-IdNr. %vatId%",
+        "kontoinhaberTitle": "Kontoinhaber",
+        "kontoinhaberName": "Janus Fenske",
+        "agbText": "Es gelten unsere allgemeinen Geschäftsbedingungen.",
+        "deOekoText": "DE-ÖKO-039",
+        "emailText": "info@weine-feinkost.de",
+        "emailLabel": "E-Mail",
+        "internetText": "www.weine-feinkost.de",
+        "internetLabel": "Internet",
+        "telText": "0202 / 87966",
+        "telLabel": "Tel.",
+        "faxText": "0202 / 86880",
+        "faxLabel": "Fax.",
+        "lineItems": {
+            "header": {
+                "position": "Pos."
+            }
+        },
+        "paymentShippingInfo": {
+            "additionalInfoVerwendungszweck": "Bitte geben Sie bei der Überweisung als Verwendungszweck die Rechnungsnummer %invoiceNumber% an.",
+            "additionalInfoEigentumsvorbehalt": "Die Ware bleibt bis zur vollständigen Bezahlung unser Eigentum.",
+            "additionalInfoContorllNote": "Bitte kontrollieren Sie bei Erhalt die Vollständigkeit und den Zustand der Ware.<br>Beschädigungen müssen dem Lieferdienst unverzüglich angezeigt werden.<br>Spätere Reklamationen können nicht berücksichtigt werden."
+        }
+    }
+}

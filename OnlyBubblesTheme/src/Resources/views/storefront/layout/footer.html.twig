@@ -1,0 +1,53 @@
+{% sw_extends '@WeineFeinkostTheme/storefront/layout/footer.html.twig' %}
+
+{% block base_footer %}
+    <footer class="ob-footer footer-main">
+		<div class="footer-top">
+			<div class="container">
+				<div class="info-tiles">
+					{% set fastShippingLabel = 'footer.fastShippingLabel'|trans %}
+					{% set fastShippingText = 'footer.fastShippingText'|trans %}
+					{% set positiveFeedbacksLabel = 'footer.positiveFeedbacksLabel'|trans %}
+					{% set wineConsultationLabel = 'footer.wineConsultationLabel'|trans %}
+					{% set wineConsultationText = 'footer.wineConsultationText'|trans %}
+					{% set securePaymentLabel = 'footer.securePaymentLabel'|trans %}
+					{% set securePaymentText = 'footer.securePaymentText'|trans %}
+					{% set bestPriceLabel = 'footer.bestPriceLabel'|trans %}
+					{% set bestPriceText = 'footer.bestPriceText'|trans %}
+					<div class="info-tile" title="">
+						<span class="tile-icon fast-shipping-icon"></span>
+						<div>
+							<span class="tile-label">{{ fastShippingLabel == 'footer.fastShippingLabel' ? 'Schnell geliefert' : fastShippingLabel }}</span>
+							<span class="tile-text">{{ fastShippingText == 'footer.fastShippingText' ? 'Versand in 24 h, frei ab 12 Flaschen' : fastShippingText }}</span>
+						</div>
+					</div>
+					<div class="info-tile" title="">
+						<span class="tile-icon wine-consultation-icon"></span>
+						<div>
+							<span class="tile-label">{{ wineConsultationLabel == 'footer.wineConsultationLabel' ? 'Persönliche Beratung' : wineConsultationLabel }}</span>
+							<span class="tile-text">{{ wineConsultationText == 'footer.wineConsultationText' ? 'Schaumwein-Expertise per Mail' : wineConsultationText }}</span>
+						</div>
+					</div>
+					<div class="info-tile" title="">
+						<span class="tile-icon secure-payment-icon"></span>
+						<div>
+							<span class="tile-label">{{ securePaymentLabel == 'footer.securePaymentLabel' ? 'Sicher bezahlen' : securePaymentLabel }}</span>
+							<span class="tile-text">{{ securePaymentText == 'footer.securePaymentText' ? 'Rechnung, PayPal, Apple Pay & Karte' : securePaymentText }}</span>
+						</div>
+					</div>
+					<div class="info-tile" title="">
+						<span class="tile-icon best-price-icon"></span>
+						<div>
+							<span class="tile-label">{{ bestPriceLabel == 'footer.bestPriceLabel' ? 'Ausgezeichnet' : bestPriceLabel }}</span>
+							<span class="tile-text">{{ bestPriceText == 'footer.bestPriceText' ? 'wein.plus Premium-Mitglied' : bestPriceText }}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+        {% block base_footer_inner %}
+			{{ parent() }}
+        {% endblock %}
+    </footer>
+{% endblock %}

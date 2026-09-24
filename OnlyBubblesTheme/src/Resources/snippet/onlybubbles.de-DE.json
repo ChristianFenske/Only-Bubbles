@@ -1,0 +1,95 @@
+{
+    "obTheme": {
+        "general": {
+            "change": "Ändern",
+            "edit": "Bearbeiten",
+            "requiredHint": "Pflichtfeld"
+        },
+        "trust": {
+            "freeShipping": "Kostenloser Versand ab 12 Flaschen",
+            "secure": "Sichere, verschlüsselte Übertragung"
+        },
+        "steps": {
+            "label": "Bestellfortschritt",
+            "address": "Adresse",
+            "shippingPayment": "Versand & Zahlung",
+            "confirm": "Prüfen & Bestellen",
+            "done": "erledigt",
+            "current": "aktueller Schritt"
+        },
+        "login": {
+            "eyebrow": "Mein Konto",
+            "title": "Anmelden oder Konto erstellen",
+            "dealerRegister": "Als Händler registrieren",
+            "existingEyebrow": "Ich bin bereits Kunde",
+            "existingTitle": "Willkommen zurück",
+            "existingText": "Mit E-Mail-Adresse und Passwort einloggen.",
+            "advantagesTitle": "Ihre Vorteile als Kunde",
+            "advantage1": "Schneller einkaufen",
+            "advantage2": "Daten & Einstellungen speichern",
+            "advantage3": "Bestellübersicht & Sendungsverfolgung",
+            "advantage4": "Newsletter-Abo verwalten"
+        },
+        "register": {
+            "eyebrow": "Ich bin Neukunde",
+            "title": "Konto erstellen",
+            "text": "In wenigen Schritten zu Ihrem persönlichen Only-Bubbles-Konto.",
+            "sectionAccount": "Konto",
+            "sectionPersonal": "Persönliche Informationen",
+            "sectionAddress": "Ihre Adresse",
+            "sectionPrivacy": "Datenschutz",
+            "guestHint": "Bestellungen verfolgen und beim nächsten Mal schneller bestellen.",
+            "submitAccount": "Konto erstellen",
+            "submitCheckout": "Weiter zu Versand & Zahlung"
+        },
+        "checkout": {
+            "eyebrow": "Kasse",
+            "loginHint": "Sie sind bereits Kunde?",
+            "loginLink": "Hier einloggen",
+            "cart": "Warenkorb",
+            "summary": "Zusammenfassung",
+            "positions": "{1} 1 Position|]1,Inf[ %count% Positionen",
+            "orderTitle": "Ihre Bestellung",
+            "commentLabel": "Möchten Sie uns etwas zu Ihrer Bestellung mitteilen?",
+            "commentPlaceholder": "z. B. Geschenkverpackung, Lieferhinweis …",
+            "addressEqual": "Entspricht der Lieferadresse"
+        },
+        "finish": {
+            "eyebrow": "Bestellung erfolgreich",
+            "title": "Vielen Dank für Ihre Bestellung!",
+            "text": "Wir haben Ihre Bestellung erhalten und Ihnen eine Bestätigung per E-Mail geschickt. Zeit, die Gläser kalt zu stellen.",
+            "orderNumber": "Bestellnummer",
+            "copy": "Kopieren",
+            "copied": "Kopiert",
+            "timelineOrdered": "Bestellt",
+            "timelineOrderedSub": "Heute",
+            "timelineProcessing": "In Bearbeitung",
+            "timelineProcessingSub": "Zahlungseingang",
+            "timelineShipped": "Versendet",
+            "timelineShippedSub": "Tracking per E-Mail",
+            "timelineEnjoy": "Genießen",
+            "timelineEnjoySub": "2–3 Werktage",
+            "prepaymentTitle": "Zahlungsart Vorkasse:",
+            "prepaymentText": "Bitte überweisen Sie den Betrag von <strong>%amount%</strong> unter Angabe der Bestellnummer. Die Bankverbindung finden Sie in Ihrer Bestätigungs-E-Mail.",
+            "infoTitle": "Informationen",
+            "paymentLabel": "Zahlungsart",
+            "shippingLabel": "Versandart",
+            "continueShopping": "Weiter einkaufen",
+            "toAccount": "Zu meinem Konto"
+        },
+        "account": {
+            "eyebrow": "Mein Konto",
+            "hello": "Hallo,",
+            "welcome": "Willkommen zurück, %name%",
+            "revocation": "Bestellung widerrufen",
+            "manageAddresses": "Adressen verwalten",
+            "editProfile": "Profil bearbeiten",
+            "newsletterTitle": "Newsletter-Abonnement",
+            "defaultShipping": "Standard-Lieferadresse",
+            "defaultBilling": "Standard-Rechnungsadresse",
+            "ordersEmptyTitle": "Noch keine Bestellungen",
+            "ordersEmptyText": "Sobald Sie bei uns bestellt haben, finden Sie hier alle Bestellungen mit Status und Details.",
+            "ordersEmptyCta": "Schaumweine entdecken"
+        }
+    }
+}

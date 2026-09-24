@@ -1,0 +1,32 @@
+{% sw_extends '@Storefront/storefront/page/account/index.html.twig' %}
+
+{% block page_account_overview_welcome %}
+    <div class="account-welcome ob-welcome-hero">
+        <div class="ob-bubbles ob-bubbles-corner" aria-hidden="true"><span></span><span></span><span></span></div>
+        <p class="ob-eyebrow">{{ 'obTheme.account.eyebrow'|trans|sw_sanitize }}</p>
+        <h1>{{ 'obTheme.account.welcome'|trans({'%name%': context.customer.firstName})|sw_sanitize }}</h1>
+
+        {% block page_account_overview_welcome_intro %}
+            {{ parent() }}
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block page_account_overview_profile_title %}
+    <div class="ob-card-head">
+        <h2 class="card-title">
+            {% sw_icon 'avatar' style { size: 'xs' } %}
+            {{ 'account.overviewProfileHeader'|trans|sw_sanitize }}
+        </h2>
+        <a class="ob-card-link" href="{{ path('frontend.account.profile.page') }}">{{ 'obTheme.general.edit'|trans|sw_sanitize }}</a>
+    </div>
+{% endblock %}
+
+{% block page_account_overview_newsletter_title %}
+    <div class="ob-card-head">
+        <h2 class="card-title">
+            {% sw_icon 'envelope' style { size: 'xs' } %}
+            {{ 'obTheme.account.newsletterTitle'|trans|sw_sanitize }}
+        </h2>
+    </div>
+{% endblock %}

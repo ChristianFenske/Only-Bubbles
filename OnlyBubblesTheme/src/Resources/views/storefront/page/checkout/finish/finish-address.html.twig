@@ -1,0 +1,15 @@
+{% sw_extends '@Storefront/storefront/page/checkout/finish/finish-address.html.twig' %}
+
+{% block page_checkout_finish_address_shipping_title %}
+    <div class="card-title">
+        {% sw_icon 'marker' style { size: 'xs' } %}
+        {{ 'checkout.shippingAddressHeader'|trans|sw_sanitize }}
+    </div>
+{% endblock %}
+
+{% block page_checkout_finish_address_billing_title %}
+    <div class="card-title">
+        {% sw_icon 'file' style { size: 'xs' } %}
+        {{ 'checkout.billingAddressHeader'|trans|sw_sanitize }}
+    </div>
+{% endblock %}

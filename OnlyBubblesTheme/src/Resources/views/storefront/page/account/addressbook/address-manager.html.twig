@@ -1,0 +1,18 @@
+{% sw_extends '@Storefront/storefront/page/account/addressbook/address-manager.html.twig' %}
+
+{# Überschriften über den beiden Standard-Adressen (Desktop). Mobil zeigt das Badge den Typ. #}
+{% block address_base_default_address %}
+    <div class="row g-3 ob-default-address-headings d-none d-lg-flex" aria-hidden="true">
+        <p class="col-lg-6 ob-default-address-heading">{{ 'obTheme.account.defaultShipping'|trans|sw_sanitize }}</p>
+        <p class="col-lg-6 ob-default-address-heading">{{ 'obTheme.account.defaultBilling'|trans|sw_sanitize }}</p>
+    </div>
+    {{ parent() }}
+{% endblock %}
+
+{% block address_base_list_create_address %}
+    <a href="{{ path('frontend.account.address.create.page') }}"
+       class="address-manager-modal-address-form btn ob-btn-outline flex-shrink-0">
+        {% sw_icon 'plus' style { size: 'xs' } %}
+        {{ 'account.addressCreateBtn'|trans|sw_sanitize }}
+    </a>
+{% endblock %}

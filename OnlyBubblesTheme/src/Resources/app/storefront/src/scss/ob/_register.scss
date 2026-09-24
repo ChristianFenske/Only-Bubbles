@@ -1,0 +1,209 @@
+// ===========================================================================
+// Anmelden / Konto erstellen  (/account/login)
+// ===========================================================================
+
+.account-register {
+    padding: 8px 0 72px;
+
+    .ob-register-grid {
+        display: grid;
+        grid-template-columns: 5fr 7fr;
+        gap: 32px;
+        align-items: start;
+    }
+
+    // --- Dunkle Login-Karte -------------------------------------------------
+    .ob-login-panel {
+        @include ob-card-dark;
+        position: sticky;
+        top: 24px;
+        overflow: hidden;
+        padding: 44px 40px 40px;
+
+        .login-card {
+            background: transparent;
+            border: 0;
+            margin: 0 !important;
+
+            .card-body { padding: 0; }
+        }
+
+        .ob-eyebrow { color: $ob-gold-light; }
+
+        .card-title {
+            @include ob-serif-title(34px);
+            font-weight: 500;
+            color: $ob-on-dark;
+            margin-bottom: 8px;
+        }
+
+        .login-form-description {
+            color: $ob-on-dark-60;
+            font-size: 14.5px;
+            margin-bottom: 28px;
+        }
+
+        .form-label { color: $ob-on-dark; }
+        .form-required-label { color: $ob-gold-light; }
+
+        .form-control {
+            background: rgba(255, 255, 255, .05);
+            border-color: rgba(243, 238, 227, .18);
+            color: $ob-on-dark;
+
+            &::placeholder { color: rgba(243, 238, 227, .4); }
+
+            &:focus {
+                border-color: $ob-gold-light;
+                box-shadow: 0 0 0 3px rgba(210, 179, 126, .18);
+            }
+        }
+
+        .ob-password-toggle {
+            color: rgba(243, 238, 227, .6);
+
+            &:hover { color: $ob-gold-light; }
+        }
+
+        .row.g-2 > .form-group {
+            width: 100%;
+        }
+
+        .login-password-recover a {
+            color: $ob-gold-light;
+            font-size: 13.5px;
+            text-decoration: none;
+
+            &:hover { text-decoration: underline; }
+        }
+
+        .login-submit .btn { width: 100%; }
+
+        .alert { border-radius: 10px; }
+    }
+
+    .login-advantages {
+        margin-top: 36px;
+        padding-top: 32px;
+        border-top: 1px solid $ob-on-dark-line;
+
+        .login-advantages-header {
+            @include ob-serif-title(24px);
+            font-weight: 500;
+            color: $ob-on-dark;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 14.5px;
+            color: $ob-on-dark;
+
+            + li { margin-top: 14px; }
+        }
+    }
+
+    // --- Helle Registrierungskarte -----------------------------------------
+    .ob-register-panel {
+        .register-card {
+            @include ob-card;
+            padding: 44px;
+
+            > .card-body { padding: 0; }
+        }
+
+        .card-title {
+            @include ob-serif-title(34px);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+    }
+}
+
+// Gilt für Registrierung auf der Login-Seite UND im Checkout
+.register-card {
+    .register-personal,
+    .register-billing,
+    .register-shipping {
+        border: 0;
+        padding: 0;
+        margin: 0;
+    }
+
+    // Abweichende Lieferadresse: gestrichelter Rahmen
+    .register-shipping {
+        margin-top: 8px;
+        padding: 24px 24px 8px;
+        border: 1.5px dashed $ob-line-input;
+        border-radius: 12px;
+
+        > legend.card-title {
+            float: none;
+            width: auto;
+            padding: 0 8px;
+            margin: 0 0 8px -8px;
+            @include ob-serif-title(20px);
+        }
+    }
+
+    .privacy-notice {
+        margin-top: 32px;
+        padding-top: 0;
+        font-size: 13.5px;
+        color: $ob-muted;
+
+        .privacy-notice-title { display: none; }
+        br { display: none; }
+    }
+
+    .ob-privacy-section .privacy-notice { margin-top: 0; }
+
+    .ob-form-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        flex-wrap: wrap;
+        margin-top: 28px;
+        padding-top: 28px;
+        border-top: 1px solid $ob-line;
+
+        .register-required-info {
+            margin: 0;
+            font-size: 12.5px;
+            color: $ob-muted;
+        }
+    }
+
+    .captcha-wrapper,
+    .basic-captcha { margin-top: 16px; }
+}
+
+@include media-breakpoint-down(lg) {
+    .account-register {
+        .ob-register-grid { grid-template-columns: 1fr; }
+
+        .ob-login-panel {
+            position: relative;
+            top: 0;
+            padding: 32px 24px;
+        }
+
+        .ob-register-panel .register-card { padding: 28px 20px; }
+    }
+
+    .register-card .ob-form-footer {
+        flex-direction: column-reverse;
+        align-items: stretch;
+
+        .btn { width: 100%; }
+    }
+}

@@ -1,0 +1,61 @@
+{% sw_extends '@Framework/documents/delivery_note.html.twig' %}
+
+{% block document_side_info_contents %}
+    {% block document_side_info_customer_number %}
+        <tr>
+            <td>
+                {{ 'document.customerNumber'|trans({
+                    '%customerNumber%': customer.customerNumber
+                })|sw_sanitize(null, true) }}
+            </td>
+        </tr>
+    {% endblock %}
+
+    {% block document_side_info_order_number %}
+        <tr>
+            <td>
+                {{ 'document.orderNumber'|trans({
+                    '%orderNumber%': order.orderNumber
+                })|sw_sanitize(null, true) }}
+            </td>
+        </tr>
+    {% endblock %}
+
+    {% block document_side_info_order_date %}
+        <tr>
+            <td>
+                {{ 'document.orderDate'|trans({
+                    '%orderDate%': order.orderDateTime|format_date(
+                        'medium',
+                        locale=locale
+                    )
+                })|sw_sanitize(null, true) }}
+            </td>
+        </tr>
+    {% endblock %}
+
+    {% block document_side_info_date %}
+        <tr>
+            <td>
+                {{ 'document.date'|trans({
+                    '%date%': config.documentDate|format_date(
+                        'medium',
+                        locale=locale
+                    )
+                })|sw_sanitize(null, true) }}
+            </td>
+        </tr>
+    {% endblock %}
+{% endblock %}
+
+{% block document_payment_shipping_additional %}
+	<br><br><br>
+	{{ 'document.paymentShippingInfo.deliveryAssignLabel'|trans|raw }}: <span class="assignment_line"></span><br><br>
+
+	{{ 'document.paymentShippingInfo.additionalInfoContorllNote'|trans|raw }}<br><br>
+	{{ 'document.paymentShippingInfo.additionalInfoThanksText'|trans|sw_sanitize(null, true) }}<br>
+{% endblock %}
+{% block document_payment %}
+{% endblock %}
+{% block document_shipping %}
+{% endblock %}

@@ -1,0 +1,95 @@
+{
+    "obTheme": {
+        "general": {
+            "change": "Change",
+            "edit": "Edit",
+            "requiredHint": "Required field"
+        },
+        "trust": {
+            "freeShipping": "Free shipping from 12 bottles",
+            "secure": "Secure, encrypted transmission"
+        },
+        "steps": {
+            "label": "Checkout progress",
+            "address": "Address",
+            "shippingPayment": "Shipping & payment",
+            "confirm": "Review & order",
+            "done": "done",
+            "current": "current step"
+        },
+        "login": {
+            "eyebrow": "My account",
+            "title": "Log in or create an account",
+            "dealerRegister": "Register as a retailer",
+            "existingEyebrow": "I am a returning customer",
+            "existingTitle": "Welcome back",
+            "existingText": "Log in with your email address and password.",
+            "advantagesTitle": "Your benefits as a customer",
+            "advantage1": "Faster checkout",
+            "advantage2": "Save data & preferences",
+            "advantage3": "Order overview & tracking",
+            "advantage4": "Manage newsletter subscription"
+        },
+        "register": {
+            "eyebrow": "I am a new customer",
+            "title": "Create account",
+            "text": "Your personal Only Bubbles account in just a few steps.",
+            "sectionAccount": "Account",
+            "sectionPersonal": "Personal information",
+            "sectionAddress": "Your address",
+            "sectionPrivacy": "Privacy",
+            "guestHint": "Track orders and check out faster next time.",
+            "submitAccount": "Create account",
+            "submitCheckout": "Continue to shipping & payment"
+        },
+        "checkout": {
+            "eyebrow": "Checkout",
+            "loginHint": "Already a customer?",
+            "loginLink": "Log in here",
+            "cart": "Shopping cart",
+            "summary": "Summary",
+            "positions": "{1} 1 item|]1,Inf[ %count% items",
+            "orderTitle": "Your order",
+            "commentLabel": "Anything you would like to tell us about your order?",
+            "commentPlaceholder": "e.g. gift wrapping, delivery note …",
+            "addressEqual": "Same as shipping address"
+        },
+        "finish": {
+            "eyebrow": "Order successful",
+            "title": "Thank you for your order!",
+            "text": "We have received your order and sent you a confirmation email. Time to chill the glasses.",
+            "orderNumber": "Order number",
+            "copy": "Copy",
+            "copied": "Copied",
+            "timelineOrdered": "Ordered",
+            "timelineOrderedSub": "Today",
+            "timelineProcessing": "Processing",
+            "timelineProcessingSub": "Payment received",
+            "timelineShipped": "Shipped",
+            "timelineShippedSub": "Tracking via email",
+            "timelineEnjoy": "Enjoy",
+            "timelineEnjoySub": "2–3 working days",
+            "prepaymentTitle": "Payment in advance:",
+            "prepaymentText": "Please transfer <strong>%amount%</strong> quoting the order number. You will find our bank details in your confirmation email.",
+            "infoTitle": "Information",
+            "paymentLabel": "Payment method",
+            "shippingLabel": "Shipping method",
+            "continueShopping": "Continue shopping",
+            "toAccount": "Go to my account"
+        },
+        "account": {
+            "eyebrow": "My account",
+            "hello": "Hello,",
+            "welcome": "Welcome back, %name%",
+            "revocation": "Revoke order",
+            "manageAddresses": "Manage addresses",
+            "editProfile": "Edit profile",
+            "newsletterTitle": "Newsletter subscription",
+            "defaultShipping": "Default shipping address",
+            "defaultBilling": "Default billing address",
+            "ordersEmptyTitle": "No orders yet",
+            "ordersEmptyText": "As soon as you have ordered from us, you will find all orders with status and details here.",
+            "ordersEmptyCta": "Discover sparkling wines"
+        }
+    }
+}

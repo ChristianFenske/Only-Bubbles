@@ -1,0 +1,176 @@
+{% sw_extends '@Storefront/storefront/page/checkout/confirm/index.html.twig' %}
+
+{% block page_checkout %}
+    <div class="ob-checkout ob-checkout-confirm">
+        {% sw_include '@OnlyBubblesTheme/storefront/component/ob/checkout-steps.html.twig' with { obStep: 3 } %}
+        {{ parent() }}
+    </div>
+{% endblock %}
+
+{% block page_checkout_confirm_header %}
+    <div class="ob-confirm-head">
+        <h1 class="confirm-main-header">{{ 'checkout.confirmHeader'|trans|sw_sanitize }}</h1>
+        <span class="confirm-main-header-item-counter">
+            {{ 'obTheme.checkout.positions'|trans({'%count%': page.cart.lineItems|length})|sw_sanitize }}
+        </span>
+    </div>
+{% endblock %}
+
+{# AGB/Widerruf wandern in die Seitenleiste (siehe page_checkout_confirm_tos_auto_confirmed) #}
+{% block page_checkout_confirm_tos %}{% endblock %}
+
+{% block page_checkout_confirm_product_table %}
+    <div class="confirm-product">
+        <div class="card checkout-card ob-order-card">
+            <div class="card-body">
+                <div class="ob-card-head">
+                    <div class="card-title">{{ 'obTheme.checkout.orderTitle'|trans|sw_sanitize }}</div>
+                    <span class="ob-card-head-meta">
+                        {{ 'obTheme.checkout.positions'|trans({'%count%': page.cart.lineItems|length})|sw_sanitize }}
+                    </span>
+                </div>
+
+                <ul class="list-unstyled ob-line-items">
+                    {{ block('page_checkout_confirm_table_items') }}
+                </ul>
+
+                {% if config('core.cart.showCustomerComment') %}
+                    {% set obCommentKey = constant('Shopware\\Core\\Checkout\\Order\\SalesChannel\\OrderService::CUSTOMER_COMMENT_KEY') %}
+                    <div class="checkout-customer-comment-control ob-comment">
+                        <label class="form-label" for="{{ obCommentKey }}">
+                            {{ 'obTheme.checkout.commentLabel'|trans|sw_sanitize }}
+                        </label>
+                        <textarea class="form-control"
+                                  placeholder="{{ 'obTheme.checkout.commentPlaceholder'|trans|sw_sanitize }}"
+                                  id="{{ obCommentKey }}"
+                                  form="confirmOrderForm"
+                                  name="{{ obCommentKey }}"></textarea>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{# Kommentar sitzt jetzt in der Karte "Ihre Bestellung" #}
+{% block page_checkout_additional %}{% endblock %}
+
+{% block page_checkout_aside_summary %}
+    <div class="ob-summary-card">
+        <div class="ob-bubbles ob-bubbles-corner" aria-hidden="true"><span></span><span></span><span></span></div>
+        {{ parent() }}
+        {{ block('page_checkout_aside_actions_inner') }}
+    </div>
+{% endblock %}
+
+{% block page_checkout_summary_header %}
+    <h2 class="checkout-aside-summary-header">{{ 'obTheme.checkout.summary'|trans|sw_sanitize }}</h2>
+{% endblock %}
+
+{# Die Aktionen (AGB + Bestell-Button) werden in der dunklen Karte gerendert #}
+{% block page_checkout_aside_actions %}
+    {% sw_include '@OnlyBubblesTheme/storefront/component/ob/trust-box.html.twig' %}
+{% endblock %}
+
+{% block page_checkout_aside_actions_inner %}
+    {{ block('ob_confirm_tos') }}
+
+    {% if block('page_checkout_confirm_legal_guarantee_notice') is defined %}
+        {{ block('page_checkout_confirm_legal_guarantee_notice') }}
+    {% endif %}
+
+    <div class="checkout-aside-action">
+        <form id="confirmOrderForm"
+              action="{{ confirmOrderFormAction }}"
+              data-checkout-customer-storage="true"
+              data-checkout-customer-storage-options="{{ { customerId: context.customer.id }|json_encode }}"
+              data-form-preserver="true"
+              data-form-preserver-options="{{ { ignoredElementNames: [constant('Shopware\\Core\\Checkout\\Order\\SalesChannel\\OrderService::CUSTOMER_COMMENT_KEY'), 'tos'] }|json_encode }}"
+              data-form-handler="true"
+              data-form-handler-options="{{ { formFieldSelector: null }|json_encode }}"
+              data-form-add-history="true"
+              data-form-add-history-options="{{ formAddHistoryOptions|json_encode }}"
+              method="post">
+
+            <input type="text" name="hash" hidden="hidden" value="{{ page.cart.getHash }}" />
+
+            {{ block('page_checkout_confirm_form_submit') }}
+        </form>
+    </div>
+{% endblock %}
+
+{# Eigener Block (statt page_checkout_confirm_tos_auto_confirmed), damit das Template
+   in allen 6.7.x-Versionen gleich funktioniert. #}
+{% block ob_confirm_tos %}
+    {% set cmsPath = 'frontend.cms.page' %}
+    {% set obShowGuarantee = config('core.cart.showLegalGuaranteeNotice') ? true : false %}
+    {% set obGuaranteeOpen = '<button type="button" class="btn btn-link-inline" aria-haspopup="dialog" data-bs-toggle="modal" data-bs-target="#legalGuaranteeNoticeModal">' %}
+    {% set tosModalTagOpen = '<button type="button" class="checkout-confirm-terms-modal btn btn-link-inline" aria-haspopup="dialog" data-ajax-modal="true" data-url="' ~ path(cmsPath, { id: config('core.basicInformation.tosPage') }) ~ '">' %}
+    {% set tosModalTagClose = '</button>' %}
+
+    {% if feature('v6.8.0.0') and not config('core.cart.showTosCheckbox') and block('page_checkout_confirm_tos_auto_confirmed') is defined %}
+        {{ block('page_checkout_confirm_tos_auto_confirmed') }}
+    {% else %}
+        <div class="confirm-tos">
+            <div class="form-check ob-check-row ob-check-row-dark">
+                <input type="checkbox"
+                       class="checkout-confirm-tos-checkbox form-check-input{% if formViolations.getViolations('/tos') is not empty %} is-invalid{% endif %}"
+                       required="required"
+                       id="tos"
+                       form="confirmOrderForm"
+                       name="tos">
+                <label for="tos" class="checkout-confirm-tos-label custom-control-label">
+                    {{ (obShowGuarantee ? 'checkout.confirmTermsTextModalWithGuarantee' : 'checkout.confirmTermsTextModal')|trans({
+                        '%tosModalTagOpen%': tosModalTagOpen,
+                        '%tosModalTagClose%': tosModalTagClose,
+                        '%legalGuaranteeNoticeModalTagOpen%': obGuaranteeOpen,
+                        '%legalGuaranteeNoticeModalTagClose%': '</button>',
+                    })|raw }}
+                </label>
+            </div>
+
+            {% if page.showRevocation is defined and page.showRevocation %}
+                <div class="form-check ob-check-row ob-check-row-dark">
+                    <input type="checkbox"
+                           class="checkout-confirm-revocation-checkbox form-check-input{% if formViolations.getViolations('/revocation') is not empty %} is-invalid{% endif %}"
+                           required="required"
+                           id="revocation"
+                           form="confirmOrderForm"
+                           name="revocation">
+                    <label for="revocation" class="checkout-confirm-revocation-label custom-control-label">
+                        {{ 'checkout.confirmRevocationTerms'|trans() }}
+                    </label>
+                </div>
+            {% endif %}
+
+            <p class="revocation-notice">
+                {{ 'checkout.confirmRevocationNoticeModal'|trans({
+                    '%revocationModalTagOpen%': '<button type="button" class="btn btn-link-inline" aria-haspopup="dialog" data-ajax-modal="true" data-url="' ~ path(cmsPath, { id: config('core.basicInformation.revocationPage') }) ~ '">',
+                    '%revocationModalTagClose%': '</button>'
+                })|raw }}
+            </p>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_confirm_form_submit %}
+    <div class="d-grid">
+        <button id="confirmFormSubmit"
+                class="btn btn-primary btn-lg ob-btn-gold"
+                form="confirmOrderForm"
+                {% if page.cart.errors.blockResubmit %}disabled{% endif %}
+                type="submit">
+            {% sw_icon 'lock-closed' style { size: 'xs' } %}
+            {{ 'checkout.confirmSubmit'|trans|sw_sanitize }}
+        </button>
+    </div>
+{% endblock %}
+
+{# Voller Shop-Header/-Footer wie im Design (Shopware nutzt im Checkout sonst die Minimal-Variante) #}
+{% block base_esi_header %}
+    {{ render_esi(path('frontend.header', { headerParameters: headerParameters }), { ignore_errors: false }) }}
+{% endblock %}
+
+{% block base_esi_footer %}
+    {{ render_esi(path('frontend.footer', { footerParameters: footerParameters }), { ignore_errors: false }) }}
+{% endblock %}

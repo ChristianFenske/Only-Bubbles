@@ -1,0 +1,64 @@
+{% sw_extends '@Storefront/storefront/page/account/sidebar.html.twig' %}
+
+{% block page_account_sidebar_header %}
+    {% if not headerWidget %}
+        {% set obInitials = (context.customer.firstName|first ~ context.customer.lastName|first)|upper %}
+        <div class="card-header account-aside-header ob-aside-head">
+            <span class="ob-avatar" aria-hidden="true">{{ obInitials }}</span>
+            <span class="ob-aside-greeting">
+                <small>{{ 'obTheme.account.hello'|trans|sw_sanitize }}</small>
+                <strong>{{ context.customer.title }} {{ context.customer.firstName }} {{ context.customer.lastName }}</strong>
+            </span>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block page_account_sidebar_link_home %}
+    <a href="{{ path('frontend.account.home.page') }}"
+       title="{{ 'account.overviewLink'|trans|striptags }}"
+       class="list-group-item list-group-item-action account-aside-item{% if activeRoute is same as('frontend.account.home.page') %} is-active{% endif %}"
+       {% if activeRoute is same as('frontend.account.home.page') %} aria-current="page"{% endif %}>
+        {% sw_icon 'dashboard' style { size: 'xs' } %}
+        {{ 'account.overviewLink'|trans|sw_sanitize }}
+    </a>
+{% endblock %}
+
+{% block page_account_sidebar_link_profile %}
+    <a href="{{ path('frontend.account.profile.page') }}"
+       title="{{ 'account.profileLink'|trans|striptags }}"
+       class="list-group-item list-group-item-action account-aside-item{% if activeRoute is same as('frontend.account.profile.page') %} is-active{% endif %}"
+       {% if activeRoute is same as('frontend.account.profile.page') %} aria-current="page"{% endif %}>
+        {% sw_icon 'avatar' style { size: 'xs' } %}
+        {{ 'account.profileLink'|trans|sw_sanitize }}
+    </a>
+{% endblock %}
+
+{% block page_account_sidebar_link_address %}
+    <a href="{{ path('frontend.account.address.page') }}"
+       title="{{ 'account.addressLink'|trans|striptags }}"
+       class="list-group-item list-group-item-action account-aside-item{% if activeRoute starts with('frontend.account.address') %} is-active{% endif %}"
+       {% if activeRoute starts with('frontend.account.address.page') %} aria-current="page"{% endif %}>
+        {% sw_icon 'marker' style { size: 'xs' } %}
+        {{ 'account.addressLink'|trans|sw_sanitize }}
+    </a>
+{% endblock %}
+
+{% block page_account_sidebar_link_orders %}
+    <a href="{{ path('frontend.account.order.page') }}"
+       title="{{ 'account.ordersLink'|trans|striptags }}"
+       class="list-group-item list-group-item-action account-aside-item{% if activeRoute is same as('frontend.account.order.page') %} is-active{% endif %}"
+       {% if activeRoute is same as('frontend.account.order.page') %} aria-current="page"{% endif %}>
+        {% sw_icon 'package-closed' style { size: 'xs' } %}
+        {{ 'account.ordersLink'|trans|sw_sanitize }}
+    </a>
+
+    {% set obRevocationUrl = theme_config('ob-link-revocation') %}
+    {% if obRevocationUrl %}
+        <a href="{{ obRevocationUrl }}"
+           title="{{ 'obTheme.account.revocation'|trans|striptags }}"
+           class="list-group-item list-group-item-action account-aside-item{% if app.request.pathInfo == obRevocationUrl %} is-active{% endif %}">
+            {% sw_icon 'arrow-turn-left' style { size: 'xs' } %}
+            {{ 'obTheme.account.revocation'|trans|sw_sanitize }}
+        </a>
+    {% endif %}
+{% endblock %}

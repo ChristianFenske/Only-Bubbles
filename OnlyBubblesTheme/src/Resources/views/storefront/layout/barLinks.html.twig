@@ -1,0 +1,38 @@
+<div class="bar-links">
+	<div class="container">
+		<div class="topbar-infos-text-box">
+			{% set infoText = 'header.topBarInfoText'|trans %}
+			<span class="icon-stars"></span>
+			<span  class="topbar-infos-text">
+				{{ infoText == 'header.topBarInfoText' ? 'Kostenloser Versand ab 12 Flaschen' : infoText }}
+			</span>
+		</div>
+		<div class="magazin-link">
+			{% set magazinUrl = 'header.topBarMagazinLink'|trans %}
+			<a href="{{ magazinUrl == 'header.topBarMagazinLink' ? 'https://www.only-bubbles.de/unterwegs/' : magazinUrl }}" title="MAGAZIN" target="_blank">
+				<span class="icon-edit-3"></span>
+				<span class="magazin-label">MAGAZIN</span>
+				{% set magazinText = 'header.topBarMagazinText'|trans %}
+				<span class="is--hidden-phone">{{ magazinText == 'header.topBarMagazinText' ? ': Only Bubbles — Unterwegs' : magazinText }}</span>
+			</a>
+		</div>
+		<div class="some-links">
+			{% set facebookUrl = 'some.facebookUrl'|trans %}
+			{% set xUrl = 'some.xUrl'|trans %}
+			{% set instagramUrl = 'some.instagramUrl'|trans %}
+			{% set linkedinUrl = 'some.linkedinUrl'|trans %}
+			<a class="btn btn-primary" href="{{ facebookUrl == 'some.facebookUrl' ? 'https://www.facebook.com/WeineFeinkostChristianFenske' : facebookUrl }}" title="Facebook" target="_blank">
+				<span class="icon-facebook"></span>
+			</a>
+			<a class="btn btn-primary" href="{{ xUrl == 'some.xUrl' ? 'https://x.com/WeineFeinkost' : xUrl }}" title="X" target="_blank">
+				<span class="icon-x"></span>
+			</a>
+			<a class="btn btn-primary" href="{{ instagramUrl == 'some.instagramUrl' ? 'https://www.instagram.com/weine_und_feinkost/' : instagramUrl }}" title="Instagram" target="_blank">
+				<span class="icon-instagram"></span>
+			</a>
+			<a class="btn btn-primary" href="{{ linkedinUrl == 'some.linkedinUrl' ? 'https://www.linkedin.com/uas/login?session_redirect=%2Fcompany%2F105995195' : linkedinUrl }}" title="LinkedIn" target="_blank">
+				<span class="icon-linkedin"></span>
+			</a>
+		</div>
+	</div>
+</div>

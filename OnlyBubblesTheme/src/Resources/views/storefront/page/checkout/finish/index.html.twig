@@ -1,0 +1,61 @@
+{% sw_extends '@Storefront/storefront/page/checkout/finish/index.html.twig' %}
+
+{% block page_checkout %}
+    <div class="checkout ob-finish">
+        {{ block('base_flashbags_checkout') }}
+
+        {{ block('page_checkout_finish_details') }}
+
+        <div class="ob-finish-grid">
+            <div class="ob-finish-main">
+                {{ block('page_checkout_finish_product_table') }}
+                {{ block('page_checkout_additional') }}
+            </div>
+
+            <aside class="ob-finish-aside">
+                <div class="checkout-aside-summary ob-summary-card">
+                    <h2 class="checkout-aside-summary-header">{{ 'obTheme.checkout.summary'|trans|sw_sanitize }}</h2>
+                    {% sw_include '@Storefront/storefront/page/checkout/summary.html.twig' %}
+                </div>
+            </aside>
+        </div>
+
+        <div class="ob-finish-actions">
+            <a href="{{ path('frontend.home.page') }}" class="btn btn-primary btn-lg">
+                {{ 'obTheme.finish.continueShopping'|trans|sw_sanitize }}
+                {% sw_icon 'arrow-right' style { size: 'xs' } %}
+            </a>
+            {% if context.customer and not context.customer.guest %}
+                <a href="{{ path('frontend.account.home.page') }}" class="btn ob-btn-outline btn-lg">
+                    {% sw_icon 'avatar' style { size: 'xs' } %}
+                    {{ 'obTheme.finish.toAccount'|trans|sw_sanitize }}
+                </a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block page_checkout_finish_product_table %}
+    <div class="card checkout-card checkout-product-table ob-order-card">
+        <div class="card-body">
+            <div class="ob-card-head">
+                <div class="card-title">
+                    {% sw_icon 'bag' style { size: 'xs' } %}
+                    {{ 'obTheme.checkout.orderTitle'|trans|sw_sanitize }}
+                </div>
+            </div>
+            <ul class="list-unstyled ob-line-items">
+                {{ block('page_checkout_finish_items') }}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
+{# Voller Shop-Header/-Footer wie im Design (Shopware nutzt im Checkout sonst die Minimal-Variante) #}
+{% block base_esi_header %}
+    {{ render_esi(path('frontend.header', { headerParameters: headerParameters }), { ignore_errors: false }) }}
+{% endblock %}
+
+{% block base_esi_footer %}
+    {{ render_esi(path('frontend.footer', { footerParameters: footerParameters }), { ignore_errors: false }) }}
+{% endblock %}

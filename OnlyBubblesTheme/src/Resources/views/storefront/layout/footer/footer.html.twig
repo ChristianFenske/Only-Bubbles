@@ -1,0 +1,214 @@
+{% sw_extends '@WeineFeinkostTheme/storefront/layout/footer/footer.html.twig' %}
+
+{% block layout_footer_vat %}
+{% endblock %}
+
+{% block layout_footer_navigation_hotline %}
+	{% set footerCategories = ['Weine', 'Länder/Regionen', 'Rebsorten', 'Feinkost', 'Spirituosen'] %}
+	{% set footerNoSubCategories = ['Fruchtsäfte', 'Probierpakete', 'Geschenkeservice', 'Veranstaltungen'] %}
+	
+	{# Get main navigation tree with al #}
+	{% set mainTree = footer.extensions.mainNavigation.tree ?? [] %}
+	
+	<div class="col-md-2 footer-column js-footer-column column-logo">
+		
+		<div class="footer-logo-box">
+			<div style="position: relative; width: 30px; height: 34px; flex: 0 0 auto;">
+				<div style="position: absolute; left: 11px; top: 0px; width: 8px; height: 8px; border-radius: 50%; border: 1.3px solid oklch(0.7 0.095 82);"></div>
+				<div style="position: absolute; left: 2px; top: 10px; width: 11px; height: 11px; border-radius: 50%; background: oklch(0.74 0.09 84);"></div>
+				<div style="position: absolute; left: 13px; top: 19px; width: 15px; height: 15px; border-radius: 50%; background: oklch(0.7 0.095 83);"></div>
+			</div>
+			<div style="font-family: &quot;Cormorant Garamond&quot;, serif; font-weight: 600; font-size: 21px; letter-spacing: 0.14em; color: rgb(243, 238, 227); text-indent: 0.14em;">ONLY BUBBLES</div>
+		</div>
+		
+		<p>
+			{% set onlyBubblesFooterText = 'footer.onlyBubblesFooterText'|trans %}
+			{{ onlyBubblesFooterText == 'footer.onlyBubblesFooterText' ? 'Die Welt der Schaumweine. Handverlesene Champagner, Crémants, Cavas und Proseccos für jeden Anlass — und jeden Nicht-Anlass.' : onlyBubblesFooterText }}
+		</p>
+		
+		{% sw_include '@Storefront/storefront/layout/barLinks.html.twig' %}
+	</div>
+
+	{% for cat in mainTree %}
+		{% if cat.category.name in footerCategories %}
+			<div class="col-md-2 footer-column js-footer-column">
+				<div class="footer-column-headline footer-headline js-footer-column-headline"
+				 id="collapseFooterCatTitle{{ loop.index }}"
+				 role="listitem">
+					<a href="{{ cat.category.seoUrl }}"
+					   {% if cat.category.shouldOpenInNewTab %}target="_blank"{% endif %}
+					   title="{{ cat.category.translated.name }}">
+						{{ cat.category.translated.name }}
+					</a>
+					{% if cat.children|length > 0 %}
+						<button class="footer-column-toggle btn btn-link btn-link-inline js-collapse-footer-column-trigger"
+								data-bs-target="#collapseFooterCat{{ loop.index }}"
+								data-bs-toggle="collapse"
+								aria-controls="collapseFooterCat{{ loop.index }}"
+								aria-labelledby="collapseFooterCatTitle{{ loop.index }}"
+								aria-expanded="true">
+
+							{% sw_icon 'plus' style {
+								class: 'footer-plus'
+							} %}
+
+							{% sw_icon 'minus' style {
+								class: 'footer-minus'
+							} %}
+						</button>					
+					{% endif %}
+				</div>
+				<div id="collapseFooterCat{{ loop.index }}"
+					 class="footer-column-content collapse js-footer-column-content"
+					 aria-labelledby="collapseFooterCatTitle{{ loop.index }}"
+					 role="listitem">
+
+					<div class="footer-column-content-inner">
+						<ul class="list-unstyled">
+							{% for treeItem in cat.children %}
+								{% set category = treeItem.category %}
+								{% set name = category.translated.name %}
+
+								<li class="footer-link-item">
+									{% if category.type == 'folder' %}
+										<div>{{ name }}</div>
+									{% else %}
+										<a class="footer-link"
+										   href="{{ category.seoUrl }}"
+										   {% if category.shouldOpenInNewTab %}target="_blank"{% endif %}
+										   title="{{ name }}">
+											{{ name }}
+										</a>
+									{% endif %}
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	{% endfor %}
+{% endblock %}
+
+{% block layout_footer_navigation_column %}
+	<div class="col-md-2 footer-column js-footer-column type-{{ root.category.type }}">
+		{% block layout_footer_navigation_information_headline %}
+			{{ parent() }}
+		{% endblock %}
+
+		{% block layout_footer_navigation_information_content %}
+			{{ parent() }}
+		{% endblock %}
+	</div>
+{% endblock %}
+
+{% block layout_footer_navigation_columns_payment_methods %}
+	<div class="col-md-2 footer-column js-footer-column payment-methods">
+		<div class="footer-column-headline footer-headline js-footer-column-headline"
+			 id="collapseFooterTitlePaymentMethods"
+			 role="listitem">
+			<span>{{ 'footer.paymentMethodsLabel'|trans|sw_sanitize }}</span>
+			<button class="footer-column-toggle btn btn-link btn-link-inline js-collapse-footer-column-trigger"
+					data-bs-target="#collapseFooterPaymentMethods"
+					data-bs-toggle="collapse"
+					aria-controls="collapseFooterPaymentMethods"
+					aria-labelledby="collapseFooterTitlePaymentMethods"
+					aria-expanded="true">
+
+				{% sw_icon 'plus' style {
+					class: 'footer-plus'
+				} %}
+
+				{% sw_icon 'minus' style {
+					class: 'footer-minus'
+				} %}
+			</button>
+		</div>
+		<div id="collapseFooterPaymentMethods"
+			 class="footer-column-content collapse js-footer-column-content"
+			 aria-labelledby="collapseFooterTitlePaymentMethods"
+			 role="listitem">
+			<div class="partner-method-links footer-img-links">
+				<a class="payment-method-link" href="{{ app.request.baseUrl }}/Service/Versand-Zahlungsbedingungen/" title="{{ 'footer.purchaseOnInvoice'|trans }}">
+					<img src="{{ asset('bundles/weinefeinkosttheme/assets/images/payment-rechnung.png', 'asset') }}" alt="{{ 'footer.purchaseOnInvoice'|trans }}">
+				</a>
+				<a class="payment-method-link" href="{{ app.request.baseUrl }}/Service/Versand-Zahlungsbedingungen/" title="{{ 'footer.paypal'|trans }}">
+					<img src="{{ asset('bundles/weinefeinkosttheme/assets/images/payment-paypal.png', 'asset') }}" alt="{{ 'footer.paypal'|trans }}">
+				</a>
+				<a class="payment-method-link" href="{{ app.request.baseUrl }}/Service/Versand-Zahlungsbedingungen/" title="{{ 'footer.applepay'|trans }}">
+					<img src="{{ asset('bundles/weinefeinkosttheme/assets/images/apple-pay.png', 'asset') }}" alt="{{ 'footer.applepay'|trans }}">
+				</a>
+				<a class="payment-method-link" href="{{ app.request.baseUrl }}/Service/Versand-Zahlungsbedingungen/" title="{{ 'footer.creditcards'|trans }}">
+					<img src="{{ asset('bundles/weinefeinkosttheme/assets/images/credit-cards-logos.png', 'asset') }}" alt="{{ 'footer.creditcards'|trans }}">
+				</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block layout_footer_copyright %}
+	<div class="container copyright-box">
+		<div class="footer-bottom-links">
+			<ul>
+				<li>
+					<a href="{{ app.request.baseUrl }}/Service/Impressum/"
+					   title="{{ 'footer.bottom.imprintLinkLabel'|trans }}">
+						{{ 'footer.bottom.imprintLinkLabel'|trans }}
+					</a>
+				</li>
+
+				<li>
+					<a href="{{ app.request.baseUrl }}/Service/Datenschutz/"
+					   title="{{ 'footer.bottom.privacyLinkLabel'|trans }}">
+						{{ 'footer.bottom.privacyLinkLabel'|trans }}
+					</a>
+				</li>
+
+				<li>
+					<a href="{{ app.request.baseUrl }}/Service/AGB/"
+					   title="{{ 'footer.bottom.agbLinkLabel'|trans }}">
+						{{ 'footer.bottom.agbLinkLabel'|trans }}
+					</a>
+				</li>
+
+				<li>
+					<a href="{{ app.request.baseUrl }}/Service/Widerrufsbelehrung/"
+					   title="{{ 'footer.bottom.withdrawLinkLabel'|trans }}">
+						{{ 'footer.bottom.withdrawLinkLabel'|trans }}
+					</a>
+				</li>
+
+				<li>
+					<a href=""
+					   class="js-cookie-trigger"
+					   title="{{ 'footer.bottom.cookiesLinkLabel'|trans }}">
+						{{ 'footer.bottom.cookiesLinkLabel'|trans }}
+					</a>
+				</li>
+			</ul>
+		</div>
+
+		<div class="footer-copyright">
+			{{ 'footer.obCopyrightInfo'|trans|sw_sanitize }}
+		</div>
+	</div>
+{% endblock %}
+
+{% block layout_footer_navigation_information_link_item %}
+	{% set categoryName = category.translated.name|lower %}
+	
+	<li class="footer-link-item">
+		{% block layout_footer_navigation_information_link %}
+			{% if category.type == 'folder' %}
+				<div>{{ name }}</div>
+			{% else %}
+				<a class="footer-link{% if 'cookie' in categoryName %} js-cookie-trigger{% endif %}"
+				   href="{{ category.seoUrl }}"
+				   {% if category.shouldOpenInNewTab %}target="_blank"{% endif %}
+				   title="{{ name }}">
+					{{ name }}
+				</a>
+			{% endif %}
+		{% endblock %}
+	</li>
+{% endblock %}

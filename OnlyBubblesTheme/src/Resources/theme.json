@@ -1,0 +1,140 @@
+{
+    "name": "OnlyBubblesTheme",
+    "author": "Bitbrew",
+	"previewMedia": "app/storefront/src/assets/preview.png",
+    "views": [
+        "@Storefront",
+        "@Plugins",
+        "@WeineFeinkostTheme",
+        "@OnlyBubblesTheme"
+    ],
+    "style": [
+        "app/storefront/src/scss/overrides.scss",
+        "@Storefront",
+        "@WeineFeinkostTheme",
+        "app/storefront/src/scss/base.scss"
+    ],
+    "script": [
+        "@Storefront",
+        "app/storefront/dist/storefront/js/only-bubbles-theme/only-bubbles-theme.js"
+    ],
+    "asset": [
+        "@Storefront",
+        "@WeineFeinkostTheme",
+        "app/storefront/src/assets"
+    ],
+    "config": {
+        "blocks": {
+            "onlyBubblesColors": {
+                "label": {
+                    "de-DE": "Only Bubbles — Farben",
+                    "en-GB": "Only Bubbles — Colors"
+                }
+            },
+            "onlyBubblesFonts": {
+                "label": {
+                    "de-DE": "Only Bubbles — Schriften",
+                    "en-GB": "Only Bubbles — Fonts"
+                }
+            },
+            "onlyBubblesLinks": {
+                "label": {
+                    "de-DE": "Only Bubbles — Links",
+                    "en-GB": "Only Bubbles — Links"
+                }
+            }
+        },
+        "fields": {
+            "sw-color-brand-primary": {
+                "label": {
+                    "de-DE": "Akzent (Gold)",
+                    "en-GB": "Accent (Gold)"
+                },
+                "type": "color",
+                "value": "#b0883c",
+                "editable": true,
+                "block": "onlyBubblesColors"
+            },
+            "sw-color-brand-secondary": {
+                "label": {
+                    "de-DE": "Dunkel (Ink)",
+                    "en-GB": "Dark (Ink)"
+                },
+                "type": "color",
+                "value": "#26221d",
+                "editable": true,
+                "block": "onlyBubblesColors"
+            },
+            "ob-color-gold-dark": {
+                "label": {
+                    "de-DE": "Gold dunkel (Hover)",
+                    "en-GB": "Gold dark (hover)"
+                },
+                "type": "color",
+                "value": "#9a7531",
+                "editable": true,
+                "block": "onlyBubblesColors"
+            },
+            "ob-color-stock": {
+                "label": {
+                    "de-DE": "Lagerstatus Grün",
+                    "en-GB": "Stock green"
+                },
+                "type": "color",
+                "value": "#81ba00",
+                "editable": true,
+                "block": "onlyBubblesColors"
+            },
+            "sw-font-family-base": {
+                "label": {
+                    "de-DE": "Fließtext",
+                    "en-GB": "Body font"
+                },
+                "type": "fontFamily",
+                "value": "'Jost', sans-serif",
+                "editable": true,
+                "block": "onlyBubblesFonts"
+            },
+            "sw-font-family-headline": {
+                "label": {
+                    "de-DE": "Überschriften",
+                    "en-GB": "Headline font"
+                },
+                "type": "fontFamily",
+                "value": "'Cormorant Garamond', serif",
+                "editable": true,
+                "block": "onlyBubblesFonts"
+            },
+            "ob-link-revocation": {
+                "label": {
+                    "de-DE": "Link „Bestellung widerrufen“ (Konto-Menü)",
+                    "en-GB": "Link \"Revoke order\" (account menu)"
+                },
+                "helpText": {
+                    "de-DE": "URL der Widerrufs-Formularseite, z. B. /widerruf-formular. Leer = Menüpunkt ausblenden.",
+                    "en-GB": "URL of the revocation form page. Empty = hide menu item."
+                },
+                "type": "text",
+                "value": "",
+                "editable": true,
+                "scss": false,
+                "block": "onlyBubblesLinks"
+            },
+            "ob-link-dealer-register": {
+                "label": {
+                    "de-DE": "Link „Als Händler registrieren“ (Login-Seite)",
+                    "en-GB": "Link \"Register as retailer\" (login page)"
+                },
+                "helpText": {
+                    "de-DE": "URL der Händler-Registrierung. Leer = Button ausblenden.",
+                    "en-GB": "URL of the retailer registration. Empty = hide button."
+                },
+                "type": "text",
+                "value": "",
+                "editable": true,
+                "scss": false,
+                "block": "onlyBubblesLinks"
+            }
+        }
+    }
+}
