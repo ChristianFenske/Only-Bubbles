@@ -9,6 +9,8 @@ const { PluginBaseClass } = window;
 export default class ObSegmentedSelectPlugin extends PluginBaseClass {
     static options = {
         maxOptions: 4,
+        // Kontotyp ohne Auswahl (Login-Seite) -> "Privat" vorauswählen
+        defaultAccountType: 'private',
         wrapperClass: 'ob-segmented',
         itemClass: 'ob-segmented-item',
         activeClass: 'is-active',
@@ -52,6 +54,8 @@ export default class ObSegmentedSelectPlugin extends PluginBaseClass {
             return button;
         });
 
+        this._applyDefault(options);
+
         select.classList.add('ob-segmented-source');
         select.setAttribute('tabindex', '-1');
         select.setAttribute('aria-hidden', 'true');
@@ -59,6 +63,20 @@ export default class ObSegmentedSelectPlugin extends PluginBaseClass {
         select.addEventListener('change', this._sync.bind(this));
 
         this._sync();
+    }
+
+    _applyDefault(options) {
+        const select = this.el;
+        const isAccountType = select.classList.contains('contact-select');
+        const hasDefault = options.some((option) => option.value === this.options.defaultAccountType);
+
+        if (!isAccountType || select.value || !hasDefault) {
+            return;
+        }
+
+        select.value = this.options.defaultAccountType;
+        // "change" erst nach der Initialisierung der Shopware-Plugins (FormFieldToggle)
+        window.setTimeout(() => select.dispatchEvent(new Event('change', { bubbles: true })), 0);
     }
 
     _onClick(value) {

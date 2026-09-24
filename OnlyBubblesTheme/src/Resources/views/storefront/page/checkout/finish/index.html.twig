@@ -50,3 +50,12 @@
         </div>
     </div>
 {% endblock %}
+
+{# Voller Shop-Header/-Footer wie im Design (Shopware nutzt im Checkout sonst die Minimal-Variante) #}
+{% block base_esi_header %}
+    {{ render_esi(path('frontend.header', { headerParameters: headerParameters }), { ignore_errors: false }) }}
+{% endblock %}
+
+{% block base_esi_footer %}
+    {{ render_esi(path('frontend.footer', { footerParameters: footerParameters }), { ignore_errors: false }) }}
+{% endblock %}
