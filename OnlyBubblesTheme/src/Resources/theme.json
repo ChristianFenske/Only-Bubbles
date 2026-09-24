@@ -1,14 +1,15 @@
 {
     "name": "OnlyBubblesTheme",
-    "author": "Only Bubbles",
+    "author": "Bitbrew",
+    "previewMedia": "app/storefront/src/assets/preview.png",
     "views": [
         "@Storefront",
         "@Plugins",
+        "@WeineFeinkostTheme",
         "@OnlyBubblesTheme"
     ],
     "style": [
-        "app/storefront/src/scss/overrides.scss",
-        "@Storefront",
+        "@WeineFeinkostTheme",
         "app/storefront/src/scss/base.scss"
     ],
     "script": [
@@ -17,22 +18,11 @@
     ],
     "asset": [
         "@Storefront",
+        "@WeineFeinkostTheme",
         "app/storefront/src/assets"
     ],
     "config": {
         "blocks": {
-            "onlyBubblesColors": {
-                "label": {
-                    "de-DE": "Only Bubbles — Farben",
-                    "en-GB": "Only Bubbles — Colors"
-                }
-            },
-            "onlyBubblesFonts": {
-                "label": {
-                    "de-DE": "Only Bubbles — Schriften",
-                    "en-GB": "Only Bubbles — Fonts"
-                }
-            },
             "onlyBubblesLinks": {
                 "label": {
                     "de-DE": "Only Bubbles — Links",
@@ -41,66 +31,6 @@
             }
         },
         "fields": {
-            "sw-color-brand-primary": {
-                "label": {
-                    "de-DE": "Akzent (Gold)",
-                    "en-GB": "Accent (Gold)"
-                },
-                "type": "color",
-                "value": "#b0883c",
-                "editable": true,
-                "block": "onlyBubblesColors"
-            },
-            "sw-color-brand-secondary": {
-                "label": {
-                    "de-DE": "Dunkel (Ink)",
-                    "en-GB": "Dark (Ink)"
-                },
-                "type": "color",
-                "value": "#26221d",
-                "editable": true,
-                "block": "onlyBubblesColors"
-            },
-            "ob-color-gold-dark": {
-                "label": {
-                    "de-DE": "Gold dunkel (Hover)",
-                    "en-GB": "Gold dark (hover)"
-                },
-                "type": "color",
-                "value": "#9a7531",
-                "editable": true,
-                "block": "onlyBubblesColors"
-            },
-            "ob-color-stock": {
-                "label": {
-                    "de-DE": "Lagerstatus Grün",
-                    "en-GB": "Stock green"
-                },
-                "type": "color",
-                "value": "#81ba00",
-                "editable": true,
-                "block": "onlyBubblesColors"
-            },
-            "sw-font-family-base": {
-                "label": {
-                    "de-DE": "Fließtext",
-                    "en-GB": "Body font"
-                },
-                "type": "fontFamily",
-                "value": "'Jost', sans-serif",
-                "editable": true,
-                "block": "onlyBubblesFonts"
-            },
-            "sw-font-family-headline": {
-                "label": {
-                    "de-DE": "Überschriften",
-                    "en-GB": "Headline font"
-                },
-                "type": "fontFamily",
-                "value": "'Cormorant Garamond', serif",
-                "editable": true,
-                "block": "onlyBubblesFonts"
-            },
             "ob-link-revocation": {
                 "label": {
                     "de-DE": "Link „Bestellung widerrufen“ (Konto-Menü)",

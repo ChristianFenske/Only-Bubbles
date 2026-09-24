@@ -1,0 +1,30 @@
+{
+    "pickware-quotes": {
+        "quote-document": {
+            "title": "Angebot",
+            "page": "Seite",
+            "pageOf": "von",
+            "summary": {
+                "customer-number": "Kunden-Nr.",
+                "order-number": "Bestell-Nr."
+            },
+            "line-items": {
+                "product-number": "Art-Nr.",
+                "name": "Bezeichnung",
+                "quantity": "Anz.",
+                "tax-rate": "MwSt.",
+                "unit-price-gross": "Brutto Preis",
+                "total-price-gross": "Brutto Gesamt"
+            },
+            "price": {
+                "net-total": "Gesamtkosten Netto",
+                "tax": "zzgl. %rate% % MwSt",
+                "total": "Gesamtkosten"
+            },
+            "legal": {
+                "non-binding": "Das Angebot ist freibleibend.",
+                "retention-of-title": "Die Ware bleibt bis zur vollständigen Bezahlung unser Eigentum"
+            }
+        }
+    }
+}

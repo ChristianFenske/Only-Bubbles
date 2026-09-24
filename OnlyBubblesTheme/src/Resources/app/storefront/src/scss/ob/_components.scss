@@ -418,7 +418,7 @@ fieldset:first-of-type > .ob-section-head,
 }
 
 // --- Deko-Bläschen ---------------------------------------------------------
-@keyframes obrise {
+@keyframes ob-corner-rise {
     0%   { transform: translateY(3px);  opacity: .8; }
     100% { transform: translateY(-3px); opacity: 1; }
 }
@@ -447,7 +447,7 @@ fieldset:first-of-type > .ob-section-head,
     span {
         position: absolute;
         border-radius: 50%;
-        animation: obrise 3.4s ease-in-out infinite alternate;
+        animation: ob-corner-rise 3.4s ease-in-out infinite alternate;
 
         &:nth-child(1) { top: 36px; right: 44px; width: 12px; height: 12px; border: 1.4px solid $ob-gold-light; }
         &:nth-child(2) { top: 62px; right: 26px; width: 18px; height: 18px; background: $ob-gold-light; opacity: .85; animation-duration: 4.2s; }
@@ -572,6 +572,10 @@ fieldset:first-of-type > .ob-section-head,
 .ob-steps,
 .account-aside {
     .icon > svg { top: 0; }
+
+    // icomoon (base.scss) hängt an gleichnamige Klassen (icon-info, icon-truck, icon-arrow-right)
+    // ein Schrift-Glyph -> bei Shopware-SVG-Icons ausblenden
+    .icon::before { content: none !important; }
 
     .icon-xs,
     .icon-xs > svg {

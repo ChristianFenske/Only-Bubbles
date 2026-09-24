@@ -1,0 +1,27 @@
+{% sw_extends '@WeineFeinkostTheme/storefront/component/product/card/box-standard.html.twig' %}
+
+{% block component_product_box_description %}
+    <p class="product-description mb-0">
+
+        {% set obDescription = product.translated.customFields.only_bubbles_description_text ?? null %}
+        {% set wfDescription = product.translated.description ?? '' %}
+
+        {% if obDescription is not empty %}
+            {% set description = obDescription|striptags %}
+        {% else %}
+            {% set description = wfDescription|striptags %}
+        {% endif %}
+
+        {% if description|length > 750 %}
+            {{ description|slice(0, 750) }}
+            <a href="{{ path('frontend.detail.page', {
+                productId: product.id
+            }) }}#product-section" class="more-link">
+                … mehr anzeigen
+            </a>
+        {% else %}
+            {{ description }}
+        {% endif %}
+
+    </p>
+{% endblock %}

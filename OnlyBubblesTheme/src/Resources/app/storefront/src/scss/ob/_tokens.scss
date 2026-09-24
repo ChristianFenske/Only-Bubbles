@@ -2,9 +2,12 @@
 // Only Bubbles — Tokens für Konto & Checkout (aus dem Design-Handoff)
 // ===========================================================================
 
+// Farben aus base.scss des Themes übernehmen, wo vorhanden
+$ob-ink:          $color_font;          // #26221d
+$ob-gold-soft:    $color_sw_bg_gold;    // #f7eeda
 $ob-ink-2:        #3a352d;   // Labels, Hover dunkler Buttons
-$ob-cream:        #fbf9f4;   // Seitenhintergrund
-$ob-sand:         #f4f2ec;   // Flächen (Checkbox-Zeilen, Pills, Tabellenkopf)
+$ob-cream:        $color_bg_light;     // #fbf9f4   // Seitenhintergrund
+$ob-sand:         $color_bg_middle;    // #f4f2ec   // Flächen (Checkbox-Zeilen, Pills, Tabellenkopf)
 $ob-line:         #e8e4dc;   // Karten-Rahmen
 $ob-line-input:   #dcd7cd;   // Input-Rahmen
 $ob-muted:        #6f675b;   // Nebentext auf hell
