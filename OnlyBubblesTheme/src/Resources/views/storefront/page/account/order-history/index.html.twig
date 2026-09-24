@@ -1,0 +1,14 @@
+{% sw_extends '@Storefront/storefront/page/account/order-history/index.html.twig' %}
+
+{% block page_account_orders_info_empty %}
+    <div class="ob-empty-state">
+        <div class="ob-bubbles ob-bubbles-corner" aria-hidden="true"><span></span><span></span><span></span></div>
+        <span class="ob-empty-state-icon">{% sw_icon 'package-open' %}</span>
+        <h2>{{ 'obTheme.account.ordersEmptyTitle'|trans|sw_sanitize }}</h2>
+        <p>{{ 'obTheme.account.ordersEmptyText'|trans|sw_sanitize }}</p>
+        <a href="{{ path('frontend.home.page') }}" class="btn btn-primary">
+            {{ 'obTheme.account.ordersEmptyCta'|trans|sw_sanitize }}
+            {% sw_icon 'arrow-right' style { size: 'xs' } %}
+        </a>
+    </div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% sw_extends '@Storefront/storefront/page/account/_page.html.twig' %}
+
+{% block page_account %}
+    <div class="account account-content ob-account">
+        {{ block('page_account_sidebar') }}
+        {{ block('page_account_main') }}
+    </div>
+{% endblock %}
+
+{% block page_account_sidebar %}
+    <div class="account-content-aside d-none d-lg-block">
+        {% if context.customer and not context.customer.guest %}
+            {% sw_include '@Storefront/storefront/page/account/sidebar.html.twig' %}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block page_account_main %}
+    <div class="account-content-main">
+        {% if activeRoute != 'frontend.account.home.page' %}
+            <p class="ob-eyebrow">{{ 'obTheme.account.eyebrow'|trans|sw_sanitize }}</p>
+        {% endif %}
+        {{ block('page_account_main_content') }}
+    </div>
+{% endblock %}

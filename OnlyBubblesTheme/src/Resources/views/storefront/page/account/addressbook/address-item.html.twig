@@ -1,0 +1,14 @@
+{% sw_extends '@Storefront/storefront/page/account/addressbook/address-item.html.twig' %}
+
+{% block address_item_badge %}
+    <div class="mt-auto">
+        <span class="address-item-default-badge ob-badge">
+            {% if defaultShipping %}
+                {% sw_icon 'truck' style { size: 'xs' } %}
+            {% else %}
+                {% sw_icon 'file' style { size: 'xs' } %}
+            {% endif %}
+            {{ snippet|trans|sw_sanitize }}
+        </span>
+    </div>
+{% endblock %}

@@ -1,0 +1,541 @@
+// ===========================================================================
+// Mein Konto (Übersicht, Profil, Adressen, Bestellungen)
+// ===========================================================================
+
+.ob-account {
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr);
+    gap: 40px;
+    align-items: start;
+    margin: 8px 0 72px;
+
+    > .account-content-aside,
+    > .account-content-main {
+        width: auto;
+        max-width: none;
+        padding: 0;
+    }
+
+    .account-content-aside {
+        position: sticky;
+        top: 24px;
+    }
+
+    // Seitentitel
+    .account-welcome {
+        margin-bottom: 28px;
+
+        h1 {
+            font-family: $ob-font-serif;
+            font-weight: 500;
+            font-size: clamp(34px, 4vw, 46px);
+            line-height: 1.05;
+            margin-bottom: 12px;
+        }
+
+        p {
+            color: $ob-muted;
+            font-size: 15.5px;
+            margin: 0;
+        }
+    }
+
+    h1.account-welcome {
+        font-family: $ob-font-serif;
+        font-weight: 500;
+        font-size: clamp(34px, 4vw, 46px);
+        line-height: 1.05;
+        margin-bottom: 12px;
+
+        + p {
+            color: $ob-muted;
+            font-size: 15.5px;
+            margin-bottom: 28px;
+        }
+    }
+
+    // Karten
+    .card {
+        @include ob-card;
+    }
+
+    .card-body { padding: 30px 32px; }
+
+    .card-title {
+        @include ob-serif-title(24px);
+    }
+
+    .card-col,
+    .account-overview-card { margin-bottom: 20px; }
+
+    .js-account-overview-addresses,
+    .account-overview > .row {
+        --bs-gutter-x: 20px;
+    }
+
+    address,
+    .card-body p {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .alert { border-radius: 12px; }
+}
+
+// --- Seitenleiste ----------------------------------------------------------
+.account-aside {
+    .account-menu-inner {
+        @include ob-card;
+        padding: 22px 18px;
+        overflow: hidden;
+    }
+
+    .ob-aside-head {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 6px 10px 22px;
+        margin-bottom: 12px;
+        border: 0;
+        border-bottom: 1px solid $ob-line;
+        background: transparent;
+    }
+
+    .ob-avatar {
+        display: grid;
+        place-items: center;
+        flex: none;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: $ob-ink;
+        color: $ob-gold-light;
+        font-family: $ob-font-serif;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .ob-aside-greeting {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2;
+
+        small {
+            font-size: 12.5px;
+            color: $ob-muted;
+        }
+
+        strong {
+            font-family: $ob-font-serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: $ob-ink;
+        }
+    }
+
+    .account-aside-list-group {
+        gap: 4px;
+    }
+
+    .account-aside-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 14px;
+        border: 0;
+        border-radius: 10px;
+        background: transparent;
+        font-size: 14.5px;
+        color: $ob-ink;
+
+        .icon { color: $ob-muted; }
+
+        &:hover {
+            background: $ob-sand;
+            color: $ob-ink;
+        }
+
+        &.is-active {
+            background: $ob-gold-soft;
+            color: $ob-gold-700;
+            font-weight: 500;
+
+            .icon { color: $ob-gold-600; }
+        }
+    }
+
+    .account-aside-footer {
+        margin-top: 12px;
+        padding: 16px 4px 0;
+        border: 0;
+        border-top: 1px solid $ob-line;
+        background: transparent;
+    }
+
+    .account-aside-btn {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 12px;
+        width: 100%;
+        font-size: 14.5px;
+
+        .icon,
+        .icon > svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        padding: 8px 10px;
+        font-weight: 500;
+        color: $ob-gold-700;
+        text-decoration: none;
+
+        .icon { color: $ob-gold-600; }
+
+        &:hover { color: $ob-ink; }
+    }
+}
+
+// --- Übersicht -------------------------------------------------------------
+.ob-welcome-hero.account-welcome {
+    position: relative;
+    overflow: hidden;
+    padding: 44px 40px 40px;
+    border-radius: $ob-radius-card;
+    background: radial-gradient(ellipse at 85% 0%, #4a3f30 0%, $ob-ink 60%);
+    color: $ob-on-dark;
+
+    .ob-eyebrow { color: $ob-gold-light; }
+
+    h1 { color: $ob-on-dark; }
+
+    p {
+        max-width: 600px;
+        color: rgba(243, 238, 227, .8);
+    }
+}
+
+.ob-account {
+    // Reihenfolge wie im Design: Profil, Adressen, Newsletter, letzte Bestellung
+    .account-overview {
+        display: flex;
+        flex-direction: column;
+
+        > * { order: 1; }
+        > .account-overview-newsletter { order: 5; }
+        > .account-overview-newest-order { order: 6; }
+    }
+
+    .account-overview .ob-card-head .card-title { font-size: 24px; }
+
+    .account-overview-profile .card-body p:empty { display: none; }
+
+    .account-overview-profile .card-body p:last-of-type { color: $ob-muted; }
+
+    .account-overview-card .card { height: 100%; }
+
+    // Newsletter als Toggle-Switch
+    .account-overview-newsletter {
+        form .form-check {
+            align-items: center;
+            padding: 18px 20px;
+            border-radius: 12px;
+            background: $ob-sand;
+        }
+
+        .form-check-input {
+            width: 46px;
+            height: 26px;
+            border-radius: 13px;
+            border: 0;
+            background-color: #d6d0c4;
+            background-image: radial-gradient(circle, #fff 0 9px, transparent 9.5px);
+            background-size: 26px 26px;
+            background-position: left center;
+            background-repeat: no-repeat;
+            transition: background-position .2s ease, background-color .2s ease;
+
+            &:checked {
+                background-color: $ob-gold-600;
+                background-image: radial-gradient(circle, #fff 0 9px, transparent 9.5px);
+                background-position: right center;
+            }
+        }
+
+        .form-check-label { font-size: 14.5px; }
+    }
+}
+
+// --- Profil ----------------------------------------------------------------
+.ob-account .account-profile {
+    .account-profile-personal,
+    .account-profile-credentials {
+        margin-bottom: 20px !important;
+    }
+
+    .card-title {
+        padding-bottom: 16px;
+        margin-bottom: 22px;
+        border-bottom: 1px solid $ob-line;
+    }
+
+    .card-actions {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .account-profile-required-info {
+        font-size: 12.5px;
+        color: $ob-muted;
+    }
+
+    .profile-form-submit {
+        min-height: 50px;
+        padding: 0 28px;
+        border-radius: $ob-radius-pill;
+        background: $ob-ink;
+        border-color: $ob-ink;
+        color: $ob-cream;
+        font-size: 15px;
+
+        &:hover { background: $ob-ink-2; color: #fff; }
+    }
+
+    .account-profile-mail-label {
+        display: block;
+        @include ob-eyebrow;
+        font-size: 11px;
+        color: $ob-muted;
+    }
+
+    .account-profile-mail {
+        font-size: 15.5px;
+    }
+
+    .account-profile-change {
+        font-size: 14px;
+        font-weight: 500;
+        color: $ob-gold-700;
+        text-decoration: none;
+
+        &:hover { color: $ob-ink; }
+    }
+
+    // Aufgeklappte Formulare (E-Mail / Passwort)
+    .profile-content .card {
+        background: $ob-sand;
+        border-color: transparent;
+        margin-bottom: 20px;
+    }
+}
+
+// --- Adressen --------------------------------------------------------------
+.ob-account .address-manager-select-address,
+.address-manager-modal .address-manager-select-address {
+    padding: 26px 28px !important;
+    border: 1px solid $ob-line !important;
+    border-radius: $ob-radius-card;
+    background: #fff;
+    min-height: 200px;
+
+    address { margin-bottom: 18px; }
+
+    .dropdown > button {
+        display: grid;
+        place-items: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+
+        &:hover { background: $ob-sand !important; }
+    }
+
+    .dropdown-menu {
+        border: 1px solid $ob-line;
+        border-radius: 12px;
+        box-shadow: $ob-shadow-card;
+        padding: 6px;
+
+        .dropdown-item {
+            border-radius: 8px;
+            font-size: 14px;
+            padding: 8px 12px;
+        }
+    }
+}
+
+.ob-account {
+    .ob-default-address-headings {
+        margin-bottom: -4px;
+    }
+
+    .ob-default-address-heading {
+        @include ob-eyebrow;
+        font-size: 12px;
+        margin: 0;
+    }
+
+    .address-manager-list-base h2 {
+        font-family: $ob-font-serif;
+        font-weight: 500;
+        font-size: 34px;
+        margin: 8px 0 20px !important;
+    }
+
+    .address-manager-list-search {
+        min-height: 50px;
+        padding-left: 44px;
+        border-radius: $ob-radius-pill;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236f675b' stroke-width='1.6' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: 16px center;
+        background-size: 18px;
+    }
+
+    .address-item-default-badge.ob-badge {
+        padding: 5px 12px;
+    }
+}
+
+// --- Bestellungen ----------------------------------------------------------
+.ob-account {
+    .account-orders-overview .order-table,
+    .account-overview-newest-order .order-table {
+        margin-bottom: 16px;
+        @include ob-card;
+        overflow: hidden;
+    }
+
+    .order-wrapper {
+        border: 0;
+        background: transparent;
+    }
+
+    .order-item-header {
+        padding: 24px 28px;
+        border: 0;
+        background: #fff;
+    }
+
+    .order-table-header-heading {
+        font-family: $ob-font-serif;
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+    .order-table-header-label,
+    .order-table-header-order-table-header-cell {
+        @include ob-eyebrow;
+        font-size: 11px;
+        color: $ob-muted;
+    }
+
+    .order-table-header-order-table-header {
+        border-top: 1px solid $ob-line;
+        margin-top: 16px;
+        padding-top: 14px;
+    }
+
+    .order-table-body-value {
+        font-size: 15px;
+        color: $ob-ink;
+    }
+
+    // Status-Badges: Gold-hell mit Punkt
+    .order-item-status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 6px 12px;
+        border-radius: $ob-radius-pill;
+        background: $ob-gold-soft;
+        color: $ob-gold-700;
+        font-size: 12.5px;
+        font-weight: 500;
+
+        &::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+    }
+
+    .order-item-status-badge-completed {
+        background: #e7f1dd;
+        color: #4b7a1d;
+    }
+
+    .order-item-status-badge-cancelled {
+        background: #f3e4e1;
+        color: #9b3b2d;
+    }
+
+    .order-table-header-context-menu,
+    .order-hide-btn {
+        border-radius: $ob-radius-pill;
+        background: $ob-sand;
+        border-color: transparent;
+    }
+
+    .order-detail-content {
+        border-top: 1px solid $ob-line;
+        background: #fff;
+    }
+}
+
+// Leerzustand (ersetzt die orange Warnbox)
+.ob-empty-state {
+    position: relative;
+    overflow: hidden;
+    padding: 56px 32px;
+    @include ob-card;
+    text-align: center;
+
+    .ob-bubbles-corner span { border-color: $ob-gold-600; }
+    .ob-bubbles-corner span:nth-child(2) { background: $ob-gold-600; opacity: .5; }
+
+    h2 {
+        margin: 18px 0 8px;
+        @include ob-serif-title(30px);
+        font-weight: 500;
+    }
+
+    p {
+        max-width: 420px;
+        margin: 0 auto 26px;
+        color: $ob-muted;
+    }
+}
+
+.ob-empty-state-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: $ob-gold-soft;
+    color: $ob-gold-600;
+
+    .icon,
+    .icon > svg {
+        width: 30px;
+        height: 30px;
+        color: $ob-gold-600;
+    }
+}
+
+// --- Responsive ------------------------------------------------------------
+@include media-breakpoint-down(lg) {
+    .ob-account {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+
+        .account-content-aside { position: static; }
+        .card-body { padding: 24px 20px; }
+    }
+
+    .ob-welcome-hero.account-welcome { padding: 32px 24px; }
+}

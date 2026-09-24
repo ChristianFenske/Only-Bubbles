@@ -1,0 +1,8 @@
+{# Nummerierter Abschnitts-Kopf ("01 Konto"). Die Nummer kommt aus einem CSS-Counter
+   (.ob-counter-scope), damit ausgeblendete Abschnitte die Zählung nicht stören.
+   Parameter: title (string), tag (optional, Standard: legend) #}
+{% set obTag = tag ?? 'legend' %}
+<{{ obTag }} class="ob-section-head">
+    <span class="ob-section-num" aria-hidden="true"></span>
+    <span class="ob-section-title">{{ title }}</span>
+</{{ obTag }}>

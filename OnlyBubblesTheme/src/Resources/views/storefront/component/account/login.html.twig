@@ -1,0 +1,26 @@
+{% sw_extends '@Storefront/storefront/component/account/login.html.twig' %}
+
+{% block component_account_login_header %}
+    {% if obEyebrow is defined and obEyebrow %}
+        <p class="ob-eyebrow">{{ obEyebrow }}</p>
+    {% endif %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block component_account_login_form_description %}
+    {% if obDescription is defined and obDescription %}
+        <p class="login-form-description">{{ obDescription }}</p>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block component_account_login_submit %}
+    <div class="login-submit d-grid">
+        <button type="submit" class="btn btn-primary ob-btn-gold">
+            {{ 'account.loginSubmit'|trans|sw_sanitize }}
+            {% sw_icon 'arrow-right' style { size: 'xs' } %}
+        </button>
+    </div>
+{% endblock %}

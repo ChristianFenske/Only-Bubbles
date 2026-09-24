@@ -1,0 +1,601 @@
+// ===========================================================================
+// Checkout: Versandinformationen (/checkout/register) + Bestellung abschließen (/checkout/confirm)
+// ===========================================================================
+
+// --- Schrittanzeige --------------------------------------------------------
+.ob-steps {
+    margin: 8px 0 32px;
+}
+
+.ob-steps-list {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.ob-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14.5px;
+    color: $ob-muted;
+
+    + .ob-step::before {
+        content: '';
+        display: block;
+        width: 80px;
+        height: 1px;
+        margin-right: 4px;
+        background: $ob-line-input;
+    }
+
+    .ob-step-dot {
+        display: grid;
+        place-items: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 1px solid $ob-line-input;
+        background: #fff;
+        font-size: 13px;
+        font-weight: 500;
+        color: $ob-ink-2;
+    }
+
+    &.is-active {
+        color: $ob-ink;
+        font-weight: 500;
+
+        .ob-step-dot {
+            background: $ob-ink;
+            border-color: $ob-ink;
+            color: #fff;
+        }
+    }
+
+    &.is-done .ob-step-dot {
+        background: $ob-gold-600;
+        border-color: $ob-gold-600;
+        color: #fff;
+    }
+}
+
+// --- Grundlayout: Inhalt | Sticky-Sidebar 400px ----------------------------
+.ob-checkout .checkout {
+    padding-top: 0;
+
+    .checkout-container {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 400px;
+        column-gap: 32px;
+        align-items: start;
+        margin: 0 0 72px;
+    }
+
+    .checkout-main,
+    .checkout-additional,
+    .checkout-aside {
+        width: auto;
+        max-width: none;
+        flex: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .checkout-main { grid-column: 1; }
+
+    .checkout-aside {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        position: sticky;
+        top: 24px;
+    }
+}
+
+// --- Karten ----------------------------------------------------------------
+.ob-checkout {
+    .card,
+    .checkout-card {
+        @include ob-card;
+    }
+
+    .card-body { padding: 32px 34px; }
+
+    .card-title {
+        @include ob-serif-title(24px);
+        margin-bottom: 20px;
+    }
+
+    .alert { border-radius: 12px; }
+}
+
+// Abschnittsnummern (01 Lieferadresse … 05 Ihre Bestellung) per Counter
+.ob-checkout-confirm .checkout-main {
+    counter-reset: ob-section;
+
+    .card-title,
+    .card-title.ob-section-title {
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid $ob-line;
+
+        &::before {
+            counter-increment: ob-section;
+            content: counter(ob-section, decimal-leading-zero);
+            font-family: $ob-font-sans;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: .2em;
+            color: $ob-gold-600;
+        }
+    }
+
+    .ob-card-head .card-title {
+        padding-bottom: 0;
+        border-bottom: 0;
+    }
+}
+
+// --- Dunkle Summen-/Warenkorb-Karte ---------------------------------------
+.ob-summary-card {
+    @include ob-card-dark;
+    position: relative;
+    overflow: hidden;
+    padding: 30px;
+
+    // Shopware-Skin hinterlegt die Zusammenfassung weiß -> in der dunklen Karte neutralisieren
+    .checkout-aside-summary,
+    .checkout-aside-summary-container,
+    .checkout-aside-summary-list-container {
+        background: transparent;
+        border: 0;
+        padding: 0;
+        box-shadow: none;
+        color: inherit;
+    }
+
+    .checkout-aside-summary-header {
+        @include ob-serif-title(32px);
+        font-weight: 500;
+        color: $ob-on-dark;
+        margin-bottom: 22px;
+    }
+
+    .checkout-aside-summary-list {
+        margin: 0;
+        font-size: 14.5px;
+    }
+
+    .checkout-aside-summary-label,
+    .checkout-aside-summary-value {
+        color: $ob-on-dark;
+        margin-bottom: 10px;
+    }
+
+    .checkout-aside-summary-total {
+        margin-top: 14px;
+        padding-top: 22px;
+        border-top: 1px solid $ob-on-dark-line;
+        font-weight: 600;
+        align-self: end;
+    }
+
+    dd.checkout-aside-summary-total {
+        font-size: 28px;
+        line-height: 1;
+        color: $ob-gold-light;
+    }
+
+    .summary-net,
+    .summary-tax {
+        margin-top: 0;
+        margin-bottom: 6px;
+        font-size: 12.5px;
+        color: $ob-on-dark-60;
+    }
+
+    // Warenkorb-Positionen (Seite Versandinformationen)
+    .checkout-aside-product-list {
+        margin: 0 0 18px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid $ob-on-dark-line;
+    }
+
+    .line-item {
+        border-color: $ob-on-dark-line;
+        color: $ob-on-dark;
+
+        a,
+        .line-item-label {
+            color: $ob-on-dark;
+            font-family: $ob-font-serif;
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.2;
+            text-decoration: none;
+        }
+
+        .line-item-img-container {
+            background: rgba(255, 255, 255, .06);
+            border-radius: 10px;
+        }
+
+        .line-item-product-number,
+        .line-item-delivery-date,
+        .line-item-details-characteristics,
+        .line-item-unit-price,
+        .line-item-quantity-label {
+            color: $ob-on-dark-60;
+            font-size: 12.5px;
+        }
+
+        .line-item-total-price,
+        .line-item-price { color: $ob-on-dark; }
+    }
+
+    .btn-link-inline { color: $ob-gold-light; }
+}
+
+// --- Seite: Versandinformationen -------------------------------------------
+.ob-checkout-address {
+    .checkout .checkout-main {
+        @include ob-card;
+        padding: 44px;
+    }
+
+    .address-main-header {
+        font-family: $ob-font-serif;
+        font-weight: 500;
+        font-size: clamp(32px, 3.5vw, 42px);
+        margin-bottom: 24px;
+    }
+
+    .ob-login-hint {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 8px;
+        padding: 14px 18px;
+        border-radius: 12px;
+        background: $ob-sand;
+        font-size: 14.5px;
+
+        > .icon:last-child {
+            margin-left: auto;
+            color: $ob-gold-600;
+        }
+
+        a {
+            font-weight: 600;
+            color: $ob-gold-700;
+            text-decoration: none;
+
+            &:hover { text-decoration: underline; }
+        }
+    }
+
+    .ob-login-hint-icon {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: $ob-ink;
+        color: #fff;
+
+        .icon { color: #fff; }
+    }
+
+    #loginCollapse .login-card {
+        margin: 16px 0 8px !important;
+        background: $ob-sand;
+        border: 0;
+        border-radius: 12px;
+
+        .card-body { padding: 24px; }
+        .card-title { font-size: 22px; }
+    }
+
+    .register-card {
+        border: 0;
+        background: transparent;
+
+        > .card-body { padding: 0; }
+    }
+
+    .register-guest-control {
+        margin-top: 4px;
+    }
+}
+
+// --- Seite: Bestellung abschließen -----------------------------------------
+.ob-checkout-confirm {
+    .ob-confirm-head {
+        display: flex;
+        align-items: baseline;
+        gap: 16px;
+        margin-bottom: 28px;
+
+        .confirm-main-header {
+            margin: 0;
+            font-family: $ob-font-serif;
+            font-weight: 500;
+            font-size: clamp(32px, 3.5vw, 44px);
+        }
+
+        .confirm-main-header-item-counter {
+            font-size: 14px;
+            color: $ob-gold-700;
+        }
+    }
+
+    .confirm-address,
+    .confirm-payment-shipping,
+    .confirm-product { margin-bottom: 20px; }
+
+    // Liefer- + Rechnungsadresse als EINE Karte mit zwei Spalten
+    .js-confirm-overview-addresses {
+        @include ob-card;
+        margin: 0;
+        padding: 32px 18px;
+
+        > .card-col { padding: 0 16px; }
+
+        .card {
+            border: 0;
+            background: transparent;
+        }
+
+        .card-body { padding: 0; }
+
+        .card-actions { margin-top: 18px; }
+    }
+
+    .ob-address-equal {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14.5px;
+
+        .icon { color: $ob-gold-600; }
+    }
+
+    // Zahlungs-/Versandarten als Radio-Karten
+    .confirm-payment-shipping > .row {
+        --bs-gutter-x: 20px;
+        row-gap: 20px;
+    }
+
+    .confirm-payment,
+    .confirm-shipping {
+        .card { height: 100%; }
+    }
+
+    .payment-method,
+    .shipping-method {
+        .form-group { margin-bottom: 10px; }
+    }
+
+    .payment-method-radio,
+    .shipping-method-radio {
+        position: relative;
+        padding: 18px 20px;
+        border: 1px solid $ob-line;
+        border-radius: 12px;
+        background: #fff;
+        transition: border-color .2s ease, background-color .2s ease;
+
+        &:hover { border-color: $ob-line-input; }
+
+        &:has(.form-check-input:checked) {
+            border: 1.5px solid $ob-gold-600;
+            background: $ob-cream;
+            padding: 17.5px 19.5px;
+        }
+
+        .form-check-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            width: 100%;
+        }
+
+        strong {
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        p {
+            margin-top: 4px;
+            font-size: 13px;
+            color: $ob-muted;
+        }
+
+        .payment-method-description,
+        .shipping-method-description { width: auto; flex: 1; }
+
+        .payment-method-image,
+        .shipping-method-image {
+            max-height: 26px;
+            width: auto;
+            order: 2;
+        }
+    }
+
+    .payment-method-collapse,
+    .shipping-method-collapse,
+    .confirm-checkout-collapse-trigger {
+        margin-top: 4px;
+    }
+
+    // Positionen
+    .ob-line-items {
+        margin: 0;
+    }
+
+    .line-item {
+        padding: 22px 0;
+        border-color: $ob-line;
+    }
+
+    .line-item-label {
+        font-family: $ob-font-serif;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 1.2;
+        color: $ob-ink;
+        text-decoration: none;
+    }
+
+    .line-item-img-container {
+        border-radius: 10px;
+        background: $ob-sand;
+    }
+
+    .line-item-product-number,
+    .line-item-delivery-date {
+        font-size: 12.5px;
+        color: $ob-muted;
+    }
+
+    .line-item-details-characteristics {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 8px;
+
+        .line-item-details-characteristics-option {
+            padding: 3px 10px;
+            border-radius: $ob-radius-pill;
+            background: $ob-sand;
+            font-size: 12px;
+        }
+    }
+
+    .line-item-total-price {
+        font-size: 18px;
+        font-weight: 600;
+        color: $ob-gold-700;
+    }
+
+    .quantity-selector-group {
+        border: 1px solid $ob-line-input;
+        border-radius: $ob-radius-pill;
+        overflow: hidden;
+        background: #fff;
+
+        .btn {
+            border: 0;
+            background: transparent;
+            color: $ob-ink;
+            min-height: 0;
+        }
+
+        .form-control {
+            min-height: 40px;
+            border: 0;
+            text-align: center;
+            padding: 0 4px;
+            box-shadow: none;
+        }
+    }
+
+    .line-item-remove-button {
+        border: 0;
+        background: transparent;
+        color: $ob-muted;
+
+        &:hover { color: $danger; }
+    }
+
+    .ob-comment {
+        margin-top: 8px;
+        padding-top: 24px;
+        border-top: 1px solid $ob-line;
+    }
+
+    // AGB/Widerruf + Bestell-Button in der dunklen Karte
+    .ob-summary-card {
+        .confirm-tos {
+            margin-top: 22px;
+            padding-top: 22px;
+            border-top: 1px solid $ob-on-dark-line;
+        }
+
+        .ob-check-row-dark.form-check {
+            display: flex;
+            gap: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, .06);
+
+            .form-check-input {
+                flex: none;
+                float: none;
+                width: 20px;
+                height: 20px;
+                margin: 1px 0 0;
+                border-color: rgba(243, 238, 227, .35);
+                background-color: transparent;
+
+                &:checked {
+                    background-color: $ob-gold-600;
+                    border-color: $ob-gold-600;
+                }
+            }
+
+            .custom-control-label {
+                font-size: 13.5px;
+                color: $ob-on-dark;
+                margin: 0;
+            }
+        }
+
+        .revocation-notice {
+            margin: 4px 0 18px;
+            font-size: 12.5px;
+            color: $ob-on-dark-60;
+        }
+
+        .checkout-aside-action { margin-top: 0; }
+    }
+
+    // Button wirkt ausgegraut, solange AGB nicht bestätigt (Absenden prüft trotzdem "required")
+    .checkout-aside:has(#tos:not(:checked)) #confirmFormSubmit,
+    .checkout-aside:has(#revocation:not(:checked)) #confirmFormSubmit {
+        background: rgba(243, 238, 227, .14);
+        border-color: transparent;
+        color: rgba(243, 238, 227, .7);
+    }
+}
+
+// --- Responsive ------------------------------------------------------------
+@include media-breakpoint-down(lg) {
+    .ob-checkout .checkout .checkout-container {
+        grid-template-columns: minmax(0, 1fr);
+        row-gap: 24px;
+    }
+
+    .ob-checkout .checkout .checkout-aside {
+        grid-column: 1;
+        grid-row: auto;
+        position: static;
+    }
+
+    .ob-checkout-address .checkout-main { padding: 28px 20px; }
+
+    .ob-step {
+        + .ob-step::before { width: 24px; }
+        .ob-step-label { @include visually-hidden; }
+    }
+
+    .ob-checkout-confirm .js-confirm-overview-addresses > .card-col + .card-col {
+        margin-top: 24px;
+    }
+}

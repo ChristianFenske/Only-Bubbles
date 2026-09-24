@@ -1,0 +1,83 @@
+{% sw_extends '@Storefront/storefront/page/account/register/index.html.twig' %}
+
+{% block page_account_register_header %}
+    <div class="ob-page-head">
+        <div>
+            <p class="ob-eyebrow">{{ 'obTheme.login.eyebrow'|trans|sw_sanitize }}</p>
+            <h1 class="ob-page-title">{{ 'obTheme.login.title'|trans|sw_sanitize }}</h1>
+        </div>
+
+        {% set obDealerUrl = theme_config('ob-link-dealer-register') %}
+        {% if obDealerUrl %}
+            <a href="{{ obDealerUrl }}" class="btn ob-btn-outline">
+                {% sw_icon 'briefcase' style { size: 'sm' } %}
+                {{ 'obTheme.login.dealerRegister'|trans|sw_sanitize }}
+            </a>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block page_account_register_inner %}
+    <div class="ob-register-grid">
+        {{ block('page_account_register_login_container') }}
+        {{ block('page_account_register_container') }}
+    </div>
+{% endblock %}
+
+{% block page_account_register_login_container %}
+    <div class="ob-login-panel">
+        <div class="ob-bubbles ob-bubbles-corner" aria-hidden="true"><span></span><span></span><span></span></div>
+
+        {% sw_include '@Storefront/storefront/component/account/login.html.twig' with {
+            cardTitle: 'obTheme.login.existingTitle'|trans|sw_sanitize,
+            obEyebrow: 'obTheme.login.existingEyebrow'|trans|sw_sanitize,
+            obDescription: 'obTheme.login.existingText'|trans|sw_sanitize
+        } %}
+
+        {{ block('page_account_register_advantages') }}
+    </div>
+{% endblock %}
+
+{% block page_account_register_advantages_title %}
+    <h2 class="login-advantages-header">
+        {{ 'obTheme.login.advantagesTitle'|trans|sw_sanitize }}
+    </h2>
+{% endblock %}
+
+{% block page_account_register_advantages_entry1 %}
+    <li>
+        <span class="ob-icon-circle">{% sw_icon 'rocket' style { size: 'xs' } %}</span>
+        {{ 'obTheme.login.advantage1'|trans|sw_sanitize }}
+    </li>
+{% endblock %}
+
+{% block page_account_register_advantages_entry2 %}
+    <li>
+        <span class="ob-icon-circle">{% sw_icon 'bookmark' style { size: 'xs' } %}</span>
+        {{ 'obTheme.login.advantage2'|trans|sw_sanitize }}
+    </li>
+{% endblock %}
+
+{% block page_account_register_advantages_entry3 %}
+    <li>
+        <span class="ob-icon-circle">{% sw_icon 'package-closed' style { size: 'xs' } %}</span>
+        {{ 'obTheme.login.advantage3'|trans|sw_sanitize }}
+    </li>
+{% endblock %}
+
+{% block page_account_register_advantages_entry4 %}
+    <li>
+        <span class="ob-icon-circle">{% sw_icon 'envelope' style { size: 'xs' } %}</span>
+        {{ 'obTheme.login.advantage4'|trans|sw_sanitize }}
+    </li>
+{% endblock %}
+
+{% block page_account_register_container %}
+    <div class="ob-register-panel">
+        {% sw_include '@Storefront/storefront/component/account/register.html.twig' with {
+            cardTitle: 'obTheme.register.title'|trans|sw_sanitize,
+            obEyebrow: 'obTheme.register.eyebrow'|trans|sw_sanitize,
+            obIntro: 'obTheme.register.text'|trans|sw_sanitize
+        } %}
+    </div>
+{% endblock %}
