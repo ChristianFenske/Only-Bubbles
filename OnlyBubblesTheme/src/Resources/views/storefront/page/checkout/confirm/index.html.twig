@@ -55,16 +55,20 @@
 {# Kommentar sitzt jetzt in der Karte "Ihre Bestellung" #}
 {% block page_checkout_additional %}{% endblock %}
 
+{# Seitenleiste komplett mit eigenem Markup (ohne parent()), damit Eltern-Themes
+   (z. B. WeineFeinkostTheme) die Struktur der dunklen Karte nicht verändern. #}
 {% block page_checkout_aside_summary %}
     <div class="ob-summary-card">
         <div class="ob-bubbles ob-bubbles-corner" aria-hidden="true"><span></span><span></span><span></span></div>
-        {{ parent() }}
+
+        <h2 class="checkout-aside-summary-header">{{ 'obTheme.checkout.summary'|trans|sw_sanitize }}</h2>
+
+        <div class="checkout-aside-summary-list-container">
+            {% sw_include '@Storefront/storefront/page/checkout/summary.html.twig' %}
+        </div>
+
         {{ block('page_checkout_aside_actions_inner') }}
     </div>
-{% endblock %}
-
-{% block page_checkout_summary_header %}
-    <h2 class="checkout-aside-summary-header">{{ 'obTheme.checkout.summary'|trans|sw_sanitize }}</h2>
 {% endblock %}
 
 {# Die Aktionen (AGB + Bestell-Button) werden in der dunklen Karte gerendert #}

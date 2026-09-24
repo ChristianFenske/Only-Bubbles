@@ -90,6 +90,32 @@
             "ordersEmptyTitle": "Noch keine Bestellungen",
             "ordersEmptyText": "Sobald Sie bei uns bestellt haben, finden Sie hier alle Bestellungen mit Status und Details.",
             "ordersEmptyCta": "Schaumweine entdecken"
+        },
+        "cart": {
+            "title": "Warenkorb",
+            "colProduct": "Produkt",
+            "colQuantity": "Anzahl",
+            "colTotal": "Summe",
+            "continueShopping": "Weiter einkaufen",
+            "clearCart": "Warenkorb leeren",
+            "clearConfirm": "Wirklich alle Artikel aus dem Warenkorb entfernen?",
+            "addByNumber": "Artikel per Artikelnummer hinzufügen",
+            "addByNumberPlaceholder": "Produktnummer eingeben …",
+            "shippingDetails": "Versanddetails",
+            "deliveryCountry": "Lieferland",
+            "shippingMethod": "Versandart",
+            "deliveryTime": "Lieferzeit",
+            "shippingCosts": "Versandkosten",
+            "shippingInfoLink": "Alle Versand- & Zahlungsinfos",
+            "promotion": "Gutscheincode",
+            "promotionPlaceholder": "Gutscheincode eingeben …",
+            "promotionSubmit": "Gutschein einlösen",
+            "toCheckout": "Zur Kasse",
+            "freeShippingMissing": "{1} Noch 1 Flasche bis zum kostenlosen Versand|]1,Inf[ Noch %count% Flaschen bis zum kostenlosen Versand",
+            "freeShippingReached": "Kostenloser Versand erreicht",
+            "emptyTitle": "Ihr Warenkorb ist leer",
+            "emptyText": "Entdecken Sie unsere Auswahl an Champagner, Crémant und Winzersekt.",
+            "emptyCta": "Schaumweine entdecken"
         }
     }
 }

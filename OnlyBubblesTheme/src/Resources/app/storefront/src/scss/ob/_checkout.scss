@@ -575,6 +575,97 @@
     }
 }
 
+// --- Robustheit gegenüber Eltern-Theme-Styles (z. B. WeineFeinkostTheme) ---
+.ob-checkout .checkout {
+    // Wrapper-Elemente sind nur Struktur - Karten-Optik liefern ausschließlich .card / .ob-*-Karten
+    .confirm-address,
+    .confirm-payment-shipping,
+    .confirm-payment,
+    .confirm-shipping,
+    .confirm-product,
+    .checkout-aside,
+    .checkout-aside-container,
+    .checkout-aside-action,
+    .cart-add-product-container,
+    .cart-shipping-costs-container {
+        background: transparent !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    .confirm-address,
+    .confirm-product {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    // Karten in der Adress-Karte nicht nochmals rahmen
+    .js-confirm-overview-addresses .card,
+    .js-confirm-overview-addresses .checkout-card {
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+    }
+}
+
+.ob-summary-card {
+    // Eltern-Themes setzen teils Serifenschrift / Flex-Layouts auf die Summenliste
+    &,
+    .checkout-aside-summary-list,
+    .checkout-aside-summary-label,
+    .checkout-aside-summary-value,
+    .confirm-tos,
+    .confirm-tos label,
+    .revocation-notice {
+        font-family: $ob-font-sans !important;
+    }
+
+    .checkout-aside-summary-header {
+        font-family: $ob-font-serif !important;
+        border: 0 !important;
+        padding: 0 !important;
+    }
+
+    .checkout-aside-summary-list-container,
+    .checkout-aside-summary-container,
+    .confirm-tos,
+    .checkout-aside-action {
+        display: block !important;
+        width: 100% !important;
+        float: none !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .checkout-aside-summary-list {
+        display: flex !important;
+        flex-wrap: wrap;
+        margin: 0 !important;
+
+        > dt { flex: 0 0 60%; max-width: 60%; }
+        > dd { flex: 0 0 40%; max-width: 40%; text-align: right; }
+
+        // Gesamtsumme: mehr Platz für lange Beträge
+        > dt.checkout-aside-summary-total { flex-basis: 42%; max-width: 42%; }
+        > dd.checkout-aside-summary-total {
+            flex-basis: 58%;
+            max-width: 58%;
+            font-size: clamp(20px, 2vw, 26px);
+            white-space: nowrap;
+        }
+    }
+
+    hr { display: none; }
+}
+
 // --- Responsive ------------------------------------------------------------
 @include media-breakpoint-down(lg) {
     .ob-checkout .checkout .checkout-container {

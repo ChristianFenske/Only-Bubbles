@@ -1,0 +1,241 @@
+{% sw_extends '@Storefront/storefront/page/checkout/cart/index.html.twig' %}
+
+{#
+    Only Bubbles — Warenkorb (/checkout/cart)
+    Eigenes Markup für Layout, Seitenleiste und Leerzustand (ohne parent()),
+    damit Eltern-Themes die Struktur nicht verändern. Positionen, Mengen, Löschen,
+    Gutschein und Versandkosten laufen weiter über die Shopware-Routen.
+#}
+
+{% block page_checkout %}
+    {% set showTaxPrice = false %}
+    {% if feature('v6.8.0.0') %}
+        {% set showTaxPrice = config('core.cart.columnTaxInsteadUnitPrice') %}
+    {% endif %}
+    {% set showSubtotal = config('core.cart.showSubtotal') %}
+    {% set obIsEmpty = page.cart.lineItems.count is same as(0) %}
+
+    <div class="ob-checkout ob-checkout-cart">
+        <div class="checkout">
+            {{ block('base_flashbags_checkout') }}
+
+            {% if obIsEmpty %}
+                {% block ob_cart_empty %}
+                    <div class="ob-cart-empty">
+                        <div class="ob-bubbles ob-bubbles-corner" aria-hidden="true"><span></span><span></span><span></span></div>
+                        <span class="ob-empty-state-icon">{% sw_icon 'bag' %}</span>
+                        <h1>{{ 'obTheme.cart.emptyTitle'|trans|sw_sanitize }}</h1>
+                        <p>{{ 'obTheme.cart.emptyText'|trans|sw_sanitize }}</p>
+                        <a href="{{ path('frontend.home.page') }}" class="btn btn-primary">
+                            {{ 'obTheme.cart.emptyCta'|trans|sw_sanitize }}
+                            {% sw_icon 'arrow-right' style { size: 'xs' } %}
+                        </a>
+                    </div>
+                {% endblock %}
+            {% else %}
+                <div class="checkout-container">
+                    <div class="checkout-main">
+                        {% block ob_cart_header %}
+                            <div class="ob-confirm-head">
+                                <h1 class="cart-main-header">{{ 'obTheme.cart.title'|trans|sw_sanitize }}</h1>
+                                <span class="cart-main-header-item-counter">
+                                    ({{ 'obTheme.checkout.positions'|trans({'%count%': page.cart.lineItems|length})|sw_sanitize }})
+                                </span>
+                            </div>
+                        {% endblock %}
+
+                        {% block ob_cart_items %}
+                            <div class="card checkout-product-table ob-cart-card">
+                                <ul class="card-body list-unstyled">
+                                    {{ block('page_checkout_cart_table_header') }}
+                                    {{ block('page_checkout_cart_table_items') }}
+                                </ul>
+
+                                <div class="ob-cart-card-footer">
+                                    <a href="{{ path('frontend.home.page') }}" class="ob-cart-link">
+                                        {% sw_icon 'arrow-left' style { size: 'xs' } %}
+                                        {{ 'obTheme.cart.continueShopping'|trans|sw_sanitize }}
+                                    </a>
+
+                                    <form action="{{ path('frontend.checkout.line-items.delete') }}"
+                                          method="post"
+                                          onsubmit="return confirm('{{ 'obTheme.cart.clearConfirm'|trans|e('js') }}');">
+                                        <input type="hidden" name="redirectTo" value="frontend.checkout.cart.page">
+                                        {% for lineItem in page.cart.lineItems %}
+                                            {% if lineItem.removable %}
+                                                <input type="hidden" name="ids[]" value="{{ lineItem.id }}">
+                                            {% endif %}
+                                        {% endfor %}
+                                        <button type="submit" class="ob-cart-link ob-cart-clear">
+                                            {% sw_icon 'trash' style { size: 'xs' } %}
+                                            {{ 'obTheme.cart.clearCart'|trans|sw_sanitize }}
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            {{ block('page_checkout_cart_hidden_line_items_information') }}
+                        {% endblock %}
+
+                        {% block ob_cart_extras %}
+                            <div class="ob-cart-extras">
+                                {# Artikel per Artikelnummer hinzufügen (SW6 Quick-Add) #}
+                                <div class="card ob-cart-quickadd">
+                                    <form action="{{ path('frontend.checkout.product.add-by-number') }}" method="post" class="card-body">
+                                        <input type="hidden" name="redirectTo" value="frontend.checkout.cart.page">
+                                        <label class="form-label" for="addProductInput">{{ 'obTheme.cart.addByNumber'|trans|sw_sanitize }}</label>
+                                        <div class="ob-input-group">
+                                            <input type="text"
+                                                   name="number"
+                                                   class="form-control"
+                                                   id="addProductInput"
+                                                   placeholder="{{ 'obTheme.cart.addByNumberPlaceholder'|trans|striptags }}">
+                                            <button class="btn ob-input-btn" type="submit" id="addProductButton"
+                                                    aria-label="{{ 'obTheme.cart.addByNumber'|trans|striptags }}">
+                                                {% sw_icon 'checkmark' style { size: 'xs' } %}
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                {# Versanddetails als Akkordeon (ersetzt den Link "Versanddetails öffnen") #}
+                                {% if feature('v6.8.0.0') %}
+                                    {% set obHasPhysical = page.cart.lineItems.hasLineItemWithProductType(constant('Shopware\\Core\\Content\\Product\\ProductDefinition::TYPE_PHYSICAL')) %}
+                                {% else %}
+                                    {% set obHasPhysical = page.cart.lineItems.hasLineItemWithState(constant('Shopware\\Core\\Content\\Product\\State::IS_PHYSICAL')) %}
+                                {% endif %}
+
+                                {% if obHasPhysical %}
+                                    {% set obDelivery = page.cart.deliveries.first %}
+                                    <div class="card ob-cart-shipping">
+                                        <div class="card-body">
+                                            <button type="button"
+                                                    class="ob-accordion-toggle collapsed"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#obShippingDetails"
+                                                    aria-expanded="false"
+                                                    aria-controls="obShippingDetails">
+                                                <span class="card-title">
+                                                    {% sw_icon 'truck' style { size: 'xs' } %}
+                                                    {{ 'obTheme.cart.shippingDetails'|trans|sw_sanitize }}
+                                                </span>
+                                                <span class="ob-accordion-chevron">{% sw_icon 'arrow-head-down' style { size: 'xs' } %}</span>
+                                            </button>
+
+                                            <div class="collapse" id="obShippingDetails">
+                                                <dl class="ob-info-list">
+                                                    <div><dt>{{ 'obTheme.cart.deliveryCountry'|trans|sw_sanitize }}</dt><dd>{{ context.shippingLocation.country.translated.name }}</dd></div>
+                                                    <div><dt>{{ 'obTheme.cart.shippingMethod'|trans|sw_sanitize }}</dt><dd>{{ context.shippingMethod.translated.name }}</dd></div>
+                                                    {% if context.shippingMethod.deliveryTime %}
+                                                        <div><dt>{{ 'obTheme.cart.deliveryTime'|trans|sw_sanitize }}</dt><dd>{{ context.shippingMethod.deliveryTime.translated.name }}</dd></div>
+                                                    {% endif %}
+                                                    {% if obDelivery %}
+                                                        <div><dt>{{ 'obTheme.cart.shippingCosts'|trans|sw_sanitize }}</dt><dd>{{ obDelivery.shippingCosts.totalPrice|currency }}</dd></div>
+                                                    {% endif %}
+                                                </dl>
+
+                                                {# Lieferland / Versandart ändern (Shopware-Formular, sendet automatisch ab) #}
+                                                <form name="precalc"
+                                                      method="post"
+                                                      action="{{ path('frontend.checkout.configure') }}"
+                                                      data-form-auto-submit="true"
+                                                      class="ob-shipping-form">
+                                                    {{ block('page_checkout_cart_shipping_costs_form_group_country') }}
+                                                    {% if page.shippingMethods|length > 1 %}
+                                                        {{ block('page_checkout_cart_shipping_costs_form_group_shipping_method') }}
+                                                    {% endif %}
+                                                    <input type="hidden" name="redirectTo" value="frontend.checkout.cart.page">
+                                                </form>
+
+                                                {% set obShippingInfoUrl = theme_config('ob-link-shipping-info') %}
+                                                {% if obShippingInfoUrl %}
+                                                    <a href="{{ obShippingInfoUrl }}" class="ob-card-link">
+                                                        {{ 'obTheme.cart.shippingInfoLink'|trans|sw_sanitize }}
+                                                        {% sw_icon 'arrow-right' style { size: 'xs' } %}
+                                                    </a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endblock %}
+                    </div>
+
+                    <aside class="checkout-aside">
+                        <div class="checkout-aside-container">
+                            {% block ob_cart_aside %}
+                                <div class="ob-summary-card">
+                                    <div class="ob-bubbles ob-bubbles-corner" aria-hidden="true"><span></span><span></span><span></span></div>
+
+                                    <h2 class="checkout-aside-summary-header">{{ 'obTheme.checkout.summary'|trans|sw_sanitize }}</h2>
+
+                                    <div class="checkout-aside-summary-list-container">
+                                        {% sw_include '@Storefront/storefront/page/checkout/summary.html.twig' %}
+                                    </div>
+
+                                    {# Gutscheincode (SW6 Promotion) #}
+                                    <form action="{{ path('frontend.checkout.promotion.add') }}" class="cart-add-promotion ob-promotion" method="post">
+                                        <input type="hidden" name="redirectTo" value="frontend.checkout.cart.page">
+                                        <label class="form-label" for="addPromotionInput">{{ 'obTheme.cart.promotion'|trans|sw_sanitize }}</label>
+                                        <div class="ob-input-group">
+                                            <input type="text"
+                                                   name="code"
+                                                   class="form-control"
+                                                   id="addPromotionInput"
+                                                   placeholder="{{ 'obTheme.cart.promotionPlaceholder'|trans|striptags }}"
+                                                   aria-invalid="false">
+                                            <button class="btn ob-input-btn ob-input-btn-gold" type="submit" id="addPromotion"
+                                                    aria-label="{{ 'obTheme.cart.promotionSubmit'|trans|striptags }}">
+                                                {% sw_icon 'checkmark' style { size: 'xs' } %}
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                    <div class="d-grid">
+                                        <a href="{{ path('frontend.checkout.confirm.page') }}"
+                                           class="btn btn-primary btn-lg ob-btn-gold begin-checkout-btn"
+                                           title="{{ 'obTheme.cart.toCheckout'|trans|striptags }}">
+                                            {{ 'obTheme.cart.toCheckout'|trans|sw_sanitize }}
+                                            {% sw_icon 'arrow-right' style { size: 'xs' } %}
+                                        </a>
+                                    </div>
+                                </div>
+
+                                {# Fortschritt kostenloser Versand (nur Anzeige) #}
+                                {% set obFreeFrom = theme_config('ob-free-shipping-bottles') ?? 12 %}
+                                {% set obBottles = 0 %}
+                                {% for lineItem in page.cart.lineItems %}
+                                    {% if lineItem.type == 'product' %}
+                                        {% set obBottles = obBottles + lineItem.quantity %}
+                                    {% endif %}
+                                {% endfor %}
+                                {% set obMissing = max(0, obFreeFrom - obBottles) %}
+
+                                <div class="ob-trust-box">
+                                    {% if obFreeFrom > 0 %}
+                                        <div class="ob-free-shipping">
+                                            <p>
+                                                {% sw_icon 'truck' style { size: 'xs' } %}
+                                                {% if obMissing == 0 %}
+                                                    {{ 'obTheme.cart.freeShippingReached'|trans|sw_sanitize }}
+                                                {% else %}
+                                                    {{ 'obTheme.cart.freeShippingMissing'|trans({'%count%': obMissing})|sw_sanitize }}
+                                                {% endif %}
+                                            </p>
+                                            <div class="ob-progress" role="progressbar"
+                                                 aria-valuemin="0" aria-valuemax="{{ obFreeFrom }}" aria-valuenow="{{ min(obBottles, obFreeFrom) }}">
+                                                <span style="width: {{ (min(obBottles, obFreeFrom) / obFreeFrom * 100)|round }}%"></span>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    <p>{% sw_icon 'lock-closed' style { size: 'xs' } %} {{ 'obTheme.trust.secure'|trans|sw_sanitize }}</p>
+                                </div>
+                            {% endblock %}
+                        </div>
+                    </aside>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

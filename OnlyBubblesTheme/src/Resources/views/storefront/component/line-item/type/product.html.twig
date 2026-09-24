@@ -1,0 +1,12 @@
+{% sw_extends '@Storefront/storefront/component/line-item/type/product.html.twig' %}
+
+{# Warenkorb: Stückpreis als "Menge × Preis" unter der Artikelnummer (statt eigener Spalte) #}
+{% block component_line_item_type_product_number %}
+    {{ parent() }}
+
+    {% if activeRoute == 'frontend.checkout.cart.page' and lineItem.price %}
+        <div class="ob-line-item-unit">
+            {{ lineItem.quantity }} × {{ lineItem.price.unitPrice|currency }}
+        </div>
+    {% endif %}
+{% endblock %}

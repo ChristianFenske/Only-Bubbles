@@ -60,6 +60,36 @@
                 "editable": true,
                 "scss": false,
                 "block": "onlyBubblesLinks"
+            },
+            "ob-link-shipping-info": {
+                "label": {
+                    "de-DE": "Link „Versand- & Zahlungsinfos“ (Warenkorb)",
+                    "en-GB": "Link \"Shipping & payment info\" (cart)"
+                },
+                "helpText": {
+                    "de-DE": "URL der Seite Versand & Zahlung. Leer = Link ausblenden.",
+                    "en-GB": "URL of the shipping & payment page. Empty = hide link."
+                },
+                "type": "text",
+                "value": "",
+                "editable": true,
+                "scss": false,
+                "block": "onlyBubblesLinks"
+            },
+            "ob-free-shipping-bottles": {
+                "label": {
+                    "de-DE": "Kostenloser Versand ab … Flaschen (Warenkorb-Balken)",
+                    "en-GB": "Free shipping from … bottles (cart progress bar)"
+                },
+                "helpText": {
+                    "de-DE": "Nur Anzeige. 0 = Balken ausblenden. Die echten Versandkosten kommen aus den Versandregeln.",
+                    "en-GB": "Display only. 0 = hide bar."
+                },
+                "type": "number",
+                "value": 12,
+                "editable": true,
+                "scss": false,
+                "block": "onlyBubblesLinks"
             }
         }
     }
