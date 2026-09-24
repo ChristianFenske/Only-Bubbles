@@ -1,0 +1,16 @@
+{% sw_extends '@Storefront/storefront/component/line-item/element/remove.html.twig' %}
+
+{# Warenkorbseite: Papierkorb statt "x" #}
+{% block component_line_item_remove_button %}
+    {% if activeRoute is same as('frontend.checkout.cart.page') and displayMode == 'default' %}
+        <button type="submit"
+                aria-label="{{ 'checkout.removeLineItem'|trans({ '%lineItemLabel%': label })|striptags }}"
+                title="{{ 'global.default.remove'|trans }}"
+                data-product-id="{{ lineItem.id }}"
+                class="btn btn-outline-secondary btn-sm line-item-remove-button">
+            {% sw_icon 'trash' style { size: 'xs' } %}
+        </button>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

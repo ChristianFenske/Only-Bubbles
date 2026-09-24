@@ -90,6 +90,32 @@
             "ordersEmptyTitle": "Noch keine Bestellungen",
             "ordersEmptyText": "Sobald Sie bei uns bestellt haben, finden Sie hier alle Bestellungen mit Status und Details.",
             "ordersEmptyCta": "Schaumweine entdecken"
+        },
+        "cart": {
+            "breadcrumbLabel": "Brotkrumen-Navigation",
+            "breadcrumbHome": "Start",
+            "colProduct": "Produkt",
+            "colTotal": "Summe",
+            "sku": "Art.-Nr.",
+            "inclVat": "inkl. %amount% MwSt.",
+            "continueShopping": "Weiter einkaufen",
+            "clearCart": "Warenkorb leeren",
+            "addByNumber": "Artikel per Artikelnummer hinzufügen",
+            "shippingDetails": "Versanddetails",
+            "shippingCountry": "Lieferland",
+            "deliveryTime": "Lieferzeit",
+            "shippingCosts": "Versandkosten",
+            "shippingInfoLink": "Alle Versand- & Zahlungsinfos",
+            "proceed": "Zur Kasse",
+            "freeShippingMissing": "{1} Noch 1 Flasche bis zum kostenlosen Versand|]1,Inf[ Noch %count% Flaschen bis zum kostenlosen Versand",
+            "freeShippingReached": "Kostenloser Versand erreicht",
+            "emptyTitle": "Ihr Warenkorb ist leer",
+            "emptyText": "Entdecken Sie unsere Auswahl an Champagner, Crémant und Winzersekt.",
+            "emptyCta": "Schaumweine entdecken"
+        },
+        "accountMenu": {
+            "newHere": "Neu hier?",
+            "createAccount": "Konto erstellen"
         }
     }
 }

@@ -52,6 +52,16 @@
         {{ 'account.ordersLink'|trans|sw_sanitize }}
     </a>
 
+    {# Header-Dropdown: zusätzlich Merkzettel #}
+    {% if headerWidget and config('core.cart.wishlistEnabled') %}
+        <a href="{{ path('frontend.wishlist.page') }}"
+           title="{{ 'header.wishlist'|trans|striptags }}"
+           class="list-group-item list-group-item-action account-aside-item">
+            {% sw_icon 'heart' style { size: 'xs' } %}
+            {{ 'header.wishlist'|trans|sw_sanitize }}
+        </a>
+    {% endif %}
+
     {% set obRevocationUrl = theme_config('ob-link-revocation') %}
     {% if obRevocationUrl %}
         <a href="{{ obRevocationUrl }}"

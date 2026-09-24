@@ -1,0 +1,44 @@
+{% sw_extends '@Storefront/storefront/layout/header/account-menu.html.twig' %}
+
+{# Konto-Dropdown im Header (auch Offcanvas auf Mobil): dunkler Kopf mit Initialen #}
+{% block layout_header_actions_account_widget_dropdown_header %}
+    {% if context.customer and not context.customer.guest %}
+        {% set obInitials = (context.customer.firstName|first ~ context.customer.lastName|first)|upper %}
+        <div class="dropdown-header account-menu-header ob-menu-head">
+            <span class="ob-menu-bubble" aria-hidden="true"></span>
+            <span class="ob-menu-bubble" aria-hidden="true"></span>
+            <span class="ob-menu-avatar" aria-hidden="true">{{ obInitials }}</span>
+            <span class="ob-menu-greeting">
+                <small>{{ 'obTheme.account.eyebrow'|trans|sw_sanitize }}</small>
+                <strong>{{ context.customer.firstName }} {{ context.customer.lastName }}</strong>
+            </span>
+        </div>
+    {% elseif context.customer %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block layout_header_actions_account_widget_dropdown_login_login %}
+    <a href="{{ path('frontend.account.login.page') }}"
+       title="{{ 'account.loginSubmit'|trans|striptags }}"
+       class="btn btn-primary account-menu-login-button">
+        {{ 'account.loginSubmit'|trans|sw_sanitize }}
+    </a>
+{% endblock %}
+
+{% block layout_header_actions_account_widget_dropdown_login_register %}
+    <div class="account-menu-register">
+        {{ 'obTheme.accountMenu.newHere'|trans|sw_sanitize }}
+        <a href="{{ path('frontend.account.login.page') }}"
+           title="{{ 'obTheme.accountMenu.createAccount'|trans|striptags }}">
+            {{ 'obTheme.accountMenu.createAccount'|trans|sw_sanitize }}
+        </a>
+    </div>
+{% endblock %}
+
+{# Nicht eingeloggt: nur Anmelden + Konto erstellen, keine Menüpunkte #}
+{% block layout_header_actions_account_widget_dropdown_links %}
+    {% if context.customer %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

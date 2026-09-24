@@ -1,0 +1,747 @@
+// ===========================================================================
+// Warenkorb (/checkout/cart)
+// ===========================================================================
+
+.ob-checkout-cart {
+    padding-top: 22px;
+
+    // Schmalere Sidebar als im Checkout (Design: 360–380px)
+    .checkout .checkout-container {
+        grid-template-columns: minmax(0, 1fr) 370px;
+    }
+
+    .checkout-aside-container {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+}
+
+// --- Brotkrumen + Titel ----------------------------------------------------
+.ob-cart-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 36px;
+    font-size: 13.5px;
+    color: $ob-muted;
+
+    a {
+        color: $ob-muted;
+        text-decoration: none;
+
+        &:hover { color: $ob-gold-600; }
+    }
+
+    .icon {
+        width: 12px;
+        height: 12px;
+        color: $ob-line-input;
+    }
+
+    [aria-current] { color: $ob-ink; }
+}
+
+.ob-cart-head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 28px;
+
+    .cart-main-header {
+        margin: 0;
+        font-family: $ob-font-serif;
+        font-weight: 500;
+        font-size: clamp(36px, 4vw, 48px);
+        line-height: 1;
+        color: $ob-ink;
+    }
+
+    .cart-main-header-item-counter {
+        font-size: 15px;
+        color: $ob-muted;
+    }
+}
+
+// --- Artikel-Karte ---------------------------------------------------------
+$ob-cart-cols: minmax(0, 1fr) 124px 100px 36px;
+
+.ob-cart-table {
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.ob-cart-table-head {
+    display: grid;
+    grid-template-columns: $ob-cart-cols;
+    gap: 16px;
+    align-items: center;
+    padding: 16px 30px;
+    background: $ob-sand;
+    font-size: 12px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: $ob-muted;
+}
+
+.ob-cart-items {
+    margin: 0;
+
+    > .line-item {
+        padding: 26px 30px;
+        border-bottom: 1px solid $ob-line;
+    }
+
+    > .line-item > .line-item-row {
+        display: grid;
+        grid-template-columns: $ob-cart-cols;
+        grid-template-areas: 'info qty total remove';
+        gap: 16px;
+        align-items: center;
+        margin: 0;
+
+        > * {
+            width: auto;
+            max-width: none;
+            flex: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        > .line-item-info { grid-area: info; }
+        > .line-item-quantity { grid-area: qty; }
+        > .line-item-total-price { grid-area: total; }
+        > .line-item-remove { grid-area: remove; }
+        > .line-item-children { grid-column: 1 / -1; }
+
+        // Stückpreis steht als "1 × 11,95 €" unter der Art.-Nr.
+        > .line-item-unit-price,
+        > .line-item-tax-price { display: none; }
+    }
+
+    // Produkt: Bild + Details
+    .line-item-info > .line-item-row {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 18px;
+        margin: 0;
+
+        > * {
+            width: auto;
+            max-width: none;
+            padding: 0;
+        }
+
+        > .line-item-details {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+    }
+
+    .line-item-img-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 80px;
+        height: 104px;
+        margin: 0;
+        border-radius: 10px;
+        background: $ob-sand;
+    }
+
+    .line-item-img-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+
+    .line-item-img {
+        width: auto;
+        max-width: 100%;
+        height: 94px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        object-fit: contain;
+        filter: drop-shadow(0 8px 14px rgba(40, 34, 26, .16));
+    }
+
+    // Reihenfolge wie im Design: Name, Art.-Nr., Stückpreis, Lieferzeit, Pills, Merkzettel
+    .line-item-details-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        > .line-item-label { order: 1; }
+        > .line-item-product-number { order: 2; }
+        > .ob-li-unit { order: 3; }
+        > .line-item-delivery-date { order: 4; }
+        > .line-item-details-characteristics,
+        > .product-feature-list { order: 5; }
+        > .product-wishlist { order: 6; }
+    }
+
+    .line-item-label {
+        display: block;
+        font-family: $ob-font-serif;
+        font-size: 21px;
+        font-weight: 600;
+        line-height: 1.15;
+        color: $ob-ink;
+        text-decoration: none;
+
+        &:hover { color: $ob-gold-700; }
+    }
+
+    .line-item-product-number {
+        margin: 4px 0 6px;
+        font-size: 12.5px;
+        color: $ob-muted;
+    }
+
+    .ob-li-unit {
+        margin-bottom: 10px;
+        font-size: 13px;
+        color: $ob-ink-2;
+    }
+
+    .line-item-delivery-date {
+        margin-bottom: 8px;
+        font-size: 12.5px;
+        color: $ob-muted;
+    }
+
+    // Eigenschaften als Pills (Varianten-Optionen + Produkt-Merkmale)
+    .line-item-details-characteristics.ob-li-pills,
+    .product-feature-list-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin: 0 0 12px;
+        padding: 0;
+        list-style: none;
+    }
+
+    .ob-li-pills .line-item-details-characteristics-option,
+    .product-feature-list-item {
+        margin: 0;
+        padding: 4px 10px;
+        border-radius: 14px;
+        background: $ob-sand;
+        font-size: 12px;
+        font-weight: 400;
+        color: $ob-ink-2;
+    }
+
+    .product-feature-list { margin: 0; }
+    .product-feature-feature { display: inline; }
+    .product-feature-label { display: none; }
+    .product-feature-list-item:has(.product-feature-feature-reference-price) { display: none; }
+
+    // Merkzettel
+    .product-wishlist { margin: 0; }
+
+    .product-wishlist-action {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        font-family: $ob-font-sans;
+        font-size: 13px;
+        color: $ob-ink-2;
+
+        .icon {
+            width: 15px;
+            height: 15px;
+            color: currentColor;
+        }
+
+        &:hover,
+        &.product-wishlist-added { color: $ob-gold-700; }
+    }
+
+    // Mengen-Stepper als Pill
+    .line-item-quantity {
+        display: flex;
+        justify-content: center;
+    }
+
+    .line-item-quantity-row {
+        margin: 0;
+
+        > * {
+            width: auto;
+            padding: 0;
+        }
+    }
+
+    .line-item-quantity-label { display: none; }
+
+    .quantity-selector-group {
+        flex-wrap: nowrap;
+        width: 124px;
+        padding: 4px;
+        border: 1px solid $ob-line-input;
+        border-radius: 26px;
+        background: #fff;
+
+        .btn {
+            flex: none;
+            width: 34px;
+            height: 34px;
+            min-height: 0;
+            padding: 0;
+            border: 0;
+            border-radius: 50% !important;
+            background: transparent;
+            color: $ob-ink;
+
+            &:hover { background: $ob-sand; }
+        }
+
+        .form-control {
+            min-width: 0;
+            height: 34px;
+            min-height: 0;
+            padding: 0 2px;
+            border: 0;
+            background: transparent;
+            box-shadow: none;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 500;
+            -moz-appearance: textfield;
+
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+        }
+    }
+
+    // Summe
+    .line-item-total-price {
+        display: block;
+        text-align: right;
+    }
+
+    .line-item-total-price-label { display: none; }
+
+    .line-item-total-price-value {
+        font-size: 18px;
+        font-weight: 600;
+        color: $ob-gold-700;
+    }
+
+    .ob-li-tax {
+        margin-top: 2px;
+        font-size: 11.5px;
+        font-weight: 400;
+        color: $ob-muted;
+    }
+
+    .line-item.is-discount .line-item-total-price-value { color: $ob-gold-600; }
+
+    // Entfernen
+    .line-item-remove { text-align: right; }
+
+    .line-item-remove-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: transparent;
+        color: $ob-muted;
+
+        &:hover,
+        &:focus-visible {
+            background: $ob-sand;
+            color: $danger;
+        }
+    }
+}
+
+.ob-cart-table-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 18px 30px;
+
+    .ob-cart-continue {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        color: $ob-ink;
+        text-decoration: none;
+
+        .icon { color: $ob-gold-600; }
+
+        &:hover { color: $ob-gold-700; }
+    }
+
+    .ob-cart-clear { margin: 0; }
+
+    .ob-cart-clear .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 0;
+        padding: 0;
+        border: 0;
+        font-size: 13.5px;
+        font-weight: 400;
+        letter-spacing: 0;
+        color: $ob-muted;
+        text-decoration: none;
+
+        &:hover { color: $danger; }
+    }
+}
+
+// --- Karten: Artikelnummer + Versanddetails --------------------------------
+.ob-cart-extras {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    align-items: start;
+    margin: 0 0 20px;
+
+    > .card {
+        width: auto;
+        max-width: none;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+.ob-cart-extra-card.cart-add-product-container {
+    padding: 26px 28px;
+
+    .form-label {
+        display: block;
+        margin-bottom: 7px;
+        font-size: 13px;
+        color: $ob-ink-2;
+    }
+}
+
+// Input + angehängter Button (Artikelnummer, Gutschein)
+.ob-input-join {
+    flex-wrap: nowrap;
+
+    .form-control {
+        height: 50px;
+        border-radius: $ob-radius-input 0 0 $ob-radius-input !important;
+    }
+
+    .btn.ob-input-join-btn {
+        flex: none;
+        width: 54px;
+        height: 50px;
+        min-height: 0;
+        padding: 0;
+        border: 0;
+        border-radius: 0 $ob-radius-input $ob-radius-input 0 !important;
+        background: $ob-ink;
+        color: #fff;
+
+        .icon { color: #fff; }
+
+        &:hover { opacity: .88; }
+    }
+}
+
+.ob-cart-shipping {
+    overflow: hidden;
+}
+
+.ob-cart-shipping-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 24px 28px;
+    border: 0;
+    background: transparent;
+    font-family: $ob-font-sans;
+    text-align: left;
+
+    > .icon { color: $ob-gold-600; }
+}
+
+.ob-cart-shipping-title {
+    flex: 1;
+    font-family: $ob-font-serif;
+    font-size: 21px;
+    font-weight: 600;
+    color: $ob-ink;
+}
+
+.ob-cart-shipping-chevron {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: $ob-sand;
+    color: $ob-ink;
+    transform: rotate(180deg);
+    transition: transform .2s ease;
+
+    .icon {
+        width: 12px;
+        height: 12px;
+    }
+
+    .collapsed & { transform: none; }
+}
+
+.ob-cart-shipping-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0 28px 26px;
+    font-size: 14px;
+    color: $ob-ink-2;
+
+    .form-select {
+        height: 44px;
+        margin-top: 6px;
+        font-size: 14px;
+    }
+
+    .ob-cart-shipping-link {
+        align-self: flex-start;
+        margin-top: 4px;
+        padding: 0;
+        font-size: 13px;
+    }
+}
+
+.ob-cart-shipping-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+
+    > span:last-child {
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    // Auswahlfelder über volle Breite
+    &:has(select) {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+// --- Sidebar ---------------------------------------------------------------
+.ob-checkout-cart .ob-summary-card {
+    padding: 32px 30px;
+
+    .checkout-aside-summary-list {
+        padding-bottom: 4px;
+    }
+
+    .ob-cart-promotion {
+        margin: 22px 0 0;
+        padding: 22px 0;
+        border-top: 1px solid $ob-on-dark-line;
+
+        .form-label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 13px;
+            color: rgba(243, 238, 227, .75);
+        }
+
+        .checkout-aside-add-code {
+            flex-wrap: nowrap;
+        }
+
+        .form-control {
+            height: 50px;
+            border: 1px solid rgba(243, 238, 227, .18);
+            border-radius: $ob-radius-input 0 0 $ob-radius-input !important;
+            background: rgba(255, 255, 255, .05);
+            color: $ob-on-dark;
+
+            &::placeholder { color: rgba(243, 238, 227, .45); }
+
+            &:focus {
+                border-color: $ob-gold-600;
+                box-shadow: 0 0 0 3px rgba(154, 118, 58, .16);
+            }
+        }
+
+        .btn.ob-input-join-btn {
+            flex: none;
+            width: 54px;
+            height: 50px;
+            min-height: 0;
+            padding: 0;
+            border: 0;
+            border-radius: 0 $ob-radius-input $ob-radius-input 0 !important;
+            background: $ob-gold-600;
+            color: #fff;
+
+            .icon { color: #fff; }
+
+            &:hover { background: $ob-gold-700; }
+        }
+    }
+
+    .begin-checkout-btn {
+        min-height: 54px;
+        border-radius: $ob-radius-pill;
+        font-size: 15px;
+        letter-spacing: .03em;
+    }
+}
+
+// Trust-Box mit Fortschritt "kostenloser Versand"
+.ob-cart-trust {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 18px 20px;
+    border-radius: 12px;
+    background: $ob-sand;
+    font-size: 13.5px;
+    color: $ob-ink-2;
+}
+
+.ob-cart-trust-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .icon { color: $ob-gold-600; }
+}
+
+.ob-cart-progress {
+    height: 6px;
+    border-radius: 4px;
+    background: #fff;
+    overflow: hidden;
+
+    > span {
+        display: block;
+        height: 100%;
+        border-radius: 4px;
+        background: $ob-gold-600;
+        transition: width .3s ease;
+    }
+}
+
+// --- Leerer Warenkorb ------------------------------------------------------
+.ob-cart-empty {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 72px;
+    padding: 72px 40px;
+    border-radius: $ob-radius-card;
+    background: $ob-sand;
+    text-align: center;
+
+    h2 {
+        margin: 0 0 8px;
+        font-family: $ob-font-serif;
+        font-size: 32px;
+        font-weight: 500;
+        color: $ob-ink;
+    }
+
+    p {
+        max-width: 440px;
+        margin: 0 auto 28px;
+        font-size: 15px;
+        line-height: 1.6;
+        color: $ob-muted;
+    }
+
+    .btn.ob-cart-empty-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 52px;
+        padding: 0 32px;
+        font-size: 15px;
+        font-weight: 500;
+    }
+}
+
+.ob-cart-empty-icon {
+    display: grid;
+    place-items: center;
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 22px;
+    border-radius: 50%;
+    background: #fff;
+
+    .icon {
+        width: 22px;
+        height: 22px;
+        color: $ob-gold-600;
+    }
+}
+
+.ob-cart-empty-bubble {
+    position: absolute;
+    border-radius: 50%;
+    animation: obrise 3.2s ease-in-out infinite alternate;
+
+    &:nth-child(1) { left: 20%; top: 36px; width: 14px; height: 14px; border: 1.4px solid $ob-gold-light; }
+    &:nth-child(2) { right: 22%; top: 56px; width: 24px; height: 24px; background: rgba(210, 179, 126, .6); animation-duration: 3.9s; }
+    &:nth-child(3) { right: 30%; bottom: 44px; width: 9px; height: 9px; border: 1.3px solid $ob-gold-light; animation-duration: 2.7s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ob-cart-empty-bubble { animation: none; }
+}
+
+// --- Responsive ------------------------------------------------------------
+@include media-breakpoint-down(lg) {
+    .ob-checkout-cart .checkout .checkout-container {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .ob-cart-table-head { display: none; }
+
+    .ob-cart-items {
+        > .line-item { padding: 22px 18px; }
+
+        > .line-item > .line-item-row {
+            grid-template-columns: minmax(0, 1fr) auto 36px;
+            grid-template-areas:
+                'info info info'
+                'qty total remove';
+            row-gap: 14px;
+        }
+
+        .line-item-quantity { justify-content: flex-start; }
+    }
+
+    .ob-cart-table-foot {
+        padding: 16px 18px;
+        flex-wrap: wrap;
+    }
+
+    .ob-cart-empty { padding: 56px 20px; }
+}

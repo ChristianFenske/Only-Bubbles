@@ -90,6 +90,32 @@
             "ordersEmptyTitle": "No orders yet",
             "ordersEmptyText": "As soon as you have ordered from us, you will find all orders with status and details here.",
             "ordersEmptyCta": "Discover sparkling wines"
+        },
+        "cart": {
+            "breadcrumbLabel": "Breadcrumb",
+            "breadcrumbHome": "Home",
+            "colProduct": "Product",
+            "colTotal": "Total",
+            "sku": "Item no.",
+            "inclVat": "incl. %amount% VAT",
+            "continueShopping": "Continue shopping",
+            "clearCart": "Empty cart",
+            "addByNumber": "Add item by product number",
+            "shippingDetails": "Shipping details",
+            "shippingCountry": "Delivery country",
+            "deliveryTime": "Delivery time",
+            "shippingCosts": "Shipping costs",
+            "shippingInfoLink": "All shipping & payment info",
+            "proceed": "Checkout",
+            "freeShippingMissing": "{1} 1 more bottle for free shipping|]1,Inf[ %count% more bottles for free shipping",
+            "freeShippingReached": "Free shipping reached",
+            "emptyTitle": "Your cart is empty",
+            "emptyText": "Discover our selection of Champagne, Crémant and grower's sparkling wine.",
+            "emptyCta": "Discover sparkling wines"
+        },
+        "accountMenu": {
+            "newHere": "New here?",
+            "createAccount": "Create account"
         }
     }
 }

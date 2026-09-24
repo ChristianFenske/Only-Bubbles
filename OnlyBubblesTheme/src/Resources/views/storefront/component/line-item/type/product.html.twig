@@ -1,0 +1,53 @@
+{% sw_extends '@Storefront/storefront/component/line-item/type/product.html.twig' %}
+
+{# Anpassungen nur auf der Warenkorbseite (/checkout/cart). Bestätigung, Offcanvas & Konto bleiben unverändert. #}
+
+{% block component_line_item_type_product_variant_characteristics %}
+    {% if activeRoute is same as('frontend.checkout.cart.page') and displayMode == 'default' %}
+        <div class="line-item-details-characteristics ob-li-pills">
+            {% for option in lineItem.payload.options %}
+                <span class="line-item-details-characteristics-option" title="{{ option.group }}">{{ option.option }}</span>
+            {% endfor %}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block component_line_item_type_product_number %}
+    {% if activeRoute is same as('frontend.checkout.cart.page') and displayMode == 'default' %}
+        {% set obRef = lineItem.price.referencePrice %}
+        <div class="line-item-product-number">
+            {{ 'obTheme.cart.sku'|trans|sw_sanitize }} {{ lineItem.payload.productNumber }}
+            {%- if obRef %}
+                · {{ obRef.purchaseUnit|replace({'.': ','}) }} {{ obRef.unitName }}
+                ({{ obRef.price|currency }} / {{ obRef.referenceUnit|replace({'.': ','}) }} {{ obRef.unitName }})
+            {%- endif %}
+        </div>
+        <div class="ob-li-unit">{{ lineItem.quantity }} × {{ lineItem.price.unitPrice|currency }}</div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block component_line_item_type_product_col_total_price %}
+    {% if activeRoute is same as('frontend.checkout.cart.page') and displayMode == 'default' %}
+        <div class="line-item-total-price line-item-price">
+            {% sw_include '@Storefront/storefront/component/line-item/element/total-price.html.twig' with {
+                currency: lineItem.order.currency.isoCode
+            } %}
+
+            {% if context.taxState == 'gross' %}
+                {% set obTax = 0 %}
+                {% for obCalcTax in lineItem.price.calculatedTaxes %}
+                    {% set obTax = obTax + obCalcTax.tax %}
+                {% endfor %}
+                {% if obTax > 0 %}
+                    <div class="ob-li-tax">{{ 'obTheme.cart.inclVat'|trans({'%amount%': obTax|currency})|sw_sanitize }}</div>
+                {% endif %}
+            {% endif %}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
