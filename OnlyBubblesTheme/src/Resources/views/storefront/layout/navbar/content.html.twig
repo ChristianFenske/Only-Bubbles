@@ -1,0 +1,99 @@
+{% sw_extends '@Storefront/storefront/layout/navbar/content.html.twig' %}
+
+{# Mega-Menü: Kopfzeile, Unterkategorien (2. Ebene = Gruppen, 3. Ebene = Links), Bildkarte aus Kategoriebild + -beschreibung #}
+{% block layout_navbar_content %}
+    {% set category = navigationTree.category %}
+    {% set name = category.translated.name %}
+    {% set obLinks = navigationTree.children|filter(child => child.children|length == 0) %}
+    {% set obGroups = navigationTree.children|filter(child => child.children|length > 0) %}
+
+    <div class="ob-mega-inner{% if category.media %} has-teaser{% endif %}">
+        <div class="ob-mega-main">
+            {% block ob_mega_head %}
+                <div class="ob-mega-head">
+                    <h2 class="ob-mega-title">{{ name }}</h2>
+                    {% if category.type == 'page' %}
+                        <a class="ob-mega-all" href="{{ seoUrl('frontend.navigation.page', { navigationId: category.id }) }}" title="{{ name }}">
+                            {{ 'obTheme.nav.showAll'|trans|sw_sanitize }}
+                            {% sw_icon 'arrow-right' style { size: 'xs' } %}
+                        </a>
+                    {% endif %}
+                </div>
+            {% endblock %}
+
+            {% block ob_mega_body %}
+                <div class="ob-mega-grid">
+                    {% if obLinks|length > 0 %}
+                        <div class="ob-mega-group ob-mega-group-links">
+                            <div class="ob-mega-links">
+                                {% for obItem in obLinks %}
+                                    {{ block('ob_mega_link') }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% for obGroup in obGroups %}
+                        {% set obGroupCat = obGroup.category %}
+                        <div class="ob-mega-group">
+                            {% if obGroupCat.type == 'folder' %}
+                                <div class="ob-mega-group-title">{{ obGroupCat.translated.name }}</div>
+                            {% else %}
+                                <a class="ob-mega-group-title" href="{{ obGroupCat.seoUrl }}" title="{{ obGroupCat.translated.name }}">{{ obGroupCat.translated.name }}</a>
+                            {% endif %}
+                            <div class="ob-mega-links">
+                                {% for obItem in obGroup.children %}
+                                    {{ block('ob_mega_link') }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endblock %}
+        </div>
+
+        {% block ob_mega_teaser %}
+            {% if category.media %}
+                {% set obTeaserText = category.translated.description|striptags|trim %}
+                <a class="ob-mega-teaser"
+                   href="{{ category.seoUrl }}"
+                   {% if category.shouldOpenInNewTab %}target="_blank"{% endif %}
+                   title="{{ name }}">
+                    {% sw_thumbnails 'ob-mega-teaser-image' with {
+                        media: category.media,
+                        sizes: { default: '400px' },
+                        attributes: {
+                            class: 'ob-mega-teaser-img',
+                            alt: (category.media.translated.alt ?: name),
+                            loading: 'lazy'
+                        }
+                    } %}
+                    <span class="ob-mega-teaser-bubble" aria-hidden="true"></span>
+                    <span class="ob-mega-teaser-bubble" aria-hidden="true"></span>
+                    <span class="ob-mega-teaser-body">
+                        <span class="ob-mega-teaser-title">{{ name }}</span>
+                        {% if obTeaserText %}
+                            <span class="ob-mega-teaser-text">{{ obTeaserText|u.truncate(140, '…', false) }}</span>
+                        {% endif %}
+                        <span class="ob-mega-teaser-cta">
+                            {{ 'obTheme.nav.teaserCta'|trans|sw_sanitize }}
+                            {% sw_icon 'arrow-right' style { size: 'xs' } %}
+                        </span>
+                    </span>
+                </a>
+            {% endif %}
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block ob_mega_link %}
+    {% set obCat = obItem.category %}
+    {% if obCat.type == 'folder' %}
+        <span class="ob-mega-link">{{ obCat.translated.name }}</span>
+    {% else %}
+        <a class="ob-mega-link nav-item-{{ obCat.id }}-link"
+           href="{{ obCat.seoUrl }}"
+           {% if obCat.shouldOpenInNewTab %}target="_blank"{% if obCat.linkType == 'external' %} rel="noopener noreferrer"{% endif %}{% endif %}
+           title="{{ obCat.translated.name }}">{{ obCat.translated.name }}</a>
+    {% endif %}
+{% endblock %}

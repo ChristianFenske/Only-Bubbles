@@ -1,0 +1,20 @@
+{% sw_extends '@Storefront/storefront/layout/navbar/navbar.html.twig' %}
+
+{# Only Bubbles Header: Menüpunkte als Pills mit Pfeil, Mega-Menü statt Standard-Dropdown #}
+{% block layout_navbar_menu_item_link_content %}
+    <span {% if not feature('JSON_LD_DATA') %}itemprop="name"{% endif %} class="main-navigation-link-text{% if name == name|upper %} ob-nav-caps{% endif %}">{{ name }}</span>
+    {% if hasChildren %}
+        <svg class="ob-nav-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg>
+    {% endif %}
+{% endblock %}
+
+{% block layout_navbar_menu_item_children %}
+    <div class="dropdown-menu ob-mega">
+        {% sw_include '@Storefront/storefront/layout/navbar/content.html.twig' with {
+            themeIconConfig: themeIconConfig,
+            navigationTree: treeItem,
+            level: level+1,
+            page: page
+        } only %}
+    </div>
+{% endblock %}

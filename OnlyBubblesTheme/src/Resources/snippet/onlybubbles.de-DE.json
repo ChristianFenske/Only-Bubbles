@@ -116,6 +116,10 @@
         "accountMenu": {
             "newHere": "Neu hier?",
             "createAccount": "Konto erstellen"
+        },
+        "nav": {
+            "showAll": "Alle anzeigen",
+            "teaserCta": "Zur Auswahl"
         }
     }
 }
