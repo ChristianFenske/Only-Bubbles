@@ -11,10 +11,14 @@
 @include media-breakpoint-up(lg) {
     // --- Menüpunkte ----------------------------------------------------------
     .nav-main nav.main-navigation-menu {
-        // Gesamthöhe je Menüpunkt = 42px wie im Standard (p-2 + Textzeile),
+        // Oben wie bisher (Position der Menüpunkte), unten 8px weniger,
         // damit das Mega-Menü direkt an der Header-Kante ansetzt.
         .main-navigation-menu-list > .nav-item {
-            padding: 5px 0 !important;
+            padding: 24px 0 16px !important;
+
+            @media (max-width: 1350px) {
+                padding: 12px 0 4px !important;
+            }
         }
 
         .main-navigation-link.root {
@@ -27,7 +31,7 @@
             font-size: 14px;
             font-weight: 400;
             letter-spacing: .01em;
-            line-height: 16px;
+            line-height: 1.3;
             color: $ob-ink;
             white-space: nowrap;
             transition: background-color .15s ease, color .15s ease;
