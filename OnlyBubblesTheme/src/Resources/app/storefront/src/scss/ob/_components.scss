@@ -275,55 +275,63 @@ body:has(.account-register, .ob-checkout, .ob-finish, .ob-account) {
 }
 
 // --- Segmented Pills (JS: ob-segmented-select.plugin) ---------------------
-.ob-segmented-source {
-    position: absolute !important;
-    width: 1px !important;
-    height: 1px !important;
-    min-height: 0 !important;
-    padding: 0 !important;
-    margin: -1px !important;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0 !important;
-    opacity: 0;
-    pointer-events: none;
+form:not(#cms-form-newsletter) {
+	.ob-segmented-source {
+		position: absolute !important;
+		width: 1px !important;
+		height: 1px !important;
+		min-height: 0 !important;
+		padding: 0 !important;
+		margin: -1px !important;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		border: 0 !important;
+		opacity: 0;
+		pointer-events: none;
+	}	
+
+	.ob-segmented {
+		display: inline-flex;
+		flex-wrap: wrap;
+		gap: 2px;
+		padding: 4px;
+		background: $ob-sand;
+		border-radius: $ob-radius-pill;
+	}
+
+	.ob-segmented-item {
+		min-height: 40px;
+		padding: 0 20px;
+		border: 0;
+		border-radius: $ob-radius-pill;
+		background: transparent;
+		font-family: $ob-font-sans;
+		font-size: 14.5px;
+		color: $ob-ink-2;
+		cursor: pointer;
+		transition: background-color .2s ease, color .2s ease, box-shadow .2s ease;
+
+		&:hover { color: $ob-ink; }
+
+		&:focus-visible {
+			outline: 2px solid $ob-gold-600;
+			outline-offset: 2px;
+		}
+
+		&.is-active {
+			background: $ob-ink;
+			color: $ob-cream;
+			box-shadow: 0 2px 8px rgba(40, 34, 26, .18);
+		}
+
+		&:disabled { cursor: not-allowed; opacity: .6; }
+	}
 }
 
-.ob-segmented {
-    display: inline-flex;
-    flex-wrap: wrap;
-    gap: 2px;
-    padding: 4px;
-    background: $ob-sand;
-    border-radius: $ob-radius-pill;
-}
-
-.ob-segmented-item {
-    min-height: 40px;
-    padding: 0 20px;
-    border: 0;
-    border-radius: $ob-radius-pill;
-    background: transparent;
-    font-family: $ob-font-sans;
-    font-size: 14.5px;
-    color: $ob-ink-2;
-    cursor: pointer;
-    transition: background-color .2s ease, color .2s ease, box-shadow .2s ease;
-
-    &:hover { color: $ob-ink; }
-
-    &:focus-visible {
-        outline: 2px solid $ob-gold-600;
-        outline-offset: 2px;
-    }
-
-    &.is-active {
-        background: $ob-ink;
-        color: $ob-cream;
-        box-shadow: 0 2px 8px rgba(40, 34, 26, .18);
-    }
-
-    &:disabled { cursor: not-allowed; opacity: .6; }
+form#cms-form-newsletter {
+	.ob-segmented {
+		display: none;
+	}
 }
 
 // Anrede/Kontotyp-Pills nicht in schmale Bootstrap-Spalten quetschen

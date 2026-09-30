@@ -744,8 +744,8 @@ hr,
 				}
 				
 				&.btn {
-					width: 20px;
-					height: 20px;
+					width: 25px;
+					height: 25px;
 					
 					.icon-heart:before,
 					.icon-heart-fill:before {
@@ -872,8 +872,8 @@ hr,
 }
 
 .country-icon {
-    width: 22px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
 }
 
 .product-box-stock-status {
@@ -1863,6 +1863,11 @@ footer.footer-main.ob-footer {
 			border: none;
 			height: 36px;
 			padding: 2px 8px;
+			color: #eee;
+			
+			&:hover {
+				color: #fff;
+			}
 		}
 	}
 	
@@ -2080,6 +2085,7 @@ h1.wishlist-headline {
 				
 				.country-icon {
 					margin-left: auto;
+					height: 20px;
 				}
 			}
 		}
