@@ -11,13 +11,11 @@
 @include media-breakpoint-up(lg) {
     // --- Menüpunkte ----------------------------------------------------------
     .nav-main nav.main-navigation-menu {
-        // Oben wie bisher (Position der Menüpunkte), unten 8px weniger,
-        // damit das Mega-Menü direkt an der Header-Kante ansetzt.
         .main-navigation-menu-list > .nav-item {
-            padding: 24px 0 16px !important;
+            padding: 24px 0 !important;
 
             @media (max-width: 1350px) {
-                padding: 12px 0 4px !important;
+                padding: 12px 0 !important;
             }
         }
 
@@ -72,8 +70,14 @@
     }
 
     // --- Mega-Menü -----------------------------------------------------------
+    // Navigation liegt beim Überfahren über der Header-Zeile – sonst zählt der Weg
+    // vom Menüpunkt ins Mega-Menü als "Navigation verlassen" und das Menü schließt.
+    .nav-main:hover,
+    .nav-main:focus-within { z-index: 1031; }
+
     .main-navigation-menu .dropdown-menu.ob-mega {
-        margin-top: 0;
+        // 8px nach oben: setzt direkt an der Header-Kante an (keine Lücke)
+        margin-top: -8px !important;
         padding: 0;
         border: 0;
         border-bottom: 1px solid $ob-line;
@@ -92,6 +96,16 @@
         clip-path: inset(-24px -100vmax -100vmax -100vmax) !important;
 
         &.show { animation: obdrop .22s ease-out; }
+
+        // Unsichtbare Brücke vom Menüpunkt ins Menü (Maus bleibt "in der Navigation")
+        &::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            bottom: 100%;
+            left: 0;
+            height: 16px;
+        }
     }
 
     // Solange das Mega-Menü offen ist: Schatten der Header-Zeile (Eltern-Theme) ausblenden,
@@ -297,4 +311,10 @@
 @media (prefers-reduced-motion: reduce) {
     .main-navigation-menu .dropdown-menu.ob-mega.show,
     .ob-mega-teaser-bubble { animation: none; }
+}
+
+// Logo: die zwei kleinen Bläschen sind nur umrandet (nicht gefüllt)
+.ob-header-logo .ob-bubble-1,
+.ob-header-logo .ob-bubble-3 {
+    background: transparent !important;
 }
