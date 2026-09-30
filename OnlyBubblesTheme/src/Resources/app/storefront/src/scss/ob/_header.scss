@@ -80,16 +80,34 @@
         // Weiße Schatten-Kopien schließen die Lücke zum Header (oben) und zum rechten/linken Rand,
         // danach Schatten + Abdunklung der Seite darunter. Schatten erzeugen keinen Scrollbalken.
         box-shadow:
-            0 -16px 0 #fff,
-            40px -16px 0 #fff,
-            -40px -16px 0 #fff,
+            0 -24px 0 #fff,
+            40px -24px 0 #fff,
+            -40px -24px 0 #fff,
             40px 0 0 #fff,
             -40px 0 0 #fff,
             0 28px 50px rgba(40, 34, 26, .14),
             0 0 0 100vmax rgba(38, 34, 29, .28);
-        clip-path: inset(-16px -100vmax -100vmax -100vmax);
+        clip-path: inset(-24px -100vmax -100vmax -100vmax);
 
         &.show { animation: obdrop .22s ease-out; }
+    }
+
+    // Solange das Mega-Menü offen ist: Schatten der Header-Zeile (Eltern-Theme) ausblenden,
+    // damit kein grauer Streifen zwischen Header und Menü liegt; Menü liegt über dem Header-Rand.
+    body:has(.main-navigation-menu .dropdown-menu.ob-mega.show) {
+        header.header-main,
+        .nav-main,
+        *:has(> header.header-main) {
+            box-shadow: none !important;
+            filter: none !important;
+        }
+
+        header.header-main::after,
+        header.header-main::before {
+            box-shadow: none !important;
+        }
+
+        .nav-main { z-index: 1031; }
     }
 
     .ob-mega-inner {
