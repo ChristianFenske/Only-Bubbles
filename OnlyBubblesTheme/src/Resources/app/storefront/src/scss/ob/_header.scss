@@ -77,15 +77,15 @@
 
     // Eltern-Theme (WeineFeinkost) setzt: position fixed; top 130px; width calc(100vw - 15px).
     // Only-Bubbles-Header ist 120px hoch -> Menü bündig darunter und über die volle Breite.
+    // Eltern-Theme setzt position fixed (top 130px, Breite 100vw - 15px). Da der Header jetzt
+    // mit der Seite wegscrollt, hängt das Menü direkt unter der Navigation, über volle Breite.
     .main-navigation-menu .dropdown-menu.ob-mega {
+        position: absolute !important;
+        top: 100% !important;
+        right: auto !important;
+        left: calc(50% - 50vw) !important;
+        width: 100vw !important;
         margin-top: 0 !important;
-        right: 0 !important;
-        left: 0 !important;
-        width: auto !important;
-
-        @media (min-width: 1351px) {
-            top: 120px !important;
-        }
 
         padding: 0;
         border: 0;
@@ -304,9 +304,34 @@
     background: transparent !important;
 }
 
-// Header immer sichtbar: das Eltern-Theme schiebt Header und Navigation beim
-// Runterscrollen per Klasse .not-sticky nach oben weg – hier abgeschaltet.
-header.header-main.not-sticky,
-.nav-main.not-sticky {
+// Header steht oben auf der Seite und scrollt mit dem Inhalt weg (kein Sticky, kein Wieder-Einblenden).
+// Eltern-Theme: header + .nav-main sind position sticky, Script setzt .not-sticky / .not-on-top.
+header.header-main,
+header.header-main.not-sticky {
+    position: relative !important;
+    top: 0 !important;
     transform: none !important;
+}
+
+// Menü über volle Breite darf keinen waagerechten Scrollbalken erzeugen
+html { overflow-x: clip; }
+
+@include media-breakpoint-up(lg) {
+    // Gleiche Lage wie bisher im Sticky-Modus (dort 10px Versatz durch "top"), aber ohne Mitscrollen
+    .nav-main,
+    .nav-main.not-sticky,
+    .nav-main.not-on-top {
+        position: relative !important;
+        top: 10px !important;
+        transform: none !important;
+        overflow: visible !important;
+    }
+}
+
+@media (min-width: 1351px) {
+    .nav-main.not-on-top { margin-top: -95px !important; }
+}
+
+@media (min-width: 992px) and (max-width: 1350px) {
+    .nav-main.not-on-top { margin-top: -34px !important; }
 }
