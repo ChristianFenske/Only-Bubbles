@@ -1,0 +1,248 @@
+// ===========================================================================
+// Startseite: Magazin "Wissen & Genuss" (Text-Element .magazin-title-box + Acris-Blog-Slider)
+// Greift automatisch für den Abschnitt, der die .magazin-title-box enthält –
+// keine CSS-Klasse in der Einkaufswelt nötig.
+// ===========================================================================
+
+.cms-section:has(.magazin-title-box) {
+    padding-top: 80px;
+    padding-bottom: 72px;
+
+    // --- Kopfzeile: Eyebrow, Überschrift, "Alle Beiträge" -------------------
+    .magazin-title-box {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 24px;
+        flex-wrap: wrap;
+
+        h6 {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin: 0 0 18px;
+            font-family: $ob-font-sans;
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: #907d5e;
+
+            &::before {
+                content: '';
+                display: block;
+                width: 42px;
+                height: 1px;
+                background: #bc9956;
+            }
+        }
+
+        h2 {
+            margin: 0;
+            font-family: $ob-font-serif;
+            font-size: clamp(34px, 4vw, 48px);
+            font-weight: 500;
+            line-height: 1.05;
+            color: $ob-ink;
+        }
+
+        > a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 6px;
+            font-size: 15px;
+            font-weight: 500;
+            color: $ob-gold-600;
+            text-decoration: none;
+
+            &::after {
+                content: '→';
+                font-size: 16px;
+                transition: transform .2s ease;
+            }
+
+            &:hover {
+                color: $ob-gold-700;
+
+                &::after { transform: translateX(3px); }
+            }
+        }
+    }
+
+    // --- Blog-Slider ---------------------------------------------------------
+    .cms-block-acris-blog-latest-slider .cms-block-container {
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+    }
+
+    .cms-element-acris-blog-latest-slider {
+        padding-bottom: 60px;
+
+        .acris-blog-latest-slider-header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-bottom: 22px;
+        }
+
+        // "Neueste Beiträge" – die Überschrift steht schon darüber
+        .acris-blog-latest-headline { display: none; }
+
+        .acris-blog-latest-slider-nav {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .acris-blog-latest-slider-counter {
+            font-size: 13px;
+            letter-spacing: .08em;
+            color: $ob-muted;
+        }
+
+        .acris-blog-latest-slider-controls {
+            gap: 8px;
+
+            button {
+                width: 42px;
+                height: 42px;
+                border: 1px solid $ob-line-input;
+                border-radius: 50%;
+                background: #fff;
+                color: $ob-ink;
+                transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+
+                &:hover,
+                &:focus-visible {
+                    border-color: $ob-gold-600;
+                    background: $ob-gold-600;
+                    color: #fff;
+                }
+
+                &[disabled] { opacity: .4; }
+
+                .icon { color: currentColor; }
+            }
+        }
+
+        // Karte
+        .acris-blog-latest-featured {
+            height: 100%;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            overflow: visible;
+        }
+
+        .acris-blog-latest-featured-image {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .acris-blog-latest-featured-image-link {
+            display: block;
+            overflow: hidden;
+            border-radius: 16px;
+            background: $ob-sand;
+            aspect-ratio: 4 / 3;
+        }
+
+        .acris-blog-latest-featured-image-tag {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .5s ease;
+        }
+
+        .acris-blog-latest-featured:hover .acris-blog-latest-featured-image-tag {
+            transform: scale(1.04);
+        }
+
+        // Blog-Gruppe als goldene Zeile unter dem Bild (statt Badge auf dem Bild)
+        .acris-blog-latest-featured-image .acris-blog-latest-badge {
+            position: static;
+            align-self: flex-start;
+            margin: 22px 0 0;
+            padding: 0;
+            border-radius: 0;
+            background: transparent !important;
+            font-family: $ob-font-sans;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: $ob-gold-600 !important;
+        }
+
+        .acris-blog-latest-featured-body {
+            padding: 10px 0 0;
+        }
+
+        .acris-blog-latest-featured-image:not(.has-badge) + .acris-blog-latest-featured-body {
+            padding-top: 22px;
+        }
+
+        .acris-blog-latest-featured-title-link {
+            text-decoration: none;
+        }
+
+        .acris-blog-latest-featured-title {
+            margin: 0 0 10px;
+            font-family: $ob-font-serif;
+            font-size: 24px;
+            font-weight: 500;
+            line-height: 1.25;
+            color: $ob-ink;
+            transition: color .2s ease;
+        }
+
+        .acris-blog-latest-featured-title-link:hover .acris-blog-latest-featured-title {
+            color: $ob-gold-700;
+        }
+
+        .acris-blog-latest-featured-description {
+            font-size: 14.5px;
+            line-height: 1.6;
+            color: $ob-muted;
+        }
+
+        // Autor + Datum wie in der Vorlage ausblenden
+        .acris-blog-latest-featured-footer { display: none; }
+
+        // Punkte
+        .tns-nav,
+        .base-slider-dots {
+            bottom: 0;
+        }
+
+        .tns-nav button,
+        .base-slider-dots button {
+            width: 8px;
+            height: 8px;
+            padding: 0;
+            margin: 0 5px;
+            border: 0;
+            background: $ob-line-input;
+            box-shadow: none;
+            transition: background-color .2s ease, width .2s ease;
+
+            &.tns-nav-active {
+                width: 22px;
+                border-radius: 4px;
+                background: $ob-gold-600;
+                box-shadow: none;
+            }
+        }
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .cms-section:has(.magazin-title-box) {
+        padding-top: 48px;
+        padding-bottom: 40px;
+
+        .magazin-title-box > a { margin-bottom: 0; }
+    }
+}
