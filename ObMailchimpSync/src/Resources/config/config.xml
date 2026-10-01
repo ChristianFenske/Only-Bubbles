@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
+
+    <card>
+        <title>Mailchimp</title>
+        <title lang="de-DE">Mailchimp</title>
+
+        <input-field type="bool">
+            <name>enabled</name>
+            <label>Enable sync</label>
+            <label lang="de-DE">Synchronisation aktiv</label>
+            <helpText>Can be set per sales channel (select it at the top).</helpText>
+            <helpText lang="de-DE">Kann je Verkaufskanal eingestellt werden (oben den Verkaufskanal auswählen).</helpText>
+            <defaultValue>false</defaultValue>
+        </input-field>
+
+        <input-field type="password">
+            <name>apiKey</name>
+            <label>API key</label>
+            <label lang="de-DE">API-Key</label>
+            <helpText>Mailchimp → Profile → Extras → API keys. Format: xxxxxxxx-us21</helpText>
+            <helpText lang="de-DE">Mailchimp → Profil → Extras → API-Keys. Format: xxxxxxxx-us21</helpText>
+        </input-field>
+
+        <input-field type="text">
+            <name>audienceId</name>
+            <label>Audience ID</label>
+            <label lang="de-DE">Zielgruppen-ID (Audience ID)</label>
+            <helpText>Mailchimp → Audience → Settings → Audience name and defaults → "Audience ID".</helpText>
+            <helpText lang="de-DE">Mailchimp → Zielgruppe → Einstellungen → Zielgruppenname und Standardwerte → „Zielgruppen-ID“.</helpText>
+        </input-field>
+
+        <input-field type="bool">
+            <name>syncNames</name>
+            <label>Transfer first and last name (FNAME / LNAME)</label>
+            <label lang="de-DE">Vor- und Nachname übertragen (FNAME / LNAME)</label>
+            <defaultValue>true</defaultValue>
+        </input-field>
+
+        <input-field type="bool">
+            <name>syncUnsubscribe</name>
+            <label>Transfer unsubscriptions</label>
+            <label lang="de-DE">Abmeldungen übertragen</label>
+            <helpText>Recipients who unsubscribe in Shopware are set to "unsubscribed" in Mailchimp.</helpText>
+            <helpText lang="de-DE">Wer sich in Shopware abmeldet, wird in Mailchimp auf „abgemeldet“ gesetzt.</helpText>
+            <defaultValue>true</defaultValue>
+        </input-field>
+    </card>
+</config>
