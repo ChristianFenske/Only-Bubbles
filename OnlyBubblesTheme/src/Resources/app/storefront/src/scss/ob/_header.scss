@@ -83,10 +83,9 @@
         border-bottom: 1px solid $ob-line;
         border-radius: 0;
         background: #fff;
-        // Schatten + Abdunklung der Seite darunter. Die oberen 8px (unter dem Header)
-        // werden ausgeschnitten: Menü liegt optisch hinter der Header-Kante.
+        // Schatten + Abdunklung der Seite darunter (nur unterhalb der Oberkante)
         box-shadow: 0 28px 50px rgba(40, 34, 26, .14), 0 0 0 100vmax rgba(38, 34, 29, .28) !important;
-        clip-path: inset(8px -100vmax -100vmax -100vmax) !important;
+        clip-path: inset(0 -100vmax -100vmax -100vmax) !important;
 
         &.show { animation: obdrop .22s ease-out; }
 
@@ -107,7 +106,7 @@
         gap: 56px;
         max-width: 1320px;
         margin: 0 auto;
-        padding: 48px 56px 44px;
+        padding: 40px 56px 44px;
         font-family: $ob-font-sans;
         text-align: left;
 
