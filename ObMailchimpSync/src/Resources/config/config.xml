@@ -47,4 +47,26 @@
             <defaultValue>true</defaultValue>
         </input-field>
     </card>
+
+    <card>
+        <title>Test &amp; manual sync</title>
+        <title lang="de-DE">Test &amp; Abgleich</title>
+
+        <input-field type="bool">
+            <name>syncNow</name>
+            <label>Check connection and transfer all now (on save)</label>
+            <label lang="de-DE">Jetzt prüfen und alle übertragen (beim Speichern)</label>
+            <helpText>Switch on and save: tests API key and audience, transfers all recipients and writes the result below. Switches off automatically. Reload the page to see the result.</helpText>
+            <helpText lang="de-DE">Einschalten und speichern: prüft API-Key und Zielgruppe, überträgt alle Empfänger und schreibt das Ergebnis unten hinein. Schaltet sich danach selbst aus. Zum Anzeigen die Seite neu laden.</helpText>
+            <defaultValue>false</defaultValue>
+        </input-field>
+
+        <input-field type="textarea">
+            <name>lastResult</name>
+            <label>Last result</label>
+            <label lang="de-DE">Letztes Ergebnis</label>
+            <helpText>Written by the plugin (test, full sync, errors). No need to edit.</helpText>
+            <helpText lang="de-DE">Wird vom Plugin geschrieben (Test, Komplett-Abgleich, Fehler). Nicht bearbeiten nötig.</helpText>
+        </input-field>
+    </card>
 </config>

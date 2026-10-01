@@ -27,6 +27,15 @@
    - Zielgruppen-ID: Mailchimp → Zielgruppe → Einstellungen → Zielgruppenname und Standardwerte
 3. Speichern. Neue Anmeldungen gehen ab sofort durch, bestehende spätestens mit dem nächsten Komplett-Abgleich.
 
+## Testen / Fehlersuche (ohne Server-Zugriff)
+In der Plugin-Konfiguration (Verkaufskanal auswählen) gibt es die Karte **„Test & Abgleich“**:
+1. „Jetzt prüfen und alle übertragen“ einschalten → **Speichern** → Seite neu laden.
+2. Im Feld **„Letztes Ergebnis“** steht dann z. B.:
+   „Verbindung OK – Zielgruppe „Only Bubbles“ (42 Kontakte). Shopware: 5 bestätigt, 1 unbestätigt, 0 abgemeldet.
+   Übertragen: 4 neu angelegt, 1 schon in Mailchimp (unverändert), 0 abgemeldet.“
+   oder eine verständliche Fehlermeldung (falscher API-Key, falsche Zielgruppen-ID …).
+Fehler beim Sofort-Abgleich (z. B. Mailchimp lehnt eine Adresse ab) landen ebenfalls dort.
+
 Optional per Konsole: `bin/console ob:mailchimp:sync` (sofortiger Komplett-Abgleich mit Ausgabe).
 
 ## Hinweise

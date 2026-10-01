@@ -9,6 +9,7 @@ use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Sorting\FieldSorting;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
 
@@ -26,6 +27,13 @@ use Shopware\Core\System\SystemConfig\SystemConfigService;
 class RecipientSynchronizer
 {
     private const CONFIG = 'ObMailchimpSync.config.';
+
+    /**
+     * Anzahl Empfänger je Verkaufskanal und Shopware-Status aus dem letzten Komplett-Abgleich.
+     *
+     * @var array<string, array<string, int>>
+     */
+    private array $lastCounts = [];
 
     /**
      * @param EntityRepository<NewsletterRecipientCollection> $recipientRepository
@@ -76,6 +84,10 @@ class RecipientSynchronizer
                     'email' => $recipient->getEmail(),
                     'salesChannelId' => $recipient->getSalesChannelId(),
                 ]);
+                $this->writeResult(
+                    $recipient->getSalesChannelId(),
+                    'Fehler bei ' . $recipient->getEmail() . ': ' . $e->getMessage()
+                );
             }
         }
     }
@@ -85,16 +97,20 @@ class RecipientSynchronizer
      *
      * @return array<string, array{created: int, existing: int, unsubscribed: int, errors: list<string>}> je Verkaufskanal-ID
      */
-    public function syncAll(Context $context, ?callable $progress = null): array
+    public function syncAll(Context $context, ?callable $progress = null, ?string $onlyChannelId = null): array
     {
         $membersByChannel = [];
         $configs = [];
+        $this->lastCounts = [];
         $offset = 0;
         $limit = 500;
 
         do {
             $criteria = new Criteria();
-            $criteria->addFilter(new EqualsAnyFilter('status', ['optIn', 'direct', 'optOut']));
+            $criteria->addFilter(new EqualsAnyFilter('status', ['optIn', 'direct', 'optOut', 'notSet']));
+            if ($onlyChannelId !== null) {
+                $criteria->addFilter(new EqualsFilter('salesChannelId', $onlyChannelId));
+            }
             $criteria->addSorting(new FieldSorting('createdAt'));
             $criteria->setOffset($offset);
             $criteria->setLimit($limit);
@@ -104,6 +120,8 @@ class RecipientSynchronizer
 
             foreach ($recipients as $recipient) {
                 $channelId = $recipient->getSalesChannelId();
+                $statusKey = (string) $recipient->getStatus();
+                $this->lastCounts[$channelId][$statusKey] = ($this->lastCounts[$channelId][$statusKey] ?? 0) + 1;
 
                 if (!\array_key_exists($channelId, $configs)) {
                     $configs[$channelId] = $this->getConfig($channelId);
@@ -161,6 +179,68 @@ class RecipientSynchronizer
         }
 
         return $results;
+    }
+
+    /**
+     * Verbindung prüfen + Komplett-Abgleich für einen Verkaufskanal; liefert einen lesbaren Bericht
+     * (wird im Feld "Letztes Ergebnis" der Plugin-Konfiguration angezeigt).
+     */
+    public function runDiagnostic(string $salesChannelId, Context $context): string
+    {
+        $config = $this->getConfig($salesChannelId);
+
+        if ($config === null) {
+            if (!$this->systemConfig->getBool(self::CONFIG . 'enabled', $salesChannelId)) {
+                return 'Synchronisation ist für diesen Verkaufskanal nicht aktiv.';
+            }
+
+            return 'API-Key oder Zielgruppen-ID fehlt.';
+        }
+
+        try {
+            $audience = $this->client->getAudience($config['apiKey'], $config['audienceId']);
+        } catch (\Throwable $e) {
+            return 'Verbindung fehlgeschlagen: ' . $e->getMessage();
+        }
+
+        $results = $this->syncAll($context, null, $salesChannelId);
+        $result = $results[$salesChannelId] ?? ['created' => 0, 'existing' => 0, 'unsubscribed' => 0, 'errors' => []];
+        $counts = $this->lastCounts[$salesChannelId] ?? [];
+
+        $confirmed = ($counts['optIn'] ?? 0) + ($counts['direct'] ?? 0);
+        $lines = [
+            \sprintf('Verbindung OK – Zielgruppe „%s“ (%d Kontakte vor dem Abgleich).', $audience['name'], $audience['memberCount']),
+            \sprintf(
+                'Shopware: %d bestätigt, %d unbestätigt (Double-Opt-in offen, wird nicht übertragen), %d abgemeldet.',
+                $confirmed,
+                $counts['notSet'] ?? 0,
+                $counts['optOut'] ?? 0
+            ),
+            \sprintf(
+                'Übertragen: %d neu angelegt, %d schon in Mailchimp (unverändert), %d abgemeldet.',
+                $result['created'],
+                $result['existing'],
+                $result['unsubscribed']
+            ),
+        ];
+
+        if ($result['errors'] !== []) {
+            $lines[] = 'Fehler: ' . implode(' | ', \array_slice($result['errors'], 0, 5));
+        }
+
+        return implode(' ', $lines);
+    }
+
+    public function writeResult(?string $salesChannelId, string $message): void
+    {
+        try {
+            $this->systemConfig->set(
+                self::CONFIG . 'lastResult',
+                (new \DateTimeImmutable('now', new \DateTimeZone('Europe/Berlin')))->format('d.m.Y H:i') . ' – ' . $message,
+                $salesChannelId
+            );
+        } catch (\Throwable) {
+        }
     }
 
     /**

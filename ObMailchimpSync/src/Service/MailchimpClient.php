@@ -100,6 +100,35 @@ class MailchimpClient
         return $result;
     }
 
+    /**
+     * Prüft API-Key und Zielgruppe.
+     *
+     * @return array{name: string, memberCount: int}
+     */
+    public function getAudience(string $apiKey, string $audienceId): array
+    {
+        [$status, $data] = $this->request(
+            $apiKey,
+            'GET',
+            \sprintf('/lists/%s?fields=name,stats.member_count', rawurlencode($audienceId)),
+            [],
+            [401, 403, 404]
+        );
+
+        if ($status === 401 || $status === 403) {
+            throw new MailchimpException('API-Key ungültig oder ohne Berechtigung (Mailchimp: ' . (string) ($data['detail'] ?? $data['title'] ?? $status) . ')');
+        }
+
+        if ($status === 404) {
+            throw new MailchimpException('Zielgruppen-ID „' . $audienceId . '“ nicht gefunden. Bitte die ID aus Zielgruppe → Einstellungen → Zielgruppenname und Standardwerte kopieren (nicht den Namen).');
+        }
+
+        return [
+            'name' => (string) ($data['name'] ?? ''),
+            'memberCount' => (int) ($data['stats']['member_count'] ?? 0),
+        ];
+    }
+
     public static function subscriberHash(string $email): string
     {
         return md5(mb_strtolower(trim($email)));
@@ -131,10 +160,12 @@ class MailchimpClient
         $url = \sprintf('https://%s.api.mailchimp.com/3.0%s', self::dataCenter($apiKey), $path);
 
         try {
-            $response = $this->httpClient->request($method, $url, [
-                'auth_basic' => ['shopware', trim($apiKey)],
-                'json' => $body,
-            ]);
+            $options = ['auth_basic' => ['shopware', trim($apiKey)]];
+            if ($body !== []) {
+                $options['json'] = $body;
+            }
+
+            $response = $this->httpClient->request($method, $url, $options);
 
             $status = $response->getStatusCode();
             $content = $response->getContent(false);
