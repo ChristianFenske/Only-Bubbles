@@ -1,0 +1,44 @@
+{% sw_extends '@Storefront/storefront/base.html.twig' %}
+
+{# Seite "Bestellung widerrufen" (Widerrufs-Plugin, Route frontend.revocation.form):
+   Inhalt des Plugins links, Sidebar "So funktioniert's" rechts. Alle anderen Seiten unverändert. #}
+{% block base_main_container %}
+    {% if activeRoute is same as('frontend.revocation.form') %}
+        <div class="ob-revocation">
+            <div class="ob-revocation-main">
+                {{ parent() }}
+            </div>
+
+            <aside class="ob-revocation-aside">
+                <div class="ob-revocation-steps">
+                    <span class="ob-revocation-bubble" aria-hidden="true"></span>
+                    <span class="ob-revocation-bubble" aria-hidden="true"></span>
+                    <div class="ob-revocation-steps-title">{{ 'obTheme.revocation.howTitle'|trans|sw_sanitize }}</div>
+                    <ol>
+                        <li><span>1</span>{{ 'obTheme.revocation.step1'|trans|sw_sanitize }}</li>
+                        <li><span>2</span>{{ 'obTheme.revocation.step2'|trans|sw_sanitize }}</li>
+                        <li><span>3</span>{{ 'obTheme.revocation.step3'|trans|sw_sanitize }}</li>
+                    </ol>
+                </div>
+
+                <div class="ob-revocation-links">
+                    {% if config('core.basicInformation.revocationPage') %}
+                        <a href="{{ path('frontend.cms.page', { id: config('core.basicInformation.revocationPage') }) }}"
+                           data-ajax-modal="true"
+                           data-url="{{ path('frontend.cms.page', { id: config('core.basicInformation.revocationPage') }) }}">
+                            {% sw_icon 'document-view' style { size: 'xs' } %}
+                            {{ 'obTheme.revocation.readPolicy'|trans|sw_sanitize }}
+                        </a>
+                    {% endif %}
+                    {% set obMail = config('core.basicInformation.email') ?: 'info@onlybubbles.de' %}
+                    <a href="mailto:{{ obMail }}">
+                        {% sw_icon 'envelope' style { size: 'xs' } %}
+                        {{ obMail }}
+                    </a>
+                </div>
+            </aside>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

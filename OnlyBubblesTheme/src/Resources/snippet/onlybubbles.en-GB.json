@@ -122,6 +122,13 @@
         "nav": {
             "showAll": "Show all",
             "teaserCta": "Discover"
+        },
+        "revocation": {
+            "howTitle": "How it works",
+            "step1": "Fill in and submit the form",
+            "step2": "Receive a confirmation by e-mail",
+            "step3": "Return the goods – we refund the amount",
+            "readPolicy": "Read the cancellation policy"
         }
     }
 }

@@ -122,6 +122,13 @@
         "nav": {
             "showAll": "Alle anzeigen",
             "teaserCta": "Zur Auswahl"
+        },
+        "revocation": {
+            "howTitle": "So funktioniert's",
+            "step1": "Formular ausfüllen und absenden",
+            "step2": "Eingangsbestätigung per E-Mail erhalten",
+            "step3": "Ware zurücksenden – wir erstatten den Betrag",
+            "readPolicy": "Widerrufsbelehrung lesen"
         }
     }
 }
