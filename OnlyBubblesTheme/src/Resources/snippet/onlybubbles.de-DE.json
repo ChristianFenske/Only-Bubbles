@@ -111,7 +111,9 @@
             "freeShippingReached": "Kostenloser Versand erreicht",
             "emptyTitle": "Ihr Warenkorb ist leer",
             "emptyText": "Entdecken Sie unsere Auswahl an Champagner, Crémant und Winzersekt.",
-            "emptyCta": "Schaumweine entdecken"
+            "emptyCta": "Schaumweine entdecken",
+            "freeShippingMissingBoth": "Noch %bottles% oder %amount% bis zum kostenlosen Versand",
+            "bottles": "{1} 1 Flasche|]1,Inf[ %count% Flaschen"
         },
         "accountMenu": {
             "newHere": "Neu hier?",

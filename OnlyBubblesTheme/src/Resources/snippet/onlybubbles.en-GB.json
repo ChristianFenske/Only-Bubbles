@@ -111,7 +111,9 @@
             "freeShippingReached": "Free shipping reached",
             "emptyTitle": "Your cart is empty",
             "emptyText": "Discover our selection of Champagne, Crémant and grower's sparkling wine.",
-            "emptyCta": "Discover sparkling wines"
+            "emptyCta": "Discover sparkling wines",
+            "freeShippingMissingBoth": "%bottles% or %amount% more for free shipping",
+            "bottles": "{1} 1 bottle|]1,Inf[ %count% bottles"
         },
         "accountMenu": {
             "newHere": "New here?",

@@ -248,25 +248,34 @@
 
 {# Unter der dunklen Karte: Fortschritt kostenloser Versand + Sicherheit #}
 {% block page_checkout_aside_actions %}
-    {# Flaschen für den kostenlosen Versand #}
+    {# Kostenloser Versand ab 12 Flaschen ODER ab 100 € Bestellwert (Warenwert brutto) #}
     {% set obFreeShippingBottles = 12 %}
+    {% set obFreeShippingAmount = 100 %}
     {% set obBottles = 0 %}
     {% for lineItem in page.cart.lineItems.filterType('product') %}
         {% set obBottles = obBottles + lineItem.quantity %}
     {% endfor %}
-    {% set obMissing = max(0, obFreeShippingBottles - obBottles) %}
-    {% set obPct = min(100, (obBottles / obFreeShippingBottles * 100)|round) %}
+    {% set obAmount = page.cart.price.positionPrice %}
+    {% set obMissingBottles = max(0, obFreeShippingBottles - obBottles) %}
+    {% set obMissingAmount = max(0, obFreeShippingAmount - obAmount) %}
+    {% set obReached = obMissingBottles == 0 or obMissingAmount <= 0 %}
+    {% set obPct = min(100, max(obBottles / obFreeShippingBottles * 100, obAmount / obFreeShippingAmount * 100)|round) %}
 
     <div class="ob-cart-trust">
         <div class="ob-cart-trust-row">
             {% sw_icon 'truck' style { size: 'xs' } %}
-            {% if obMissing == 0 %}
-                {{ 'obTheme.cart.freeShippingReached'|trans|sw_sanitize }}
-            {% else %}
-                {{ 'obTheme.cart.freeShippingMissing'|trans({'%count%': obMissing})|sw_sanitize }}
-            {% endif %}
+            <span>
+                {% if obReached %}
+                    {{ 'obTheme.cart.freeShippingReached'|trans|sw_sanitize }}
+                {% else %}
+                    {{ 'obTheme.cart.freeShippingMissingBoth'|trans({
+                        '%bottles%': 'obTheme.cart.bottles'|trans({'%count%': obMissingBottles}),
+                        '%amount%': obMissingAmount|currency
+                    })|sw_sanitize }}
+                {% endif %}
+            </span>
         </div>
-        <div class="ob-cart-progress" role="progressbar" aria-valuemin="0" aria-valuemax="{{ obFreeShippingBottles }}" aria-valuenow="{{ min(obBottles, obFreeShippingBottles) }}">
+        <div class="ob-cart-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ obPct }}">
             <span style="width: {{ obPct }}%"></span>
         </div>
         <div class="ob-cart-trust-row">
