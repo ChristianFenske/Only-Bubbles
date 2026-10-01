@@ -1,0 +1,74 @@
+// ===========================================================================
+// Checkout: Altlasten des Eltern-Themes (WeineFeinkost) neutralisieren
+// Dort bekommen auf /checkout/confirm fast alle Blöcke einen grauen Rahmen
+// (1px #d9d9d9, Radius 30px), Roboto Serif und eine halbbreite Summe.
+// Hohe Spezifität der Eltern-Regeln -> hier mit !important.
+// ===========================================================================
+
+.ob-checkout {
+    // "Ringe" um die Bereiche entfernen – die Karten selbst behalten ihren Only-Bubbles-Rahmen
+    .confirm-tos,
+    .confirm-address,
+    .confirm-product,
+    .confirm-payment-shipping,
+    .checkout-aside-summary,
+    .checkout-additional {
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+    }
+
+    .confirm-address,
+    .confirm-product,
+    .confirm-payment-shipping {
+        padding: 0 !important;
+    }
+
+    .confirm-payment-shipping .confirm-payment,
+    .confirm-payment-shipping .confirm-shipping {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+    }
+
+    .confirm-payment-shipping .confirm-shipping .checkout-card {
+        padding: 0 !important;
+        border: 1px solid $ob-line !important;
+        border-radius: $ob-radius-card !important;
+    }
+
+    // Summe: volle Breite, Only-Bubbles-Schrift
+    .checkout-aside .checkout-aside-summary-list-container {
+        float: none !important;
+        max-width: none !important;
+        padding: 0 !important;
+        font-family: $ob-font-sans !important;
+        font-size: 14.5px !important;
+    }
+
+    .checkout-aside .checkout-aside-summary-list dt,
+    .checkout-aside .checkout-aside-summary-list dd {
+        font-family: $ob-font-sans !important;
+    }
+
+    // Artikelnamen in Cormorant statt Roboto Serif
+    a.line-item-label,
+    .line-item-label {
+        font-family: $ob-font-serif !important;
+        font-size: 20px !important;
+        font-weight: 600 !important;
+    }
+
+    .line-item-delivery-date { color: $ob-muted !important; }
+}
+
+// Bestellseite: AGB-Block in der dunklen Karte ohne eigenen Rahmen
+.ob-checkout-confirm .ob-summary-card .confirm-tos {
+    margin-top: 22px !important;
+    padding: 22px 0 0 !important;
+    border-top: 1px solid $ob-on-dark-line !important;
+}
+
+// Bläschen in den dunklen Summenkarten (Warenkorb, Bestellseite) ausblenden
+.ob-summary-card .ob-bubbles-corner { display: none !important; }
