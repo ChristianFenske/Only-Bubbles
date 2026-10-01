@@ -1,0 +1,181 @@
+// ===========================================================================
+// Formulare: Kontakt (CMS-Formular) + "Bestellung widerrufen" (Widerrufs-Plugin)
+// ===========================================================================
+
+.cms-element-form,
+.revocation-form {
+    // Innere Karte ohne Rahmen ("Ring") – die Fläche drumherum liefert die Seite
+    .card {
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .card > .card-body { padding: 0; }
+
+    .form-label {
+        margin-bottom: 7px;
+        font-family: $ob-font-sans;
+        font-size: 13.5px;
+        color: $ob-ink-2;
+    }
+
+    // Pflichtfeld-Stern in Gold statt Rot
+    .form-required-label { color: $ob-gold-600 !important; }
+
+    .form-control,
+    .form-select {
+        min-height: 50px;
+        padding: 0 16px;
+        border: 1px solid $ob-line-input;
+        border-radius: $ob-radius-input;
+        background-color: #fff;
+        font-family: $ob-font-sans;
+        font-size: 15px;
+        color: $ob-ink;
+        box-shadow: none;
+        transition: border-color .2s ease, box-shadow .2s ease;
+
+        &::placeholder { color: #9a9286; }
+
+        &:focus {
+            border-color: $ob-gold-600;
+            box-shadow: 0 0 0 3px rgba(154, 118, 58, .16);
+            outline: 0;
+        }
+    }
+
+    .form-select { padding-right: 40px; }
+
+    textarea.form-control {
+        min-height: 150px;
+        padding: 14px 16px;
+    }
+
+    .form-group,
+    .row.g-2 > [class*='col'] { margin-bottom: 14px; }
+
+    // Checkbox (Datenschutz)
+    .form-check-input {
+        width: 20px;
+        height: 20px;
+        margin-top: 2px;
+        border: 1px solid $ob-line-input;
+        border-radius: 6px;
+
+        &:checked {
+            border-color: $ob-gold-600;
+            background-color: $ob-gold-600;
+        }
+
+        &:focus { box-shadow: 0 0 0 3px rgba(154, 118, 58, .16); }
+    }
+
+    a:not(.btn) {
+        color: $ob-gold-600;
+
+        &:hover { color: $ob-gold-700; }
+    }
+
+    // Button: dunkle Pill wie im Checkout
+    .btn-primary {
+        min-height: 52px;
+        padding: 0 32px !important;
+        border: 0;
+        border-radius: $ob-radius-pill !important;
+        background: $ob-ink;
+        color: $ob-cream;
+        font-family: $ob-font-sans;
+        font-size: 15px;
+        font-weight: 500 !important;
+
+        &:hover,
+        &:focus-visible {
+            background: $ob-ink-2;
+            color: #fff;
+        }
+    }
+
+    // Anrede als Segmented Pills (JS: ob-segmented-select.plugin)
+    .ob-segmented-source {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        min-height: 0 !important;
+        margin: -1px !important;
+        padding: 0 !important;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0 !important;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .ob-segmented {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 2px;
+        padding: 4px;
+        border-radius: $ob-radius-pill;
+        background: #fff;
+        border: 1px solid $ob-line;
+    }
+
+    .ob-segmented-item {
+        min-height: 40px;
+        padding: 0 18px;
+        border: 0;
+        border-radius: $ob-radius-pill;
+        background: transparent;
+        font-family: $ob-font-sans;
+        font-size: 14.5px;
+        color: $ob-ink-2;
+        cursor: pointer;
+        transition: background-color .2s ease, color .2s ease;
+
+        &:hover { color: $ob-ink; }
+
+        &.is-active {
+            background: $ob-ink;
+            color: $ob-cream;
+            box-shadow: 0 2px 8px rgba(40, 34, 26, .18);
+        }
+    }
+}
+
+// Kontaktformular: Anrede eigene Zeile, Vor- und Nachname nebeneinander
+@include media-breakpoint-up(md) {
+    #cms-form-contact .form-content > .row:first-child {
+        > .col-md-4:first-child {
+            flex: 0 0 100%;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        > .col-md-4:not(:first-child) {
+            flex: 0 0 50%;
+            width: 50%;
+            max-width: 50%;
+        }
+    }
+}
+
+// Widerruf: Auswahl der Bestellung
+.revocation-order-select .list-group-item {
+    margin-bottom: 10px;
+    padding: 18px 20px;
+    border: 1px solid $ob-line !important;
+    border-radius: 12px !important;
+    background: #fff;
+    color: $ob-ink;
+
+    &.active {
+        padding: 17.5px 19.5px;
+        border: 1.5px solid $ob-gold-600 !important;
+        background: $ob-cream;
+        color: $ob-ink;
+
+        .text-muted.text-muted { color: $ob-muted; }
+        .badge.badge { background-color: $ob-gold-600; }
+    }
+}
