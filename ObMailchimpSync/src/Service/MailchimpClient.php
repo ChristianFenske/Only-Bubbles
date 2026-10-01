@@ -18,51 +18,81 @@ class MailchimpClient
     }
 
     /**
-     * Legt ein Mitglied an oder aktualisiert es (PUT = upsert).
+     * Legt einen neuen Kontakt als "subscribed" an. Bestehende Kontakte bleiben UNVERÄNDERT
+     * (kein Überschreiben von Status oder Namen – wer sich in Mailchimp abgemeldet hat, bleibt abgemeldet).
      *
      * @param array<string, string> $mergeFields
+     *
+     * @return bool true = neu angelegt, false = existierte bereits
      */
-    public function upsertMember(string $apiKey, string $audienceId, string $email, string $status, array $mergeFields = []): void
+    public function addMember(string $apiKey, string $audienceId, string $email, array $mergeFields = []): bool
     {
         $body = [
             'email_address' => $email,
-            'status_if_new' => $status,
-            'status' => $status,
+            'status' => 'subscribed',
         ];
 
         if ($mergeFields !== []) {
             $body['merge_fields'] = $mergeFields;
         }
 
-        $this->request(
-            $apiKey,
-            'PUT',
-            \sprintf('/lists/%s/members/%s', rawurlencode($audienceId), self::subscriberHash($email)),
-            $body
-        );
+        [$status, $data] = $this->request($apiKey, 'POST', \sprintf('/lists/%s/members', rawurlencode($audienceId)), $body, [400]);
+
+        if ($status === 400) {
+            if (($data['title'] ?? '') === 'Member Exists') {
+                return false;
+            }
+
+            throw self::error($status, $data);
+        }
+
+        return true;
     }
 
     /**
-     * Batch-Abgleich: bis zu 500 Mitglieder je Aufruf, vorhandene werden aktualisiert.
+     * Setzt einen bestehenden Kontakt auf "unsubscribed". Unbekannte Adressen werden NICHT angelegt.
+     *
+     * @return bool true = abgemeldet, false = Kontakt gibt es in Mailchimp nicht
+     */
+    public function unsubscribeMember(string $apiKey, string $audienceId, string $email): bool
+    {
+        [$status, $data] = $this->request(
+            $apiKey,
+            'PATCH',
+            \sprintf('/lists/%s/members/%s', rawurlencode($audienceId), self::subscriberHash($email)),
+            ['status' => 'unsubscribed'],
+            [404]
+        );
+
+        return $status !== 404;
+    }
+
+    /**
+     * Batch: legt bis zu 500 neue Kontakte je Aufruf an. Bestehende Kontakte werden NICHT verändert
+     * (update_existing = false).
      *
      * @param list<array{email_address: string, status: string, merge_fields?: array<string, string>}> $members
      *
-     * @return array{created: int, updated: int, errors: list<string>}
+     * @return array{created: int, existing: int, errors: list<string>}
      */
-    public function batchUpsert(string $apiKey, string $audienceId, array $members): array
+    public function batchAdd(string $apiKey, string $audienceId, array $members): array
     {
-        $result = ['created' => 0, 'updated' => 0, 'errors' => []];
+        $result = ['created' => 0, 'existing' => 0, 'errors' => []];
 
         foreach (array_chunk($members, 500) as $chunk) {
-            $response = $this->request($apiKey, 'POST', \sprintf('/lists/%s', rawurlencode($audienceId)), [
+            [, $response] = $this->request($apiKey, 'POST', \sprintf('/lists/%s', rawurlencode($audienceId)), [
                 'members' => $chunk,
-                'update_existing' => true,
+                'update_existing' => false,
             ]);
 
             $result['created'] += \count($response['new_members'] ?? []);
-            $result['updated'] += \count($response['updated_members'] ?? []);
 
             foreach ($response['errors'] ?? [] as $error) {
+                if (($error['error_code'] ?? '') === 'ERROR_CONTACT_EXISTS') {
+                    ++$result['existing'];
+                    continue;
+                }
+
                 $result['errors'][] = ($error['email_address'] ?? '?') . ': ' . ($error['error'] ?? 'Unbekannter Fehler');
             }
         }
@@ -92,10 +122,11 @@ class MailchimpClient
 
     /**
      * @param array<string, mixed> $body
+     * @param list<int> $allowedErrors HTTP-Fehlercodes, die nicht als Exception geworfen werden
      *
-     * @return array<string, mixed>
+     * @return array{0: int, 1: array<string, mixed>}
      */
-    private function request(string $apiKey, string $method, string $path, array $body): array
+    private function request(string $apiKey, string $method, string $path, array $body, array $allowedErrors = []): array
     {
         $url = \sprintf('https://%s.api.mailchimp.com/3.0%s', self::dataCenter($apiKey), $path);
 
@@ -114,15 +145,23 @@ class MailchimpClient
         $data = json_decode($content, true);
         $data = \is_array($data) ? $data : [];
 
-        if ($status >= 400) {
-            throw new MailchimpException(\sprintf(
-                'Mailchimp-Fehler %d: %s %s',
-                $status,
-                (string) ($data['title'] ?? ''),
-                (string) ($data['detail'] ?? '')
-            ));
+        if ($status >= 400 && !\in_array($status, $allowedErrors, true)) {
+            throw self::error($status, $data);
         }
 
-        return $data;
+        return [$status, $data];
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    private static function error(int $status, array $data): MailchimpException
+    {
+        return new MailchimpException(\sprintf(
+            'Mailchimp-Fehler %d: %s %s',
+            $status,
+            (string) ($data['title'] ?? ''),
+            (string) ($data['detail'] ?? '')
+        ));
     }
 }

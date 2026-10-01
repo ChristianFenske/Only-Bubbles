@@ -15,10 +15,13 @@ use Shopware\Core\System\SystemConfig\SystemConfigService;
 /**
  * Überträgt Newsletter-Empfänger nach Mailchimp.
  *
- * Shopware-Status -> Mailchimp-Status:
- *  - optIn / direct (bestätigt)  -> subscribed
- *  - optOut (abgemeldet)         -> unsubscribed (wenn "Abmeldungen übertragen" aktiv)
+ * Shopware-Status -> Mailchimp:
+ *  - optIn / direct (bestätigt)  -> neuer Kontakt "subscribed"; BESTEHENDE Kontakte bleiben unverändert
+ *                                   (wer sich in Mailchimp abgemeldet hat, wird nie wieder angemeldet)
+ *  - optOut (abgemeldet)         -> vorhandener Kontakt wird "unsubscribed" (wenn aktiviert), nie neu angelegt
  *  - notSet (noch nicht bestätigt) -> wird nicht übertragen (Double-Opt-in läuft in Shopware)
+ *
+ * Es wird nichts gelöscht – weder in Shopware noch in Mailchimp.
  */
 class RecipientSynchronizer
 {
@@ -61,13 +64,11 @@ class RecipientSynchronizer
             }
 
             try {
-                $this->client->upsertMember(
-                    $config['apiKey'],
-                    $config['audienceId'],
-                    $member['email_address'],
-                    $member['status'],
-                    $member['merge_fields'] ?? []
-                );
+                if ($member['status'] === 'subscribed') {
+                    $this->client->addMember($config['apiKey'], $config['audienceId'], $member['email_address'], $member['merge_fields'] ?? []);
+                } else {
+                    $this->client->unsubscribeMember($config['apiKey'], $config['audienceId'], $member['email_address']);
+                }
             } catch (\Throwable $e) {
                 // Anmeldung im Shop darf nie an Mailchimp scheitern – nur protokollieren,
                 // der nächtliche Komplett-Abgleich holt es nach.
@@ -82,7 +83,7 @@ class RecipientSynchronizer
     /**
      * Komplett-Abgleich aller Empfänger aller aktiven Verkaufskanäle.
      *
-     * @return array<string, array{created: int, updated: int, errors: list<string>}> je Verkaufskanal-ID
+     * @return array<string, array{created: int, existing: int, unsubscribed: int, errors: list<string>}> je Verkaufskanal-ID
      */
     public function syncAll(Context $context, ?callable $progress = null): array
     {
@@ -126,10 +127,28 @@ class RecipientSynchronizer
         foreach ($membersByChannel as $channelId => $members) {
             $config = $configs[$channelId];
 
+            $results[$channelId] = ['created' => 0, 'existing' => 0, 'unsubscribed' => 0, 'errors' => []];
+
+            $subscribe = array_values(array_filter($members, static fn (array $m): bool => $m['status'] === 'subscribed'));
+            $unsubscribe = array_values(array_filter($members, static fn (array $m): bool => $m['status'] === 'unsubscribed'));
+
             try {
-                $results[$channelId] = $this->client->batchUpsert($config['apiKey'], $config['audienceId'], $members);
+                $batch = $this->client->batchAdd($config['apiKey'], $config['audienceId'], $subscribe);
+                $results[$channelId]['created'] = $batch['created'];
+                $results[$channelId]['existing'] = $batch['existing'];
+                $results[$channelId]['errors'] = $batch['errors'];
             } catch (\Throwable $e) {
-                $results[$channelId] = ['created' => 0, 'updated' => 0, 'errors' => [$e->getMessage()]];
+                $results[$channelId]['errors'][] = $e->getMessage();
+            }
+
+            foreach ($unsubscribe as $member) {
+                try {
+                    if ($this->client->unsubscribeMember($config['apiKey'], $config['audienceId'], $member['email_address'])) {
+                        ++$results[$channelId]['unsubscribed'];
+                    }
+                } catch (\Throwable $e) {
+                    $results[$channelId]['errors'][] = $member['email_address'] . ': ' . $e->getMessage();
+                }
             }
 
             foreach ($results[$channelId]['errors'] as $error) {

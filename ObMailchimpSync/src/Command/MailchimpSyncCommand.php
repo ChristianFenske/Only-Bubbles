@@ -26,10 +26,11 @@ class MailchimpSyncCommand extends Command
             Context::createCLIContext(),
             static function (string $channelId, array $result) use ($io): void {
                 $io->writeln(\sprintf(
-                    'Verkaufskanal %s: %d neu, %d aktualisiert, %d Fehler',
+                    'Verkaufskanal %s: %d neu, %d schon vorhanden (unverändert), %d abgemeldet, %d Fehler',
                     $channelId,
                     $result['created'],
-                    $result['updated'],
+                    $result['existing'],
+                    $result['unsubscribed'],
                     \count($result['errors'])
                 ));
 

@@ -2,7 +2,7 @@
     "name": "bitbrew/ob-mailchimp-sync",
     "description": "Überträgt Newsletter-Empfänger aus Shopware automatisch in eine Mailchimp-Zielgruppe",
     "type": "shopware-platform-plugin",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "authors": [
         {
