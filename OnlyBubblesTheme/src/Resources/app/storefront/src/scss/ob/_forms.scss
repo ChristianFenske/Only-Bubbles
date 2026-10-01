@@ -2,7 +2,9 @@
 // Formulare: Kontakt (CMS-Formular) + "Bestellung widerrufen" (Widerrufs-Plugin)
 // ===========================================================================
 
-.cms-element-form,
+// Nur Kontakt- und Widerrufsformular – der Newsletter (#cms-form-newsletter) hat sein eigenes Design
+.cms-element-form:has(#cms-form-contact),
+.cms-element-form:has(#cms-form-online-revocation-request),
 .revocation-form {
     // Innere Karte ohne Rahmen ("Ring") – die Fläche drumherum liefert die Seite
     .card {
