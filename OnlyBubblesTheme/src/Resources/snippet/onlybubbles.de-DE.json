@@ -142,6 +142,16 @@
             "loginLink": "Hier anmelden",
             "formEyebrow": "Neues Händlerkonto",
             "formTitle": "Ihre Angaben"
+        },
+        "search": {
+            "suggestions": "Suchvorschläge",
+            "categories": "Kategorien",
+            "producers": "Winzer",
+            "products": "Produkte",
+            "xOfY": "%shown% von %total%",
+            "resultsFor": "Ergebnisse für „%term%“",
+            "noResult": "Keine Treffer für „%term%“",
+            "noResultHint": "Prüfen Sie die Schreibweise oder versuchen Sie einen allgemeineren Begriff."
         }
     }
 }

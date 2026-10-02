@@ -142,6 +142,16 @@
             "loginLink": "Log in here",
             "formEyebrow": "New retailer account",
             "formTitle": "Your details"
+        },
+        "search": {
+            "suggestions": "Suggestions",
+            "categories": "Categories",
+            "producers": "Producers",
+            "products": "Products",
+            "xOfY": "%shown% of %total%",
+            "resultsFor": "results for “%term%”",
+            "noResult": "No results for “%term%”",
+            "noResultHint": "Check the spelling or try a more general term."
         }
     }
 }

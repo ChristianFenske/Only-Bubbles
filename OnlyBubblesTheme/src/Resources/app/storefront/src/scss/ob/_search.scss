@@ -1,0 +1,421 @@
+// ===========================================================================
+// Header-Suche: Suchfeld + Vorschlags-Dropdown (Handoff „Suche“, Zustand Ergebnisse)
+// Markup: layout/header/search-suggest.html.twig
+// ===========================================================================
+
+// --- Suchfeld (öffnet über die goldene Lupe) ------------------------------------
+.header-search #header-main-search-input {
+    height: 54px;
+    padding-left: 24px;
+    border: 1.5px solid #ddd5c6;
+    border-radius: $ob-radius-pill;
+    font-family: $ob-font-sans;
+    font-size: 16px;
+    color: $ob-ink;
+
+    &::placeholder { color: #9a9286; }
+
+    &:focus {
+        border-color: $ob-gold-600;
+        box-shadow: 0 0 0 4px rgba(154, 118, 58, .14);
+    }
+}
+
+.header-search-form:has(.ob-suggest-wrap) .input-group {
+    position: relative;
+    z-index: 1051; // Feld bleibt hell über der abgedunkelten Seite
+}
+
+.header-search-form:has(.ob-suggest-wrap) #header-main-search-input {
+    border-color: $ob-gold-600;
+    box-shadow: 0 0 0 4px rgba(154, 118, 58, .14);
+}
+
+// --- Dropdown ------------------------------------------------------------------
+.ob-suggest-wrap {
+    position: absolute;
+    z-index: 1050;
+    top: calc(100% + 14px);
+    left: 50%;
+    width: min(1060px, calc(100vw - 32px));
+    transform: translateX(-50%);
+    font-family: $ob-font-sans;
+    text-align: left;
+}
+
+.ob-suggest {
+    overflow: hidden;
+    border-radius: 20px;
+    background: #fff;
+    // Schatten + Hairline + abgedunkelte Seite dahinter
+    box-shadow: 0 30px 70px rgba(40, 34, 26, .22), 0 0 0 1px $ob-line, 0 0 0 100vmax rgba(38, 34, 29, .4);
+    animation: obsuggest .2s ease-out;
+
+    a { text-decoration: none; }
+}
+
+@keyframes obsuggest {
+    0% { opacity: 0; transform: translateY(-6px); }
+    100% { opacity: 1; transform: none; }
+}
+
+.ob-suggest-grid {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+}
+
+.ob-suggest-label {
+    margin-bottom: 10px;
+    font-size: 11px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: $ob-gold-600;
+}
+
+// --- linke Spalte --------------------------------------------------------------
+.ob-suggest-side {
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    padding: 26px 22px;
+    border-right: 1px solid $ob-line;
+    background: #faf8f3;
+}
+
+.ob-suggest-term {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 -10px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 15px;
+    color: $ob-ink;
+
+    .icon { color: #9a9286; }
+
+    strong { font-weight: 600; }
+
+    &:hover { background: #f1ece2; color: $ob-ink; }
+}
+
+.ob-suggest-cat {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 0 -10px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 15px;
+    color: $ob-ink;
+
+    &:hover { background: #f1ece2; color: $ob-ink; }
+}
+
+.ob-suggest-count {
+    min-width: 30px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    background: #fff;
+    font-size: 12px;
+    text-align: center;
+    color: $ob-muted;
+}
+
+.ob-suggest-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.ob-suggest-pill {
+    padding: 6px 12px;
+    border: 1px solid $ob-line-input;
+    border-radius: $ob-radius-pill;
+    background: #fff;
+    font-size: 13px;
+    color: $ob-ink;
+    transition: border-color .15s ease, color .15s ease;
+
+    &:hover { border-color: $ob-gold-600; color: $ob-gold-700; }
+}
+
+// --- Produkte --------------------------------------------------------------------
+.ob-suggest-main { padding: 24px 22px 18px; }
+
+.ob-suggest-main-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 0 12px;
+}
+
+.ob-suggest-of {
+    font-size: 13px;
+    color: $ob-muted;
+}
+
+// Shopware-Standard für die Liste neutralisieren
+.search-suggest-container.ob-suggest-products {
+    position: static;
+    top: auto;
+    left: auto;
+    z-index: auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    transform: none;
+    background: transparent;
+    gap: 4px 12px;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+    list-style: none;
+
+    &::after { display: none; }
+
+    .search-suggest-product { border: 0; }
+}
+
+.ob-suggest-product.search-suggest-product-link {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr) auto;
+    gap: 14px;
+    align-items: start;
+    padding: 10px 12px;
+    border-radius: 12px;
+    color: $ob-ink;
+    transition: background-color .15s ease;
+}
+
+.search-suggest-product.is-active .ob-suggest-product,
+.ob-suggest-product:hover,
+.ob-suggest-product:focus-visible {
+    background: #faf8f3;
+    color: $ob-ink;
+    box-shadow: none;
+}
+
+.ob-suggest-img {
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 80px;
+    overflow: hidden;
+    border-radius: 10px;
+    background: $ob-sand;
+
+    img {
+        width: auto;
+        max-width: 100%;
+        height: 70px;
+        object-fit: contain;
+        mix-blend-mode: multiply;
+    }
+}
+
+.ob-suggest-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.ob-suggest-producer {
+    margin-bottom: 2px;
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: $ob-muted;
+}
+
+.ob-suggest-name {
+    display: -webkit-box;
+    overflow: hidden;
+    font-family: $ob-font-serif;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    mark {
+        padding: 0;
+        background: none;
+        color: #86682f;
+    }
+}
+
+.ob-suggest-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 7px;
+
+    span {
+        padding: 2px 8px;
+        border-radius: 10px;
+        background: $ob-sand;
+        font-size: 11.5px;
+        color: $ob-ink-2;
+    }
+}
+
+.ob-suggest-price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-top: 16px;
+    white-space: nowrap;
+}
+
+.ob-suggest-price-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #86682f;
+}
+
+.ob-suggest-price-ref {
+    margin-top: 2px;
+    font-size: 11.5px;
+    color: $ob-muted;
+}
+
+// --- Fußleiste ---------------------------------------------------------------------
+.search-suggest-total.ob-suggest-foot { padding: 0; }
+
+.ob-suggest-foot .search-suggest-total-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 18px 28px;
+    background: $ob-ink;
+    color: $ob-on-dark;
+
+    &:hover,
+    &:focus-visible {
+        background: #2f2a24;
+        color: #fff;
+        box-shadow: none;
+
+        .ob-suggest-foot-arrow { transform: translateX(3px); }
+    }
+}
+
+.ob-suggest-foot-count {
+    font-size: 15px;
+    color: rgba(243, 238, 227, .8);
+
+    b {
+        margin-right: 8px;
+        font-family: $ob-font-serif;
+        font-size: 24px;
+        font-weight: 600;
+        color: $ob-gold-light;
+    }
+}
+
+.ob-suggest-foot-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+}
+
+.ob-suggest-foot-arrow {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: $ob-gold-600;
+    transition: transform .2s ease;
+
+    .icon { color: #fff; }
+}
+
+.ob-suggest-foot-bubbles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.ob-suggest-foot-bubbles span {
+    position: absolute;
+    border-radius: 50%;
+    animation: obrise 3.2s ease-in-out infinite alternate;
+
+    &:nth-child(1) { left: 46%; top: 10px; width: 9px; height: 9px; border: 1.3px solid rgba(210, 179, 126, .8); }
+    &:nth-child(2) { left: 48.5%; top: 26px; width: 14px; height: 14px; background: rgba(210, 179, 126, .5); animation-duration: 3.9s; }
+}
+
+// --- Keine Treffer -------------------------------------------------------------------
+.ob-suggest-none {
+    padding: 40px 32px 44px;
+    text-align: center;
+
+    p {
+        margin: 0;
+        font-size: 14.5px;
+        color: $ob-muted;
+    }
+}
+
+.ob-suggest-none-bubbles {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    margin: 0 auto 16px;
+
+    span {
+        position: absolute;
+        border-radius: 50%;
+        animation: obrise 3.2s ease-in-out infinite alternate;
+
+        &:nth-child(1) { left: 16px; top: 0; width: 10px; height: 10px; border: 1.4px solid $ob-gold-light; }
+        &:nth-child(2) { left: 2px; top: 14px; width: 14px; height: 14px; background: $ob-gold-light; animation-duration: 3.9s; }
+        &:nth-child(3) { left: 18px; top: 22px; width: 20px; height: 20px; background: $ob-gold-600; animation-duration: 4.4s; }
+    }
+}
+
+.ob-suggest-none-title {
+    margin-bottom: 8px;
+    font-family: $ob-font-serif;
+    font-size: 30px;
+    font-weight: 500;
+    color: $ob-ink;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ob-suggest,
+    .ob-suggest-foot-bubbles span,
+    .ob-suggest-none-bubbles span { animation: none; }
+}
+
+// --- Responsive ----------------------------------------------------------------------
+@media (max-width: 1199.98px) {
+    .ob-suggest-grid { grid-template-columns: minmax(0, 1fr); }
+
+    .ob-suggest-side { display: none; }
+
+    .search-suggest-container.ob-suggest-products { grid-template-columns: minmax(0, 1fr); }
+}
+
+@include media-breakpoint-down(md) {
+    .ob-suggest-wrap { width: calc(100vw - 16px); }
+
+    .ob-suggest { border-radius: 0 0 16px 16px; }
+
+    .ob-suggest-main { padding: 16px 10px 10px; }
+
+    .ob-suggest-foot-bubbles { display: none; }
+
+    .ob-suggest-foot .search-suggest-total-link { padding: 14px 18px; }
+
+    .ob-suggest-foot-all { font-size: 0; gap: 0; }
+}

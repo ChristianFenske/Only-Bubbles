@@ -1,0 +1,217 @@
+{% sw_extends '@Storefront/storefront/layout/header/search-suggest.html.twig' %}
+
+{# Only-Bubbles-Such-Dropdown (Handoff „Suche“, Zustand Ergebnisse).
+   Klassen js-search-result / js-result bleiben für die Shopware-Live-Suche (Tastatur, Klick).
+   Kategorien kommen aus OnlyBubblesTheme\Subscriber\SearchSuggestSubscriber. #}
+{% block layout_search_suggest %}
+    {% set obTerm = page.searchTerm|trim %}
+    {% set obTermLower = obTerm|lower %}
+    {% set obTermLen = obTerm|length %}
+    {% set obTotal = page.searchResult.total %}
+    {% set obProducts = page.searchResult.elements|slice(0, 6) %}
+    {% set obSearchUrl = path('frontend.search.page') ~ '?search=' %}
+
+    {# Winzer der Treffer #}
+    {% set obManAgg = page.searchResult.aggregations.get('manufacturer') %}
+    {% set obManNames = {} %}
+    {% if obManAgg and obManAgg.entities is defined %}
+        {% for m in obManAgg.entities %}
+            {% set obManNames = obManNames|merge({ (m.id): (m.translated.name ?: m.name) }) %}
+        {% endfor %}
+    {% endif %}
+    {% for product in obProducts %}
+        {% if product.manufacturerId and obManNames[product.manufacturerId] is not defined and product.manufacturer %}
+            {% set obManNames = obManNames|merge({ (product.manufacturerId): product.manufacturer.translated.name }) %}
+        {% endif %}
+    {% endfor %}
+
+    {# Suchvorschläge: ergänztes Wort aus den Produktnamen + typische Begriffe #}
+    {% set obKeywords = ['Brut Nature', 'Extra Brut', 'Rosé', 'Grand Cru', 'Premier Cru', 'Blanc de Blancs', 'Blanc de Noirs', 'Millésime'] %}
+    {% set obWord = '' %}
+    {% for product in page.searchResult.elements %}
+        {% for w in product.translated.name|split(' ') %}
+            {% set w = w|trim(',.;:()"„“') %}
+            {% if obWord == '' and obTermLen > 0 and (w|lower) starts with obTermLower and (w|length) > obTermLen %}
+                {% set obWord = w %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    {% if obWord == '' %}{% set obWord = obTerm %}{% endif %}
+
+    {% set obSuggestions = [] %}
+    {% for k in obKeywords %}
+        {% if obSuggestions|length < 4 and (k|lower) not in (obWord|lower) %}
+            {% set obHit = false %}
+            {% for product in page.searchResult.elements %}
+                {% if (k|lower) in (product.translated.name|lower) %}{% set obHit = true %}{% endif %}
+            {% endfor %}
+            {% if obHit %}{% set obSuggestions = obSuggestions|merge([obWord ~ ' ' ~ k]) %}{% endif %}
+        {% endif %}
+    {% endfor %}
+    {% if obSuggestions|length < 4 and obWord|lower != obTermLower %}
+        {% set obSuggestions = [obWord]|merge(obSuggestions) %}
+    {% endif %}
+
+    {% set obCategories = page.searchResult.extensions.obSuggest.categories ?? [] %}
+
+    <div class="search-suggest js-search-result ob-suggest-wrap">
+        <div class="ob-suggest{% if obTotal == 0 %} is-empty{% endif %}">
+            {% if obTotal == 0 %}
+                {% block layout_search_suggest_no_result %}
+                    <div class="ob-suggest-none" id="search-suggest-result-info" role="status">
+                        <div class="ob-suggest-none-bubbles" aria-hidden="true"><span></span><span></span><span></span></div>
+                        <div class="ob-suggest-none-title">{{ 'obTheme.search.noResult'|trans({'%term%': obTerm})|sw_sanitize }}</div>
+                        <p>{{ 'obTheme.search.noResultHint'|trans|sw_sanitize }}</p>
+                    </div>
+                {% endblock %}
+            {% else %}
+                <div class="ob-suggest-grid">
+                    {# --- linke Spalte ------------------------------------------------ #}
+                    <aside class="ob-suggest-side">
+                        {% if obSuggestions|length %}
+                            <div class="ob-suggest-section">
+                                <div class="ob-suggest-label">{{ 'obTheme.search.suggestions'|trans|sw_sanitize }}</div>
+                                {% for s in obSuggestions %}
+                                    <a class="ob-suggest-term" href="{{ obSearchUrl ~ s|url_encode }}">
+                                        {% sw_icon 'search' style { size: 'xs' } %}
+                                        <span>
+                                            {%- if (s|lower) starts with obTermLower -%}
+                                                {{ s|slice(0, obTermLen) }}<strong>{{ s|slice(obTermLen) }}</strong>
+                                            {%- else -%}
+                                                <strong>{{ s }}</strong>
+                                            {%- endif -%}
+                                        </span>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        {% if obCategories|length %}
+                            <div class="ob-suggest-section">
+                                <div class="ob-suggest-label">{{ 'obTheme.search.categories'|trans|sw_sanitize }}</div>
+                                {% for c in obCategories %}
+                                    <a class="ob-suggest-cat" href="{{ seoUrl('frontend.navigation.page', { navigationId: c.id }) }}">
+                                        <span>{{ c.name }}</span>
+                                        <span class="ob-suggest-count">{{ c.count }}</span>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        {% if obManNames|length %}
+                            <div class="ob-suggest-section">
+                                <div class="ob-suggest-label">{{ 'obTheme.search.producers'|trans|sw_sanitize }}</div>
+                                <div class="ob-suggest-pills">
+                                    {% for name in obManNames|slice(0, 6) %}
+                                        <a class="ob-suggest-pill" href="{{ obSearchUrl ~ name|url_encode }}">{{ name }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </aside>
+
+                    {# --- Produkte ------------------------------------------------------ #}
+                    <div class="ob-suggest-main">
+                        <div class="ob-suggest-main-head">
+                            <div class="ob-suggest-label">{{ 'obTheme.search.products'|trans|sw_sanitize }}</div>
+                            <div class="ob-suggest-of">{{ 'obTheme.search.xOfY'|trans({'%shown%': obProducts|length, '%total%': obTotal})|sw_sanitize }}</div>
+                        </div>
+
+                        <ul class="search-suggest-container ob-suggest-products"
+                            id="search-suggest-listbox"
+                            aria-label="{{ 'header.searchDropdownTitle'|trans|striptags }}"
+                            role="listbox">
+                            {% for product in obProducts %}
+                                {% set price = product.calculatedPrice %}
+                                {% if product.calculatedPrices.count > 0 %}{% set price = product.calculatedPrices.last %}{% endif %}
+                                {% set obFrom = product.calculatedPrices.count > 1 %}
+                                {% if product.variantListingConfig.displayParent and product.parentId === null %}
+                                    {% set obFrom = obFrom or price.unitPrice != product.calculatedCheapestPrice.unitPrice %}
+                                    {% set price = product.calculatedCheapestPrice %}
+                                {% endif %}
+                                {% set obName = product.translated.name %}
+                                {% set obNameU = obName|u %}
+                                {% set obPos = obTermLen > 0 ? obNameU.ignoreCase().indexOf(obTerm) : null %}
+
+                                {# Chips: Dosage/Lage aus dem Namen, Jahrgang, Flaschengröße #}
+                                {% set obChips = [] %}
+                                {% for k in obKeywords %}
+                                    {% if obChips|length < 1 and (k|lower) in (obName|lower) %}{% set obChips = obChips|merge([k]) %}{% endif %}
+                                {% endfor %}
+                                {% for w in obName|split(' ') %}
+                                    {% if obChips|length < 2 and w matches '/^(19|20)\\d\\d$/' %}{% set obChips = obChips|merge([w]) %}{% endif %}
+                                {% endfor %}
+                                {% if obChips|length < 2 and product.purchaseUnit and product.unit %}
+                                    {% set obChips = obChips|merge([((product.purchaseUnit ~ '')|replace({'.': ','})) ~ ' ' ~ (product.unit.translated.shortCode ?: product.unit.translated.name)]) %}
+                                {% endif %}
+
+                                {% block layout_search_suggest_result_product %}
+                                    <li class="search-suggest-product js-result" role="option">
+                                        <a href="{{ seoUrl('frontend.detail.page', { productId: product.id }) }}"
+                                           title="{{ obName }}"
+                                           class="search-suggest-product-link ob-suggest-product">
+                                            <span class="ob-suggest-img">
+                                                {% if product.cover.media.url %}
+                                                    {% sw_thumbnails 'search-suggest-product-image-thumbnails' with {
+                                                        media: product.cover.media,
+                                                        sizes: { default: '100px' },
+                                                        attributes: { class: 'search-suggest-product-image', alt: (product.cover.media.translated.alt ?: obName) }
+                                                    } %}
+                                                {% endif %}
+                                            </span>
+
+                                            <span class="ob-suggest-info">
+                                                {% if obManNames[product.manufacturerId] is defined %}
+                                                    <span class="ob-suggest-producer">{{ obManNames[product.manufacturerId] }}</span>
+                                                {% endif %}
+                                                <span class="ob-suggest-name">
+                                                    {%- if obPos is not null -%}
+                                                        {{ obNameU.slice(0, obPos) }}<mark>{{ obNameU.slice(obPos, (obTerm|u).length) }}</mark>{{ obNameU.slice(obPos + (obTerm|u).length) }}
+                                                    {%- else -%}
+                                                        {{ obName }}
+                                                    {%- endif -%}
+                                                </span>
+                                                {% if obChips|length %}
+                                                    <span class="ob-suggest-chips">
+                                                        {% for chip in obChips %}<span>{{ chip }}</span>{% endfor %}
+                                                    </span>
+                                                {% endif %}
+                                            </span>
+
+                                            <span class="ob-suggest-price">
+                                                <span class="ob-suggest-price-value">
+                                                    {% if obFrom %}{{ 'listing.listingTextFrom'|trans|sw_sanitize }} {% endif %}{{ price.unitPrice|currency }}
+                                                </span>
+                                                {% if price.referencePrice is not null %}
+                                                    <span class="ob-suggest-price-ref">{{ price.referencePrice.price|currency }} / {% if price.referencePrice.referenceUnit != 1 %}{{ price.referencePrice.referenceUnit }} {% endif %}{{ price.referencePrice.unitName }}</span>
+                                                {% endif %}
+                                            </span>
+                                        </a>
+                                    </li>
+                                {% endblock %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                {# --- Fußleiste: ganze Leiste ist der Link ---------------------------- #}
+                {% block layout_search_suggest_result_total %}
+                    <div class="js-result search-suggest-total ob-suggest-foot" role="option">
+                        <a href="{{ obSearchUrl ~ obTerm|url_encode }}"
+                           class="search-suggest-total-link"
+                           title="{{ 'header.searchAllResults'|trans|striptags }}">
+                            <span class="ob-suggest-foot-bubbles" aria-hidden="true"><span></span><span></span></span>
+                            <span class="ob-suggest-foot-count" id="search-suggest-result-info">
+                                <b>{{ obTotal }}</b> {{ 'obTheme.search.resultsFor'|trans({'%term%': obTerm})|sw_sanitize }}
+                            </span>
+                            <span class="ob-suggest-foot-all">
+                                {{ 'header.searchAllResults'|trans|sw_sanitize }}
+                                <span class="ob-suggest-foot-arrow">{% sw_icon 'arrow-right' style { size: 'xs' } %}</span>
+                            </span>
+                        </a>
+                    </div>
+                {% endblock %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
