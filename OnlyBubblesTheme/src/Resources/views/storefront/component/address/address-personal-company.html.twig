@@ -3,6 +3,11 @@
 {# Gewerblich = nur Firmenname (z. B. Lieferung ins Büro). Abteilung und USt-IdNr. nur bei der Händlerregistrierung. #}
 {% set obDealerPage = activeRoute starts with 'frontend.account.customer-group-registration' %}
 
+{# Händlerseite: Firmenfelder immer sichtbar (es gibt dort keine Kontotyp-Auswahl) #}
+{% if obDealerPage and prefix != 'shippingAddress' %}
+    {% set hasSelectedBusiness = true %}
+{% endif %}
+
 {% block component_address_form_company_department %}
     {% if obDealerPage %}{{ parent() }}{% endif %}
 {% endblock %}
