@@ -10,6 +10,12 @@
         {% set wfLinks = navigationTree.children|filter(child => child.children|length == 0) %}
         {% set wfGroups = navigationTree.children|filter(child => child.children|length > 0) %}
 
+        {# Viele Gruppen (z. B. Länder/Regionen): Liste links, Unterpunkte der gewählten Gruppe rechts #}
+        {% if wfGroups|length > 6 %}
+            {% sw_include '@WeineFeinkostTheme/storefront/component/wf/mega-explorer.html.twig' with {
+                navigationTree: navigationTree
+            } %}
+        {% else %}
         <div class="wf-mega-inner{% if category.media %} has-teaser{% endif %}">
             <div class="wf-mega-main">
                 {% block wf_mega_head %}
@@ -85,6 +91,7 @@
                 {% endif %}
             {% endblock %}
         </div>
+        {% endif %}
     {% else %}
         {{ parent() }}
     {% endif %}

@@ -1,0 +1,136 @@
+{# Mega-Menü für Kategorien mit vielen Gruppen (z. B. Länder/Regionen):
+   links durchsuchbare Liste, Mitte die Unterpunkte der gewählten Gruppe,
+   rechts Bildkarte + "Beliebt". Umschalten per wf-checkout.js. #}
+{% set wfParent = navigationTree.category %}
+{% set wfItems = navigationTree.children %}
+{% set wfFirstActive = (wfItems|filter(item => item.children|length > 0)|first) ?: (wfItems|first) %}
+{% set wfActiveId = wfFirstActive ? wfFirstActive.category.id : null %}
+
+{# "Beliebt": Namen aus der Theme-Einstellung, verlinkt auf die passende Unterkategorie #}
+{% set wfPopularNames = (theme_config('wf-mega-popular') ?? '')|split(',')|map(n => n|trim)|filter(n => n is not empty) %}
+{% set wfPopular = [] %}
+{% for wfPopularName in wfPopularNames %}
+    {% set wfFound = null %}
+    {% for wfItem in wfItems %}
+        {% for wfSub in wfItem.children %}
+            {% if wfFound is null and wfSub.category.translated.name|lower == wfPopularName|lower and wfSub.category.type != 'folder' %}
+                {% set wfFound = wfSub.category %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    {% if wfFound %}
+        {% set wfPopular = wfPopular|merge([wfFound]) %}
+    {% endif %}
+{% endfor %}
+
+<div class="wf-mega-inner wf-mega-explorer" data-wf-mega-explorer="true">
+    <div class="wf-mega-nav">
+        <label class="wf-mega-search">
+            {% sw_icon 'search' style { size: 'xs' } %}
+            <input type="search"
+                   class="wf-mega-search-input"
+                   placeholder="{{ 'wfTheme.nav.searchCountry'|trans|striptags }}"
+                   aria-label="{{ 'wfTheme.nav.searchCountry'|trans|striptags }}"
+                   autocomplete="off"
+                   data-wf-mega-search="true">
+        </label>
+
+        <div class="wf-mega-nav-label">{{ 'wfTheme.nav.countries'|trans|sw_sanitize }}</div>
+
+        <ul class="wf-mega-countries list-unstyled">
+            {% for wfItem in wfItems %}
+                {% set wfCat = wfItem.category %}
+                {% set wfSearchText = wfCat.translated.name %}
+                {% for wfSub in wfItem.children %}
+                    {% set wfSearchText = wfSearchText ~ ' ' ~ wfSub.category.translated.name %}
+                {% endfor %}
+                <li data-wf-mega-search-text="{{ wfSearchText|lower }}">
+                    <a class="wf-mega-country{% if wfCat.id == wfActiveId %} is-active{% endif %}"
+                       href="{{ wfCat.type == 'folder' ? '#' : wfCat.seoUrl }}"
+                       title="{{ wfCat.translated.name }}"
+                       data-wf-mega-target="{{ wfCat.id }}">
+                        <span class="wf-mega-country-name">{{ wfCat.translated.name }}</span>
+                        {% if wfItem.children|length > 0 %}
+                            <span class="wf-mega-country-count">{{ 'wfTheme.nav.regions'|trans({'%count%': wfItem.children|length})|sw_sanitize }}</span>
+                            {% sw_icon 'arrow-head-right' style { size: 'xs' } %}
+                        {% endif %}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="wf-mega-panels">
+        {% for wfItem in wfItems %}
+            {% set wfCat = wfItem.category %}
+            <div class="wf-mega-panel" data-wf-mega-panel="{{ wfCat.id }}"{% if wfCat.id != wfActiveId %} hidden{% endif %}>
+                <div class="wf-mega-head">
+                    <h2 class="wf-mega-title">{{ wfCat.translated.name }}</h2>
+                    {% if wfCat.type != 'folder' %}
+                        <a class="wf-mega-all" href="{{ wfCat.seoUrl }}" title="{{ wfCat.translated.name }}">
+                            {{ 'wfTheme.nav.allFrom'|trans({'%name%': wfCat.translated.name})|sw_sanitize }}
+                            {% sw_icon 'arrow-right' style { size: 'xs' } %}
+                        </a>
+                    {% endif %}
+                </div>
+
+                {% if wfItem.children|length > 0 %}
+                    <div class="wf-mega-links wf-mega-links-cols">
+                        {% for wfSub in wfItem.children %}
+                            {% set wfSubCat = wfSub.category %}
+                            {% if wfSubCat.type == 'folder' %}
+                                <span class="wf-mega-link">{{ wfSubCat.translated.name }}</span>
+                            {% else %}
+                                <a class="wf-mega-link nav-item-{{ wfSubCat.id }}-link"
+                                   href="{{ wfSubCat.seoUrl }}"
+                                   {% if wfSubCat.shouldOpenInNewTab %}target="_blank"{% if wfSubCat.linkType == 'external' %} rel="noopener noreferrer"{% endif %}{% endif %}
+                                   title="{{ wfSubCat.translated.name }}">{{ wfSubCat.translated.name }}</a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <aside class="wf-mega-aside">
+        {% for wfItem in wfItems %}
+            {% set wfCat = wfItem.category %}
+            {% set wfMedia = wfCat.media ?: wfParent.media %}
+            <a class="wf-mega-teaser wf-mega-teaser-country"
+               href="{{ wfCat.type == 'folder' ? wfParent.seoUrl : wfCat.seoUrl }}"
+               title="{{ 'wfTheme.nav.allFrom'|trans({'%name%': wfCat.translated.name})|striptags }}"
+               data-wf-mega-panel="{{ wfCat.id }}"{% if wfCat.id != wfActiveId %} hidden{% endif %}>
+                {% if wfMedia %}
+                    {% sw_thumbnails 'wf-mega-teaser-image' with {
+                        media: wfMedia,
+                        sizes: { default: '400px' },
+                        attributes: {
+                            class: 'wf-mega-teaser-img',
+                            alt: (wfMedia.translated.alt ?: wfCat.translated.name)
+                        }
+                    } %}
+                {% endif %}
+                <span class="wf-mega-teaser-body">
+                    <span class="wf-mega-teaser-eyebrow">{{ 'wfTheme.nav.countryEyebrow'|trans|sw_sanitize }}</span>
+                    <span class="wf-mega-teaser-title">{{ 'wfTheme.nav.allFrom'|trans({'%name%': wfCat.translated.name})|sw_sanitize }}</span>
+                    <span class="wf-mega-teaser-cta">
+                        {{ 'wfTheme.nav.countryCta'|trans|sw_sanitize }}
+                        {% sw_icon 'arrow-right' style { size: 'xs' } %}
+                    </span>
+                </span>
+            </a>
+        {% endfor %}
+
+        {% if wfPopular|length > 0 %}
+            <div class="wf-mega-popular">
+                <div class="wf-mega-nav-label">{{ 'wfTheme.nav.popular'|trans|sw_sanitize }}</div>
+                <div class="wf-mega-popular-list">
+                    {% for wfPopularCat in wfPopular %}
+                        <a class="wf-mega-pill" href="{{ wfPopularCat.seoUrl }}" title="{{ wfPopularCat.translated.name }}">{{ wfPopularCat.translated.name }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </aside>
+</div>

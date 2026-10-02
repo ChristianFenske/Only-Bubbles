@@ -43,6 +43,21 @@
                 "editable": true,
                 "scss": false,
                 "block": "wfDesign"
+            },
+            "wf-mega-popular": {
+                "label": {
+                    "de-DE": "Menü Länder/Regionen: „Beliebt“",
+                    "en-GB": "Countries/regions menu: \"Popular\""
+                },
+                "helpText": {
+                    "de-DE": "Regionen mit Komma getrennt, z. B. Bordeaux, Burgund, Toskana. Leer = ausblenden.",
+                    "en-GB": "Regions separated by commas, e.g. Bordeaux, Burgund, Toskana. Empty = hide."
+                },
+                "type": "text",
+                "value": "Bordeaux, Burgund, Toskana, Rioja, Mosel, Wachau",
+                "editable": true,
+                "scss": false,
+                "block": "wfDesign"
             }
         }
     }

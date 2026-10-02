@@ -79,7 +79,14 @@
         },
         "nav": {
             "showAll": "Alle anzeigen",
-            "teaserCta": "Zur Auswahl"
+            "teaserCta": "Zur Auswahl",
+            "searchCountry": "Land oder Region suchen …",
+            "countries": "Länder",
+            "regions": "{1} 1 Region|]1,Inf[ %count% Regionen",
+            "allFrom": "Alle Weine aus %name%",
+            "countryEyebrow": "Weinland entdecken",
+            "countryCta": "Jetzt entdecken",
+            "popular": "Beliebt"
         },
         "register": {
             "guestHint": "Bestellungen verfolgen und beim nächsten Mal schneller bestellen.",

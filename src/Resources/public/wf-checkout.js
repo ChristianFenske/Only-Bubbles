@@ -4,6 +4,7 @@
  * - Bestellnummer kopieren (Abschlussseite, [data-wf-copy-text])
  * - Anrede/Kontotyp als Pill-Auswahl (Registrierung, Konto, Checkout, Adress-Formulare)
  * - Auge-Button an Passwortfeldern (Anmelden, Registrierung, Konto)
+ * - Mega-Menü Länder/Regionen: Land wählen und suchen
  */
 (function () {
     'use strict';
@@ -185,7 +186,65 @@
         update();
     }
 
+    /* --- Mega-Menü Länder/Regionen: Gruppe wählen + suchen ------------------ */
+    function initMegaExplorer(explorer) {
+        if (explorer.dataset.wfMegaReady === 'true') {
+            return;
+        }
+        explorer.dataset.wfMegaReady = 'true';
+
+        var links = Array.prototype.slice.call(explorer.querySelectorAll('[data-wf-mega-target]'));
+        var search = explorer.querySelector('[data-wf-mega-search]');
+
+        function activate(id) {
+            links.forEach(function (link) {
+                link.classList.toggle('is-active', link.dataset.wfMegaTarget === id);
+            });
+            explorer.querySelectorAll('[data-wf-mega-panel]').forEach(function (panel) {
+                panel.hidden = panel.dataset.wfMegaPanel !== id;
+            });
+        }
+
+        links.forEach(function (link) {
+            link.addEventListener('mouseenter', function () { activate(link.dataset.wfMegaTarget); });
+            link.addEventListener('focus', function () { activate(link.dataset.wfMegaTarget); });
+        });
+
+        if (search) {
+            search.addEventListener('input', function () {
+                var query = search.value.trim().toLowerCase();
+                var firstVisible = null;
+
+                links.forEach(function (link) {
+                    var item = link.closest('li');
+                    var match = !query || (item.dataset.wfMegaSearchText || '').indexOf(query) !== -1;
+                    item.hidden = !match;
+                    if (match && !firstVisible) {
+                        firstVisible = link;
+                    }
+                });
+
+                if (query && firstVisible) {
+                    activate(firstVisible.dataset.wfMegaTarget);
+                }
+            });
+
+            // Enter springt zur ersten Fundstelle
+            search.addEventListener('keydown', function (event) {
+                if (event.key !== 'Enter') {
+                    return;
+                }
+                event.preventDefault();
+                var active = explorer.querySelector('.wf-mega-country.is-active');
+                if (active && active.getAttribute('href') !== '#') {
+                    window.location.href = active.href;
+                }
+            });
+        }
+    }
+
     function scan(root) {
+        root.querySelectorAll('[data-wf-mega-explorer]').forEach(initMegaExplorer);
         root.querySelectorAll('[data-wf-copy-text]').forEach(initCopy);
 
         root.querySelectorAll(SEGMENTED_SELECTOR).forEach(function (select) {

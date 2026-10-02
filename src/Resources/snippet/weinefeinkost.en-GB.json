@@ -79,7 +79,14 @@
         },
         "nav": {
             "showAll": "Show all",
-            "teaserCta": "Discover"
+            "teaserCta": "Discover",
+            "searchCountry": "Search country or region …",
+            "countries": "Countries",
+            "regions": "{1} 1 region|]1,Inf[ %count% regions",
+            "allFrom": "All wines from %name%",
+            "countryEyebrow": "Discover wine country",
+            "countryCta": "Discover now",
+            "popular": "Popular"
         },
         "register": {
             "guestHint": "Track orders and check out faster next time.",
