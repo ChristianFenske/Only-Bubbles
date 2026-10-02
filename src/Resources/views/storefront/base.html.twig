@@ -1,7 +1,60 @@
 {% sw_extends '@Storefront/storefront/base.html.twig' %}
 
+{# Theme-Einstellung "Neues Warenkorb- & Checkout-Design" (theme.json: wf-checkout-design).
+   Aus = alles wie bisher. #}
+{% set wfDesign = theme_config('wf-checkout-design') %}
+
+{% block base_body_classes %}{{ parent() }}{% if wfDesign %} wf-design{% endif %}{% endblock %}
+
+{# Seite "Bestellung widerrufen" (Widerrufs-Plugin, Route frontend.revocation.form):
+   Inhalt des Plugins links, Sidebar "So funktioniert's" rechts. Alle anderen Seiten unverändert. #}
+{% block base_main_container %}
+    {% if wfDesign and activeRoute is same as('frontend.revocation.form') %}
+        <div class="wf-revocation">
+            <div class="wf-revocation-main">
+                {{ parent() }}
+            </div>
+
+            <aside class="wf-revocation-aside">
+                <div class="wf-revocation-steps">
+                    <div class="wf-revocation-steps-title">{{ 'wfTheme.revocation.howTitle'|trans|sw_sanitize }}</div>
+                    <ol>
+                        <li><span>1</span>{{ 'wfTheme.revocation.step1'|trans|sw_sanitize }}</li>
+                        <li><span>2</span>{{ 'wfTheme.revocation.step2'|trans|sw_sanitize }}</li>
+                        <li><span>3</span>{{ 'wfTheme.revocation.step3'|trans|sw_sanitize }}</li>
+                    </ol>
+                </div>
+
+                <div class="wf-revocation-links">
+                    {% if config('core.basicInformation.revocationPage') %}
+                        <a href="{{ path('frontend.cms.page', { id: config('core.basicInformation.revocationPage') }) }}"
+                           data-ajax-modal="true"
+                           data-url="{{ path('frontend.cms.page', { id: config('core.basicInformation.revocationPage') }) }}">
+                            {% sw_icon 'document-view' style { size: 'xs' } %}
+                            {{ 'wfTheme.revocation.readPolicy'|trans|sw_sanitize }}
+                        </a>
+                    {% endif %}
+                    {% set wfMail = config('core.basicInformation.email') %}
+                    {% if wfMail %}
+                        <a href="mailto:{{ wfMail }}">
+                            {% sw_icon 'envelope' style { size: 'xs' } %}
+                            {{ wfMail }}
+                        </a>
+                    {% endif %}
+                </div>
+            </aside>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
 {% block base_body_script %}
 	{{ parent() }}
 
 	<script defer src="{{ asset('bundles/weinefeinkosttheme/custom.js') }}"></script>
+
+	{% if wfDesign %}
+		<script defer src="{{ asset('bundles/weinefeinkosttheme/wf-checkout.js') }}"></script>
+	{% endif %}
 {% endblock %}

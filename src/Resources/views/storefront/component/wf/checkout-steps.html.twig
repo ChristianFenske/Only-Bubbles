@@ -1,0 +1,31 @@
+{# Schrittanzeige im Checkout. Parameter: wfStep (1 = Adresse, 2 = Versand & Zahlung, 3 = Prüfen & Bestellen)
+   Shopware fasst Versand/Zahlung und Prüfen auf der Confirm-Seite zusammen -> dort ist Schritt 3 aktiv. #}
+{% set wfSteps = [
+    'wfTheme.steps.address',
+    'wfTheme.steps.shippingPayment',
+    'wfTheme.steps.confirm'
+] %}
+
+<nav class="wf-steps" aria-label="{{ 'wfTheme.steps.label'|trans|striptags }}">
+    <ol class="wf-steps-list">
+        {% for snippet in wfSteps %}
+            {% set wfIndex = loop.index %}
+            {% set wfState = wfIndex < wfStep ? 'is-done' : (wfIndex == wfStep ? 'is-active' : 'is-upcoming') %}
+            <li class="wf-step {{ wfState }}"{% if wfIndex == wfStep %} aria-current="step"{% endif %}>
+                <span class="wf-step-dot" aria-hidden="true">
+                    {% if wfIndex < wfStep %}
+                        {% sw_icon 'checkmark' style { size: 'xs' } %}
+                    {% else %}
+                        {{ wfIndex }}
+                    {% endif %}
+                </span>
+                <span class="wf-step-label">
+                    {{ snippet|trans|sw_sanitize }}
+                    {% if wfIndex < wfStep %}
+                        <span class="visually-hidden">({{ 'wfTheme.steps.done'|trans|sw_sanitize }})</span>
+                    {% endif %}
+                </span>
+            </li>
+        {% endfor %}
+    </ol>
+</nav>

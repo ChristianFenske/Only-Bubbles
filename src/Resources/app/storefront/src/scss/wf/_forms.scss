@@ -1,0 +1,165 @@
+// ===========================================================================
+// Formulare: "Bestellung widerrufen" (Widerrufs-Plugin + CMS-Widerrufsformular)
+// ===========================================================================
+
+// Nur Widerrufsformulare – Kontakt, Newsletter usw. bleiben unverändert
+.cms-element-form:has(#cms-form-online-revocation-request),
+.revocation-form {
+    // Innere Karte ohne Rahmen ("Ring") – die Fläche drumherum liefert die Seite
+    .card {
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .card > .card-body { padding: 0; }
+
+    .form-label {
+        margin-bottom: 7px;
+        font-family: $wf-font-sans;
+        font-size: 13.5px;
+        color: $wf-ink-2;
+    }
+
+    // Pflichtfeld-Stern in Gold statt Rot
+    .form-required-label { color: $wf-gold-600 !important; }
+
+    .form-control,
+    .form-select {
+        min-height: 50px;
+        padding: 0 16px;
+        border: 1px solid $wf-line-input;
+        border-radius: $wf-radius-input;
+        background-color: #fff;
+        font-family: $wf-font-sans;
+        font-size: 15px;
+        color: $wf-ink;
+        box-shadow: none;
+        transition: border-color .2s ease, box-shadow .2s ease;
+
+        &::placeholder { color: #959595; }
+
+        &:focus {
+            border-color: $wf-gold-600;
+            box-shadow: 0 0 0 3px rgba(133, 64, 64, .16);
+            outline: 0;
+        }
+    }
+
+    .form-select { padding-right: 40px; }
+
+    textarea.form-control {
+        min-height: 150px;
+        padding: 14px 16px;
+    }
+
+    .form-group,
+    .row.g-2 > [class*='col'] { margin-bottom: 14px; }
+
+    // Checkbox (Datenschutz)
+    .form-check-input {
+        width: 20px;
+        height: 20px;
+        margin-top: 2px;
+        border: 1px solid $wf-line-input;
+        border-radius: 6px;
+
+        &:checked {
+            border-color: $wf-gold-600;
+            background-color: $wf-gold-600;
+        }
+
+        &:focus { box-shadow: 0 0 0 3px rgba(133, 64, 64, .16); }
+    }
+
+    a:not(.btn) {
+        color: $wf-gold-600;
+
+        &:hover { color: $wf-gold-700; }
+    }
+
+    // Button: dunkle Pill wie im Checkout
+    .btn-primary {
+        min-height: 52px;
+        padding: 0 32px !important;
+        border: 0;
+        border-radius: $wf-radius-pill !important;
+        background: $wf-ink;
+        color: $wf-cream;
+        font-family: $wf-font-sans;
+        font-size: 15px;
+        font-weight: 500 !important;
+
+        &:hover,
+        &:focus-visible {
+            background: $wf-ink-2;
+            color: #fff;
+        }
+    }
+
+    // Anrede als Segmented Pills (JS: wf-segmented-select.plugin)
+    .wf-segmented-source {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        min-height: 0 !important;
+        margin: -1px !important;
+        padding: 0 !important;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0 !important;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .wf-segmented {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 2px;
+        padding: 4px;
+        border-radius: $wf-radius-pill;
+        background: #fff;
+        border: 1px solid $wf-line;
+    }
+
+    .wf-segmented-item {
+        min-height: 40px;
+        padding: 0 18px;
+        border: 0;
+        border-radius: $wf-radius-pill;
+        background: transparent;
+        font-family: $wf-font-sans;
+        font-size: 14.5px;
+        color: $wf-ink-2;
+        cursor: pointer;
+        transition: background-color .2s ease, color .2s ease;
+
+        &:hover { color: $wf-ink; }
+
+        &.is-active {
+            background: $wf-ink;
+            color: $wf-cream;
+            box-shadow: 0 2px 8px rgba(33, 33, 33, .18);
+        }
+    }
+}
+
+// Widerruf: Auswahl der Bestellung
+.revocation-order-select .list-group-item {
+    margin-bottom: 10px;
+    padding: 18px 20px;
+    border: 1px solid $wf-line !important;
+    border-radius: 12px !important;
+    background: #fff;
+    color: $wf-ink;
+
+    &.active {
+        padding: 17.5px 19.5px;
+        border: 1.5px solid $wf-gold-600 !important;
+        background: $wf-cream;
+        color: $wf-ink;
+
+        .text-muted.text-muted { color: $wf-muted; }
+        .badge.badge { background-color: $wf-gold-600; }
+    }
+}

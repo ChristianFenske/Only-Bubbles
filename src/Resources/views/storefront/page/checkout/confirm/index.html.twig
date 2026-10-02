@@ -1,5 +1,216 @@
 {% sw_extends '@Storefront/storefront/page/checkout/confirm/index.html.twig' %}
 
+{% set wfDesign = theme_config('wf-checkout-design') %}
+
+{% block page_checkout %}
+    {% if wfDesign %}
+        <div class="wf-checkout wf-checkout-confirm">
+            {% sw_include '@WeineFeinkostTheme/storefront/component/wf/checkout-steps.html.twig' with { wfStep: 3 } %}
+            {{ parent() }}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_confirm_header %}
+    {% if wfDesign %}
+        <div class="wf-confirm-head">
+            <h1 class="confirm-main-header">{{ 'checkout.confirmHeader'|trans|sw_sanitize }}</h1>
+            <span class="confirm-main-header-item-counter">
+                {{ 'wfTheme.checkout.positions'|trans({'%count%': page.cart.lineItems|length})|sw_sanitize }}
+            </span>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{# AGB/Widerruf wandern in die Seitenleiste (siehe page_checkout_confirm_tos_auto_confirmed) #}
+{% block page_checkout_confirm_tos %}
+    {% if wfDesign %}
+
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_confirm_product_table %}
+    {% if wfDesign %}
+        <div class="confirm-product">
+            <div class="card checkout-card wf-order-card">
+                <div class="card-body">
+                    <div class="wf-card-head">
+                        <div class="card-title">{{ 'wfTheme.checkout.orderTitle'|trans|sw_sanitize }}</div>
+                        <span class="wf-card-head-meta">
+                            {{ 'wfTheme.checkout.positions'|trans({'%count%': page.cart.lineItems|length})|sw_sanitize }}
+                        </span>
+                    </div>
+
+                    <ul class="list-unstyled wf-line-items">
+                        {{ block('page_checkout_confirm_table_items') }}
+                    </ul>
+
+                    {% if config('core.cart.showCustomerComment') %}
+                        {% set wfCommentKey = constant('Shopware\\Core\\Checkout\\Order\\SalesChannel\\OrderService::CUSTOMER_COMMENT_KEY') %}
+                        <div class="checkout-customer-comment-control wf-comment">
+                            <label class="form-label" for="{{ wfCommentKey }}">
+                                {{ 'wfTheme.checkout.commentLabel'|trans|sw_sanitize }}
+                            </label>
+                            <textarea class="form-control"
+                                      placeholder="{{ 'wfTheme.checkout.commentPlaceholder'|trans|sw_sanitize }}"
+                                      id="{{ wfCommentKey }}"
+                                      form="confirmOrderForm"
+                                      name="{{ wfCommentKey }}"></textarea>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{# Kommentar sitzt jetzt in der Karte "Ihre Bestellung" #}
+{% block page_checkout_additional %}
+    {% if wfDesign %}
+
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_aside_summary %}
+    {% if wfDesign %}
+        <div class="wf-summary-card">
+            {{ parent() }}
+            {{ block('page_checkout_aside_actions_inner') }}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_summary_header %}
+    {% if wfDesign %}
+        <h2 class="checkout-aside-summary-header">{{ 'wfTheme.checkout.summary'|trans|sw_sanitize }}</h2>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{# Die Aktionen (AGB + Bestell-Button) werden in der dunklen Karte gerendert #}
+{% block page_checkout_aside_actions %}
+    {% if wfDesign %}
+        {% sw_include '@WeineFeinkostTheme/storefront/component/wf/trust-box.html.twig' %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_aside_actions_inner %}
+    {% if wfDesign %}
+        {{ block('wf_confirm_tos') }}
+
+        {% if block('page_checkout_confirm_legal_guarantee_notice') is defined %}
+            {{ block('page_checkout_confirm_legal_guarantee_notice') }}
+        {% endif %}
+
+        <div class="checkout-aside-action">
+            <form id="confirmOrderForm"
+                  action="{{ confirmOrderFormAction }}"
+                  data-checkout-customer-storage="true"
+                  data-checkout-customer-storage-options="{{ { customerId: context.customer.id }|json_encode }}"
+                  data-form-preserver="true"
+                  data-form-preserver-options="{{ { ignoredElementNames: [constant('Shopware\\Core\\Checkout\\Order\\SalesChannel\\OrderService::CUSTOMER_COMMENT_KEY'), 'tos'] }|json_encode }}"
+                  data-form-handler="true"
+                  data-form-handler-options="{{ { formFieldSelector: null }|json_encode }}"
+                  data-form-add-history="true"
+                  data-form-add-history-options="{{ formAddHistoryOptions|json_encode }}"
+                  method="post">
+
+                <input type="text" name="hash" hidden="hidden" value="{{ page.cart.getHash }}" />
+
+                {{ block('page_checkout_confirm_form_submit') }}
+            </form>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{# Eigener Block (statt page_checkout_confirm_tos_auto_confirmed), damit das Template
+   in allen 6.7.x-Versionen gleich funktioniert. #}
+{% block wf_confirm_tos %}
+    {% set cmsPath = 'frontend.cms.page' %}
+    {% set wfShowGuarantee = config('core.cart.showLegalGuaranteeNotice') ? true : false %}
+    {% set wfGuaranteeOpen = '<button type="button" class="btn btn-link-inline" aria-haspopup="dialog" data-bs-toggle="modal" data-bs-target="#legalGuaranteeNoticeModal">' %}
+    {% set tosModalTagOpen = '<button type="button" class="checkout-confirm-terms-modal btn btn-link-inline" aria-haspopup="dialog" data-ajax-modal="true" data-url="' ~ path(cmsPath, { id: config('core.basicInformation.tosPage') }) ~ '">' %}
+    {% set tosModalTagClose = '</button>' %}
+
+    {% if feature('v6.8.0.0') and not config('core.cart.showTosCheckbox') and block('page_checkout_confirm_tos_auto_confirmed') is defined %}
+        {{ block('page_checkout_confirm_tos_auto_confirmed') }}
+    {% else %}
+        <div class="confirm-tos">
+            <div class="form-check wf-check-row wf-check-row-dark">
+                <input type="checkbox"
+                       class="checkout-confirm-tos-checkbox form-check-input{% if formViolations.getViolations('/tos') is not empty %} is-invalid{% endif %}"
+                       required="required"
+                       id="tos"
+                       form="confirmOrderForm"
+                       name="tos">
+                <label for="tos" class="checkout-confirm-tos-label custom-control-label">
+                    {{ (wfShowGuarantee ? 'checkout.confirmTermsTextModalWithGuarantee' : 'checkout.confirmTermsTextModal')|trans({
+                        '%tosModalTagOpen%': tosModalTagOpen,
+                        '%tosModalTagClose%': tosModalTagClose,
+                        '%legalGuaranteeNoticeModalTagOpen%': wfGuaranteeOpen,
+                        '%legalGuaranteeNoticeModalTagClose%': '</button>',
+                    })|raw }}
+                </label>
+            </div>
+
+            {% if page.showRevocation is defined and page.showRevocation %}
+                <div class="form-check wf-check-row wf-check-row-dark">
+                    <input type="checkbox"
+                           class="checkout-confirm-revocation-checkbox form-check-input{% if formViolations.getViolations('/revocation') is not empty %} is-invalid{% endif %}"
+                           required="required"
+                           id="revocation"
+                           form="confirmOrderForm"
+                           name="revocation">
+                    <label for="revocation" class="checkout-confirm-revocation-label custom-control-label">
+                        {{ 'checkout.confirmRevocationTerms'|trans() }}
+                    </label>
+                </div>
+            {% endif %}
+
+            <p class="revocation-notice">
+                {{ 'checkout.confirmRevocationNoticeModal'|trans({
+                    '%revocationModalTagOpen%': '<button type="button" class="btn btn-link-inline" aria-haspopup="dialog" data-ajax-modal="true" data-url="' ~ path(cmsPath, { id: config('core.basicInformation.revocationPage') }) ~ '">',
+                    '%revocationModalTagClose%': '</button>'
+                })|raw }}
+            </p>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_confirm_form_submit %}
+    {% if wfDesign %}
+        <div class="d-grid">
+            <button id="confirmFormSubmit"
+                    class="btn btn-primary btn-lg wf-btn-gold"
+                    form="confirmOrderForm"
+                    {% if page.cart.errors.blockResubmit %}disabled{% endif %}
+                    type="submit">
+                {% sw_icon 'lock-closed' style { size: 'xs' } %}
+                {{ 'checkout.confirmSubmit'|trans|sw_sanitize }}
+            </button>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
 {% block base_esi_header %}
     {% sw_include '@Storefront/storefront/layout/header.html.twig' %}
 {% endblock %}

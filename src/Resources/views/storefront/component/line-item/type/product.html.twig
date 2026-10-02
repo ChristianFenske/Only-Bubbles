@@ -1,9 +1,37 @@
 {% sw_extends '@Storefront/storefront/component/line-item/type/product.html.twig' %}
 
+{# Neues Design: Anpassungen nur auf der Warenkorbseite (/checkout/cart).
+   Bestätigung, Offcanvas & Konto bleiben unverändert. #}
+{% set wfCartPage = theme_config('wf-checkout-design') and activeRoute is same as('frontend.checkout.cart.page') %}
+
+{% block component_line_item_type_product_variant_characteristics %}
+	{% if wfCartPage and displayMode == 'default' %}
+		<div class="line-item-details-characteristics wf-li-pills">
+			{% for option in lineItem.payload.options %}
+				<span class="line-item-details-characteristics-option" title="{{ option.group }}">{{ option.option }}</span>
+			{% endfor %}
+		</div>
+	{% else %}
+		{{ parent() }}
+	{% endif %}
+{% endblock %}
+
 {% block component_line_item_type_product_number %}
-	<div class="line-item-product-number">
-		{{ lineItem.payload.productNumber }}
-	</div>
+	{% if wfCartPage and displayMode == 'default' %}
+		{% set wfRef = lineItem.price.referencePrice %}
+		<div class="line-item-product-number">
+			{{ 'wfTheme.cart.sku'|trans|sw_sanitize }} {{ lineItem.payload.productNumber }}
+			{%- if wfRef %}
+				· {{ wfRef.purchaseUnit|replace({'.': ','}) }} {{ wfRef.unitName }}
+				({{ wfRef.price|currency }} / {{ wfRef.referenceUnit|replace({'.': ','}) }} {{ wfRef.unitName }})
+			{%- endif %}
+		</div>
+		<div class="wf-li-unit">{{ lineItem.quantity }} × {{ lineItem.price.unitPrice|currency }}</div>
+	{% else %}
+		<div class="line-item-product-number">
+			{{ lineItem.payload.productNumber }}
+		</div>
+	{% endif %}
 {% endblock %}
 
 {% block component_line_item_type_product_label %}
@@ -75,7 +103,23 @@
 {% endblock %}
 
 {% block component_line_item_type_product_col_total_price %}
-	{% if displayMode !== 'offcanvas' %}
+	{% if wfCartPage and displayMode == 'default' %}
+		<div class="line-item-total-price line-item-price">
+			{% sw_include '@Storefront/storefront/component/line-item/element/total-price.html.twig' with {
+				currency: lineItem.order.currency.isoCode
+			} %}
+
+			{% if context.taxState == 'gross' %}
+				{% set wfTax = 0 %}
+				{% for wfCalcTax in lineItem.price.calculatedTaxes %}
+					{% set wfTax = wfTax + wfCalcTax.tax %}
+				{% endfor %}
+				{% if wfTax > 0 %}
+					<div class="wf-li-tax">{{ 'wfTheme.cart.inclVat'|trans({'%amount%': wfTax|currency})|sw_sanitize }}</div>
+				{% endif %}
+			{% endif %}
+		</div>
+	{% elseif displayMode !== 'offcanvas' %}
 		{{ parent() }}
 	{% endif %}
 {% endblock %}

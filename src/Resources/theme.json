@@ -18,5 +18,32 @@
     "asset": [
         "@Storefront",
         "app/storefront/src/assets"
-    ]
+    ],
+    "config": {
+        "blocks": {
+            "wfDesign": {
+                "label": {
+                    "de-DE": "Warenkorb, Checkout & Menüs",
+                    "en-GB": "Cart, checkout & menus"
+                }
+            }
+        },
+        "fields": {
+            "wf-checkout-design": {
+                "label": {
+                    "de-DE": "Neues Warenkorb- & Checkout-Design",
+                    "en-GB": "New cart & checkout design"
+                },
+                "helpText": {
+                    "de-DE": "Warenkorb, Checkout, Bestellabschluss, Widerrufsseite, Konto-Menü und aufgeklapptes Hauptmenü im neuen Aufbau. Aus = bisheriges Design.",
+                    "en-GB": "Cart, checkout, order confirmation, revocation page, account menu and mega menu in the new layout. Off = previous design."
+                },
+                "type": "switch",
+                "value": true,
+                "editable": true,
+                "scss": false,
+                "block": "wfDesign"
+            }
+        }
+    }
 }

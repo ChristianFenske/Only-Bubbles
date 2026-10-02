@@ -1,5 +1,7 @@
 {% sw_extends '@Storefront/storefront/layout/navbar/navbar.html.twig' %}
 
+{% set wfDesign = theme_config('wf-checkout-design') %}
+
 {% block layout_navbar_menu_item_link_content %}
 	{% set categoryIconClassname = category.customFields.custom_category_icon_class %}
 	{% set categoryIconMediaId = category.customFields.custom_category_icon_media %}
@@ -9,4 +11,20 @@
 	{% endif %}
 
 	{{ parent() }}
+{% endblock %}
+
+{# Neues Design: aufgeklapptes Menü als Mega-Menü (Kopfzeile, Gruppen, Bildkarte) #}
+{% block layout_navbar_menu_item_children %}
+    {% if wfDesign %}
+        <div class="dropdown-menu w-100 wf-mega">
+            {% sw_include '@Storefront/storefront/layout/navbar/content.html.twig' with {
+                themeIconConfig: themeIconConfig,
+                navigationTree: treeItem,
+                level: level+1,
+                page: page
+            } only %}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
 {% endblock %}

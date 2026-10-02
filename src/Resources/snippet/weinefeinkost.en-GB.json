@@ -1,0 +1,101 @@
+{
+    "wfTheme": {
+        "account": {
+            "eyebrow": "My account"
+        },
+        "accountMenu": {
+            "createAccount": "Create account",
+            "newHere": "New here?"
+        },
+        "cart": {
+            "addByNumber": "Add item by product number",
+            "bottles": "{1} 1 bottle|]1,Inf[ %count% bottles",
+            "breadcrumbHome": "Home",
+            "breadcrumbLabel": "Breadcrumb",
+            "clearCart": "Empty cart",
+            "colProduct": "Product",
+            "colTotal": "Total",
+            "continueShopping": "Continue shopping",
+            "deliveryTime": "Delivery time",
+            "emptyCta": "Discover wines",
+            "emptyText": "Discover our selection of wines and delicacies.",
+            "emptyTitle": "Your cart is empty",
+            "freeShippingMissingBoth": "%bottles% or %amount% more for free shipping",
+            "freeShippingReached": "Free shipping reached",
+            "inclVat": "incl. %amount% VAT",
+            "proceed": "Checkout",
+            "shippingCosts": "Shipping costs",
+            "shippingCountry": "Delivery country",
+            "shippingDetails": "Shipping details",
+            "shippingInfoLink": "All shipping & payment info",
+            "sku": "Item no."
+        },
+        "checkout": {
+            "addressEqual": "Same as shipping address",
+            "cart": "Shopping cart",
+            "commentLabel": "Anything you would like to tell us about your order?",
+            "commentPlaceholder": "e.g. gift wrapping, delivery note …",
+            "eyebrow": "Checkout",
+            "loginHint": "Already a customer?",
+            "loginLink": "Log in here",
+            "orderTitle": "Your order",
+            "positions": "{1} 1 item|]1,Inf[ %count% items",
+            "summary": "Summary"
+        },
+        "finish": {
+            "continueShopping": "Continue shopping",
+            "copied": "Copied",
+            "copy": "Copy",
+            "eyebrow": "Order successful",
+            "infoTitle": "Information",
+            "orderNumber": "Order number",
+            "paymentLabel": "Payment method",
+            "prepaymentText": "Please transfer <strong>%amount%</strong> quoting the order number. You will find our bank details in your confirmation email.",
+            "prepaymentTitle": "Payment in advance:",
+            "shippingLabel": "Shipping method",
+            "text": "We have received your order and sent you a confirmation by e-mail. Time to get the glasses ready.",
+            "timelineEnjoy": "Enjoy",
+            "timelineEnjoySub": "2–3 working days",
+            "timelineOrdered": "Ordered",
+            "timelineOrderedSub": "Today",
+            "timelineProcessing": "Processing",
+            "timelineProcessingSub": "Payment received",
+            "timelineShipped": "Shipped",
+            "timelineShippedSub": "Tracking via email",
+            "title": "Thank you for your order!",
+            "toAccount": "Go to my account"
+        },
+        "general": {
+            "change": "Change"
+        },
+        "nav": {
+            "showAll": "Show all",
+            "teaserCta": "Discover"
+        },
+        "register": {
+            "guestHint": "Track orders and check out faster next time.",
+            "sectionAddress": "Your address",
+            "sectionPersonal": "Personal information",
+            "sectionPrivacy": "Privacy",
+            "submitCheckout": "Continue to shipping & payment"
+        },
+        "revocation": {
+            "howTitle": "How it works",
+            "readPolicy": "Read the cancellation policy",
+            "step1": "Fill in and submit the form",
+            "step2": "Receive a confirmation by e-mail",
+            "step3": "Return the goods – we refund the amount"
+        },
+        "steps": {
+            "address": "Address",
+            "confirm": "Review & order",
+            "done": "done",
+            "label": "Checkout progress",
+            "shippingPayment": "Shipping & payment"
+        },
+        "trust": {
+            "freeShipping": "Free shipping from 12 bottles",
+            "secure": "Secure, encrypted transmission"
+        }
+    }
+}

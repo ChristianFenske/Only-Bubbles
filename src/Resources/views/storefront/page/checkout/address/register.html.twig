@@ -1,0 +1,14 @@
+{% sw_extends '@Storefront/storefront/page/checkout/address/register.html.twig' %}
+
+{% set wfDesign = theme_config('wf-checkout-design') %}
+
+{% block page_checkout_register_personal_guest_label %}
+    {% if wfDesign %}
+        <label class="custom-control-label" for="personalGuest">
+            {{ 'checkout.registerCustomermodeLabel'|trans|sw_sanitize }}
+            <small class="wf-check-hint">{{ 'wfTheme.register.guestHint'|trans|sw_sanitize }}</small>
+        </label>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

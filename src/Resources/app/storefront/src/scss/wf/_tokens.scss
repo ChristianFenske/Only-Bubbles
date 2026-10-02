@@ -1,0 +1,59 @@
+// ===========================================================================
+// W&F — Tokens für Warenkorb, Checkout, Widerruf und Menüs
+// Aufbau wie im Only-Bubbles-Theme, Farben und Schriften von Weine & Feinkost.
+// ===========================================================================
+
+$wf-ink:          $color_primary_dark;       // #424242 dunkle Flächen, Buttons
+$wf-ink-2:        $color_font_gray_dark;     // #2e2e2e Labels, Hover dunkler Buttons
+$wf-gold:         $color_primary_brown;      // #854040 Akzent
+$wf-gold-dark:    $color_primary_brown_font; // #6b3535 Akzent Hover
+$wf-gold-600:     $color_primary_brown;      // Buttons, Pflicht-Stern, Fokus
+$wf-gold-700:     $color_primary_brown_font; // Hover
+$wf-gold-light:   #d8a9a9;                   // Akzent auf dunkel
+$wf-gold-soft:    #f6eaea;                   // zarte Akzentfläche
+$wf-cream:        $color_bg_img;             // #fafaf9 Seitenhintergrund
+$wf-sand:         $color_bg_gray_dark;       // #f4f4f4 Flächen
+$wf-line:         #e5e5e5;                   // Karten-Rahmen
+$wf-line-input:   $color_border;             // #d9d9d9 Input-Rahmen
+$wf-muted:        #707070;                   // Nebentext auf hell
+$wf-on-dark:      #f5f5f5;                   // Text auf dunkel
+$wf-on-dark-60:   rgba(245, 245, 245, .6);
+$wf-on-dark-line: rgba(245, 245, 245, .14);
+
+$wf-radius-card:  16px;
+$wf-radius-input: 8px;
+$wf-radius-pill:  30px;
+
+$wf-shadow-card:  0 14px 34px rgba(33, 33, 33, .08);
+$wf-font-serif:   'Roboto Serif', Georgia, serif;
+$wf-font-sans:    'Roboto', Arial, sans-serif;
+
+@mixin wf-card {
+    background: #fff;
+    border: 1px solid $wf-line;
+    border-radius: $wf-radius-card;
+}
+
+@mixin wf-card-dark {
+    background: $wf-ink;
+    color: $wf-on-dark;
+    border: 0;
+    border-radius: $wf-radius-card;
+}
+
+@mixin wf-eyebrow {
+    font-family: $wf-font-sans;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: $wf-gold-600;
+}
+
+@mixin wf-serif-title($size: 24px) {
+    font-family: $wf-font-serif;
+    font-weight: 600;
+    font-size: $size;
+    line-height: 1.15;
+    color: $wf-ink;
+}

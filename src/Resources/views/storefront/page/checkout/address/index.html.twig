@@ -1,5 +1,83 @@
 {% sw_extends '@Storefront/storefront/page/checkout/address/index.html.twig' %}
 
+{% set wfDesign = theme_config('wf-checkout-design') %}
+
+{% block page_checkout %}
+    {% if wfDesign %}
+        <div class="wf-checkout wf-checkout-address">
+            {% sw_include '@WeineFeinkostTheme/storefront/component/wf/checkout-steps.html.twig' with { wfStep: 1 } %}
+            {{ parent() }}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_address_header %}
+    {% if wfDesign %}
+        <p class="wf-eyebrow">{{ 'wfTheme.checkout.eyebrow'|trans|sw_sanitize }}</p>
+        {{ parent() }}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_address_login_toggle %}
+    {% if wfDesign %}
+        <div class="register-login-collapse-toogle wf-login-hint">
+            <span class="wf-login-hint-icon">{% sw_icon 'avatar' style { size: 'xs' } %}</span>
+            <span>
+                {{ 'wfTheme.checkout.loginHint'|trans|sw_sanitize }}
+                <a href="#loginCollapse"
+                   class="login-collapse-toggle"
+                   data-bs-toggle="collapse"
+                   aria-controls="loginCollapse"
+                   aria-expanded="{{ loginError ? 'true' : 'false' }}">{{ 'wfTheme.checkout.loginLink'|trans|sw_sanitize }}</a>
+            </span>
+            {% sw_icon 'arrow-right' style { size: 'xs' } %}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{# Seitenleiste: dunkle Warenkorb-Karte (Artikel oben, Summen darunter) + Trust-Box #}
+{% block page_checkout_aside_summary %}
+    {% if wfDesign %}
+        <div class="checkout-aside-summary wf-summary-card">
+            <h2 class="checkout-aside-summary-header">{{ 'wfTheme.checkout.cart'|trans|sw_sanitize }}</h2>
+
+            {{ block('page_checkout_address_products_list') }}
+
+            <div class="checkout-aside-summary-list-container">
+                {{ block('page_checkout_summary_list_container') }}
+            </div>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_aside_actions %}
+    {% if wfDesign %}
+        {{ parent() }}
+        {% sw_include '@WeineFeinkostTheme/storefront/component/wf/trust-box.html.twig' %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{# Kartentitel entfällt: Überschrift "Versandinformationen" steht bereits oben in der Karte #}
+{% block page_checkout_address_register_card %}
+    {% if wfDesign %}
+        {% sw_include '@Storefront/storefront/page/checkout/address/register.html.twig' with {
+            cardTitle: null
+        } %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
 {% block base_esi_header %}
     {% sw_include '@Storefront/storefront/layout/header.html.twig' %}
 {% endblock %}

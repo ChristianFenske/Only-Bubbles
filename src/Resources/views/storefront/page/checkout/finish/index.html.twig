@@ -1,5 +1,66 @@
 {% sw_extends '@Storefront/storefront/page/checkout/finish/index.html.twig' %}
 
+{% set wfDesign = theme_config('wf-checkout-design') %}
+
+{% block page_checkout %}
+    {% if wfDesign %}
+        <div class="checkout wf-finish">
+            {{ block('base_flashbags_checkout') }}
+
+            {{ block('page_checkout_finish_details') }}
+
+            <div class="wf-finish-grid">
+                <div class="wf-finish-main">
+                    {{ block('page_checkout_finish_product_table') }}
+                    {{ block('page_checkout_additional') }}
+                </div>
+
+                <aside class="wf-finish-aside">
+                    <div class="checkout-aside-summary wf-summary-card">
+                        <h2 class="checkout-aside-summary-header">{{ 'wfTheme.checkout.summary'|trans|sw_sanitize }}</h2>
+                        {% sw_include '@Storefront/storefront/page/checkout/summary.html.twig' %}
+                    </div>
+                </aside>
+            </div>
+
+            <div class="wf-finish-actions">
+                <a href="{{ path('frontend.home.page') }}" class="btn btn-primary btn-lg">
+                    {{ 'wfTheme.finish.continueShopping'|trans|sw_sanitize }}
+                    {% sw_icon 'arrow-right' style { size: 'xs' } %}
+                </a>
+                {% if context.customer and not context.customer.guest %}
+                    <a href="{{ path('frontend.account.home.page') }}" class="btn wf-btn-outline btn-lg">
+                        {% sw_icon 'avatar' style { size: 'xs' } %}
+                        {{ 'wfTheme.finish.toAccount'|trans|sw_sanitize }}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_finish_product_table %}
+    {% if wfDesign %}
+        <div class="card checkout-card checkout-product-table wf-order-card">
+            <div class="card-body">
+                <div class="wf-card-head">
+                    <div class="card-title">
+                        {% sw_icon 'bag' style { size: 'xs' } %}
+                        {{ 'wfTheme.checkout.orderTitle'|trans|sw_sanitize }}
+                    </div>
+                </div>
+                <ul class="list-unstyled wf-line-items">
+                    {{ block('page_checkout_finish_items') }}
+                </ul>
+            </div>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
 {% block base_esi_header %}
     {% sw_include '@Storefront/storefront/layout/header.html.twig' %}
 {% endblock %}

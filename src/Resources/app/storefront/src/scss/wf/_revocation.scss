@@ -1,0 +1,409 @@
+// ===========================================================================
+// Bestellung widerrufen (Widerrufs-Plugin, body.is-ctl-revocation)
+// Markup kommt aus dem Plugin – Gestaltung rein per CSS, Sidebar über base.html.twig
+// ===========================================================================
+
+&.is-ctl-revocation { background: $wf-cream; }
+
+// --- Raster: Inhalt | Sidebar 300px ----------------------------------------
+.wf-revocation {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 24px;
+    align-items: start;
+    max-width: 1120px;
+    margin: 32px auto 80px;
+}
+
+.wf-revocation-main .container-main { padding: 0; }
+
+.revocation-page {
+    max-width: none;
+    padding: 0;
+
+    > .row {
+        margin: 0;
+
+        > .col-lg-8 {
+            flex: 0 0 100%;
+            width: 100%;
+            max-width: 100%;
+            padding: 0;
+        }
+    }
+}
+
+// --- Kopf --------------------------------------------------------------------
+.revocation-page-title {
+    margin: 0 0 12px;
+    font-family: $wf-font-serif;
+    font-size: clamp(36px, 4.4vw, 52px);
+    font-weight: 500;
+    line-height: 1.05;
+    color: $wf-ink;
+
+    &::before {
+        content: 'Widerruf';
+        display: block;
+        margin-bottom: 12px;
+        font-family: $wf-font-sans;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: .2em;
+        text-transform: uppercase;
+        color: $wf-gold-600;
+    }
+}
+
+.revocation-page-description {
+    margin-bottom: 26px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: $wf-muted;
+}
+
+// Hinweis-Box statt blauem Bootstrap-Alert
+.revocation-page .alert-info {
+    gap: 14px;
+    margin-bottom: 24px;
+    padding: 18px 22px;
+    border: 0;
+    border-radius: 14px;
+    background: $wf-sand;
+    color: $wf-ink;
+
+    > .icon {
+        display: grid;
+        place-items: center;
+        flex: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #fff;
+        color: $wf-gold-600;
+
+        > svg {
+            width: 18px;
+            height: 18px;
+            top: 0;
+        }
+
+        svg path,
+        svg use { fill: currentColor; }
+    }
+
+    .alert-content-container {
+        font-size: 14.5px;
+        font-weight: 600;
+        line-height: 1.5;
+
+        &::after {
+            content: 'Sie können die Vertragsnummer trotzdem unten manuell eintragen.';
+            display: block;
+            margin-top: 2px;
+            font-weight: 400;
+            color: $wf-muted;
+        }
+    }
+}
+
+// --- Formular-Karte ------------------------------------------------------------
+.revocation-form.card {
+    border: 1px solid $wf-line !important;
+    border-radius: $wf-radius-card !important;
+    background: #fff !important;
+
+    > .card-body { padding: 36px 38px; }
+}
+
+.revocation-form-content {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 18px;
+
+    // Abschnitt 01
+    &::before {
+        content: '01 · Ihre Angaben';
+        grid-column: 1 / -1;
+        order: -1;
+        margin-bottom: 22px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid $wf-line;
+        font-family: $wf-font-sans;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: .2em;
+        text-transform: uppercase;
+        color: $wf-gold-600;
+    }
+
+    > * { grid-column: 1 / -1; }
+
+    > .mb-3 { margin-bottom: 18px !important; }
+
+    // Name + E-Mail nebeneinander, Vertragsnummer darunter
+    > .mb-3:has(#revocationCustomerName) { grid-column: 1; order: 1; }
+    > .mb-3:has(#revocationCustomerEmail) { grid-column: 2; order: 2; }
+    > .mb-3:has(#revocationOrderNumber) {
+        order: 3;
+
+        &::after {
+            content: 'Bestellnummer, Abonnentennummer o. Ä. – steht in Ihrer Bestellbestätigung.';
+            display: block;
+            margin-top: 6px;
+            font-size: 12.5px;
+            color: $wf-muted;
+        }
+    }
+
+    // Abschnitt 02
+    > .mb-3:has(#revocationReason) {
+        order: 4;
+
+        &::before {
+            content: '02 · Hinweis an uns';
+            display: block;
+            margin: 10px 0 22px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid $wf-line;
+            font-family: $wf-font-sans;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: $wf-gold-600;
+        }
+
+        textarea { min-height: 130px; }
+    }
+
+    > .shopware_surname_confirm { order: 5; }
+    > .mb-3:has(.form-check) { order: 6; }
+
+    // Fußzeile: Pflichtfeld-Hinweis links, Button rechts
+    > p.small {
+        grid-column: 1;
+        order: 7;
+        align-self: center;
+        margin: 0 !important;
+        font-size: 13px;
+        color: $wf-muted !important;
+    }
+
+    > .btn {
+        grid-column: 2;
+        order: 8;
+        justify-self: end;
+    }
+
+    .form-label {
+        margin-bottom: 7px;
+        font-size: 13px;
+        color: $wf-ink-2;
+    }
+
+    .text-danger { color: $wf-gold-600 !important; }
+
+    .form-control {
+        min-height: 50px;
+        padding: 0 16px;
+        border: 1px solid $wf-line-input;
+        border-radius: $wf-radius-input;
+        background: #fff;
+        font-family: $wf-font-sans;
+        font-size: 15px;
+        color: $wf-ink;
+        box-shadow: none;
+
+        &:focus {
+            border-color: $wf-gold-600;
+            box-shadow: 0 0 0 3px rgba(133, 64, 64, .16);
+        }
+    }
+
+    textarea.form-control { padding: 14px 16px; }
+
+    // Datenschutz als ganze Zeile
+    .form-check {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        min-height: 0;
+        margin: 4px 0 0;
+        padding: 16px 18px;
+        border-radius: 10px;
+        background: $wf-sand;
+
+        .form-check-input {
+            flex: none;
+            float: none;
+            width: 22px;
+            height: 22px;
+            margin: 0;
+            border: 1px solid $wf-line-input;
+            border-radius: 6px;
+            background-color: #fff;
+            cursor: pointer;
+
+            &:checked {
+                border-color: $wf-gold-600;
+                background-color: $wf-gold-600;
+            }
+
+            &:focus { box-shadow: 0 0 0 3px rgba(133, 64, 64, .16); }
+        }
+
+        .form-check-label {
+            font-size: 14px;
+            line-height: 1.5;
+            color: $wf-ink-2;
+            cursor: pointer;
+
+            a {
+                color: $wf-gold-700;
+                font-weight: 500;
+            }
+        }
+    }
+
+    // Button dunkel; ausgegraut bis Datenschutz angehakt
+    .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 52px;
+        padding: 0 32px !important;
+        border: 0;
+        border-radius: $wf-radius-pill !important;
+        background: $wf-ink;
+        color: $wf-cream;
+        font-family: $wf-font-sans;
+        font-size: 15px;
+        font-weight: 500 !important;
+
+        &::after { content: '→'; }
+
+        &:hover,
+        &:focus-visible {
+            background: $wf-ink-2;
+            color: #fff;
+        }
+    }
+
+    &:has(.form-check-input:not(:checked)) .btn-primary {
+        background: #cccccc;
+        color: #fff;
+        cursor: not-allowed;
+    }
+}
+
+// --- Sidebar -------------------------------------------------------------------
+.wf-revocation-aside {
+    position: sticky;
+    top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.wf-revocation-steps {
+    @include wf-card-dark;
+    position: relative;
+    overflow: hidden;
+    padding: 28px 26px;
+
+    ol {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    li {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        font-size: 14px;
+        line-height: 1.45;
+        color: rgba(245, 245, 245, .82);
+
+        > span {
+            display: grid;
+            place-items: center;
+            flex: none;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: rgba(216, 169, 169, .2);
+            font-size: 12.5px;
+            font-weight: 500;
+            color: $wf-gold-light;
+        }
+    }
+}
+
+.wf-revocation-steps-title {
+    margin-bottom: 18px;
+    font-family: $wf-font-serif;
+    font-size: 24px;
+    font-weight: 500;
+    color: $wf-on-dark;
+}
+
+.wf-revocation-bubble {
+    position: absolute;
+    border-radius: 50%;
+    animation: wfrise 3.2s ease-in-out infinite alternate;
+
+    &:nth-child(1) { right: 22px; top: 20px; width: 11px; height: 11px; border: 1.3px solid rgba(216, 169, 169, .8); }
+    &:nth-child(2) { right: 10px; top: 36px; width: 18px; height: 18px; background: rgba(216, 169, 169, .5); animation-duration: 3.9s; }
+}
+
+.wf-revocation-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 18px 20px;
+    border-radius: 14px;
+    background: $wf-sand;
+
+    a {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        color: $wf-ink-2;
+        text-decoration: none;
+
+        .icon { color: $wf-gold-600; }
+
+        &:hover { color: $wf-gold-700; }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .wf-revocation-bubble { animation: none; }
+}
+
+// --- Mobil ---------------------------------------------------------------------
+@include media-breakpoint-down(lg) {
+    .wf-revocation { grid-template-columns: minmax(0, 1fr); }
+    .wf-revocation-aside { position: static; }
+}
+
+@include media-breakpoint-down(md) {
+    .revocation-form.card > .card-body { padding: 26px 20px; }
+
+    .revocation-form-content {
+        grid-template-columns: minmax(0, 1fr);
+
+        > .mb-3:has(#revocationCustomerName),
+        > .mb-3:has(#revocationCustomerEmail),
+        > p.small,
+        > .btn { grid-column: 1; }
+
+        > .btn { justify-self: stretch; justify-content: center; margin-top: 14px; }
+    }
+}

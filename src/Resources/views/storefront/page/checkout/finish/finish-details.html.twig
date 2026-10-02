@@ -1,0 +1,207 @@
+{% sw_extends '@Storefront/storefront/page/checkout/finish/finish-details.html.twig' %}
+
+{% set wfDesign = theme_config('wf-checkout-design') %}
+
+{% block page_checkout_finish_data %}
+    {% if wfDesign %}
+        <section class="wf-finish-hero">
+            <div class="wf-finish-hero-inner">
+                <div class="wf-finish-check" aria-hidden="true">{% sw_icon 'checkmark' %}</div>
+
+                <p class="wf-eyebrow">{{ 'wfTheme.finish.eyebrow'|trans|sw_sanitize }}</p>
+
+                {% block page_checkout_finish_header %}
+                    {% if wfDesign %}
+                        <h1 class="finish-header">
+                            {% if page.changedPayment == true %}
+                                {{ 'checkout.finishUpdateHeader'|trans|sw_sanitize }}
+                            {% else %}
+                                {{ 'wfTheme.finish.title'|trans|sw_sanitize }}
+                            {% endif %}
+                        </h1>
+                    {% else %}
+                        {{ parent() }}
+                    {% endif %}
+                {% endblock %}
+
+                {% block page_checkout_finish_subtitle %}
+                    {% if wfDesign %}
+                        {{ parent() }}
+                    {% else %}
+                        {{ parent() }}
+                    {% endif %}
+                {% endblock %}
+
+                {% block page_checkout_finish_content %}
+                    {% if wfDesign %}
+                        <div class="finish-content">
+                            {% block page_checkout_finish_teaser %}
+                                {% if wfDesign %}
+                                    {% if page.changedPayment != true %}
+                                        <p class="finish-teaser">{{ 'wfTheme.finish.text'|trans|sw_sanitize }}</p>
+                                    {% endif %}
+                                {% else %}
+                                    {{ parent() }}
+                                {% endif %}
+                            {% endblock %}
+
+                            {% block page_checkout_finish_ordernumber %}
+                                {% if wfDesign %}
+                                    <div class="finish-ordernumber wf-order-number" data-order-number="{{ page.order.orderNumber }}">
+                                        <span class="wf-order-number-label">{{ 'wfTheme.finish.orderNumber'|trans|sw_sanitize }}</span>
+                                        <strong class="wf-order-number-value">{{ page.order.orderNumber }}</strong>
+                                        <button type="button"
+                                                class="wf-copy-btn"
+                                                data-wf-copy-text="true"
+                                                data-wf-copy-text-options="{{ { value: page.order.orderNumber, copiedLabel: 'wfTheme.finish.copied'|trans|striptags }|json_encode }}">
+                                            {% sw_icon 'duplicate' style { size: 'xs' } %}
+                                            <span class="wf-copy-label">{{ 'wfTheme.finish.copy'|trans|sw_sanitize }}</span>
+                                        </button>
+                                    </div>
+                                {% else %}
+                                    {{ parent() }}
+                                {% endif %}
+                            {% endblock %}
+
+                            {% if block('page_checkout_finish_create_account') is defined %}
+                                {{ block('page_checkout_finish_create_account') }}
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        {{ parent() }}
+                    {% endif %}
+                {% endblock %}
+
+                {% if block('page_checkout_finish_enhanced_conversions') is defined %}
+                    {{ block('page_checkout_finish_enhanced_conversions') }}
+                {% endif %}
+
+                {% block page_checkout_finish_hidden_information_line_items %}
+                    {% if wfDesign %}
+                        {{ parent() }}
+                    {% else %}
+                        {{ parent() }}
+                    {% endif %}
+                {% endblock %}
+            </div>
+        </section>
+
+        <ol class="wf-timeline list-unstyled" aria-hidden="true">
+            <li class="is-done">
+                <span class="wf-timeline-dot">{% sw_icon 'checkmark' style { size: 'xs' } %}</span>
+                <strong>{{ 'wfTheme.finish.timelineOrdered'|trans|sw_sanitize }}</strong>
+                <small>{{ 'wfTheme.finish.timelineOrderedSub'|trans|sw_sanitize }}</small>
+            </li>
+            <li>
+                <span class="wf-timeline-dot">{% sw_icon 'package-closed' style { size: 'xs' } %}</span>
+                <strong>{{ 'wfTheme.finish.timelineProcessing'|trans|sw_sanitize }}</strong>
+                <small>{{ 'wfTheme.finish.timelineProcessingSub'|trans|sw_sanitize }}</small>
+            </li>
+            <li>
+                <span class="wf-timeline-dot">{% sw_icon 'truck' style { size: 'xs' } %}</span>
+                <strong>{{ 'wfTheme.finish.timelineShipped'|trans|sw_sanitize }}</strong>
+                <small>{{ 'wfTheme.finish.timelineShippedSub'|trans|sw_sanitize }}</small>
+            </li>
+            <li>
+                <span class="wf-timeline-dot">{% sw_icon 'sparkles' style { size: 'xs' } %}</span>
+                <strong>{{ 'wfTheme.finish.timelineEnjoy'|trans|sw_sanitize }}</strong>
+                <small>{{ 'wfTheme.finish.timelineEnjoySub'|trans|sw_sanitize }}</small>
+            </li>
+        </ol>
+
+        {% set wfPaymentMethod = feature('v6.8.0.0')
+            ? page.order.primaryOrderTransaction.paymentMethod
+            : page.order.transactions.last.paymentMethod %}
+        {% set wfIsPrepayment = wfPaymentMethod
+            and (wfPaymentMethod.technicalName == 'payment_prepayment'
+                or wfPaymentMethod.handlerIdentifier ends with 'PrePayment') %}
+
+        {% if wfIsPrepayment %}
+            <div class="wf-notice" role="note">
+                <span class="wf-notice-icon">{% sw_icon 'money-cash' style { size: 'xs' } %}</span>
+                <p>
+                    <strong>{{ 'wfTheme.finish.prepaymentTitle'|trans|sw_sanitize }}</strong>
+                    {{ 'wfTheme.finish.prepaymentText'|trans({
+                        '%amount%': page.order.amountTotal|currency(page.order.currency.isoCode)
+                    })|sw_sanitize }}
+                </p>
+            </div>
+        {% endif %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_finish_order %}
+    {% if wfDesign %}
+        <div class="finish-info wf-finish-info">
+            {{ block('page_checkout_finish_order_address') }}
+            {{ block('page_checkout_finish_order_details') }}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_finish_order_address %}
+    {% if wfDesign %}
+        <div class="finish-address">
+            {% sw_include '@Storefront/storefront/page/checkout/finish/finish-address.html.twig' %}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_finish_order_details %}
+    {% if wfDesign %}
+        <div class="finish-order-details">
+            <div class="card checkout-card">
+                <div class="card-body">
+                    {% block page_checkout_finish_order_title %}
+                        {% if wfDesign %}
+                            <div class="card-title">
+                                {% sw_icon 'info' style { size: 'xs' } %}
+                                {{ 'wfTheme.finish.infoTitle'|trans|sw_sanitize }}
+                            </div>
+                        {% else %}
+                            {{ parent() }}
+                        {% endif %}
+                    {% endblock %}
+
+                    {% block page_checkout_finish_order_payment_method %}
+                        {% if wfDesign %}
+                            {% set wfPaymentMethod = feature('v6.8.0.0')
+                                ? page.order.primaryOrderTransaction.paymentMethod
+                                : page.order.transactions.last.paymentMethod %}
+                            <p class="wf-info-row">
+                                <span class="wf-info-label">{{ 'wfTheme.finish.paymentLabel'|trans|sw_sanitize }}</span>
+                                {{ wfPaymentMethod.translated.name ?? '' }}
+                            </p>
+                        {% else %}
+                            {{ parent() }}
+                        {% endif %}
+                    {% endblock %}
+
+                    {% block page_checkout_finish_order_dispatch_method %}
+                        {% if wfDesign %}
+                            {% set wfShippingMethod = feature('v6.8.0.0')
+                                ? (page.order.primaryOrderDelivery.shippingMethod ?? null)
+                                : (page.order.deliveries.first.shippingMethod ?? null) %}
+                            {% if wfShippingMethod %}
+                                <p class="wf-info-row">
+                                    <span class="wf-info-label">{{ 'wfTheme.finish.shippingLabel'|trans|sw_sanitize }}</span>
+                                    {{ wfShippingMethod.translated.name }}
+                                </p>
+                            {% endif %}
+                        {% else %}
+                            {{ parent() }}
+                        {% endif %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

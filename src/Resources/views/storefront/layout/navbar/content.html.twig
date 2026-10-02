@@ -1,0 +1,103 @@
+{% sw_extends '@Storefront/storefront/layout/navbar/content.html.twig' %}
+
+{% set wfDesign = theme_config('wf-checkout-design') %}
+
+{# Mega-Menü: Kopfzeile, Unterkategorien (2. Ebene = Gruppen, 3. Ebene = Links), Bildkarte aus Kategoriebild + -beschreibung #}
+{% block layout_navbar_content %}
+    {% if wfDesign %}
+        {% set category = navigationTree.category %}
+        {% set name = category.translated.name %}
+        {% set wfLinks = navigationTree.children|filter(child => child.children|length == 0) %}
+        {% set wfGroups = navigationTree.children|filter(child => child.children|length > 0) %}
+
+        <div class="wf-mega-inner{% if category.media %} has-teaser{% endif %}">
+            <div class="wf-mega-main">
+                {% block wf_mega_head %}
+                    <div class="wf-mega-head">
+                        <h2 class="wf-mega-title">{{ name }}</h2>
+                        {% if category.type == 'page' %}
+                            <a class="wf-mega-all" href="{{ seoUrl('frontend.navigation.page', { navigationId: category.id }) }}" title="{{ name }}">
+                                {{ 'wfTheme.nav.showAll'|trans|sw_sanitize }}
+                                {% sw_icon 'arrow-right' style { size: 'xs' } %}
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endblock %}
+
+                {% block wf_mega_body %}
+                    <div class="wf-mega-grid">
+                        {% if wfLinks|length > 0 %}
+                            <div class="wf-mega-group wf-mega-group-links">
+                                <div class="wf-mega-links">
+                                    {% for wfItem in wfLinks %}
+                                        {{ block('wf_mega_link') }}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {% for wfGroup in wfGroups %}
+                            {% set wfGroupCat = wfGroup.category %}
+                            <div class="wf-mega-group">
+                                {% if wfGroupCat.type == 'folder' %}
+                                    <div class="wf-mega-group-title">{{ wfGroupCat.translated.name }}</div>
+                                {% else %}
+                                    <a class="wf-mega-group-title" href="{{ wfGroupCat.seoUrl }}" title="{{ wfGroupCat.translated.name }}">{{ wfGroupCat.translated.name }}</a>
+                                {% endif %}
+                                <div class="wf-mega-links">
+                                    {% for wfItem in wfGroup.children %}
+                                        {{ block('wf_mega_link') }}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endblock %}
+            </div>
+
+            {% block wf_mega_teaser %}
+                {% if category.media %}
+                    {% set wfTeaserText = category.translated.description|striptags|trim %}
+                    <a class="wf-mega-teaser"
+                       href="{{ category.seoUrl }}"
+                       {% if category.shouldOpenInNewTab %}target="_blank"{% endif %}
+                       title="{{ name }}">
+                        {% sw_thumbnails 'wf-mega-teaser-image' with {
+                            media: category.media,
+                            sizes: { default: '400px' },
+                            attributes: {
+                                class: 'wf-mega-teaser-img',
+                                alt: (category.media.translated.alt ?: name),
+                                loading: 'lazy'
+                            }
+                        } %}
+                        <span class="wf-mega-teaser-body">
+                            <span class="wf-mega-teaser-title">{{ name }}</span>
+                            {% if wfTeaserText %}
+                                <span class="wf-mega-teaser-text">{{ wfTeaserText|u.truncate(140, '…', false) }}</span>
+                            {% endif %}
+                            <span class="wf-mega-teaser-cta">
+                                {{ 'wfTheme.nav.teaserCta'|trans|sw_sanitize }}
+                                {% sw_icon 'arrow-right' style { size: 'xs' } %}
+                            </span>
+                        </span>
+                    </a>
+                {% endif %}
+            {% endblock %}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block wf_mega_link %}
+    {% set wfCat = wfItem.category %}
+    {% if wfCat.type == 'folder' %}
+        <span class="wf-mega-link">{{ wfCat.translated.name }}</span>
+    {% else %}
+        <a class="wf-mega-link nav-item-{{ wfCat.id }}-link"
+           href="{{ wfCat.seoUrl }}"
+           {% if wfCat.shouldOpenInNewTab %}target="_blank"{% if wfCat.linkType == 'external' %} rel="noopener noreferrer"{% endif %}{% endif %}
+           title="{{ wfCat.translated.name }}">{{ wfCat.translated.name }}</a>
+    {% endif %}
+{% endblock %}

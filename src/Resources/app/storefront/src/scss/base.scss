@@ -5042,3 +5042,26 @@ footer.footer-main {
 		/* } */
 	/* }	 */
 }
+
+
+/* =========================================================================
+ * Warenkorb, Checkout, Bestellabschluss, Widerruf und aufgeklappte Menüs
+ * im Aufbau des Only-Bubbles-Themes, in den W&F-Farben.
+ * Greift nur, wenn <body> die Klasse "wf-design" hat (Theme-Einstellung
+ * "Neues Warenkorb- & Checkout-Design"). Ohne die Klasse bleibt alles wie bisher.
+ * ========================================================================= */
+@import 'wf/tokens';
+@import 'wf/keyframes';
+
+body.wf-design {
+	@import 'wf/components';
+	@import 'wf/register';
+	@import 'wf/checkout';
+	@import 'wf/finish';
+	@import 'wf/cart';
+	@import 'wf/account-menu';
+	@import 'wf/header';
+	@import 'wf/checkout-reset';
+	@import 'wf/forms';
+	@import 'wf/revocation';
+}

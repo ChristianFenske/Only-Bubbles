@@ -1,0 +1,70 @@
+// ===========================================================================
+// Registrierung im Checkout (/checkout/register)
+// ===========================================================================
+
+.wf-checkout .register-card {
+    .register-personal,
+    .register-billing,
+    .register-shipping {
+        border: 0;
+        padding: 0;
+        margin: 0;
+    }
+
+    // Abweichende Lieferadresse: gestrichelter Rahmen
+    .register-shipping {
+        margin-top: 8px;
+        padding: 24px 24px 8px;
+        border: 1.5px dashed $wf-line-input;
+        border-radius: 12px;
+
+        > legend.card-title {
+            float: none;
+            width: auto;
+            padding: 0 8px;
+            margin: 0 0 8px -8px;
+            @include wf-serif-title(20px);
+        }
+    }
+
+    .privacy-notice {
+        margin-top: 32px;
+        padding-top: 0;
+        font-size: 13.5px;
+        color: $wf-muted;
+
+        .privacy-notice-title { display: none; }
+        br { display: none; }
+    }
+
+    .wf-privacy-section .privacy-notice { margin-top: 0; }
+
+    .wf-form-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        flex-wrap: wrap;
+        margin-top: 28px;
+        padding-top: 28px;
+        border-top: 1px solid $wf-line;
+
+        .register-required-info {
+            margin: 0;
+            font-size: 12.5px;
+            color: $wf-muted;
+        }
+    }
+
+    .captcha-wrapper,
+    .basic-captcha { margin-top: 16px; }
+}
+
+@include media-breakpoint-down(lg) {
+    .wf-checkout .register-card .wf-form-footer {
+        flex-direction: column-reverse;
+        align-items: stretch;
+
+        .btn { width: 100%; }
+    }
+}

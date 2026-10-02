@@ -1,0 +1,101 @@
+{% sw_extends '@Storefront/storefront/component/account/register.html.twig' %}
+
+{# Neues Design nur für die Registrierung im Checkout – Konto-/Login-Seite bleibt unverändert #}
+{% set wfIsCheckout = activeRoute starts with 'frontend.checkout' %}
+{% set wfDesign = theme_config('wf-checkout-design') and wfIsCheckout %}
+
+{% block component_account_register_header %}
+    {% if wfDesign %}
+        {% if wfEyebrow is defined and wfEyebrow %}
+            <p class="wf-eyebrow">{{ wfEyebrow }}</p>
+        {% endif %}
+
+        {{ parent() }}
+
+        {% if wfIntro is defined and wfIntro %}
+            <p class="wf-card-intro">{{ wfIntro }}</p>
+        {% endif %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block component_account_register_form %}
+    {% if wfDesign %}
+        <div class="wf-counter-scope">
+            {{ parent() }}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block component_account_register_personal_legend %}
+    {% if wfDesign %}
+        {% sw_include '@WeineFeinkostTheme/storefront/component/wf/section-head.html.twig' with {
+            title: 'wfTheme.register.sectionPersonal'|trans|sw_sanitize
+        } %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block component_account_register_address_billing_header %}
+    {% if wfDesign %}
+        {% sw_include '@WeineFeinkostTheme/storefront/component/wf/section-head.html.twig' with {
+            title: 'wfTheme.register.sectionAddress'|trans|sw_sanitize
+        } %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block component_account_register_address_different_shipping_control %}
+    {% if wfDesign %}
+        <div class="form-check register-different-shipping wf-check-row mb-3">
+            {{ block('component_account_register_address_different_shipping_input') }}
+            {{ block('component_account_register_address_different_shipping_label') }}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block component_account_register_privacy %}
+    {% if wfDesign %}
+        <div class="wf-privacy-section">
+            {% sw_include '@WeineFeinkostTheme/storefront/component/wf/section-head.html.twig' with {
+                title: 'wfTheme.register.sectionPrivacy'|trans|sw_sanitize,
+                tag: 'div'
+            } %}
+            {{ parent() }}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block component_account_register_required_fields %}
+    {% if wfDesign %}
+        {# Pflichtfeld-Hinweis wird in der Button-Zeile ausgegeben #}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block component_account_register_submit %}
+    {% if wfDesign %}
+        <div class="register-submit wf-form-footer">
+            <p class="register-required-info">
+                {{ 'global.default.noteRequiredFields'|trans|sw_sanitize }}
+            </p>
+
+            <button type="submit" class="btn btn-primary btn-lg">
+                {{ 'wfTheme.register.submitCheckout'|trans|sw_sanitize }}
+                {% sw_icon 'arrow-right' style { size: 'xs' } %}
+            </button>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

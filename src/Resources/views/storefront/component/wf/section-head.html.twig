@@ -1,0 +1,8 @@
+{# Nummerierter Abschnitts-Kopf ("01 Konto"). Die Nummer kommt aus einem CSS-Counter
+   (.wf-counter-scope), damit ausgeblendete Abschnitte die Zählung nicht stören.
+   Parameter: title (string), tag (optional, Standard: legend) #}
+{% set wfTag = tag ?? 'legend' %}
+<{{ wfTag }} class="wf-section-head">
+    <span class="wf-section-num" aria-hidden="true"></span>
+    <span class="wf-section-title">{{ title }}</span>
+</{{ wfTag }}>

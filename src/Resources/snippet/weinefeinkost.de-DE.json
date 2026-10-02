@@ -1,0 +1,101 @@
+{
+    "wfTheme": {
+        "account": {
+            "eyebrow": "Mein Konto"
+        },
+        "accountMenu": {
+            "createAccount": "Konto erstellen",
+            "newHere": "Neu hier?"
+        },
+        "cart": {
+            "addByNumber": "Artikel per Artikelnummer hinzufügen",
+            "bottles": "{1} 1 Flasche|]1,Inf[ %count% Flaschen",
+            "breadcrumbHome": "Start",
+            "breadcrumbLabel": "Brotkrumen-Navigation",
+            "clearCart": "Warenkorb leeren",
+            "colProduct": "Produkt",
+            "colTotal": "Summe",
+            "continueShopping": "Weiter einkaufen",
+            "deliveryTime": "Lieferzeit",
+            "emptyCta": "Weine entdecken",
+            "emptyText": "Entdecken Sie unsere Auswahl an Weinen und Feinkost.",
+            "emptyTitle": "Ihr Warenkorb ist leer",
+            "freeShippingMissingBoth": "Noch %bottles% oder %amount% bis zum kostenlosen Versand",
+            "freeShippingReached": "Kostenloser Versand erreicht",
+            "inclVat": "inkl. %amount% MwSt.",
+            "proceed": "Zur Kasse",
+            "shippingCosts": "Versandkosten",
+            "shippingCountry": "Lieferland",
+            "shippingDetails": "Versanddetails",
+            "shippingInfoLink": "Alle Versand- & Zahlungsinfos",
+            "sku": "Art.-Nr."
+        },
+        "checkout": {
+            "addressEqual": "Entspricht der Lieferadresse",
+            "cart": "Warenkorb",
+            "commentLabel": "Möchten Sie uns etwas zu Ihrer Bestellung mitteilen?",
+            "commentPlaceholder": "z. B. Geschenkverpackung, Lieferhinweis …",
+            "eyebrow": "Kasse",
+            "loginHint": "Sie sind bereits Kunde?",
+            "loginLink": "Hier einloggen",
+            "orderTitle": "Ihre Bestellung",
+            "positions": "{1} 1 Position|]1,Inf[ %count% Positionen",
+            "summary": "Zusammenfassung"
+        },
+        "finish": {
+            "continueShopping": "Weiter einkaufen",
+            "copied": "Kopiert",
+            "copy": "Kopieren",
+            "eyebrow": "Bestellung erfolgreich",
+            "infoTitle": "Informationen",
+            "orderNumber": "Bestellnummer",
+            "paymentLabel": "Zahlungsart",
+            "prepaymentText": "Bitte überweisen Sie den Betrag von <strong>%amount%</strong> unter Angabe der Bestellnummer. Die Bankverbindung finden Sie in Ihrer Bestätigungs-E-Mail.",
+            "prepaymentTitle": "Zahlungsart Vorkasse:",
+            "shippingLabel": "Versandart",
+            "text": "Wir haben Ihre Bestellung erhalten und Ihnen eine Bestätigung per E-Mail geschickt. Zeit, die Gläser bereitzustellen.",
+            "timelineEnjoy": "Genießen",
+            "timelineEnjoySub": "2–3 Werktage",
+            "timelineOrdered": "Bestellt",
+            "timelineOrderedSub": "Heute",
+            "timelineProcessing": "In Bearbeitung",
+            "timelineProcessingSub": "Zahlungseingang",
+            "timelineShipped": "Versendet",
+            "timelineShippedSub": "Tracking per E-Mail",
+            "title": "Vielen Dank für Ihre Bestellung!",
+            "toAccount": "Zu meinem Konto"
+        },
+        "general": {
+            "change": "Ändern"
+        },
+        "nav": {
+            "showAll": "Alle anzeigen",
+            "teaserCta": "Zur Auswahl"
+        },
+        "register": {
+            "guestHint": "Bestellungen verfolgen und beim nächsten Mal schneller bestellen.",
+            "sectionAddress": "Ihre Adresse",
+            "sectionPersonal": "Persönliche Informationen",
+            "sectionPrivacy": "Datenschutz",
+            "submitCheckout": "Weiter zu Versand & Zahlung"
+        },
+        "revocation": {
+            "howTitle": "So funktioniert's",
+            "readPolicy": "Widerrufsbelehrung lesen",
+            "step1": "Formular ausfüllen und absenden",
+            "step2": "Eingangsbestätigung per E-Mail erhalten",
+            "step3": "Ware zurücksenden – wir erstatten den Betrag"
+        },
+        "steps": {
+            "address": "Adresse",
+            "confirm": "Prüfen & Bestellen",
+            "done": "erledigt",
+            "label": "Bestellfortschritt",
+            "shippingPayment": "Versand & Zahlung"
+        },
+        "trust": {
+            "freeShipping": "Kostenloser Versand ab 12 Flaschen",
+            "secure": "Sichere, verschlüsselte Übertragung"
+        }
+    }
+}

@@ -1,0 +1,44 @@
+{% sw_extends '@Storefront/storefront/page/checkout/confirm/confirm-address.html.twig' %}
+
+{% set wfDesign = theme_config('wf-checkout-design') %}
+
+{% block page_checkout_confirm_address_shipping_actions_link %}
+    {% if wfDesign %}
+        <a href="{{ path('frontend.account.address.edit.page', {addressId: shippingAddress.id}) }}"
+           title="{{ 'account.overviewChangeShipping'|trans|striptags }}"
+           class="btn wf-btn-outline wf-btn-sm"
+           data-address-manager="true"
+           data-address-manager-options="{{ addressManagerOptions|json_encode }}">
+            {% sw_icon 'paper-pencil' style { size: 'xs' } %}
+            {{ 'wfTheme.general.change'|trans|sw_sanitize }}
+        </a>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_confirm_address_billing_data_equal %}
+    {% if wfDesign %}
+        <p class="wf-address-equal">
+            {% sw_icon 'checkmark' style { size: 'xs' } %}
+            {{ 'wfTheme.checkout.addressEqual'|trans|sw_sanitize }}
+        </p>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_confirm_address_billing_actions_link %}
+    {% if wfDesign %}
+        <a href="{{ path('frontend.account.address.edit.page', {addressId: billingAddress.id}) }}"
+           title="{{ 'account.overviewChangeBilling'|trans|striptags }}"
+           class="btn wf-btn-outline wf-btn-sm"
+           data-address-manager="true"
+           data-address-manager-options="{{ addressManagerOptions|json_encode }}">
+            {% sw_icon 'paper-pencil' style { size: 'xs' } %}
+            {{ 'wfTheme.general.change'|trans|sw_sanitize }}
+        </a>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

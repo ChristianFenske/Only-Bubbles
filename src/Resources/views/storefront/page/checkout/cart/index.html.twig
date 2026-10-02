@@ -1,0 +1,328 @@
+{% sw_extends '@Storefront/storefront/page/checkout/cart/index.html.twig' %}
+
+{% set wfDesign = theme_config('wf-checkout-design') %}
+
+{% block page_checkout %}
+    {% if wfDesign %}
+        <div class="wf-checkout wf-checkout-cart">
+            <nav class="wf-cart-breadcrumb" aria-label="{{ 'wfTheme.cart.breadcrumbLabel'|trans|striptags }}">
+                <a href="{{ path('frontend.home.page') }}">{{ 'wfTheme.cart.breadcrumbHome'|trans|sw_sanitize }}</a>
+                {% sw_icon 'arrow-head-right' style { size: 'xs' } %}
+                <span aria-current="page">{{ 'checkout.cartHeader'|trans|sw_sanitize }}</span>
+            </nav>
+            {{ parent() }}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{# Leerer Warenkorb: helle Fläche statt Info-Alert #}
+{% block page_checkout_container %}
+    {% if wfDesign %}
+        {% if page.cart.lineItems.count is same as(0) %}
+            <div class="wf-cart-head">
+                <h1 class="cart-main-header">{{ 'checkout.cartHeader'|trans|sw_sanitize }}</h1>
+            </div>
+
+            {% set messages = app.flashes %}
+            {% if messages.danger|length > 0 %}
+                <div class="flashbags">
+                    {% sw_include '@Storefront/storefront/utilities/alert.html.twig' with {
+                        type: 'danger',
+                        list: messages.danger,
+                        announceOnLoad: true,
+                        ariaLive: 'assertive'
+                    } %}
+                </div>
+            {% endif %}
+
+            <div class="wf-cart-empty" role="status">
+                <div class="wf-cart-empty-icon" aria-hidden="true">{% sw_icon 'bag' %}</div>
+                <h2>{{ 'wfTheme.cart.emptyTitle'|trans|sw_sanitize }}</h2>
+                <p>{{ 'wfTheme.cart.emptyText'|trans|sw_sanitize }}</p>
+                <a href="{{ path('frontend.home.page') }}" class="btn btn-primary wf-cart-empty-cta">
+                    {{ 'wfTheme.cart.emptyCta'|trans|sw_sanitize }}
+                    {% sw_icon 'arrow-right' style { size: 'xs' } %}
+                </a>
+            </div>
+        {% else %}
+            {{ parent() }}
+        {% endif %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_cart_header %}
+    {% if wfDesign %}
+        <div class="wf-cart-head">
+            <h1 class="cart-main-header">{{ 'checkout.cartHeader'|trans|sw_sanitize }}</h1>
+            <span class="cart-main-header-item-counter">
+                ({{- 'wfTheme.checkout.positions'|trans({'%count%': page.cart.lineItems|length})|sw_sanitize -}})
+            </span>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_cart_product_table %}
+    {% if wfDesign %}
+        {% set showTaxPrice = false %}
+        {% set showSubtotal = true %}
+
+        <div class="card checkout-product-table wf-cart-table">
+            <div class="wf-cart-table-head" aria-hidden="true">
+                <span>{{ 'wfTheme.cart.colProduct'|trans|sw_sanitize }}</span>
+                <span class="text-center">{{ 'checkout.cartHeaderQuantity'|trans|sw_sanitize }}</span>
+                <span class="text-end">{{ 'wfTheme.cart.colTotal'|trans|sw_sanitize }}</span>
+                <span></span>
+            </div>
+
+            <ul class="list-unstyled wf-cart-items">
+                {{ block('page_checkout_cart_table_items') }}
+            </ul>
+
+            <div class="wf-cart-table-foot">
+                <a href="{{ path('frontend.home.page') }}" class="wf-cart-continue">
+                    {% sw_icon 'arrow-left' style { size: 'xs' } %}
+                    {{ 'wfTheme.cart.continueShopping'|trans|sw_sanitize }}
+                </a>
+
+                <form action="{{ path('frontend.checkout.cart.delete') }}" method="post" class="wf-cart-clear">
+                    <input type="hidden" name="redirectTo" value="frontend.checkout.cart.page">
+                    <button type="submit" class="btn btn-link">
+                        {% sw_icon 'trash' style { size: 'xs' } %}
+                        {{ 'wfTheme.cart.clearCart'|trans|sw_sanitize }}
+                    </button>
+                </form>
+            </div>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{# Zwei Karten: Artikelnummer + Versanddetails (Akkordeon) #}
+{% block page_checkout_cart_add_product_and_shipping %}
+    {% if wfDesign %}
+        <div class="wf-cart-extras">
+            <div class="card wf-cart-extra-card cart-add-product-container">
+                <form action="{{ path('frontend.checkout.product.add-by-number') }}" method="post">
+                    <input type="hidden" name="redirectTo" value="frontend.checkout.cart.page">
+                    <label class="form-label" for="addProductInput">
+                        {{ 'wfTheme.cart.addByNumber'|trans|sw_sanitize }}
+                    </label>
+                    <div class="input-group wf-input-join">
+                        <input type="text"
+                               name="number"
+                               class="form-control"
+                               id="addProductInput"
+                               placeholder="{{ 'checkout.addProductPlaceholder'|trans|striptags }}"
+                               required="required">
+                        <button class="btn wf-input-join-btn add-product-button"
+                                type="submit"
+                                id="addProductButton"
+                                aria-label="{{ 'checkout.addProductLabel'|trans|striptags }}">
+                            {% sw_icon 'checkmark' style { size: 'xs' } %}
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card wf-cart-extra-card wf-cart-shipping cart-shipping-costs-container">
+                <button class="wf-cart-shipping-toggle collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseShippingCost"
+                        aria-expanded="false"
+                        aria-controls="collapseShippingCost">
+                    {% sw_icon 'truck' style { size: 'xs' } %}
+                    <span class="wf-cart-shipping-title">{{ 'wfTheme.cart.shippingDetails'|trans|sw_sanitize }}</span>
+                    <span class="wf-cart-shipping-chevron" aria-hidden="true">{% sw_icon 'arrow-head-down' style { size: 'xs' } %}</span>
+                </button>
+
+                <div class="collapse" id="collapseShippingCost">
+                    <form name="precalc"
+                          method="post"
+                          action="{{ path('frontend.checkout.configure') }}"
+                          data-form-auto-submit="true"
+                          class="wf-cart-shipping-body">
+                        {% if not context.customer %}
+                            <div class="wf-cart-shipping-row">
+                                <label for="countryId">{{ 'wfTheme.cart.shippingCountry'|trans|sw_sanitize }}</label>
+                                <select class="form-select" id="countryId" name="countryId">
+                                    {% for country in page.countries %}
+                                        <option value="{{ country.id }}"
+                                            {{ country.id == context.shippingLocation.country.id ? 'selected="selected"' : '' }}>
+                                            {{ country.translated.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% else %}
+                            <div class="wf-cart-shipping-row">
+                                <span>{{ 'wfTheme.cart.shippingCountry'|trans|sw_sanitize }}</span>
+                                <span>{{ context.shippingLocation.country.translated.name }}</span>
+                            </div>
+                        {% endif %}
+
+                        {% if page.shippingMethods|length > 1 %}
+                            <div class="wf-cart-shipping-row">
+                                <label for="shippingMethodId">{{ 'checkout.shippingMethod'|trans|sw_sanitize }}</label>
+                                <select class="form-select" id="shippingMethodId" name="shippingMethodId">
+                                    {% for shipping in page.shippingMethods %}
+                                        <option value="{{ shipping.id }}"
+                                            {% if shipping.id == context.shippingMethod.id %} selected="selected"{% endif %}>
+                                            {{ shipping.translated.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% else %}
+                            <div class="wf-cart-shipping-row">
+                                <span>{{ 'checkout.shippingMethod'|trans|sw_sanitize }}</span>
+                                <span>{{ context.shippingMethod.translated.name }}</span>
+                            </div>
+                        {% endif %}
+
+                        {% if context.shippingMethod.deliveryTime %}
+                            <div class="wf-cart-shipping-row">
+                                <span>{{ 'wfTheme.cart.deliveryTime'|trans|sw_sanitize }}</span>
+                                <span>{{ context.shippingMethod.deliveryTime.translated.name }}</span>
+                            </div>
+                        {% endif %}
+
+                        <div class="wf-cart-shipping-row">
+                            <span>{{ 'wfTheme.cart.shippingCosts'|trans|sw_sanitize }}</span>
+                            <span>{{ page.cart.shippingCosts.totalPrice|currency }}</span>
+                        </div>
+
+                        {% if config('core.basicInformation.shippingPaymentInfoPage') %}
+                            <button type="button"
+                                    class="btn btn-link-inline wf-cart-shipping-link"
+                                    aria-haspopup="dialog"
+                                    data-ajax-modal="true"
+                                    data-url="{{ path('frontend.cms.page', { id: config('core.basicInformation.shippingPaymentInfoPage') }) }}">
+                                {{ 'wfTheme.cart.shippingInfoLink'|trans|sw_sanitize }}
+                            </button>
+                        {% endif %}
+
+                        <input type="hidden" name="redirectTo" value="frontend.checkout.cart.page">
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{# Dunkle Summen-Karte mit Gutschein + "Zur Kasse" #}
+{% block page_checkout_aside_summary %}
+    {% if wfDesign %}
+        <div class="wf-summary-card">
+            {{ parent() }}
+            {{ block('wf_cart_aside_actions') }}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_summary_header %}
+    {% if wfDesign %}
+        <h2 class="checkout-aside-summary-header">{{ 'wfTheme.checkout.summary'|trans|sw_sanitize }}</h2>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block wf_cart_aside_actions %}
+    <div class="checkout-aside-action wf-cart-promotion">
+        {{ block('page_checkout_cart_add_promotion') }}
+    </div>
+    {{ block('page_checkout_cart_action_proceed') }}
+{% endblock %}
+
+{% block page_checkout_cart_add_promotion_label %}
+    {% if wfDesign %}
+        <label class="form-label" for="addPromotionInput">
+            {{ 'checkout.addPromotionLabel'|trans|sw_sanitize }}
+        </label>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_cart_add_promotion_submit %}
+    {% if wfDesign %}
+        <button class="btn wf-input-join-btn checkout-aside-add-promotion-button"
+                type="submit"
+                aria-labelledby="addPromotionInput"
+                id="addPromotion">
+            {% sw_icon 'checkmark' style { size: 'xs' } %}
+        </button>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_cart_action_proceed %}
+    {% if wfDesign %}
+        <div class="checkout-aside-action d-grid">
+            <a href="{{ path('frontend.checkout.confirm.page') }}"
+               class="btn btn-primary btn-lg wf-btn-gold begin-checkout-btn"
+               title="{{ 'checkout.proceedLink'|trans|striptags }}">
+                {{ 'wfTheme.cart.proceed'|trans|sw_sanitize }}
+                {% sw_icon 'arrow-right' style { size: 'xs' } %}
+            </a>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{# Unter der dunklen Karte: Fortschritt kostenloser Versand + Sicherheit #}
+{% block page_checkout_aside_actions %}
+    {% if wfDesign %}
+        {# Kostenloser Versand ab 12 Flaschen ODER ab 100 € Bestellwert (Warenwert brutto) #}
+        {% set wfFreeShippingBottles = 12 %}
+        {% set wfFreeShippingAmount = 100 %}
+        {% set wfBottles = 0 %}
+        {% for lineItem in page.cart.lineItems.filterType('product') %}
+            {% set wfBottles = wfBottles + lineItem.quantity %}
+        {% endfor %}
+        {% set wfAmount = page.cart.price.positionPrice %}
+        {% set wfMissingBottles = max(0, wfFreeShippingBottles - wfBottles) %}
+        {% set wfMissingAmount = max(0, wfFreeShippingAmount - wfAmount) %}
+        {% set wfReached = wfMissingBottles == 0 or wfMissingAmount <= 0 %}
+        {% set wfPct = min(100, max(wfBottles / wfFreeShippingBottles * 100, wfAmount / wfFreeShippingAmount * 100)|round) %}
+
+        <div class="wf-cart-trust">
+            <div class="wf-cart-trust-row">
+                {% sw_icon 'truck' style { size: 'xs' } %}
+                <span>
+                    {% if wfReached %}
+                        {{ 'wfTheme.cart.freeShippingReached'|trans|sw_sanitize }}
+                    {% else %}
+                        {{ 'wfTheme.cart.freeShippingMissingBoth'|trans({
+                            '%bottles%': 'wfTheme.cart.bottles'|trans({'%count%': wfMissingBottles}),
+                            '%amount%': wfMissingAmount|currency
+                        })|sw_sanitize }}
+                    {% endif %}
+                </span>
+            </div>
+            <div class="wf-cart-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ wfPct }}">
+                <span style="width: {{ wfPct }}%"></span>
+            </div>
+            <div class="wf-cart-trust-row">
+                {% sw_icon 'lock-closed' style { size: 'xs' } %}
+                {{ 'wfTheme.trust.secure'|trans|sw_sanitize }}
+            </div>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

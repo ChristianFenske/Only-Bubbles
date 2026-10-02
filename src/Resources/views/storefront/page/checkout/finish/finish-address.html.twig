@@ -1,0 +1,25 @@
+{% sw_extends '@Storefront/storefront/page/checkout/finish/finish-address.html.twig' %}
+
+{% set wfDesign = theme_config('wf-checkout-design') %}
+
+{% block page_checkout_finish_address_shipping_title %}
+    {% if wfDesign %}
+        <div class="card-title">
+            {% sw_icon 'marker' style { size: 'xs' } %}
+            {{ 'checkout.shippingAddressHeader'|trans|sw_sanitize }}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_checkout_finish_address_billing_title %}
+    {% if wfDesign %}
+        <div class="card-title">
+            {% sw_icon 'file' style { size: 'xs' } %}
+            {{ 'checkout.billingAddressHeader'|trans|sw_sanitize }}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
