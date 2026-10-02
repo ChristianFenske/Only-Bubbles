@@ -1,0 +1,23 @@
+{
+    "name": "bitbrew/weine-feinkost-theme",
+    "description": "Theme WeineFeinkostTheme plugin",
+    "authors": [{
+            "name": "Bitbrew"
+        }
+    ],
+    "type": "shopware-platform-plugin",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "WeineFeinkostTheme\\": "src/"
+        }
+    },
+    "extra": {
+        "shopware-plugin-class": "WeineFeinkostTheme\\WeineFeinkostTheme",
+		"plugin-icon": "plugin-icon.png",
+        "label": {
+            "de-DE": "Theme WeineFeinkostTheme plugin",
+            "en-GB": "Theme WeineFeinkostTheme plugin"
+        }
+    }
+}
