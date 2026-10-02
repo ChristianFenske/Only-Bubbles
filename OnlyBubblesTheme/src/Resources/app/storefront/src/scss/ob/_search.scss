@@ -419,3 +419,6 @@
 
     .ob-suggest-foot-all { font-size: 0; gap: 0; }
 }
+
+// --- Suchergebnis-Seite: Hintergrund wie Kategorie-/Produktseiten -------------------------
+.is-ctl-search .content-main { background: $ob-cream; }
