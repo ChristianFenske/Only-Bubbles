@@ -57,4 +57,105 @@
 	{% if wfDesign %}
 		<script defer src="{{ asset('bundles/weinefeinkosttheme/wf-checkout.js') }}"></script>
 	{% endif %}
+
+    {# Produktseite: Flasche in die Sticky-Kaufleiste (Plugin „Muto Sticky Buy Box“) einsetzen,
+       falls das Plugin selbst kein Bild ausgibt. Gestaltung in scss/wf/_sticky-buy.scss #}
+    {% if wfDesign and activeRoute == 'frontend.detail.page' and page.product.cover.media.url is defined and page.product.cover.media.url %}
+        {% set wfStickyMedia = page.product.cover.media %}
+        {% set wfStickyThumb = wfStickyMedia.thumbnails|filter(t => t.width >= 280)|sort((a, b) => a.width <=> b.width)|first %}
+        <script>
+            (function () {
+                var src = {{ (wfStickyThumb ? wfStickyThumb.url : wfStickyMedia.url)|json_encode|raw }};
+                var alt = {{ (page.product.translated.name ?? '')|json_encode|raw }};
+
+                // Weißen Bildhintergrund vom Rand her transparent machen (Etikett bleibt weiß)
+                var cutout = null;
+                function wfCutout(done) {
+                    var source = new Image();
+                    source.onload = function () {
+                        try {
+                            var scale = Math.min(1, 400 / source.naturalHeight);
+                            var w = Math.round(source.naturalWidth * scale);
+                            var h = Math.round(source.naturalHeight * scale);
+                            var canvas = document.createElement('canvas');
+                            canvas.width = w;
+                            canvas.height = h;
+                            var ctx = canvas.getContext('2d');
+                            ctx.drawImage(source, 0, 0, w, h);
+                            var data = ctx.getImageData(0, 0, w, h);
+                            var px = data.data;
+                            var seen = new Uint8Array(w * h);
+                            var stack = [];
+                            var isBg = function (i) {
+                                return px[i * 4 + 3] < 20 || (px[i * 4] > 232 && px[i * 4 + 1] > 232 && px[i * 4 + 2] > 232);
+                            };
+                            for (var x = 0; x < w; x++) { stack.push(x, (h - 1) * w + x); }
+                            for (var y = 0; y < h; y++) { stack.push(y * w, y * w + w - 1); }
+                            while (stack.length) {
+                                var i = stack.pop();
+                                if (seen[i] || !isBg(i)) { continue; }
+                                seen[i] = 1;
+                                px[i * 4 + 3] = 0;
+                                var cx = i % w;
+                                if (cx > 0) { stack.push(i - 1); }
+                                if (cx < w - 1) { stack.push(i + 1); }
+                                if (i >= w) { stack.push(i - w); }
+                                if (i < (h - 1) * w) { stack.push(i + w); }
+                            }
+                            ctx.putImageData(data, 0, 0);
+
+                            // Auf die Flasche zuschneiden (leeren Rand entfernen)
+                            var minX = w, minY = h, maxX = -1, maxY = -1;
+                            for (var j = 0; j < w * h; j++) {
+                                if (px[j * 4 + 3] > 20) {
+                                    var jx = j % w, jy = (j - jx) / w;
+                                    if (jx < minX) { minX = jx; }
+                                    if (jx > maxX) { maxX = jx; }
+                                    if (jy < minY) { minY = jy; }
+                                    if (jy > maxY) { maxY = jy; }
+                                }
+                            }
+                            if (maxX >= minX && maxY >= minY) {
+                                var crop = document.createElement('canvas');
+                                crop.width = maxX - minX + 1;
+                                crop.height = maxY - minY + 1;
+                                crop.getContext('2d').drawImage(canvas, minX, minY, crop.width, crop.height, 0, 0, crop.width, crop.height);
+                                canvas = crop;
+                            }
+                            cutout = canvas.toDataURL('image/png');
+                        } catch (e) {
+                            cutout = src; // Bild von fremder Domain: Original verwenden
+                        }
+                        done();
+                    };
+                    source.onerror = function () { cutout = src; done(); };
+                    source.src = src;
+                }
+
+                function wfStickyBottle() {
+                    var left = document.querySelector('.muto-sticky-buy-box__left');
+                    if (!cutout || !left || left.querySelector('.muto-sticky-buy-box__image')) {
+                        return;
+                    }
+                    var wrap = document.createElement('div');
+                    wrap.className = 'muto-sticky-buy-box__image wf-sticky-bottle';
+                    var img = document.createElement('img');
+                    img.src = cutout;
+                    img.alt = alt;
+                    wrap.appendChild(img);
+                    left.insertBefore(wrap, left.firstChild);
+                }
+
+                wfCutout(wfStickyBottle);
+
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', wfStickyBottle);
+                } else {
+                    wfStickyBottle();
+                }
+                // Plugin kann die Leiste neu aufbauen (z. B. Variantenwechsel)
+                new MutationObserver(wfStickyBottle).observe(document.body, { childList: true, subtree: true });
+            })();
+        </script>
+    {% endif %}
 {% endblock %}

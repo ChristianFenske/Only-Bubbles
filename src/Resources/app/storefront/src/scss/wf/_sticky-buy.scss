@@ -1,0 +1,148 @@
+// ===========================================================================
+// Produktseite: Sticky-Kaufleiste (Plugin „Muto Sticky Buy Box“) im Only-Bubbles-Aufbau, W&F-Farben
+// Flasche ragt oben aus der Leiste heraus (Produktbild im Plugin aktivieren).
+// ===========================================================================
+
+.muto-sticky-buy-box {
+    --muto-sticky-text-color: #{$wf-ink};
+    --muto-sticky-price-text-color: #{$wf-ink};
+    --muto-sticky-bg-color: #fff;
+    --muto-sticky-button-bg: #{$wf-ink};
+    --muto-sticky-button-bg-hover: #{$wf-gold-600};
+    --muto-sticky-button-text: #{$wf-cream};
+    --muto-sticky-button-text-hover: #fff;
+    font-family: $wf-font-sans;
+}
+
+.muto-sticky-buy-box .muto-sticky-buy-box__container {
+    overflow: visible;
+    min-height: 84px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    border: 1px solid $wf-line;
+    background-color: rgba(255, 255, 255, .96) !important;
+    box-shadow: 0 -10px 34px rgba(33, 33, 33, .10);
+}
+
+.muto-sticky-buy-box--bottom .muto-sticky-buy-box__container { border-bottom: 0; }
+
+// --- Flasche ------------------------------------------------------------------
+// Flasche ragt über die Leiste (weißer Hintergrund wird per Skript in base.html.twig entfernt)
+.muto-sticky-buy-box .muto-sticky-buy-box__image {
+    position: relative;
+    align-self: center;
+    width: 64px;
+    height: 56px;
+
+    img {
+        position: absolute;
+        z-index: 1;
+        bottom: -8px;
+        left: 50%;
+        width: auto;
+        max-width: none;
+        height: 140px;
+        object-fit: contain;
+        border-radius: 0;
+        transform: translateX(-50%);
+        filter: drop-shadow(0 6px 8px rgba(33, 33, 33, .22));
+    }
+}
+
+// --- Name + Preis ---------------------------------------------------------------
+.muto-sticky-buy-box .muto-sticky-buy-box__title {
+    font-family: $wf-font-serif;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.15;
+    color: $wf-ink;
+}
+
+.muto-sticky-buy-box .muto-sticky-buy-box__price {
+    margin-top: 4px;
+    font-size: 17px;
+    font-weight: 500;
+    color: $wf-gold-700;
+}
+
+.muto-sticky-buy-box .muto-sticky-buy-box__variants-display { color: $wf-muted; }
+
+// --- Menge als Pill ---------------------------------------------------------------
+.muto-sticky-buy-box .muto-sticky-buy-box__quantity .quantity-selector-group {
+    height: 48px;
+    overflow: hidden;
+    border: 1px solid $wf-line-input !important;
+    border-radius: $wf-radius-pill;
+    background: #fff;
+
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+
+    .btn-outline-light.btn-plus,
+    .btn-outline-light.btn-minus {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        padding: 0;
+        line-height: 1;
+
+        .icon { display: flex; align-items: center; }
+        .icon > svg { top: 0; }
+    }
+
+    .btn-outline-light.btn-plus,
+    .btn-outline-light.btn-minus,
+    .btn-outline-light.btn-plus:hover,
+    .btn-outline-light.btn-minus:hover,
+    .btn-outline-light.btn-plus:focus,
+    .btn-outline-light.btn-minus:focus {
+        width: 42px;
+        border: 0 !important;
+        background: transparent;
+        color: $wf-ink;
+    }
+
+    .btn-outline-light.btn-plus:hover,
+    .btn-outline-light.btn-minus:hover { background: $wf-sand; }
+
+    .quantity-selector-group-input {
+        height: 100%;
+        padding: 0;
+        line-height: 46px;
+        text-align: center;
+        width: 42px;
+        border: 0 !important;
+        font-size: 16px;
+        font-weight: 500;
+        box-shadow: none;
+    }
+
+    .input-group-text {
+        border: 0 !important;
+        background: transparent;
+        font-size: 13px;
+        color: $wf-muted;
+    }
+}
+
+// --- Button ---------------------------------------------------------------------
+.muto-sticky-buy-box .muto-sticky-buy-box__button.btn.btn-buy {
+    min-height: 48px;
+    padding: 0 30px;
+    border: 0;
+    border-radius: $wf-radius-pill;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: .01em;
+    transition: background-color .2s ease;
+}
+
+.muto-sticky-buy-box .muto-sticky-buy-box__variants-trigger { border-radius: $wf-radius-pill; border-color: $wf-line-input; }
+
+@include media-breakpoint-down(md) {
+    .muto-sticky-buy-box .muto-sticky-buy-box__title { font-size: 18px; }
+
+    .muto-sticky-buy-box .muto-sticky-buy-box__button.btn.btn-buy { padding: 0 18px; }
+}
