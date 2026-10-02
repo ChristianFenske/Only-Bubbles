@@ -1,10 +1,10 @@
 // ===========================================================================
-// Hover-Zustände shopweit kräftiger: Flächen/Buttons voll Gold mit weißer Schrift,
+// Hover-Zustände shopweit: Flächen/Buttons dezentes Hellgold mit dunkelgoldener Schrift,
 // reine Textlinks in Gold. Steht zuletzt und überschreibt die Hover-Regeln der Partials.
 // ===========================================================================
 
-$ob-hover-bg: $ob-gold-600;
-$ob-hover-fg: #fff;
+$ob-hover-bg: #ecdcba;
+$ob-hover-fg: #6b5226;
 
 @mixin ob-hover-fill {
     border-color: $ob-hover-bg !important;
@@ -36,18 +36,6 @@ $ob-hover-fg: #fff;
 .jga-revocation-footer-button .btn {
     &:hover,
     &:focus-visible { @include ob-hover-fill; }
-}
-
-// Gold-Buttons: Hover etwas dunkler, damit man ihn sieht
-.btn.btn-primary.ob-btn-gold,
-.ob-copy-btn,
-.ob-checkout-cart .ob-summary-card .ob-cart-promotion .btn.ob-input-join-btn,
-.jga-revocation-footer-button .btn {
-    &:hover,
-    &:focus-visible {
-        border-color: $ob-gold-700 !important;
-        background: $ob-gold-700 !important;
-    }
 }
 
 .ob-input-join .btn.ob-input-join-btn:hover { opacity: 1; }
