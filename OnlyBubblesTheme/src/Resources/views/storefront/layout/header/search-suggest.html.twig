@@ -36,7 +36,7 @@
             {% endif %}
         {% endfor %}
     {% endfor %}
-    {% if obWord == '' %}{% set obWord = obTerm %}{% endif %}
+    {% if obWord == '' %}{% set obWord = obTerm|capitalize %}{% endif %}
 
     {% set obSuggestions = [] %}
     {% for k in obKeywords %}

@@ -108,6 +108,18 @@ class SearchSuggestSubscriber implements EventSubscriberInterface
 
             usort($candidates, static fn (array $a, array $b): int => $b['count'] <=> $a['count']);
 
+            // Gleichnamige Kategorien (z. B. „Champagne“ in mehreren Ästen) nur einmal zeigen
+            $seen = [];
+            $candidates = array_values(array_filter($candidates, static function (array $c) use (&$seen): bool {
+                $key = mb_strtolower($c['name']);
+                if (isset($seen[$key])) {
+                    return false;
+                }
+                $seen[$key] = true;
+
+                return true;
+            }));
+
             $list = array_map(
                 static fn (array $c): array => ['id' => $c['id'], 'name' => $c['name'], 'count' => $c['count']],
                 \array_slice($candidates, 0, self::LIMIT)
