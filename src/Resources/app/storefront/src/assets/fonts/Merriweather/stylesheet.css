@@ -1,0 +1,252 @@
+@font-face {
+    font-family: 'Merriweather 24pt';
+    src: url('Merriweather24pt-Bold.woff2') format('woff2'),
+        url('Merriweather24pt-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 24pt';
+    src: url('Merriweather24pt-Black.woff2') format('woff2'),
+        url('Merriweather24pt-Black.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 24pt';
+    src: url('Merriweather24pt-BoldItalic.woff2') format('woff2'),
+        url('Merriweather24pt-BoldItalic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 24pt';
+    src: url('Merriweather24pt-BlackItalic.woff2') format('woff2'),
+        url('Merriweather24pt-BlackItalic.woff') format('woff');
+    font-weight: 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 24pt';
+    src: url('Merriweather24pt-MediumItalic.woff2') format('woff2'),
+        url('Merriweather24pt-MediumItalic.woff') format('woff');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 24pt';
+    src: url('Merriweather24pt-LightItalic.woff2') format('woff2'),
+        url('Merriweather24pt-LightItalic.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 24pt';
+    src: url('Merriweather24pt-SemiBoldItalic.woff2') format('woff2'),
+        url('Merriweather24pt-SemiBoldItalic.woff') format('woff');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 36pt';
+    src: url('Merriweather36pt-ExtraBoldItalic.woff2') format('woff2'),
+        url('Merriweather36pt-ExtraBoldItalic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 36pt';
+    src: url('Merriweather36pt-Bold.woff2') format('woff2'),
+        url('Merriweather36pt-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 36pt';
+    src: url('Merriweather36pt-Italic.woff2') format('woff2'),
+        url('Merriweather36pt-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 36pt';
+    src: url('Merriweather36pt-SemiBold.woff2') format('woff2'),
+        url('Merriweather36pt-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 36pt';
+    src: url('Merriweather36pt-LightItalic.woff2') format('woff2'),
+        url('Merriweather36pt-LightItalic.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 36pt';
+    src: url('Merriweather36pt-Medium.woff2') format('woff2'),
+        url('Merriweather36pt-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 36pt';
+    src: url('Merriweather36pt-SemiBoldItalic.woff2') format('woff2'),
+        url('Merriweather36pt-SemiBoldItalic.woff') format('woff');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 24pt';
+    src: url('Merriweather24pt-ExtraBold.woff2') format('woff2'),
+        url('Merriweather24pt-ExtraBold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 24pt';
+    src: url('Merriweather24pt-Italic.woff2') format('woff2'),
+        url('Merriweather24pt-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 24pt';
+    src: url('Merriweather24pt-Medium.woff2') format('woff2'),
+        url('Merriweather24pt-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 24pt';
+    src: url('Merriweather24pt-Light.woff2') format('woff2'),
+        url('Merriweather24pt-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 24pt';
+    src: url('Merriweather24pt-ExtraBoldItalic.woff2') format('woff2'),
+        url('Merriweather24pt-ExtraBoldItalic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 36pt';
+    src: url('Merriweather36pt-BoldItalic.woff2') format('woff2'),
+        url('Merriweather36pt-BoldItalic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 24pt';
+    src: url('Merriweather24pt-SemiBold.woff2') format('woff2'),
+        url('Merriweather24pt-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 36pt';
+    src: url('Merriweather36pt-Black.woff2') format('woff2'),
+        url('Merriweather36pt-Black.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 24pt';
+    src: url('Merriweather24pt-Regular.woff2') format('woff2'),
+        url('Merriweather24pt-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 36pt';
+    src: url('Merriweather36pt-BlackItalic.woff2') format('woff2'),
+        url('Merriweather36pt-BlackItalic.woff') format('woff');
+    font-weight: 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 36pt';
+    src: url('Merriweather36pt-MediumItalic.woff2') format('woff2'),
+        url('Merriweather36pt-MediumItalic.woff') format('woff');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 36pt';
+    src: url('Merriweather36pt-Light.woff2') format('woff2'),
+        url('Merriweather36pt-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 36pt';
+    src: url('Merriweather36pt-ExtraBold.woff2') format('woff2'),
+        url('Merriweather36pt-ExtraBold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Merriweather 36pt';
+    src: url('Merriweather36pt-Regular.woff2') format('woff2'),
+        url('Merriweather36pt-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+

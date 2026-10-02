@@ -1,0 +1,119 @@
+{% sw_extends '@Storefront/storefront/component/buy-widget/buy-widget.html.twig' %}
+
+{% set showPrice = true %}
+{% if product.customFields.show_price_after_login_checkbox and not context.customer %}
+	{% set showPrice = false %}
+{% endif %}
+
+{% block buy_widget_ordernumber_container %}
+{% endblock %}
+
+{% block buy_widget_buy_container %}
+	<div class="weinefeinkost-product-infos">
+		{% set productBadges = {
+			'bio': product.translated.customFields.migration_SW5SW6WeineFeinkost_product_nimbits_extrabadge_color1 ?? null,
+			'vegan': product.translated.customFields.migration_SW5SW6WeineFeinkost_product_nimbits_extrabadge_text2 ?? null
+		} %}
+		
+		{% if productBadges|length > 0 %}
+			<div class="product-info-badges">
+				{% for key, value in productBadges %}
+					{% if value %}
+						<span class="attribute-icon {{ key }}-badge"><span class="badge-icon"></span>{{ key }}</span>
+					{% endif %}
+				{% endfor %}
+			</div>
+		{% endif %}
+		
+		{% if product.manufacturer %}
+			<div class="manufacturer-name">{{ product.manufacturer.translated.name }}</div>
+		{% endif %}
+		<div class="product-name-sku">
+			<h1 class="product-detail-name" itemprop="name">
+				{{ product.translated.name|replace({ (product.manufacturer.translated.name): '' })|trim }}
+			</h1>
+			<div class="product-number">
+				{% block buy_widget_ordernumber %}
+					{{ parent() }}
+				{% endblock %}			
+			</div>
+		</div>
+		
+		<div class="product-infos-col">
+			<div class="product-infos-col-left col">
+				{% sw_include '@Storefront/storefront/component/product/product-attributes.html.twig' with {
+					product: product,
+					isListingCard: false
+				} only %}
+			</div>
+			<div class="product-infos-col-right col-4 d-none">
+			</div>
+		</div>
+	</div>
+
+	<div itemprop="offers"
+		 itemscope
+		 itemtype="{% if product.calculatedPrices|length > 1 %}https://schema.org/AggregateOffer{% else %}https://schema.org/Offer{% endif %}">
+
+		{% block buy_widget_configurator_include %}
+			{{ parent() }}
+		{% endblock %}
+		
+		<div class="buy-widget-columns">
+			<div class="buy-widget-column-left col-8">
+				{% block buy_widget_data %}
+					{% block buy_widget_data_rich_snippet_url %}
+						{{ parent() }}
+					{% endblock %}
+
+					{% block buy_widget_data_rich_snippet_price_range %}
+						{{ parent() }}
+					{% endblock %}
+
+					{% block buy_widget_data_rich_snippet_price_currency %}
+						{{ parent() }}
+					{% endblock %}
+					
+					{% block buy_widget_price %}
+						{% if showPrice %}
+							{{ parent() }}
+						{% else %}
+							<div class="show-price-after-login-text">
+								{{ 'detail.showPriceAfterLoginText'|trans }}
+							</div>
+						{% endif %}
+					{% endblock %}
+
+					{% block buy_widget_tax %}
+						{% if showPrice %}
+							<div class="product-price-unit">
+								{% sw_include '@Storefront/storefront/component/product/price-unit-line.html.twig' with {
+									referencePrice: product.calculatedPrice.referencePrice,
+									shortForm: false
+								} %}
+							</div>
+							{{ parent() }}
+						{% endif %}
+					{% endblock %}
+
+					{% block buy_widget_reviews %}
+					{% endblock %}
+				{% endblock %}
+			</div>
+			<div class="buy-widget-column-right col-4">
+				{% block buy_widget_buy_form %}
+					{% if showPrice %}
+						{% if product.active %}
+							<div class="product-detail-form-container">
+								{% sw_include '@Storefront/storefront/component/buy-widget/buy-widget-form.html.twig' %}
+							</div>
+							{% block buy_widget_delivery_informations %}
+								{{ parent() }}
+							{% endblock %}
+						{% endif %}
+					{% endif %}
+				{% endblock %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

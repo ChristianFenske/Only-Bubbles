@@ -1,0 +1,141 @@
+{% sw_extends '@Storefront/storefront/page/content/detail.html.twig' %}
+
+{% block page_content_sections_inner %}
+    <div class="cms-sections">
+        {% for section in cmsPage.sections %}
+            {% set sectionBgColor = section.backgroundColor %}
+            {% set sectionBgImg = section.backgroundMedia|sw_encode_media_url %}
+            {% set sectionBgImgMode = section.backgroundMediaMode %}
+
+            {% set sectionClasses = [section.cssClass, 'pos-' ~ section.position, 'cms-section-' ~ section.type] %}
+
+            {% if sectionBgImg %}
+                {% set sectionClasses = ['bg-image']|merge(sectionClasses) %}
+            {% endif %}
+
+            {% if sectionBgColor %}
+                {% set sectionClasses = ['bg-color']|merge(sectionClasses) %}
+            {% endif %}
+
+            {% if section.visibility is null %}
+                {% set visibility = {
+                    mobile: true,
+                    tablet: true,
+                    desktop: true
+                } %}
+            {% else %}
+                {% set visibility = section.visibility %}
+            {% endif %}
+
+            {% if not visibility.mobile %}
+                {% set sectionClasses = ['hidden-mobile']|merge(sectionClasses) %}
+            {% endif %}
+            {% if not visibility.tablet %}
+                {% set sectionClasses = ['hidden-tablet']|merge(sectionClasses) %}
+            {% endif %}
+            {% if not visibility.desktop %}
+                {% set sectionClasses = ['hidden-desktop']|merge(sectionClasses) %}
+            {% endif %}
+
+            {% block page_content_section %}
+                <div class="cms-section {{ sectionClasses|join(' ') }}"
+                     style="{% if sectionBgColor %}background-color: {{ sectionBgColor }};{% endif %}{% if sectionBgImg %}background-image: url({{ sectionBgImg }});background-size: {{ section.backgroundMediaMode }};{% endif %}">
+
+                    {% sw_include '@Storefront/storefront/section/cms-section-' ~ section.type ~ '.html.twig' %}
+                </div>
+            {% endblock %}
+        {% endfor %}
+
+		{% if page.product is defined and page.product %}
+			{% set product = page.product %}
+			{% set feinkostCat = false %}
+
+			{% if product.seoCategory and 'Feinkost' in product.seoCategory.translated.breadcrumb %}
+				{% set feinkostCat = true %}
+			{% endif %}
+			
+				
+			{% set groupedProperties = {} %}
+
+			{% for property in product.properties.elements %}
+				{% set groupName = property.group.translated.name %}
+
+				{% set current = groupedProperties[groupName]|default([]) %}
+
+				{% set groupedProperties = groupedProperties|merge({
+					(groupName): current|merge([property.translated.name])
+				}) %}
+			{% endfor %}
+
+			<div class="cms-sections wf-extra-sections">
+				<div class="description-links{% if feinkostCat %} feinkost-category{% endif %}">
+					<a class="btn btn-product" href="#product-section" title="{% if feinkostCat %}{{ 'detail.zumProduktLink'|trans }}{% else %}{{ 'detail.zumWeinLink'|trans }}{% endif %}">
+						{% if feinkostCat %}
+							{{ 'detail.zumProduktLink'|trans }}
+						{% else %}
+							{{ 'detail.zumWeinLink'|trans }}
+						{% endif %}
+					</a>
+					
+					<a class="btn btn-manufacturer" href="#manufacturer-section" title="{% if feinkostCat %}{{ 'detail.zumHerstellerLink'|trans }}{% else %}{{ 'detail.zumWinzerLink'|trans }}{% endif %}">
+						{% if feinkostCat %}
+							{{ 'detail.zumHerstellerLink'|trans }}
+						{% else %}
+							{{ 'detail.zumWinzerLink'|trans }}
+						{% endif %}
+					</a>
+					
+					<a class="btn btn-steckbrief" href="#steckbrief-section" title="{{ 'detail.foodInformationLink'|trans }}">{{ 'detail.foodInformationLink'|trans }}</a>
+					
+					{% if not feinkostCat %}
+						<a class="btn btn-rebsorten" href="#rebsorte-section" title="{{ 'detail.zurRebsorteLink'|trans }}">{{ 'detail.zurRebsorteLink'|trans }}</a>
+					{% endif %}
+				</div>
+				
+				{% if product.translated.description %}
+					<div class="section-description wf-section" id="product-section">
+						<div class="cms-section">
+							{% sw_include '@Storefront/storefront/page/content/sections/product-description.html.twig' with {
+								feinkostCat: feinkostCat,
+								product: product
+							} only %}
+						</div>
+					</div>
+				{% endif %}
+
+				{% if product.manufacturer %}
+					<div class="section-manufacturer wf-section" id="manufacturer-section">
+						<div class="cms-section">
+							{% sw_include '@Storefront/storefront/page/content/sections/product-manufacturer.html.twig' with {
+								feinkostCat: feinkostCat,
+								product: product
+							} only %}
+						</div>
+					</div>
+				{% endif %}
+
+				<div class="section-steckbrief wf-section" id="steckbrief-section">
+					<div class="cms-section">
+						{% sw_include '@Storefront/storefront/page/content/sections/product-steckbrief.html.twig' with {
+							groupedProperties: groupedProperties,
+							feinkostCat: feinkostCat,
+							product: product
+						} only %}
+					</div>
+				</div>
+
+				{% if not feinkostCat %}
+					<div class="section-rebsorte wf-section" id="rebsorte-section">
+						<div class="cms-section">
+							{% sw_include '@Storefront/storefront/page/content/sections/product-rebsorte.html.twig' with {
+								groupedProperties: groupedProperties,
+								product: product,
+								page: page
+							} only %}
+						</div>
+					</div>
+				{% endif %}
+			</div>
+		{% endif %}
+    </div>
+{% endblock %}

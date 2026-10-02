@@ -1,0 +1,41 @@
+{% sw_extends '@Storefront/storefront/layout/header/header.html.twig' %}
+
+{% block layout_header_actions %}
+	<div class="col-12 order-1 col-sm-auto order-sm-2 header-actions-col">
+		<div class="row g-0">
+			{% block layout_header_navigation_toggle %}
+				{{ parent() }}
+			{% endblock %}
+
+			{% block layout_header_search_toggle %}
+				{{ parent() }}
+			{% endblock %}
+
+			{% block layout_header_actions_account %}
+				{{ parent() }}
+			{% endblock %}
+
+			{% if config('core.cart.wishlistEnabled') %}
+				{% block layout_header_actions_wishlist %}
+					<div class="col-auto">
+						<div class="header-wishlist">
+							<a class="btn header-wishlist-btn header-actions-btn"
+							   href="{{ path('frontend.wishlist.page') }}"
+							   title="{{ 'header.wishlist'|trans|striptags }}"
+							   aria-labelledby="wishlist-basket-live-area"
+							>
+								{% sw_include '@Storefront/storefront/layout/header/actions/wishlist-widget.html.twig' %}
+								
+								<span class="wishlist-menu-title header-btn-title">{{ 'header.wishlist'|trans|striptags }}</span>
+							</a>
+						</div>
+					</div>
+				{% endblock %}
+			{% endif %}
+
+			{% block layout_header_actions_cart %}
+				{{ parent() }}
+			{% endblock %}
+		</div>
+	</div>
+{% endblock %}

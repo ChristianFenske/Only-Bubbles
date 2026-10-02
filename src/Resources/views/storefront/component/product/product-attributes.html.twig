@@ -1,0 +1,184 @@
+<div class="product-attribute-box">
+    {% set isListingCard = isListingCard|default(false) %}
+    {% set hasBio = false %}
+    {% set hasVegan = false %}
+    {% set inhaltsangaben_content = "" %}
+
+    {% set attributeRows = {
+        weintype: {},
+        year: {},
+        location: {},
+        art: {},
+        alkoholgehalt: {}
+    } %}
+	
+	{% set wf_customfiedls = product.translated.customFields %}
+	{% if  wf_customfiedls.migration_SW5SW6WeineFeinkost_product_attr9 %}
+		{% set inhaltsangaben_content = wf_customfiedls.migration_SW5SW6WeineFeinkost_product_attr9 %}
+	{% endif %}
+	{% if  wf_customfiedls.migration_SW5SW6WeineFeinkost_product_nimbits_extrabadge_color1 %}
+		{% set hasBio = true %}
+	{% endif %}
+	{% if  wf_customfiedls.migration_SW5SW6WeineFeinkost_product_nimbits_extrabadge_text2 %}
+		{% set hasVegan = true %}
+	{% endif %}
+
+    {% for group in product.sortedProperties %}
+        {% set groupName = group.translated.name %}
+
+        {% for option in group.options %}
+            {% set value = option.translated.name %}
+
+            {% if groupName == 'Rebsorten' %}
+                {% set current = attributeRows.weintype.Rebsorten|default([]) %}
+                {% set attributeRows = attributeRows|merge({
+                    weintype: attributeRows.weintype|merge({
+                        Rebsorten: current|merge([value])
+                    })
+                }) %}
+            {% endif %}
+
+            {% if groupName == 'Ausbau' %}
+                {% set attributeRows = attributeRows|merge({
+                    weintype: attributeRows.weintype|merge({ Ausbau: value })
+                }) %}
+            {% endif %}
+
+            {% if groupName == 'Jahr' %}
+                {% set attributeRows = attributeRows|merge({
+                    year: attributeRows.year|merge({ Jahr: value })
+                }) %}
+            {% endif %}
+
+            {% if groupName == 'Region' %}
+                {% set attributeRows = attributeRows|merge({
+                    location: attributeRows.location|merge({ Region: value })
+                }) %}
+            {% endif %}
+
+            {% if groupName == 'Land' %}
+                {% set attributeRows = attributeRows|merge({
+                    location: attributeRows.location|merge({ Land: value })
+                }) %}
+            {% endif %}
+
+            {% if groupName == 'Art' %}
+                {% set attributeRows = attributeRows|merge({
+                    art: attributeRows.art|merge({ Art: value })
+                }) %}
+            {% endif %}
+
+            {% if groupName == 'Alkoholgehalt' %}
+                {% set attributeRows = attributeRows|merge({
+                    alkoholgehalt: attributeRows.alkoholgehalt|merge({ Alkoholgehalt: value })
+                }) %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+
+    {% if isListingCard %}
+        {% set rowsToRender = [
+            { icon: 'grape-icon',    key: 'weintype',      labels: ['Rebsorten', 'Ausbau'] },
+            { icon: 'calendar-icon', key: 'year',          labels: ['Jahr'] },
+            { icon: 'location-icon', key: 'location',      labels: ['Region', 'Land'] }
+        ] %}
+    {% else %}
+        {% set rowsToRender = [
+            { icon: 'grape-icon',    key: 'weintype',      labels: ['Rebsorten', 'Ausbau'] },
+            { icon: 'calendar-icon', key: 'year',          labels: ['Jahr'] },
+            { icon: 'location-icon', key: 'location',      labels: ['Region', 'Land'] },
+            { icon: '',              key: 'art',           labels: ['Art'] },
+            { icon: '',              key: 'alkoholgehalt', labels: ['Alkoholgehalt'] }
+        ] %}
+    {% endif %}
+
+    {% for row in rowsToRender %}
+        {% set data = attributeRows[row.key] ?? {} %}
+        {% set hasAny = false %}
+
+        {% for label in row.labels %}
+            {% if data[label] is defined and data[label] is not empty %}
+                {% set hasAny = true %}
+            {% endif %}
+        {% endfor %}
+
+        {% if hasAny %}
+            <div class="attribute-row row-{{ row.key }}">
+                {% if row.icon %}
+                    <i class="attribute-icon {{ row.icon }}"></i>
+                {% endif %}
+                {% if not isListingCard %}
+                    <span class="attribute-label">{{ row.labels[0] }} </span>
+                {% endif %}
+
+				{% if row.key == 'weintype' %}
+					{% set rebsorten = data.Rebsorten|default([]) %}
+					<span class="winetype-attributes-group{% if data.Ausbau is defined and data.Ausbau is not empty %} with-comma{% endif %}">
+						{% if rebsorten is not empty %}
+							{% if rebsorten|length > 1 %}
+								<span class="attribute-name grape-type">{{ 'detail.cuvee'|trans }}</span>
+							{% else %}
+								<span class="attribute-name grape-type">{{ rebsorten|first|trim }}</span>
+							{% endif %}
+						{% endif %}
+
+						{% if data.Ausbau is defined and data.Ausbau is not empty %}
+							<span class="attribute-name">{{- data.Ausbau|trim -}}</span>
+						{% endif %}
+					</span>
+				{% else %}
+                    {% for label in row.labels %}
+                        {% if data[label] is defined and data[label] is not empty %}
+                            {% if label != 'Land' %}
+                                <span class="attribute-name">{{- (data[label] is iterable ? data[label]|join(', ') : data[label]|trim) -}}</span>
+                            {% else %}
+                                <span class="country-icon {{ (data[label] ?? '')|lower|replace({'ö':'oe','ü':'ue','ä':'ae','ß':'ss'}) }}-flag" title="{{ (data[label] ?? '') }}"></span>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+					{% if row.key == 'alkoholgehalt' %}<span>{{ 'detail.alkoholVol'|trans }}</span>{% endif %}
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    {% if isListingCard %}
+        <div class="attribute-row bio-info-row">
+            {% if hasBio %}
+                <i class="attribute-icon bio-badge" title="{{ 'listing.bioBadgeTooltip'|trans }}"></i>
+            {% endif %}
+            {% if hasVegan %}
+                <i class="attribute-icon vegan-badge" title="{{ 'listing.veganBadgeTooltip'|trans }}"></i>
+            {% endif %}
+
+			<a href="{{ seoUrl('frontend.detail.page', routeArguments|default({ productId: product.id })) }}#steckbrief-section"
+			   class="attribute-icon info-icon icon-info"
+			   title="{{ 'listing.infoTooltip'|trans }}">
+			</a>
+        </div>
+		<div class="attribute-row product-box-stock-status d-none" style="display: none;">
+			{% if product.available %}
+				<span class="stock-available">
+					{{ 'listing.stock.available'|trans }}
+				</span>
+			{% else %}
+				<span class="stock-unavailable">
+					{{ 'listing.stock.notAvailable'|trans }}
+				</span>
+			{% endif %}
+		</div>
+    {% else %}
+		{% if product.purchaseUnit %}
+			<div class="attribute-row inhalt-row">
+				<span class="attribute-label">{{ 'detail.inhaltLabel'|trans }} </span>
+				{# <span class="attribute-value">{{ product.purchaseUnit|number_format(2, ',', '') }} {{ product.unit.name }}</span> #}
+				<span class="attribute-value">
+					{% sw_include '@Storefront/storefront/component/product/price-unit-line.html.twig' with {
+						referencePrice: product.calculatedPrice.referencePrice,
+						shortForm: false
+					} %}
+				</span>
+			</div>
+		{% endif %}
+    {% endif %}
+</div>

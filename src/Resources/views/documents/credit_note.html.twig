@@ -1,0 +1,26 @@
+{% sw_extends '@Framework/documents/credit_note.html.twig' %}
+
+{% block document_payment_shipping_additional %}
+    {% set paymentMethod = order.transactions.last.paymentMethod %}
+    {% set billingCountry = order.billingAddress.country %}
+    {% set vatIds = order.orderCustomer.vatIds %}
+
+    {% if billingCountry.iso != 'DE' and vatIds is not empty %}
+        <p style="font-size:9px; color:#333; margin-top:8px;">
+            {{ 'document.paymentShippingInfo.additionalInfoSteuerfreieLieferung'|trans|sw_sanitize(null, true) }}
+        </p>
+    {% endif %}
+	
+	{% if paymentMethod.translated.name == 'SEPA Lastschrift' %}
+		{{ 'document.paymentShippingInfo.additionalInfoLastschriftInfo'|trans|sw_sanitize(null, true) }}<br>
+	{% elseif paymentMethod.translated.name == 'Rechnung' %}
+		{{ 'document.paymentShippingInfo.additionalInfoRechnungInfo'|trans|sw_sanitize(null, true) }}<br>
+		{{ 'document.paymentShippingInfo.additionalInfo'|trans|sw_sanitize(null, true) }}<br>
+	{% elseif paymentMethod.translated.name == 'PayPal' %}
+		{{ 'document.paymentShippingInfo.additionalInfoPaypalText'|trans|sw_sanitize(null, true) }}<br>
+	{% endif %}	
+	
+    {{ 'document.paymentShippingInfo.additionalInfoDateNote'|trans|sw_sanitize(null, true) }}<br><br>
+	{{ 'document.paymentShippingInfo.additionalInfoContorllNote'|trans|raw }}<br><br>
+	{{ 'document.paymentShippingInfo.additionalInfoThanksText'|trans|sw_sanitize(null, true) }}<br>
+{% endblock %}

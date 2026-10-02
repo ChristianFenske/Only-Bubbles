@@ -1,0 +1,16 @@
+{% sw_extends '@Storefront/storefront/page/account/register/index.html.twig' %}
+
+{% block page_account_register_container %}
+	<div class="col-lg-8">
+		<div class="b2b-register">
+			
+			<a href="{{ seoUrl('frontend.home.page') }}customer-group-registration/019d2f23fcb572f3a5eddddb8a011e10#" class="b2b-register-link btn">
+				<span class="icon-handshake-o"></span>
+				<span>{{ 'account.registerB2BTitle'|trans|sw_sanitize }}</span>
+			</a>
+		</div>
+		{% sw_include '@Storefront/storefront/component/account/register.html.twig' with {
+			cardTitle: 'account.registerPersonalHeader'|trans|sw_sanitize
+		} %}
+	</div>
+{% endblock %}

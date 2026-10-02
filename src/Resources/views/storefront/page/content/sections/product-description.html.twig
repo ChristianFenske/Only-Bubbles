@@ -1,0 +1,29 @@
+<section class="cms-section-default boxed">
+	<div class="section-head">
+		<div class="section-icon description-icon" title="{% if feinkostCat %}{{ 'detail.zumProduktLink'|trans }}{% else %}{{ 'detail.zumWeinLink'|trans }}{% endif %}">
+		</div>
+		{% if feinkostCat %}
+			<h2 class="section-title">{{ 'detail.zumWort'|trans }}<b>{{ 'detail.produktWort'|trans }}</b></h2>
+		{% else %}
+			<h2 class="section-title">{{ 'detail.zumWort'|trans }}<b>{{ 'detail.weinWort'|trans }}</b></h2>
+		{% endif %}
+	</div>
+	
+	<div class="description-content-box content-box boxed">
+		<div class="d-flex">
+			<div class="col-5">
+			</div>
+			<div class="text-content col-7">
+				<div class="boxed">
+					<div>
+						<h2>{{ 'detail.detailDescription'|trans }}</h2>
+					</div>
+					
+					<div class="description-content">
+						{{ product.translated.description|raw }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

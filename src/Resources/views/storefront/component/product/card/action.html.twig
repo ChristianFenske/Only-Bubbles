@@ -1,0 +1,27 @@
+{% sw_extends '@Storefront/storefront/component/product/card/action.html.twig' %}
+
+{% set showPrice = true %}
+{% if product.customFields.show_price_after_login_checkbox and not context.customer %}
+	{% set showPrice = false %}
+{% endif %}
+
+{% block component_product_box_action_inner %}
+	{% if showPrice %}
+		{{ parent() }}
+	{% else %}
+		<a href="{{ path('frontend.account.login.page') }}" class="btn btn-primary show-price-login-button">{{ 'detail.showPriceAfterLoginButton'|trans }}</a>
+	{% endif %}
+{% endblock %}
+
+{% block component_product_box_action_buy_button %}
+	<div class="d-grid">
+		<button class="btn btn-buy">
+			<span class="icon-shopping-cart"></span>
+			<span class="btn-buy-label">
+				{% block page_product_detail_product_buy_button_label %}
+					{{ 'listing.boxAddProduct'|trans|sw_sanitize }}
+				{% endblock %}
+			</span>
+		</button>
+	</div>
+{% endblock %}

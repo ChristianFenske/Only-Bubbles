@@ -1,0 +1,26 @@
+{% sw_extends '@Storefront/storefront/layout/footer.html.twig' %}
+
+{% block base_footer %}
+    <footer class="footer-main">
+		<div class="footer-top">
+			<div class="container">
+				<div class="info-tiles">
+					{% set fastShippingLabel = 'footer.fastShippingLabel'|trans %}
+					{% set positiveFeedbacksLabel = 'footer.positiveFeedbacksLabel'|trans %}
+					{% set wineConsultationLabel = 'footer.wineConsultationLabel'|trans %}
+					{% set securePaymentLabel = 'footer.securePaymentLabel'|trans %}
+					{% set bestPriceLabel = 'footer.bestPriceLabel'|trans %}
+					<div class="info-tile" title=""><span class="tile-icon fast-shipping-icon"></span><span class="tile-label">{{ fastShippingLabel == 'footer.fastShippingLabel' ? 'Schneller Versand' : fastShippingLabel }}</span></div>
+					<div class="info-tile" title=""><span class="tile-icon positive-feedbacks-icon"></span><span class="tile-label">{{ positiveFeedbacksLabel == 'footer.positiveFeedbacksLabel' ? '99 % positive Feedbacks' : positiveFeedbacksLabel }}</span></div>
+					<div class="info-tile" title=""><span class="tile-icon wine-consultation-icon"></span><span class="tile-label">{{ wineConsultationLabel == 'footer.wineConsultationLabel' ? 'Wein Beratung' : wineConsultationLabel }}</span></div>
+					<div class="info-tile" title=""><span class="tile-icon secure-payment-icon"></span><span class="tile-label">{{ securePaymentLabel == 'footer.securePaymentLabel' ? 'Sicheres Bezahlen' : securePaymentLabel }}</span></div>
+					<div class="info-tile" title=""><span class="tile-icon best-price-icon"></span><span class="tile-label">{{ bestPriceLabel == 'footer.bestPriceLabel' ? 'Best Price Angebote' : bestPriceLabel }}</span></div>
+				</div>
+			</div>
+		</div>
+		
+        {% block base_footer_inner %}
+			{{ parent() }}
+        {% endblock %}
+    </footer>
+{% endblock %}

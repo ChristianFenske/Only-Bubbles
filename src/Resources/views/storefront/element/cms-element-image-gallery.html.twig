@@ -1,0 +1,86 @@
+{% sw_extends '@Storefront/storefront/element/cms-element-image-gallery.html.twig' %}
+
+{% block element_image_gallery_alignment %}
+	{% if config.verticalAlign.value %}
+		<div class="cms-element-alignment{% if verticalAlign == "center" %} align-self-center{% elseif verticalAlign == "flex-end" %} align-self-end{% else %} align-self-start{% endif %}">
+	{% endif %}
+
+	{% set gallerySliderOptions = {
+		slider: {
+			navPosition: 'bottom',
+			speed: 500,
+			gutter: gutter ? gutter : 0,
+			controls: navigationArrows != "none",
+			autoHeight: false,
+			startIndex: startIndexThumbnails ? startIndexThumbnails : null
+		},
+		thumbnailSlider: {
+			items: (galleryPosition == "underneath") ? 5 : 4,
+			slideBy: (galleryPosition == "underneath") ? 5 : 4,
+			controls: true,
+			startIndex: startIndexThumbnails ? startIndexThumbnails : null,
+			ariaLive: false,
+			responsive: {
+				xs: {
+					enabled: false,
+					controls: false
+				},
+				sm: {
+					enabled: false,
+					controls: false
+				}
+			}
+		}
+	} %}
+
+	{% if galleryPosition == "left" %}
+		{% set gallerySliderOptions = gallerySliderOptions|replace_recursive({
+			thumbnailSlider: {
+				responsive: {
+					md: {
+						axis: 'vertical'
+					},
+					lg: {
+						axis: 'vertical'
+					},
+					xl: {
+						axis: 'vertical'
+					},
+					xxl: {
+						axis: 'vertical'
+					}
+				}
+			}
+		}) %}
+	{% endif %}
+
+	{% set galleryZoomSliderOptions = {
+		baseSliderWrapperClass: 'modal-body'
+	} %}
+
+	{% if page.product.media.hasSpatialObjects() %}
+		{% set galleryZoomSliderOptions = galleryZoomSliderOptions|replace_recursive({
+			slider: {
+				loop: false,
+				rewind: true,
+				swipeAngle: 5
+			},
+		}) %}
+
+		{% set gallerySliderOptions = gallerySliderOptions|replace_recursive({
+			slider: {
+				loop: false,
+				rewind: true,
+				swipeAngle: 5
+			},
+		}) %}
+	{% endif %}
+
+	{% block element_image_gallery_inner %}
+		{{ parent() }}
+	{% endblock %}
+
+	{% if config.verticalAlign.value %}
+		</div>
+	{% endif %}
+{% endblock %}

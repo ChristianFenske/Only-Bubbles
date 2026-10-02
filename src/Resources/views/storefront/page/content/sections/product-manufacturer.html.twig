@@ -1,0 +1,54 @@
+<section class="cms-section-default boxed">
+	<div class="section-head">
+		<div class="section-icon manufacturer-icon" title="{% if feinkostCat %}{{ 'detail.zumProduktLink'|trans }}{% else %}{{ 'detail.zumWinLink'|trans }}{% endif %}">
+		</div>
+		{% if feinkostCat %}
+			<h2 class="section-title">{{ 'detail.zumWort'|trans }}<b>{{ 'detail.herstellerWort'|trans }}</b></h2>
+		{% else %}
+			<h2 class="section-title">{{ 'detail.zumWort'|trans }}<b>{{ 'detail.winzerWort'|trans }}</b></h2>
+		{% endif %}
+	</div>
+	
+	<div class="manufacturer-content-box content-box">
+		<div class="manufacturertext-content d-flex">
+			<div class="manufacturer-image col-5">
+				{% if product.manufacturer.media %}
+						<div class="manufacturer-image-box boxed">
+							<img src="{{ product.manufacturer.media.url }}" title="{{ product.manufacturer.translated.name }}" alt="{{ product.manufacturer.translated.name }}">
+						</div>
+				{% endif %}
+			</div>
+			<div class="text-content col-7">
+                <div class="boxed">
+
+					<h2 class="manufacturer-name">
+						<a href="{{ seoUrl('frontend.biloba_product_manufacturer', {
+							productManufacturerId: product.manufacturer.id
+						}) }}" class="manufacturer-link">
+							{{ product.manufacturer.translated.name }}
+						</a>
+					</h2>
+                    
+                    {% if product.manufacturer.translated.description %}
+                        <div class="manufacturer-description">
+                            {% set manufacturerDescription = product.manufacturer.translated.description %}
+                            {% set manufacturerDescription = manufacturerDescription|replace({
+                                '<hr />': '<hr>',
+                                '<hr/>': '<hr>'
+                            }) %}
+
+                            {% set desParts = manufacturerDescription|split('<hr>') %}
+
+                            {{ desParts[0]|raw }}
+                        </div>
+                    {% endif %}
+                </div>
+			</div>
+		</div>
+        <div class="manufacturer-link col">
+            <a href="{{ seoUrl('frontend.biloba_product_manufacturer', { productManufacturerId: product.manufacturer.id }) }}" class="readmore-btn btn btn-primary" title="{{ 'detail.readMoreBtnLabel'|trans }}">
+                {{ 'detail.readMoreBtnLabel'|trans }}
+            </a>
+        </div>
+	</div>
+</section>

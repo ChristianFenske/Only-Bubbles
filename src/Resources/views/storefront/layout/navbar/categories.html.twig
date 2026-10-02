@@ -1,0 +1,69 @@
+{% sw_extends '@Storefront/storefront/layout/navbar/categories.html.twig' %}
+
+{% block layout_navbar_categories %}
+    {% set navigationMaxDepth = 3 %}
+
+    {% if level is not defined %}
+        {% set level = 0 %}
+    {% endif %}
+
+    <div class="{% if level == 0 %}row {% endif %}navigation-flyout-categories is-level-{{ level }}">
+        {% set showMoreLink = false %}
+
+        {% for treeItem in navigationTree %}
+            {% set category = treeItem.category %}
+
+            {% if level < 1 or loop.index < 4 %}
+                {% set id = category.id %}
+                {% set name = category.translated.name %}
+                {% set link = category_url(category) %}
+
+                {% block layout_navbar_categories_item %}
+                    {% set columnCount = navigationMedia ? 3 : 4 %}
+                    <div class="{% if level == 0 %}col-{{ 12 / columnCount }} {% endif %}{% if (loop.index0 % columnCount) != 0 %}navigation-flyout-col{% endif %}">
+                        {% block layout_navbar_categories_item_link %}
+                            {% if category.type == 'folder' %}
+                                <div class="nav-item nav-item-{{ id }} nav-link nav-item-{{ id }}-link navigation-flyout-link is-level-{{ level }}"
+                                     title="{{ name }}">
+                                    <span itemprop="name">{{ name }}</span>
+                                </div>
+                            {% else %}
+                                <a class="nav-item nav-item-{{ id }} nav-link nav-item-{{ id }}-link navigation-flyout-link is-level-{{ level }}"
+                                   href="{{ link }}"
+                                   itemprop="url"
+                                   {% if category.shouldOpenInNewTab %}
+                                       target="_blank"
+                                       {% if category.linkType == 'external' %}rel="noopener noreferrer"{% endif %}
+                                   {% endif %}
+                                   title="{{ name }}">
+                                    <span itemprop="name">{{ name }}</span>
+                                </a>
+                            {% endif %}
+                        {% endblock %}
+
+                        {% block layout_navbar_categories_recoursion %}
+                            {% if level < navigationMaxDepth and treeItem.children|length > 0 %}
+                                {% sw_include '@Storefront/storefront/layout/navbar/categories.html.twig' with {
+                                    navigationTree: treeItem.children,
+                                    level: level + 1,
+                                    page: page,
+                                    parentCategory: category
+                                } only %}
+                            {% endif %}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+            {% else %}
+                {% set showMoreLink = true %}
+            {% endif %}
+        {% endfor %}
+
+        {% if showMoreLink and parentCategory is defined and parentCategory %}
+            <a href="{{ category_url(parentCategory) }}"
+               title="{{ parentCategory.translated.name }} {{ 'navigation.findMoreCat'|trans }}"
+               class="navigation-flyout-link showmore-category-link">
+                {{ parentCategory.translated.name }} {{ 'navigation.findMoreCat'|trans }}
+            </a>
+        {% endif %}
+    </div>
+{% endblock %}

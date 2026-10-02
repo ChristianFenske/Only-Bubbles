@@ -1,0 +1,98 @@
+<section class="cms-section-default boxed">
+	<div class="section-head">
+		<div class="section-icon rebsorte-icon" title="{{ 'detail.zurRebsorteLink'|trans }}">
+		</div>
+		<h2 class="section-title">{{ 'detail.zurWort'|trans }}<b>{{ 'detail.rebsorteWort'|trans }}</b></h2>
+	</div>
+	
+	<div class="rebsorte-content-box content-box">
+		
+        {% set rebsortenCat = page.extensions.rebsorteCategories %}
+		{% set mainCategory = rebsortenCat.mainCategory|default(null) %}
+        {% set rebsorteData = page.extensions.rebsorteCategories.items|default([]) %}
+		
+		{% if mainCategory && rebsorteData is empty %}
+			<div class="rebsorten-main-category resorte-infos-row col d-flex">
+				<div class="col-5 bg-rebsorten-grape">
+					<div class="boxed">
+						<img
+							src="{{ asset('assets/images/rebsorte-grape.png', 'theme') }}"
+							alt="Rebsorte"
+							loading="lazy">
+					</div>
+				</div>
+				<div class="col-7 rebsorte-description">
+					<div class="boxed">
+						{% if mainCategory.description %}
+							<div class="rebsorten-main-category-description">
+								{{ mainCategory.description|raw }}
+							</div>
+						{% endif %}
+						{% if rebsorteData is not empty %}
+							<div class="rebsorten-links">
+								{% for rebsorteCategory in rebsorteData %}
+									<a href="#resorte_{{ rebsorteCategory.id }}">{{ rebsorteCategory.name }}</a>
+								{% endfor %}
+							</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		{% endif %}
+		
+        {% if rebsorteData is not empty %}
+			{% for rebsorteCategory in rebsorteData %}
+				<div class="resorte-infos-row col d-flex" id="resorte_{{ rebsorteCategory.id }}">
+					{% if rebsorteCategory.mediaUrl %}
+						<div class="col-5 rebsorte-image">
+							<div class="boxed">
+								<a href="{{ seoUrl('frontend.navigation.page', { navigationId: rebsorteCategory.id }) }}">
+									<img
+										src="{{ rebsorteCategory.mediaUrl }}"
+										alt="{{ rebsorteCategory.mediaAlt }}"
+										loading="lazy">
+								</a>
+							</div>
+						</div>
+					{% else %}
+						<div class="col-5 bg-rebsorten-grape">
+							<div class="boxed">
+								<img
+									src="{{ asset('assets/images/rebsorte-grape.png', 'theme') }}"
+									alt="Rebsorte"
+									loading="lazy">
+							</div>
+						</div>
+					{% endif %}
+					
+					{% if rebsorteCategory.description %}
+						{% set rebsorteDescription = rebsorteCategory.description %}
+						{% set rebsorteDescription = rebsorteDescription|replace({
+							'<hr />': '<hr>',
+							'<hr/>': '<hr>'
+						}) %}
+						
+						{% set rebDesParts = rebsorteDescription|split('<hr>') %}
+						
+						<div class="col-7 rebsorte-description">
+							<div class="boxed">
+								<h2 class="rebsorte-name">
+									<a href="{{ seoUrl('frontend.navigation.page', { navigationId: rebsorteCategory.id }) }}">
+										{{ rebsorteCategory.name }}
+									</a>
+								</h2>
+								
+								{{ rebDesParts[0]|raw }}
+								
+								{% if rebDesParts[1] %}
+									<a href="{{ seoUrl('frontend.navigation.page', { navigationId: rebsorteCategory.id }) }}" class="rebsorte-readmorelink btn ">{{ 'detail.readmore'|trans }} </a>
+								{% endif %}
+							</div>
+						</div>
+					{% endif %}
+				</div>
+			{% endfor %}
+		{% endif %}		
+		
+	</div>
+</section>

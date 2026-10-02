@@ -1,0 +1,39 @@
+{% sw_extends '@Storefront/storefront/component/product/card/price-unit.html.twig' %}
+
+{% set showPrice = true %}
+{% if product.customFields.show_price_after_login_checkbox and not context.customer %}
+	{% set showPrice = false %}
+{% endif %}
+
+{% block component_product_box_price_unit %}
+	{% if showPrice %}
+		<p class="product-price-unit">
+			{% sw_include '@Storefront/storefront/component/product/price-unit-line.html.twig' with {
+				referencePrice: referencePrice,
+				shortForm: true
+			} %}
+		</p>
+	{% endif %}
+{% endblock %}
+
+{% block component_product_box_price %}
+	{% if showPrice %}
+		{{ parent() }}
+	{% else %}
+		<div class="show-price-after-login-text">
+			{{ 'detail.showPriceAfterLoginText'|trans }}
+		</div>	
+	{% endif %}
+{% endblock %}
+
+{% block component_product_box_price_tax_info %}
+	{% if showPrice %}
+		{{ parent() }}
+	{% endif %}
+{% endblock %}
+
+{% block component_product_box_price_purchase_unit %}
+{% endblock %}
+
+{% block component_product_box_price_reference_unit %}
+{% endblock %}

@@ -1,0 +1,13 @@
+{% sw_extends '@Framework/documents/delivery_note.html.twig' %}
+
+{% block document_payment_shipping_additional %}
+	<br><br><br>
+	{{ 'document.paymentShippingInfo.deliveryAssignLabel'|trans|raw }}: <span class="assignment_line"></span><br><br>
+
+	{{ 'document.paymentShippingInfo.additionalInfoContorllNote'|trans|raw }}<br><br>
+	{{ 'document.paymentShippingInfo.additionalInfoThanksText'|trans|sw_sanitize(null, true) }}<br>
+{% endblock %}
+{% block document_payment %}
+{% endblock %}
+{% block document_shipping %}
+{% endblock %}

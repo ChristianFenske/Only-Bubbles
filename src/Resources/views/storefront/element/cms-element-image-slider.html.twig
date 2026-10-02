@@ -1,0 +1,149 @@
+{% sw_extends '@Storefront/storefront/element/cms-element-image-slider.html.twig' %}
+
+{% block element_image_slider_alignment %}
+    {% if config.verticalAlign.value %}
+        <div class="cms-element-alignment{% if sliderConfig.verticalAlign.value == 'center' %} align-self-center{% elseif sliderConfig.verticalAlign.value == 'flex-end' %} align-self-end{% else %} align-self-start{% endif %}">
+    {% endif %}
+
+    {% set defaultSliderOptions = {
+        slider: {
+            controls: sliderConfig.navigationArrows.value in visibleValues,
+            nav: sliderConfig.navigationDots.value in visibleValues,
+            navPosition: 'bottom',
+            mouseDrag: true,
+            autoplay: sliderConfig.autoSlide.value,
+            autoplayButtonOutput: false,
+            autoplayTimeout: sliderConfig.autoplayTimeout.value,
+            speed: sliderConfig.speed.value,
+            ariaLive: sliderConfig.autoSlide.value ? false : true,
+            autoHeight: (sliderConfig.displayMode.value == 'standard') ? true : false
+        }
+    } %}
+
+    {% set customSliderOptions = {
+        slider: {
+            items: 1,
+            responsive: {
+                sm: { items: 1 },
+                md: { items: 2.5 },
+                lg: { items: 3.5 },
+                xl: { items: 4.5 },
+                xxl: { items: 4.5 }
+            },
+            gutter: 2,
+            controls: sliderConfig.navigationArrows.value in visibleValues,
+            nav: sliderConfig.navigationDots.value in visibleValues,
+            navPosition: 'bottom',
+            mouseDrag: true,
+            autoplay: sliderConfig.autoSlide.value,
+            autoplayButtonOutput: false,
+            autoplayTimeout: sliderConfig.autoplayTimeout.value,
+            speed: sliderConfig.speed.value,
+            ariaLive: sliderConfig.autoSlide.value ? false : true,
+            autoHeight: false
+        }
+    } %}
+
+    <div
+        class="base-slider image-slider{% if sliderConfig.navigationArrows.value == 'outside' %} has-nav-outside{% endif %}{% if sliderConfig.navigationDots.value == 'outside' %} has-dots-outside{% endif %}"
+        data-base-slider="true"
+        data-base-slider-options='{% if sectionClasses is defined and sectionClasses is iterable and "section-category-slider" in sectionClasses %}{{ customSliderOptions|json_encode }}{% else %}{{ defaultSliderOptions|json_encode }}{% endif %}'
+        role="region"
+        aria-label="{{ 'component.cms.imageGallery.ariaLabel'|trans({ '%total%': element.data.sliderItems|length })|sw_sanitize }}"
+        tabindex="0"
+    >
+        {{ block('element_image_slider_inner') }}
+    </div>
+
+    {% if config.verticalAlign.value %}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block element_image_slider_inner %}
+	{{ parent() }}
+
+	{% if sectionClasses is defined and sectionClasses is iterable and "section-hero-slider" in sectionClasses %}
+		<div class="hero-banner-search-box">
+			<form action="{{ path('frontend.search.page') }}"
+				  method="get"
+				  data-search-widget="true"
+				  data-search-widget-options="{{ searchWidgetOptions|json_encode }}"
+				  data-url="{{ path('frontend.search.suggest') }}?search="
+				  class="hero-search-form js-search-form">
+				  
+					<div class="input-group">
+							<input
+								type="search"
+								id="hero-banner-search-input"
+								name="search"
+								class="form-control hero-banner-search-input"
+								autocomplete="off"
+								autocapitalize="off"
+								placeholder="{{ 'header.searchPlaceholder'|trans|striptags }}"
+								aria-label="{{ 'header.searchPlaceholder'|trans|striptags }}"
+								role="combobox"
+								aria-autocomplete="list"
+								aria-controls="search-suggest-listbox"
+								aria-expanded="false"
+								aria-describedby="search-suggest-result-info"
+								value="{{ page.searchTerm }}">
+								
+							<button type="submit"
+									class="btn hero-search-btn"
+									aria-label="{{ 'header.searchButton'|trans|striptags }}">
+								<span class="hero-search-icon">
+									{% sw_icon 'search' %}
+								</span>
+							</button>
+							
+							<button class="btn hero-close-btn js-search-close-btn d-none"
+									type="button"
+									aria-label="{{ 'header.searchCloseButton'|trans|striptags }}">
+								<span class="hero-close-icon">
+									{% sw_icon 'x' %}
+								</span>
+							</button>
+					</div>
+			</form>
+		</div>
+	{% endif %}
+{% endblock %}
+
+{% block element_image_slider_inner_item %}
+    <div class="image-slider-item-container">
+        {% if image.url %}
+            <a href="{{ image.url }}"
+               {% if image.ariaLabel %}aria-label="{{ image.ariaLabel }}"{% endif %}
+               class="image-slider-link"
+               {% if image.newTab %}target="_blank" rel="noopener"{% endif %}>
+                {{ imageElement }}
+            </a>
+        {% else %}
+            {{ imageElement }}
+        {% endif %}
+
+        {% if image.ariaLabel %}
+            {% set t = image.ariaLabel %}
+            {% set parts = t|split(' | ') %}
+            {% set main  = parts[0]|trim %}
+            {% set sub   = parts[1] is defined ? parts[1]|trim : null %}
+            {% set words = main|split(' ') %}
+            {% set first = words[0] %}
+            {% set second = words|slice(1)|join(' ') %}
+
+            <div class="image-title-box">
+                {% if second is empty %}
+                    <span class="image-title single-title">{{ first }}</span>
+                {% else %}
+                    <span class="image-title title-first">{{ first }}</span>
+                    <span class="image-title title-second">{{ second }}</span>
+                {% endif %}
+
+                {% if sub %}
+                    <span class="image-subtitle subtitle">{{ sub }}</span>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

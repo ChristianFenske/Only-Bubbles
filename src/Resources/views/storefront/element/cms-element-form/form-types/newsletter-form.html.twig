@@ -1,0 +1,31 @@
+{% sw_extends '@Storefront/storefront/element/cms-element-form/form-types/newsletter-form.html.twig' %}
+
+{% block cms_form_newsletter %}
+	<div class="newsletter-form-text">{{ 'newsletter.formText'|trans }}</div>
+	
+	{{ parent() }}
+{% endblock %}
+
+{% block cms_form_newsletter_input_first_name %}
+	{% sw_include '@Storefront/storefront/element/cms-element-form/form-components/cms-element-form-input.html.twig'
+		with {
+		fieldName: 'firstName',
+		autocomplete: 'section-personal given-name',
+		additionalClass: 'col-md-4',
+		label: 'newsletter.labelFirstName',
+		placeholder: 'newsletter.labelFirstName'
+	}
+	%}
+{% endblock %}
+
+{% block cms_form_newsletter_input_last_name %}
+	{% sw_include '@Storefront/storefront/element/cms-element-form/form-components/cms-element-form-input.html.twig'
+		with {
+		fieldName: 'lastName',
+		autocomplete: 'section-personal family-name',
+		additionalClass: 'col-md-4',
+		label: 'newsletter.labelLastName',
+		placeholder: 'newsletter.labelLastName'
+	}
+	%}
+{% endblock %}

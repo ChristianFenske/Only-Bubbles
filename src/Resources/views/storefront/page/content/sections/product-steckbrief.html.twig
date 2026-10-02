@@ -1,0 +1,68 @@
+<section class="cms-section-default boxed">
+	<div class="section-head">
+		<div class="section-icon steckbrief-icon" title="{{ 'detail.steckbriefWort'|trans }}">
+		</div>
+		<h2 class="section-title"><b>{{ 'detail.steckbriefWort'|trans }}</b></h2>
+	</div>
+	
+	<div class="steckbrief-content-box content-box boxed">
+		
+		<div class="steckbrief-content">
+			<div class="steckbrief-property property-item">
+				<div class="property-title">{{ 'detail.sku'|trans }}</div>
+				<div class="property-value">{{ product.productNumber }}</div>
+			</div>
+
+			{% set desiredOrder = [
+				'Jahr',
+				'Land',
+				'Region',
+				'Art',
+				'Ausbau',
+				'Rebsorten',
+				'Alkoholgehalt',
+				'Restzucker',
+				'Säuregehalt',
+				'Allergene',
+				'Brennwert / 100 g',
+				'Brennwert / 100 ml',
+				'Eiweiß / 100 ml',
+				'Eiweiß / 100 g',
+				'gesättigte Fettsäuren / 100 ml',
+				'gesättigte Fettsäuren / 100 g',
+				'Kohlenhydrate / 100 ml',
+				'Kohlenhydrate / 100 g',
+				'Fett / 100 ml',
+				'Fett / 100 g',
+				'Zucker / 100 ml',
+				'Zucker / 100 g',
+				'Salz / 100 ml',
+				'Salz / 100 g'
+			] %}
+
+			{% set sortedProperties = {} %}
+
+			{% for key in desiredOrder %}
+				{% if groupedProperties[key] is defined %}
+					{% set sortedProperties = sortedProperties|merge({ (key): groupedProperties[key] }) %}
+				{% endif %}
+			{% endfor %}
+
+			{% for groupName, values in sortedProperties %}
+				{% if groupName not in ["Bio", "Vegan"]  %}
+					<div class="steckbrief-property property-item">
+						<div class="property-title">{{ groupName }}</div>
+						<div class="property-value">{{ values|join(', ') }}{% if groupName == 'Alkoholgehalt' %}<span>{{ 'detail.alkoholVol'|trans }}</span>{% endif %}</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+			
+			{% if product.translated.customFields.migration_SW5SW6WeineFeinkost_product_attr9 %}
+				<div class="steckbrief-property property-item content-property">
+					<div class="property-title">{{ 'detail.inhaltsangabenLabel'|trans }}</div>
+					<div class="property-value">{{ product.translated.customFields.migration_SW5SW6WeineFeinkost_product_attr9|raw }}</div>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+</section>

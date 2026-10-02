@@ -1,0 +1,100 @@
+{
+    "categoryRow": {
+		"readMoreLinkPart1": "Mehr über",
+		"readMoreLinkPart2": "erfahren",
+		"inDetailTitle": "Im Detail"
+	},
+    "navigation": {
+		"findMoreCat": "entdecken"
+	},
+    "listing": {
+		"bioBadgeTooltip": "Bio Produkt",
+		"veganBadgeTooltip": "Vegan Produkt",
+		"infoTooltip": "Steckbrief",
+		"stock": {
+			"available": "auf Lager",
+			"notAvailable": "Nicht verfügbar"
+		}
+	},
+    "detail": {
+		"deliveryNormal": "auf Lager, Lieferzeit ca. 2-3 Werktage",
+		"sku": "Artikelnr.",
+		"inhaltsangabenLabel": "Inhaltsangaben",
+		"inhaltLabel": "Inhalt",
+		"foodInformationLink": "Steckbrief",
+		"zumWeinLink": "Zum Wein",
+		"zumProduktLink": "Zum Produkt",
+		"zumWinzerLink": "Zum Winzer",
+		"zumHerstellerLink": "Zum Hersteller",
+		"zurRebsorteLink": "Zur Rebsorte",
+		"weinWort": "Wein",
+		"steckbriefWort": "Steckbrief",
+		"produktWort": "Produkt",
+		"winzerWort": "Winzer",
+		"readMoreBtnLabel": "alle Produkte",
+		"readmore": "weiterlesen...",
+		"herstellerWort": "Hersteller",
+		"rebsorteWort": "Rebsorte",
+		"zumWort": "Zum",
+		"zurWort": "Zur",
+		"cuvee": "Cuvée",
+		"alkoholVol": "% vol",
+		"showPriceAfterLoginText": "Der Preis ist erst nach der Anmeldung sichtbar.",
+		"showPriceAfterLoginButton": "Im Shop anmelden",
+		"detailDescription": "Detailbeschreibung"
+	},
+    "checkout": {
+        "summaryPositionPrice": "Summe",
+        "summaryNetPrice": "Gesamtsumme ohne MwSt.",
+        "deliveryInformationText": "Lieferzeit ca."
+    },
+    "newsletter": {
+        "formText": "Keine Beiträge mehr verpassen"
+    },
+    "account": {
+        "registerB2BTitle": "Als Händler registrieren"
+    },
+    "document": {
+        "paymentShippingInfo": {
+			"additionalInfoDateNote": "Falls nicht anders vermerkt, ist das Lieferdatum gleich Rechnungsdatum.",
+			"additionalInfoSteuerfreieLieferung": "Steuerfreie innergemeinschaftliche Lieferung.",
+			"additionalInfoLastschriftInfo": "Der Rechnungsbetrag wird von Ihrem Konto abgebucht.",
+			"additionalInfoPaypalText": "Der Rechnungsbetrag wurde per PayPal angewiesen.",
+			"additionalInfoRechnungInfo": "Der Rechnungsbetrag ist zahlbar innerhalb von 7 Tagen ohne Abzug.",
+			"deliveryAssignLabel": "Unterschrift/Datum",
+			"additionalInfoContorllNote": "Bitte kontrollieren Sie bei Erhalt die Vollständigkeit und den Zustand der Ware.<br>Beschädigungen müssen dem Lieferdienst unverzüglich angezeigt werden.<br>Spätere Reklamationen können nicht berücksichtigt werden.",
+			"additionalInfoThanksText": "Vielen Dank für Ihren Einkauf!"
+		},
+		"kontoinhaberTitle": "Kontoinhaber",
+		"kontoinhaberName": "Janus Fenske",
+		"agbText": "Es gelten unsere allgemeinen Geschäftsbedingungen.",
+		"deOekoText": "DE-ÖKO-039",
+		"emailText": "info@weine-feinkost.de",
+		"emailLabel": "E-Mail",
+		"internetText": "https://weine-feinkost.de/",
+		"internetLabel": "Internet",
+		"telText": "0202 / 87966",
+		"telLabel": "Tel",
+		"faxText": "0202 / 86880",
+		"faxLabel": "Fax"
+    },
+    "some": {
+        "facebookUrl": "https://www.facebook.com/WeineFeinkostChristianFenske",
+        "xUrl": "https://x.com/WeineFeinkost",
+        "instagramUrl": "https://www.instagram.com/weine_und_feinkost/",
+        "linkedinUrl": "https://www.linkedin.com/login/?session_redirect=%2Fcompany%2F105995195"
+    },
+    "footer": {
+        "partnerLabel": "Partner",
+        "weinPlusLink": "https://www.wein.plus/de",
+        "weinPlusImgAlt": "Das europäische Weinnetzwerk",
+        "weinPlusFenskeLink": "https://webkatalog.wein.plus/weinhandel/fenske-s-weine-feinkost-inh-janus-fenske",
+        "weinPlusFenskeImgAlt": "Wir sind wein.plus Business Premium-Mitglied",
+        "paymentMethodsLabel": "Zahlungsarten",
+        "purchaseOnInvoice": "Kauf auf Rechnung",
+        "cartificatesLabel": "Zertifikate",
+        "applepay": "Apple Pay",
+        "creditcards": "Kreditkarten",
+        "paypal": "Paypal"
+    }
+}

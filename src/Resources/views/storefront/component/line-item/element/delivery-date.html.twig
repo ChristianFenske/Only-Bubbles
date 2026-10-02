@@ -1,0 +1,16 @@
+{% sw_extends '@Storefront/storefront/component/line-item/element/delivery-date.html.twig' %}
+
+{% block component_line_item_delivery_date_inner %}
+	<div class="line-item-delivery-date">
+		<span class="d-none">
+			{{ 'checkout.lineItemDeliveryDate'|trans({
+				'%earliest%': deliveryPosition.deliveryDate.earliest|format_date('short', locale=app.request.locale),
+				'%latest%': deliveryPosition.deliveryDate.latest|format_date('short', locale=app.request.locale)
+			})|sw_sanitize }}
+		</span>
+		
+		{% if lineItem.deliveryInformation.deliveryTime.name %}
+			<span class="delivery-inofs">{{ 'checkout.deliveryInformationText'|trans }} {{ lineItem.deliveryInformation.deliveryTime.name }}</span>
+		{% endif %}
+	</div>
+{% endblock %}
