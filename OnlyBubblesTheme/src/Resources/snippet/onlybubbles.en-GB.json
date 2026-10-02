@@ -129,6 +129,19 @@
             "step2": "Receive a confirmation by e-mail",
             "step3": "Return the goods – we refund the amount",
             "readPolicy": "Read the cancellation policy"
+        },
+        "dealer": {
+            "eyebrow": "For restaurants & retailers",
+            "title": "Retailer registration",
+            "stepsEyebrow": "How it works",
+            "stepsTitle": "Three steps to your retailer account",
+            "step1": "Fill in the form – ideally as “Business” with company and VAT ID.",
+            "step2": "We review your request and get back to you by e-mail.",
+            "step3": "Once approved, you will see your retailer conditions in the shop.",
+            "loginHint": "Already have a retailer account?",
+            "loginLink": "Log in here",
+            "formEyebrow": "New retailer account",
+            "formTitle": "Your details"
         }
     }
 }

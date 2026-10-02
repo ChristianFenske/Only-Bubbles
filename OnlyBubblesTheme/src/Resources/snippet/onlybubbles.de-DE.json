@@ -129,6 +129,19 @@
             "step2": "Eingangsbestätigung per E-Mail erhalten",
             "step3": "Ware zurücksenden – wir erstatten den Betrag",
             "readPolicy": "Widerrufsbelehrung lesen"
+        },
+        "dealer": {
+            "eyebrow": "Für Gastronomie & Handel",
+            "title": "Händlerregistrierung",
+            "stepsEyebrow": "So geht's",
+            "stepsTitle": "In drei Schritten zum Händlerkonto",
+            "step1": "Formular ausfüllen – am besten als „Gewerblich“ mit Firma und USt-IdNr.",
+            "step2": "Wir prüfen Ihre Anfrage und melden uns per E-Mail.",
+            "step3": "Nach der Freischaltung sehen Sie Ihre Händlerkonditionen im Shop.",
+            "loginHint": "Schon ein Händlerkonto?",
+            "loginLink": "Hier anmelden",
+            "formEyebrow": "Neues Händlerkonto",
+            "formTitle": "Ihre Angaben"
         }
     }
 }

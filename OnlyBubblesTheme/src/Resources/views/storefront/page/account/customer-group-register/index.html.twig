@@ -1,0 +1,38 @@
+{% sw_extends '@Storefront/storefront/page/account/customer-group-register/index.html.twig' %}
+
+{% block page_account_customer_group_register_inner %}
+    <div class="ob-page-head">
+        <div>
+            <p class="ob-eyebrow">{{ 'obTheme.dealer.eyebrow'|trans|sw_sanitize }}</p>
+            <h1 class="ob-page-title">
+                {{ page.group.translated.registrationTitle ?: 'obTheme.dealer.title'|trans|sw_sanitize }}
+            </h1>
+        </div>
+    </div>
+
+    <div class="ob-register-grid ob-dealer-grid">
+        <div class="ob-login-panel ob-dealer-panel">
+            <div class="ob-bubbles ob-bubbles-corner" aria-hidden="true"><span></span><span></span><span></span></div>
+
+            <p class="ob-eyebrow">{{ 'obTheme.dealer.stepsEyebrow'|trans|sw_sanitize }}</p>
+            <h2 class="ob-dealer-title">{{ 'obTheme.dealer.stepsTitle'|trans|sw_sanitize }}</h2>
+
+            <ol class="ob-dealer-steps">
+                <li><span>1</span>{{ 'obTheme.dealer.step1'|trans|sw_sanitize }}</li>
+                <li><span>2</span>{{ 'obTheme.dealer.step2'|trans|sw_sanitize }}</li>
+                <li><span>3</span>{{ 'obTheme.dealer.step3'|trans|sw_sanitize }}</li>
+            </ol>
+
+            <div class="ob-dealer-login">
+                {{ 'obTheme.dealer.loginHint'|trans|sw_sanitize }}
+                <a href="{{ path('frontend.account.login.page') }}">{{ 'obTheme.dealer.loginLink'|trans|sw_sanitize }}</a>
+            </div>
+        </div>
+
+        <div class="ob-register-panel">
+            {% sw_include '@Storefront/storefront/component/account/customer-group-register.html.twig' with {
+                cardTitle: 'account.registerPersonalHeader'|trans|sw_sanitize
+            } %}
+        </div>
+    </div>
+{% endblock %}

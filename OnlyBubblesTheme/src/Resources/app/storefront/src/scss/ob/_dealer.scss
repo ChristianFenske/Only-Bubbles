@@ -1,0 +1,112 @@
+// ===========================================================================
+// Händlerregistrierung (/customer-group-registration/…) – Raster und Karten aus _register
+// ===========================================================================
+
+// Eigenständig, damit die Seite auch ohne theme:compile (Inline-CSS) vollständig aussieht
+.account-register .ob-dealer-grid {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 32px;
+    align-items: start;
+    margin-bottom: 72px;
+
+    .ob-dealer-panel {
+        @include ob-card-dark;
+        position: sticky;
+        top: 24px;
+        overflow: hidden;
+        padding: 44px 40px 40px;
+
+        .ob-eyebrow { color: $ob-gold-light; }
+    }
+
+    .register-card {
+        @include ob-card;
+        padding: 44px;
+
+        > .card-body { padding: 0; }
+
+        .card-title {
+            @include ob-serif-title(34px);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+    }
+}
+
+@include media-breakpoint-down(lg) {
+    .account-register .ob-dealer-grid {
+        grid-template-columns: minmax(0, 1fr);
+
+        .ob-dealer-panel {
+            position: relative;
+            top: 0;
+            padding: 32px 24px;
+        }
+
+        .register-card { padding: 28px 20px; }
+    }
+}
+
+.account-register .ob-dealer-panel {
+    .ob-dealer-title {
+        @include ob-serif-title(30px);
+        margin: 0 0 24px;
+        font-weight: 500;
+        color: $ob-on-dark;
+    }
+
+    .ob-dealer-steps {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            font-size: 14.5px;
+            line-height: 1.5;
+            color: rgba(243, 238, 227, .82);
+
+            > span {
+                display: grid;
+                place-items: center;
+                flex: none;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                background: rgba(194, 160, 106, .2);
+                font-size: 13px;
+                font-weight: 500;
+                color: $ob-gold-light;
+            }
+        }
+    }
+
+    .ob-dealer-login {
+        margin-top: 32px;
+        padding-top: 26px;
+        border-top: 1px solid $ob-on-dark-line;
+        font-size: 14.5px;
+        color: $ob-on-dark-60;
+
+        a {
+            display: block;
+            margin-top: 4px;
+            font-weight: 500;
+            color: $ob-gold-light;
+            text-decoration: none;
+
+            &::after { content: ' →'; }
+
+            &:hover { text-decoration: underline; }
+        }
+    }
+}
+
+// Einleitung aus der Kundengruppe (kann HTML enthalten)
+.account-register .ob-dealer-grid .ob-card-intro p:last-child { margin-bottom: 0; }

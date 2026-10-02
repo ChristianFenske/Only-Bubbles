@@ -1,0 +1,11 @@
+{% sw_extends '@Storefront/storefront/component/account/customer-group-register.html.twig' %}
+
+{# Titel steht im Seitenkopf – in der Karte nur Eyebrow, Überschrift und Einleitung #}
+{% block component_account_register_header %}
+    <p class="ob-eyebrow">{{ 'obTheme.dealer.formEyebrow'|trans|sw_sanitize }}</p>
+    <div class="card-title">{{ 'obTheme.dealer.formTitle'|trans|sw_sanitize }}</div>
+
+    {% if page.group.translated.registrationIntroduction is not empty %}
+        <div class="ob-card-intro">{{ page.group.translated.registrationIntroduction|sw_sanitize }}</div>
+    {% endif %}
+{% endblock %}
