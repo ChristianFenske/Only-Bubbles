@@ -27,27 +27,12 @@
 .muto-sticky-buy-box--bottom .muto-sticky-buy-box__container { border-bottom: 0; }
 
 // --- Flasche ------------------------------------------------------------------
-// Weißer Reiter über der Leiste, darin die Flasche (Produktbilder mit weißem Grund fügen sich ein)
+// Flasche ragt über die Leiste (weißer Hintergrund wird per Skript in base.html.twig entfernt)
 .muto-sticky-buy-box .muto-sticky-buy-box__image {
     position: relative;
     align-self: center;
     width: 64px;
     height: 56px;
-
-    &::before {
-        content: '';
-        position: absolute;
-        bottom: calc(100% + 13px);
-        left: -10px;
-        right: -10px;
-        height: 74px;
-        border: 1px solid $ob-line;
-        border-bottom: 0;
-        border-radius: 16px 16px 0 0;
-        background: #fff;
-        box-shadow: 0 -8px 18px rgba(40, 34, 26, .07);
-        clip-path: inset(-30px -30px 0 -30px);
-    }
 
     img {
         position: absolute;
@@ -60,6 +45,7 @@
         object-fit: contain;
         border-radius: 0;
         transform: translateX(-50%);
+        filter: drop-shadow(0 6px 8px rgba(40, 34, 26, .22));
     }
 }
 
