@@ -259,3 +259,7 @@ body[class*='blog'] .ob-section-newsletter { display: none !important; }
 @include media-breakpoint-up(lg) {
     .nav-main nav.main-navigation-menu { overflow: visible !important; }
 }
+
+// Kategorie-Listing: Sortier-Leiste ohne hellen Balken
+.cms-element-product-listing-actions { background: transparent !important; }
+.cms-element-product-listing-actions .sorting.form-select { background-color: #fff !important; }
