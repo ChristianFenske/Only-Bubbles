@@ -26,7 +26,7 @@
             padding: 8px 7px !important;
             border-radius: 20px;
             font-family: $ob-font-sans;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 400;
             letter-spacing: .01em;
             line-height: 1.3;
@@ -334,4 +334,31 @@ html { overflow-x: clip; }
 
 @media (min-width: 992px) and (max-width: 1350px) {
     .nav-main.not-on-top { margin-top: -34px !important; }
+}
+
+// Schmalere Bildschirme (z. B. MacBook): Menü passt nicht zwischen Logo und Icons ->
+// eigene Zeile unter dem Header, mittig. Erst ab 1700px steht es in der Header-Zeile.
+@media (min-width: 992px) and (max-width: 1699px) {
+    .nav-main,
+    .nav-main.not-sticky,
+    .nav-main.not-on-top {
+        top: 0 !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        border-top: 1px solid $ob-line;
+        background: #fff;
+        box-shadow: 0 10px 18px -16px rgba(40, 34, 26, .35);
+    }
+
+    .nav-main nav.main-navigation-menu {
+        .navbar-nav { flex-wrap: wrap; justify-content: center; }
+
+        .main-navigation-menu-list > .nav-item { padding: 8px 0 !important; }
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .nav-main nav.main-navigation-menu .main-navigation-link.root { font-size: 14px; }
+
+    .nav-main nav.main-navigation-menu .navbar-nav > .nav-item { padding-right: 4px !important; padding-left: 4px !important; }
 }
