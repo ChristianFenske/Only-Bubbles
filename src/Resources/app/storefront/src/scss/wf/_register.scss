@@ -207,3 +207,36 @@
         .btn { width: 100%; }
     }
 }
+
+// "Als Händler registrieren" in der dunklen Anmeldekarte: gleiche Größe wie "Anmelden", hell umrandet
+.account-register .wf-login-panel .b2b-register {
+    display: block;
+    margin: 12px 0 0;
+
+    .b2b-register-link.btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        min-height: 52px;
+        padding: 0 30px;
+        border: 1px solid rgba(245, 245, 245, .55);
+        border-radius: $wf-radius-pill;
+        background: transparent;
+        font-family: $wf-font-sans;
+        font-size: 15px;
+        font-weight: 500;
+        letter-spacing: .02em;
+        color: $wf-on-dark;
+
+        span { color: inherit; }
+
+        &:hover,
+        &:focus-visible {
+            border-color: $wf-on-dark;
+            background: $wf-on-dark;
+            color: $wf-ink;
+        }
+    }
+}
