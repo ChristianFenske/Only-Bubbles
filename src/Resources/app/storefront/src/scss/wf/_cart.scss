@@ -745,3 +745,16 @@ $wf-cart-cols: minmax(0, 1fr) 124px 100px 36px;
 
     .wf-cart-empty { padding: 56px 20px; }
 }
+
+// PayPal "Später bezahlen"-Banner (SwagPayPal): skaliert sonst mit der vollen Kartenbreite
+.wf-checkout {
+    [data-swag-paypal-installment-banner],
+    .swag-paypal-installment-banner,
+    [class*='paypal-installment-banner'] {
+        width: 100%;
+        max-width: 420px;
+        margin: 14px 24px;
+
+        iframe { max-width: 100%; }
+    }
+}
