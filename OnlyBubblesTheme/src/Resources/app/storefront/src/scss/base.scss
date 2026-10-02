@@ -1977,6 +1977,11 @@ h1.wishlist-headline {
 		margin-bottom: 5px;
 	}
 	
+	a.btn.btn-rebsorten,
+	.section-rebsorte {
+		display: none;
+	}
+	
 	.product-detail-buy {
 		.product-attribute-box {
 			margin-bottom: 15px;
@@ -2545,6 +2550,21 @@ h1.biloba-manufacturer-element-, .biloba-manufacturer-element-.h1 {
 .ob-imprint-page {
 	.container, .cms-section .boxed {
 		max-width: 860px;
+	}
+}
+
+.account-register {
+	.b2b-register {
+		.b2b-register-link {
+			width: 100%;
+			background: $color_bg_dark;
+			
+			&:hover {
+				background: #fff;
+				border-color: $color_gold_primary;
+				color: $color_gold_primary;
+			}
+		}
 	}
 }
 

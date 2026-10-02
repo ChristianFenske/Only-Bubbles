@@ -33,7 +33,15 @@
             obEyebrow: 'obTheme.login.existingEyebrow'|trans|sw_sanitize,
             obDescription: 'obTheme.login.existingText'|trans|sw_sanitize
         } %}
-
+		
+		<div class="b2b-register">
+			
+			<a href="{{ seoUrl('frontend.home.page') }}customer-group-registration/019d2f23fcb572f3a5eddddb8a011e10#" class="b2b-register-link btn">
+				<span class="icon-handshake-o"></span>
+				<span>{{ 'account.registerB2BTitle'|trans|sw_sanitize }}</span>
+			</a>
+		</div>
+		
         {{ block('page_account_register_advantages') }}
     </div>
 {% endblock %}
