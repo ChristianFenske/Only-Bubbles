@@ -42,3 +42,43 @@
         {{ parent() }}
     {% endif %}
 {% endblock %}
+
+{# Produktseite: Flasche in die Sticky-Kaufleiste (Plugin „Muto Sticky Buy Box“) einsetzen,
+   falls das Plugin selbst kein Bild ausgibt. Gestaltung in scss/ob/_sticky-buy.scss #}
+{% block base_body_script %}
+    {{ parent() }}
+
+    {% if activeRoute == 'frontend.detail.page' and page.product.cover.media.url is defined and page.product.cover.media.url %}
+        {% set obStickyMedia = page.product.cover.media %}
+        {% set obStickyThumb = obStickyMedia.thumbnails|filter(t => t.width >= 280)|sort((a, b) => a.width <=> b.width)|first %}
+        <script>
+            (function () {
+                var src = {{ (obStickyThumb ? obStickyThumb.url : obStickyMedia.url)|json_encode|raw }};
+                var alt = {{ (page.product.translated.name ?? '')|json_encode|raw }};
+
+                function obStickyBottle() {
+                    var left = document.querySelector('.muto-sticky-buy-box__left');
+                    if (!left || left.querySelector('.muto-sticky-buy-box__image')) {
+                        return;
+                    }
+                    var wrap = document.createElement('div');
+                    wrap.className = 'muto-sticky-buy-box__image ob-sticky-bottle';
+                    var img = document.createElement('img');
+                    img.src = src;
+                    img.alt = alt;
+                    img.loading = 'lazy';
+                    wrap.appendChild(img);
+                    left.insertBefore(wrap, left.firstChild);
+                }
+
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', obStickyBottle);
+                } else {
+                    obStickyBottle();
+                }
+                // Plugin kann die Leiste neu aufbauen (z. B. Variantenwechsel)
+                new MutationObserver(obStickyBottle).observe(document.body, { childList: true, subtree: true });
+            })();
+        </script>
+    {% endif %}
+{% endblock %}

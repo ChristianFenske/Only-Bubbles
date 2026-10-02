@@ -1,19 +1,23 @@
 // ===========================================================================
-// Footer: Button „Bestellung widerrufen“ (Widerrufs-Plugin) einzeilig, normale Höhe
+// Footer: Button „Bestellung widerrufen“ (Widerrufs-Plugin) einzeilig, mittig
 // ===========================================================================
 
 .jga-revocation-footer-button {
-    max-width: none !important;
-
     .btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: auto;
         height: auto;
         min-height: 0;
         padding: 6px 22px !important;
         line-height: 1.4 !important;
         white-space: nowrap;
+    }
+
+    @media (min-width: 1200px) {
+        left: 50% !important;
+        width: max-content;
+        max-width: none !important;
+        transform: translateX(-50%);
     }
 }

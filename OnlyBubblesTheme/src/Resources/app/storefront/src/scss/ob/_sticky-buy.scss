@@ -89,6 +89,23 @@
     border-radius: $ob-radius-pill;
     background: #fff;
 
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+
+    .btn-outline-light.btn-plus,
+    .btn-outline-light.btn-minus {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        padding: 0;
+        line-height: 1;
+
+        .icon { display: flex; align-items: center; }
+        .icon > svg { top: 0; }
+    }
+
     .btn-outline-light.btn-plus,
     .btn-outline-light.btn-minus,
     .btn-outline-light.btn-plus:hover,
@@ -105,6 +122,10 @@
     .btn-outline-light.btn-minus:hover { background: $ob-sand; }
 
     .quantity-selector-group-input {
+        height: 100%;
+        padding: 0;
+        line-height: 46px;
+        text-align: center;
         width: 42px;
         border: 0 !important;
         font-size: 16px;
