@@ -1,0 +1,8 @@
+{% sw_extends '@Storefront/storefront/component/address/address-personal-company.html.twig' %}
+
+{# Händlerregistrierung: Firmenfelder immer sichtbar (dort gibt es keine Auswahl Privat/Gewerblich) #}
+{% if theme_config('wf-checkout-design')
+    and activeRoute starts with 'frontend.account.customer-group-registration'
+    and prefix != 'shippingAddress' %}
+    {% set hasSelectedBusiness = true %}
+{% endif %}
