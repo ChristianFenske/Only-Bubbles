@@ -5,8 +5,8 @@
 // Eltern-Theme: .is-ctl-address / .is-ctl-accountprofile .col-lg-6
 // { padding 20px; border 1px #dedede; radius 30px; max-width calc(50% - 10px) }
 // -> doppelte "Ringe" um die Karten und versetzte Kanten
-.is-ctl-address,
-.is-ctl-accountprofile {
+&.is-ctl-address,
+&.is-ctl-accountprofile {
     .col-lg-6 {
         max-width: none !important;
         padding: 0 calc(var(--bs-gutter-x) * .5) !important;
