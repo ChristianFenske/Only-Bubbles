@@ -246,3 +246,7 @@
         .magazin-title-box > a { margin-bottom: 0; }
     }
 }
+
+// Blog-Beiträge (Acris Blog): kein Newsletter-Kasten
+body[class*='blog'] .section-newsletter,
+body[class*='blog'] .ob-section-newsletter { display: none !important; }
