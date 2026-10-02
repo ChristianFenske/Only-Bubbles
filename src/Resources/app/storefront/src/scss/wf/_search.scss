@@ -423,3 +423,13 @@
 
 // --- Suchergebnis-Seite: Hintergrund wie Kategorie-/Produktseiten -------------------------
 .is-ctl-search .content-main { background: $wf-cream; }
+
+// Suchfelder im Seiteninhalt (z. B. Suchfeld im Bild auf einer Einkaufswelt):
+// keine Vorschläge, Enter sucht normal. Nur die Header-Suche zeigt das Dropdown.
+.content-main,
+.cms-page {
+    .search-suggest,
+    .wf-suggest-wrap {
+        display: none !important;
+    }
+}

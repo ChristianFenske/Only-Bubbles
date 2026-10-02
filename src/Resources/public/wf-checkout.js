@@ -5,6 +5,7 @@
  * - Anrede/Kontotyp als Pill-Auswahl (Registrierung, Konto, Checkout, Adress-Formulare)
  * - Auge-Button an Passwortfeldern (Anmelden, Registrierung, Konto)
  * - Mega-Menü Länder/Regionen: Land wählen und suchen
+ * - Suchfelder im Seiteninhalt ohne Vorschlags-Dropdown
  */
 (function () {
     'use strict';
@@ -259,6 +260,18 @@
             }
         });
     }
+
+    /* --- Suchfelder im Seiteninhalt: ohne Vorschläge ----------------------
+       Die Live-Suche reagiert auf "input" am Feld. Im Seiteninhalt (nicht im
+       Header) wird das Ereignis vorher abgefangen, Enter sucht ganz normal. */
+    document.addEventListener('input', function (event) {
+        var field = event.target;
+        if (field && field.matches && field.matches('input[type="search"], input[name="search"]')
+            && field.closest('.content-main, .cms-page')
+            && !field.closest('header, .header-main, .wf-mega-explorer')) {
+            event.stopPropagation();
+        }
+    }, true);
 
     function start() {
         scan(document);
