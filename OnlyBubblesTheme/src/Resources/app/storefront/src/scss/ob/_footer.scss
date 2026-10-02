@@ -16,6 +16,7 @@
 
     @media (min-width: 1200px) {
         left: 50% !important;
+        margin-top: 22px !important; // auf Höhe der Links/Copyright-Zeile
         width: max-content;
         max-width: none !important;
         transform: translateX(-50%);
