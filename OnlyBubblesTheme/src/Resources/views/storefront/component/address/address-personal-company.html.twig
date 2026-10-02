@@ -1,0 +1,12 @@
+{% sw_extends '@Storefront/storefront/component/address/address-personal-company.html.twig' %}
+
+{# Gewerblich = nur Firmenname (z. B. Lieferung ins Büro). Abteilung und USt-IdNr. nur bei der Händlerregistrierung. #}
+{% set obDealerPage = activeRoute starts with 'frontend.account.customer-group-registration' %}
+
+{% block component_address_form_company_department %}
+    {% if obDealerPage %}{{ parent() }}{% endif %}
+{% endblock %}
+
+{% block component_address_form_company_vatId %}
+    {% if obDealerPage %}{{ parent() }}{% endif %}
+{% endblock %}
