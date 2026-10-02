@@ -263,3 +263,7 @@ body[class*='blog'] .ob-section-newsletter { display: none !important; }
 // Kategorie-Listing: Sortier-Leiste ohne hellen Balken
 .cms-element-product-listing-actions { background: transparent !important; }
 .cms-element-product-listing-actions .sorting.form-select { background-color: #fff !important; }
+
+// Produkt-Badges (Sale, Tipp …): Abstand zwischen nebeneinanderstehenden Badges
+.product-badges { gap: 6px; }
+.product-badges .badge { margin-right: 0; }
