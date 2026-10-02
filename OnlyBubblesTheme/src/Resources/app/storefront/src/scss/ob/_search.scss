@@ -48,7 +48,7 @@
     border-radius: 20px;
     background: #fff;
     // Schatten + Hairline + abgedunkelte Seite dahinter
-    box-shadow: 0 30px 70px rgba(40, 34, 26, .22), 0 0 0 1px $ob-line, 0 0 0 100vmax rgba(38, 34, 29, .4);
+    box-shadow: 0 30px 70px rgba(40, 34, 26, .22), 0 0 0 100vmax rgba(38, 34, 29, .4);
     animation: obsuggest .2s ease-out;
 
     a { text-decoration: none; }
@@ -297,7 +297,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    padding: 18px 28px;
+    padding: 10px 28px;
     background: $ob-ink;
     color: $ob-on-dark;
 
@@ -318,7 +318,7 @@
     b {
         margin-right: 8px;
         font-family: $ob-font-serif;
-        font-size: 24px;
+        font-size: 21px;
         font-weight: 600;
         color: $ob-gold-light;
     }
@@ -336,8 +336,8 @@
 .ob-suggest-foot-arrow {
     display: grid;
     place-items: center;
-    width: 34px;
-    height: 34px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background: $ob-gold-600;
     transition: transform .2s ease;
@@ -356,8 +356,8 @@
     border-radius: 50%;
     animation: obrise 3.2s ease-in-out infinite alternate;
 
-    &:nth-child(1) { left: 46%; top: 10px; width: 9px; height: 9px; border: 1.3px solid rgba(210, 179, 126, .8); }
-    &:nth-child(2) { left: 48.5%; top: 26px; width: 14px; height: 14px; background: rgba(210, 179, 126, .5); animation-duration: 3.9s; }
+    &:nth-child(1) { left: 46%; top: 6px; width: 9px; height: 9px; border: 1.3px solid rgba(210, 179, 126, .8); }
+    &:nth-child(2) { left: 48.5%; top: 20px; width: 14px; height: 14px; background: rgba(210, 179, 126, .5); animation-duration: 3.9s; }
 }
 
 // --- Keine Treffer -------------------------------------------------------------------
