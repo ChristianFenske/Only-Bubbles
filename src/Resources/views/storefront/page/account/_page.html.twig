@@ -1,0 +1,39 @@
+{% sw_extends '@Storefront/storefront/page/account/_page.html.twig' %}
+
+{% set wfDesign = theme_config('wf-checkout-design') %}
+
+{% block page_account %}
+    {% if wfDesign %}
+        <div class="account account-content wf-account">
+            {{ block('page_account_sidebar') }}
+            {{ block('page_account_main') }}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_account_sidebar %}
+    {% if wfDesign %}
+        <div class="account-content-aside d-none d-lg-block">
+            {% if context.customer and not context.customer.guest %}
+                {% sw_include '@Storefront/storefront/page/account/sidebar.html.twig' %}
+            {% endif %}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_account_main %}
+    {% if wfDesign %}
+        <div class="account-content-main">
+            {% if activeRoute != 'frontend.account.home.page' %}
+                <p class="wf-eyebrow">{{ 'wfTheme.account.eyebrow'|trans|sw_sanitize }}</p>
+            {% endif %}
+            {{ block('page_account_main_content') }}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,40 @@
+{% sw_extends '@Storefront/storefront/component/account/login.html.twig' %}
+
+{% set wfDesign = theme_config('wf-checkout-design') %}
+
+{% block component_account_login_header %}
+    {% if wfDesign %}
+        {% if wfEyebrow is defined and wfEyebrow %}
+            <p class="wf-eyebrow">{{ wfEyebrow }}</p>
+        {% endif %}
+
+        {{ parent() }}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block component_account_login_form_description %}
+    {% if wfDesign %}
+        {% if wfDescription is defined and wfDescription %}
+            <p class="login-form-description">{{ wfDescription }}</p>
+        {% else %}
+            {{ parent() }}
+        {% endif %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block component_account_login_submit %}
+    {% if wfDesign %}
+        <div class="login-submit d-grid">
+            <button type="submit" class="btn btn-primary wf-btn-gold">
+                {{ 'account.loginSubmit'|trans|sw_sanitize }}
+                {% sw_icon 'arrow-right' style { size: 'xs' } %}
+            </button>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

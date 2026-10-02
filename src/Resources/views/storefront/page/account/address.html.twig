@@ -1,0 +1,31 @@
+{% sw_extends '@Storefront/storefront/page/account/address.html.twig' %}
+
+{% set wfDesign = theme_config('wf-checkout-design') %}
+
+{% block page_account_overview_billing_address_title %}
+    {% if wfDesign %}
+        <div class="wf-card-head">
+            <h2 class="card-title">
+                {% sw_icon 'file' style { size: 'xs' } %}
+                {{ 'account.overviewBillingHeader'|trans|sw_sanitize }}
+            </h2>
+            <a class="wf-card-link" href="{{ path('frontend.account.address.page') }}">{{ 'wfTheme.general.change'|trans|sw_sanitize }}</a>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_account_overview_shipping_address_title %}
+    {% if wfDesign %}
+        <div class="wf-card-head">
+            <h2 class="card-title">
+                {% sw_icon 'marker' style { size: 'xs' } %}
+                {{ 'account.overviewShippingHeader'|trans|sw_sanitize }}
+            </h2>
+            <a class="wf-card-link" href="{{ path('frontend.account.address.page') }}">{{ 'wfTheme.general.change'|trans|sw_sanitize }}</a>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

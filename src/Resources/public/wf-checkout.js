@@ -1,14 +1,14 @@
 /**
- * W&F – kleine Helfer für Warenkorb & Checkout (nur geladen, wenn das neue Design aktiv ist)
+ * W&F – kleine Helfer für Konto, Warenkorb & Checkout (nur geladen, wenn das neue Design aktiv ist)
  *
  * - Bestellnummer kopieren (Abschlussseite, [data-wf-copy-text])
- * - Anrede/Kontotyp als Pill-Auswahl (Registrierung im Checkout, Adress-Dialog)
- * - Auge-Button an Passwortfeldern (Registrierung im Checkout)
+ * - Anrede/Kontotyp als Pill-Auswahl (Registrierung, Konto, Checkout, Adress-Formulare)
+ * - Auge-Button an Passwortfeldern (Anmelden, Registrierung, Konto)
  */
 (function () {
     'use strict';
 
-    var SCOPE = '.wf-checkout, .address-manager-modal';
+    var SCOPE = '.account-register, .wf-checkout, .wf-account, .address-manager-modal, .account-address-form';
     var SEGMENTED_SELECTOR = 'select.contact-select, select[name="salutationId"], select[name$="[salutationId]"]';
     var isGerman = (document.documentElement.lang || '').toLowerCase().indexOf('de') === 0;
 
@@ -195,7 +195,7 @@
         });
 
         root.querySelectorAll('input[type="password"]').forEach(function (input) {
-            if (input.closest('.wf-checkout')) {
+            if (input.closest(SCOPE)) {
                 initPassword(input);
             }
         });

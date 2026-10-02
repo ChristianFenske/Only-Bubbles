@@ -23,8 +23,8 @@
         "blocks": {
             "wfDesign": {
                 "label": {
-                    "de-DE": "Warenkorb, Checkout & Menüs",
-                    "en-GB": "Cart, checkout & menus"
+                    "de-DE": "Konto, Warenkorb, Checkout & Menüs",
+                    "en-GB": "Account, cart, checkout & menus"
                 }
             }
         },
@@ -35,8 +35,8 @@
                     "en-GB": "New cart & checkout design"
                 },
                 "helpText": {
-                    "de-DE": "Warenkorb, Checkout, Bestellabschluss, Widerrufsseite, Konto-Menü und aufgeklapptes Hauptmenü im neuen Aufbau. Aus = bisheriges Design.",
-                    "en-GB": "Cart, checkout, order confirmation, revocation page, account menu and mega menu in the new layout. Off = previous design."
+                    "de-DE": "Konto, Warenkorb, Checkout, Bestellabschluss, Widerrufsseite, Konto-Menü, aufgeklapptes Hauptmenü und Sticky-Kaufleiste im neuen Aufbau. Aus = bisheriges Design.",
+                    "en-GB": "Account, cart, checkout, order confirmation, revocation page, account menu, mega menu and sticky buy bar in the new layout. Off = previous design."
                 },
                 "type": "switch",
                 "value": true,

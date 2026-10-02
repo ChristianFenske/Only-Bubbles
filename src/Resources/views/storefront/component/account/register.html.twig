@@ -1,8 +1,8 @@
 {% sw_extends '@Storefront/storefront/component/account/register.html.twig' %}
 
-{# Neues Design nur für die Registrierung im Checkout – Konto-/Login-Seite bleibt unverändert #}
+{% set wfDesign = theme_config('wf-checkout-design') %}
+
 {% set wfIsCheckout = activeRoute starts with 'frontend.checkout' %}
-{% set wfDesign = theme_config('wf-checkout-design') and wfIsCheckout %}
 
 {% block component_account_register_header %}
     {% if wfDesign %}
@@ -33,7 +33,7 @@
 {% block component_account_register_personal_legend %}
     {% if wfDesign %}
         {% sw_include '@WeineFeinkostTheme/storefront/component/wf/section-head.html.twig' with {
-            title: 'wfTheme.register.sectionPersonal'|trans|sw_sanitize
+            title: (wfIsCheckout ? 'wfTheme.register.sectionPersonal' : 'wfTheme.register.sectionAccount')|trans|sw_sanitize
         } %}
     {% else %}
         {{ parent() }}
@@ -63,13 +63,17 @@
 
 {% block component_account_register_privacy %}
     {% if wfDesign %}
-        <div class="wf-privacy-section">
-            {% sw_include '@WeineFeinkostTheme/storefront/component/wf/section-head.html.twig' with {
-                title: 'wfTheme.register.sectionPrivacy'|trans|sw_sanitize,
-                tag: 'div'
-            } %}
+        {% if wfIsCheckout %}
+            <div class="wf-privacy-section">
+                {% sw_include '@WeineFeinkostTheme/storefront/component/wf/section-head.html.twig' with {
+                    title: 'wfTheme.register.sectionPrivacy'|trans|sw_sanitize,
+                    tag: 'div'
+                } %}
+                {{ parent() }}
+            </div>
+        {% else %}
             {{ parent() }}
-        </div>
+        {% endif %}
     {% else %}
         {{ parent() }}
     {% endif %}
@@ -91,7 +95,7 @@
             </p>
 
             <button type="submit" class="btn btn-primary btn-lg">
-                {{ 'wfTheme.register.submitCheckout'|trans|sw_sanitize }}
+                {{ (wfIsCheckout ? 'wfTheme.register.submitCheckout' : 'wfTheme.register.submitAccount')|trans|sw_sanitize }}
                 {% sw_icon 'arrow-right' style { size: 'xs' } %}
             </button>
         </div>

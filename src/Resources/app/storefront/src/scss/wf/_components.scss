@@ -1,13 +1,13 @@
 // ===========================================================================
-// W&F — gemeinsame Bausteine für Warenkorb & Checkout
+// W&F — gemeinsame Bausteine für Konto, Warenkorb & Checkout
 // ===========================================================================
 
 // Bereiche, in denen die neuen Formular-/Karten-Styles gelten.
 // Bewusst eingegrenzt, damit Header-Suche, Listing-Filter usw. unberührt bleiben.
-$wf-scope: '.wf-checkout, .address-manager-modal';
+$wf-scope: '.account-register, .wf-checkout, .wf-account, .address-manager-modal, .account-address-form';
 
-// Heller Hintergrund auf Warenkorb- und Checkout-Seiten
-&:has(.wf-checkout, .wf-finish) {
+// Heller Hintergrund auf Konto- und Checkout-Seiten
+&:has(.account-register, .wf-checkout, .wf-finish, .wf-account) {
     background: $wf-cream;
 }
 
@@ -42,6 +42,7 @@ $wf-scope: '.wf-checkout, .address-manager-modal';
 
 // --- Buttons ---------------------------------------------------------------
 #{$wf-scope},
+.wf-empty-state,
 .wf-finish {
     .btn {
         display: inline-flex;
@@ -570,7 +571,9 @@ fieldset:first-of-type > .wf-section-head,
 // --- Icons ---------------------------------------------------------------
 #{$wf-scope},
 .wf-finish,
-.wf-steps {
+.wf-empty-state,
+.wf-steps,
+.account-aside {
     .icon > svg { top: 0; }
 
     .icon-xs,

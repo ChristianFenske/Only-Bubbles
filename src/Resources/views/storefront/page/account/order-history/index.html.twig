@@ -1,0 +1,19 @@
+{% sw_extends '@Storefront/storefront/page/account/order-history/index.html.twig' %}
+
+{% set wfDesign = theme_config('wf-checkout-design') %}
+
+{% block page_account_orders_info_empty %}
+    {% if wfDesign %}
+        <div class="wf-empty-state">
+            <span class="wf-empty-state-icon">{% sw_icon 'package-open' %}</span>
+            <h2>{{ 'wfTheme.account.ordersEmptyTitle'|trans|sw_sanitize }}</h2>
+            <p>{{ 'wfTheme.account.ordersEmptyText'|trans|sw_sanitize }}</p>
+            <a href="{{ path('frontend.home.page') }}" class="btn btn-primary">
+                {{ 'wfTheme.account.ordersEmptyCta'|trans|sw_sanitize }}
+                {% sw_icon 'arrow-right' style { size: 'xs' } %}
+            </a>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

@@ -1,7 +1,15 @@
 {
     "wfTheme": {
         "account": {
-            "eyebrow": "Mein Konto"
+            "eyebrow": "Mein Konto",
+            "defaultBilling": "Standard-Rechnungsadresse",
+            "defaultShipping": "Standard-Lieferadresse",
+            "hello": "Hallo,",
+            "newsletterTitle": "Newsletter-Abonnement",
+            "ordersEmptyCta": "Weine entdecken",
+            "ordersEmptyText": "Sobald Sie bei uns bestellt haben, finden Sie hier alle Bestellungen mit Status und Details.",
+            "ordersEmptyTitle": "Noch keine Bestellungen",
+            "welcome": "Willkommen zurück, %name%"
         },
         "accountMenu": {
             "createAccount": "Konto erstellen",
@@ -66,7 +74,8 @@
             "toAccount": "Zu meinem Konto"
         },
         "general": {
-            "change": "Ändern"
+            "change": "Ändern",
+            "edit": "Bearbeiten"
         },
         "nav": {
             "showAll": "Alle anzeigen",
@@ -77,7 +86,12 @@
             "sectionAddress": "Ihre Adresse",
             "sectionPersonal": "Persönliche Informationen",
             "sectionPrivacy": "Datenschutz",
-            "submitCheckout": "Weiter zu Versand & Zahlung"
+            "submitCheckout": "Weiter zu Versand & Zahlung",
+            "eyebrow": "Ich bin Neukunde",
+            "sectionAccount": "Konto",
+            "submitAccount": "Konto erstellen",
+            "text": "In wenigen Schritten zu Ihrem persönlichen Konto bei Weine & Feinkost.",
+            "title": "Konto erstellen"
         },
         "revocation": {
             "howTitle": "So funktioniert's",
@@ -96,6 +110,32 @@
         "trust": {
             "freeShipping": "Kostenloser Versand ab 12 Flaschen",
             "secure": "Sichere, verschlüsselte Übertragung"
+        },
+        "dealer": {
+            "eyebrow": "Für Gastronomie & Handel",
+            "formEyebrow": "Neues Händlerkonto",
+            "formTitle": "Ihre Angaben",
+            "loginHint": "Schon ein Händlerkonto?",
+            "loginLink": "Hier anmelden",
+            "step1": "Formular mit Firma und – falls vorhanden – USt-IdNr. ausfüllen.",
+            "step2": "Wir prüfen Ihre Anfrage und melden uns per E-Mail.",
+            "step3": "Nach der Freischaltung sehen Sie Ihre Händlerkonditionen im Shop.",
+            "stepsEyebrow": "So geht's",
+            "stepsTitle": "In drei Schritten zum Händlerkonto",
+            "title": "Händlerregistrierung"
+        },
+        "login": {
+            "advantage1": "Schneller einkaufen",
+            "advantage2": "Daten & Einstellungen speichern",
+            "advantage3": "Bestellübersicht & Sendungsverfolgung",
+            "advantage4": "Newsletter-Abo verwalten",
+            "advantagesTitle": "Ihre Vorteile als Kunde",
+            "dealerRegister": "Als Händler registrieren",
+            "existingEyebrow": "Ich bin bereits Kunde",
+            "existingText": "Mit E-Mail-Adresse und Passwort einloggen.",
+            "existingTitle": "Willkommen zurück",
+            "eyebrow": "Mein Konto",
+            "title": "Anmelden oder Konto erstellen"
         }
     }
 }

@@ -5045,7 +5045,7 @@ footer.footer-main {
 
 
 /* =========================================================================
- * Warenkorb, Checkout, Bestellabschluss, Widerruf, aufgeklappte Menüs
+ * Konto, Warenkorb, Checkout, Bestellabschluss, Widerruf, aufgeklappte Menüs
  * und Sticky-Kaufleiste auf der Produktseite
  * im Aufbau des Only-Bubbles-Themes, in den W&F-Farben.
  * Greift nur, wenn <body> die Klasse "wf-design" hat (Theme-Einstellung
@@ -5059,11 +5059,14 @@ body.wf-design {
 	@import 'wf/register';
 	@import 'wf/checkout';
 	@import 'wf/finish';
+	@import 'wf/account';
 	@import 'wf/cart';
 	@import 'wf/account-menu';
 	@import 'wf/header';
 	@import 'wf/checkout-reset';
 	@import 'wf/forms';
 	@import 'wf/revocation';
+	@import 'wf/account-reset';
+	@import 'wf/dealer';
 	@import 'wf/sticky-buy';
 }

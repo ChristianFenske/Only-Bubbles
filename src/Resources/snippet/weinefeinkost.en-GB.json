@@ -1,7 +1,15 @@
 {
     "wfTheme": {
         "account": {
-            "eyebrow": "My account"
+            "eyebrow": "My account",
+            "defaultBilling": "Default billing address",
+            "defaultShipping": "Default shipping address",
+            "hello": "Hello,",
+            "newsletterTitle": "Newsletter subscription",
+            "ordersEmptyCta": "Discover wines",
+            "ordersEmptyText": "As soon as you have ordered from us, you will find all orders with status and details here.",
+            "ordersEmptyTitle": "No orders yet",
+            "welcome": "Welcome back, %name%"
         },
         "accountMenu": {
             "createAccount": "Create account",
@@ -66,7 +74,8 @@
             "toAccount": "Go to my account"
         },
         "general": {
-            "change": "Change"
+            "change": "Change",
+            "edit": "Edit"
         },
         "nav": {
             "showAll": "Show all",
@@ -77,7 +86,12 @@
             "sectionAddress": "Your address",
             "sectionPersonal": "Personal information",
             "sectionPrivacy": "Privacy",
-            "submitCheckout": "Continue to shipping & payment"
+            "submitCheckout": "Continue to shipping & payment",
+            "eyebrow": "I am a new customer",
+            "sectionAccount": "Account",
+            "submitAccount": "Create account",
+            "text": "Create your personal Weine & Feinkost account in just a few steps.",
+            "title": "Create account"
         },
         "revocation": {
             "howTitle": "How it works",
@@ -96,6 +110,32 @@
         "trust": {
             "freeShipping": "Free shipping from 12 bottles",
             "secure": "Secure, encrypted transmission"
+        },
+        "dealer": {
+            "eyebrow": "For restaurants & retailers",
+            "formEyebrow": "New retailer account",
+            "formTitle": "Your details",
+            "loginHint": "Already have a retailer account?",
+            "loginLink": "Log in here",
+            "step1": "Fill in the form with your company and – if available – VAT ID.",
+            "step2": "We review your request and get back to you by e-mail.",
+            "step3": "Once approved, you will see your retailer conditions in the shop.",
+            "stepsEyebrow": "How it works",
+            "stepsTitle": "Three steps to your retailer account",
+            "title": "Retailer registration"
+        },
+        "login": {
+            "advantage1": "Faster checkout",
+            "advantage2": "Save data & preferences",
+            "advantage3": "Order overview & tracking",
+            "advantage4": "Manage newsletter subscription",
+            "advantagesTitle": "Your benefits as a customer",
+            "dealerRegister": "Register as a retailer",
+            "existingEyebrow": "I am a returning customer",
+            "existingText": "Log in with your email address and password.",
+            "existingTitle": "Welcome back",
+            "eyebrow": "My account",
+            "title": "Log in or create an account"
         }
     }
 }

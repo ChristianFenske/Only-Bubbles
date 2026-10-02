@@ -1,0 +1,49 @@
+{% sw_extends '@Storefront/storefront/page/account/index.html.twig' %}
+
+{% set wfDesign = theme_config('wf-checkout-design') %}
+
+{% block page_account_overview_welcome %}
+    {% if wfDesign %}
+        <div class="account-welcome wf-welcome-hero">
+            <p class="wf-eyebrow">{{ 'wfTheme.account.eyebrow'|trans|sw_sanitize }}</p>
+            <h1>{{ 'wfTheme.account.welcome'|trans({'%name%': context.customer.firstName})|sw_sanitize }}</h1>
+
+            {% block page_account_overview_welcome_intro %}
+                {% if wfDesign %}
+                    {{ parent() }}
+                {% else %}
+                    {{ parent() }}
+                {% endif %}
+            {% endblock %}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_account_overview_profile_title %}
+    {% if wfDesign %}
+        <div class="wf-card-head">
+            <h2 class="card-title">
+                {% sw_icon 'avatar' style { size: 'xs' } %}
+                {{ 'account.overviewProfileHeader'|trans|sw_sanitize }}
+            </h2>
+            <a class="wf-card-link" href="{{ path('frontend.account.profile.page') }}">{{ 'wfTheme.general.edit'|trans|sw_sanitize }}</a>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_account_overview_newsletter_title %}
+    {% if wfDesign %}
+        <div class="wf-card-head">
+            <h2 class="card-title">
+                {% sw_icon 'envelope' style { size: 'xs' } %}
+                {{ 'wfTheme.account.newsletterTitle'|trans|sw_sanitize }}
+            </h2>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

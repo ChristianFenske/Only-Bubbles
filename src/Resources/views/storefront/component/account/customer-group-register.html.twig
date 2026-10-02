@@ -1,0 +1,17 @@
+{% sw_extends '@Storefront/storefront/component/account/customer-group-register.html.twig' %}
+
+{% set wfDesign = theme_config('wf-checkout-design') %}
+
+{# Titel steht im Seitenkopf – in der Karte nur Eyebrow, Überschrift und Einleitung #}
+{% block component_account_register_header %}
+    {% if wfDesign %}
+        <p class="wf-eyebrow">{{ 'wfTheme.dealer.formEyebrow'|trans|sw_sanitize }}</p>
+        <div class="card-title">{{ 'wfTheme.dealer.formTitle'|trans|sw_sanitize }}</div>
+
+        {% if page.group.translated.registrationIntroduction is not empty %}
+            <div class="wf-card-intro">{{ page.group.translated.registrationIntroduction|sw_sanitize }}</div>
+        {% endif %}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

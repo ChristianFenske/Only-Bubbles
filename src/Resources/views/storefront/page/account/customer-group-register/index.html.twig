@@ -1,0 +1,43 @@
+{% sw_extends '@Storefront/storefront/page/account/customer-group-register/index.html.twig' %}
+
+{% set wfDesign = theme_config('wf-checkout-design') %}
+
+{% block page_account_customer_group_register_inner %}
+    {% if wfDesign %}
+        <div class="wf-page-head">
+            <div>
+                <p class="wf-eyebrow">{{ 'wfTheme.dealer.eyebrow'|trans|sw_sanitize }}</p>
+                <h1 class="wf-page-title">
+                    {{ page.group.translated.registrationTitle ?: 'wfTheme.dealer.title'|trans|sw_sanitize }}
+                </h1>
+            </div>
+        </div>
+
+        <div class="wf-register-grid wf-dealer-grid">
+            <div class="wf-login-panel wf-dealer-panel">
+
+                <p class="wf-eyebrow">{{ 'wfTheme.dealer.stepsEyebrow'|trans|sw_sanitize }}</p>
+                <h2 class="wf-dealer-title">{{ 'wfTheme.dealer.stepsTitle'|trans|sw_sanitize }}</h2>
+
+                <ol class="wf-dealer-steps">
+                    <li><span>1</span>{{ 'wfTheme.dealer.step1'|trans|sw_sanitize }}</li>
+                    <li><span>2</span>{{ 'wfTheme.dealer.step2'|trans|sw_sanitize }}</li>
+                    <li><span>3</span>{{ 'wfTheme.dealer.step3'|trans|sw_sanitize }}</li>
+                </ol>
+
+                <div class="wf-dealer-login">
+                    {{ 'wfTheme.dealer.loginHint'|trans|sw_sanitize }}
+                    <a href="{{ path('frontend.account.login.page') }}">{{ 'wfTheme.dealer.loginLink'|trans|sw_sanitize }}</a>
+                </div>
+            </div>
+
+            <div class="wf-register-panel">
+                {% sw_include '@Storefront/storefront/component/account/customer-group-register.html.twig' with {
+                    cardTitle: 'account.registerPersonalHeader'|trans|sw_sanitize
+                } %}
+            </div>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

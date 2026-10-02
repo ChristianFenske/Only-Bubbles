@@ -1,16 +1,136 @@
 {% sw_extends '@Storefront/storefront/page/account/register/index.html.twig' %}
 
+{% set wfDesign = theme_config('wf-checkout-design') %}
+
+{% block page_account_register_header %}
+    {% if wfDesign %}
+        <div class="wf-page-head">
+            <div>
+                <p class="wf-eyebrow">{{ 'wfTheme.login.eyebrow'|trans|sw_sanitize }}</p>
+                <h1 class="wf-page-title">{{ 'wfTheme.login.title'|trans|sw_sanitize }}</h1>
+            </div>
+
+            {% set wfDealerUrl = theme_config('wf-link-dealer-register') %}
+            {% if wfDealerUrl %}
+                <a href="{{ wfDealerUrl }}" class="btn wf-btn-outline">
+                    {% sw_icon 'briefcase' style { size: 'sm' } %}
+                    {{ 'wfTheme.login.dealerRegister'|trans|sw_sanitize }}
+                </a>
+            {% endif %}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_account_register_inner %}
+    {% if wfDesign %}
+        <div class="wf-register-grid">
+            {{ block('page_account_register_login_container') }}
+            {{ block('page_account_register_container') }}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_account_register_login_container %}
+    {% if wfDesign %}
+        <div class="wf-login-panel">
+            {% sw_include '@Storefront/storefront/component/account/login.html.twig' with {
+                cardTitle: 'wfTheme.login.existingTitle'|trans|sw_sanitize,
+                wfEyebrow: 'wfTheme.login.existingEyebrow'|trans|sw_sanitize,
+                wfDescription: 'wfTheme.login.existingText'|trans|sw_sanitize
+            } %}
+
+            <div class="b2b-register">
+                <a href="{{ seoUrl('frontend.home.page') }}customer-group-registration/019d2f23fcb572f3a5eddddb8a011e10#" class="b2b-register-link btn">
+                    <span class="icon-handshake-o"></span>
+                    <span>{{ 'account.registerB2BTitle'|trans|sw_sanitize }}</span>
+                </a>
+            </div>
+
+            {{ block('page_account_register_advantages') }}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_account_register_advantages_title %}
+    {% if wfDesign %}
+        <h2 class="login-advantages-header">
+            {{ 'wfTheme.login.advantagesTitle'|trans|sw_sanitize }}
+        </h2>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_account_register_advantages_entry1 %}
+    {% if wfDesign %}
+        <li>
+            <span class="wf-icon-circle">{% sw_icon 'rocket' style { size: 'xs' } %}</span>
+            {{ 'wfTheme.login.advantage1'|trans|sw_sanitize }}
+        </li>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_account_register_advantages_entry2 %}
+    {% if wfDesign %}
+        <li>
+            <span class="wf-icon-circle">{% sw_icon 'bookmark' style { size: 'xs' } %}</span>
+            {{ 'wfTheme.login.advantage2'|trans|sw_sanitize }}
+        </li>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_account_register_advantages_entry3 %}
+    {% if wfDesign %}
+        <li>
+            <span class="wf-icon-circle">{% sw_icon 'package-closed' style { size: 'xs' } %}</span>
+            {{ 'wfTheme.login.advantage3'|trans|sw_sanitize }}
+        </li>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block page_account_register_advantages_entry4 %}
+    {% if wfDesign %}
+        <li>
+            <span class="wf-icon-circle">{% sw_icon 'envelope' style { size: 'xs' } %}</span>
+            {{ 'wfTheme.login.advantage4'|trans|sw_sanitize }}
+        </li>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
 {% block page_account_register_container %}
-	<div class="col-lg-8">
-		<div class="b2b-register">
-			
-			<a href="{{ seoUrl('frontend.home.page') }}customer-group-registration/019d2f23fcb572f3a5eddddb8a011e10#" class="b2b-register-link btn">
-				<span class="icon-handshake-o"></span>
-				<span>{{ 'account.registerB2BTitle'|trans|sw_sanitize }}</span>
-			</a>
-		</div>
-		{% sw_include '@Storefront/storefront/component/account/register.html.twig' with {
-			cardTitle: 'account.registerPersonalHeader'|trans|sw_sanitize
-		} %}
-	</div>
+    {% if wfDesign %}
+        <div class="wf-register-panel">
+            {% sw_include '@Storefront/storefront/component/account/register.html.twig' with {
+                cardTitle: 'wfTheme.register.title'|trans|sw_sanitize,
+                wfEyebrow: 'wfTheme.register.eyebrow'|trans|sw_sanitize,
+                wfIntro: 'wfTheme.register.text'|trans|sw_sanitize
+            } %}
+        </div>
+    {% else %}
+        <div class="col-lg-8">
+            <div class="b2b-register">
+                <a href="{{ seoUrl('frontend.home.page') }}customer-group-registration/019d2f23fcb572f3a5eddddb8a011e10#" class="b2b-register-link btn">
+                    <span class="icon-handshake-o"></span>
+                    <span>{{ 'account.registerB2BTitle'|trans|sw_sanitize }}</span>
+                </a>
+            </div>
+            {% sw_include '@Storefront/storefront/component/account/register.html.twig' with {
+                cardTitle: 'account.registerPersonalHeader'|trans|sw_sanitize
+            } %}
+        </div>
+    {% endif %}
 {% endblock %}

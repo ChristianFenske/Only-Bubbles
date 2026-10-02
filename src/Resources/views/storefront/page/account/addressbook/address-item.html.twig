@@ -1,0 +1,20 @@
+{% sw_extends '@Storefront/storefront/page/account/addressbook/address-item.html.twig' %}
+
+{% set wfDesign = theme_config('wf-checkout-design') %}
+
+{% block address_item_badge %}
+    {% if wfDesign %}
+        <div class="mt-auto">
+            <span class="address-item-default-badge wf-badge">
+                {% if defaultShipping %}
+                    {% sw_icon 'truck' style { size: 'xs' } %}
+                {% else %}
+                    {% sw_icon 'file' style { size: 'xs' } %}
+                {% endif %}
+                {{ snippet|trans|sw_sanitize }}
+            </span>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
