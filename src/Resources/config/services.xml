@@ -52,5 +52,11 @@
 		<service id="WeineFeinkostTheme\Subscriber\SimilarProductsCriteriaSubscriber">
 			<tag name="kernel.event_subscriber"/>
 		</service>
+		<!-- Such-Dropdown: Kategorien der Treffer mit Anzahl (Template: extensions.wfSuggest) -->
+		<service id="WeineFeinkostTheme\Subscriber\SearchSuggestSubscriber">
+			<argument type="service" id="category.repository"/>
+			<argument type="service" id="logger"/>
+			<tag name="kernel.event_subscriber"/>
+		</service>
     </services>
 </container>

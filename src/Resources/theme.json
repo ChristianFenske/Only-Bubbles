@@ -35,8 +35,8 @@
                     "en-GB": "New cart & checkout design"
                 },
                 "helpText": {
-                    "de-DE": "Konto, Warenkorb, Checkout, Bestellabschluss, Widerrufsseite, Konto-Menü, aufgeklapptes Hauptmenü und Sticky-Kaufleiste im neuen Aufbau. Aus = bisheriges Design.",
-                    "en-GB": "Account, cart, checkout, order confirmation, revocation page, account menu, mega menu and sticky buy bar in the new layout. Off = previous design."
+                    "de-DE": "Konto, Warenkorb, Checkout, Bestellabschluss, Widerrufsseite, Konto-Menü, aufgeklapptes Hauptmenü, Such-Dropdown und Sticky-Kaufleiste im neuen Aufbau. Aus = bisheriges Design.",
+                    "en-GB": "Account, cart, checkout, order confirmation, revocation page, account menu, mega menu, search dropdown and sticky buy bar in the new layout. Off = previous design."
                 },
                 "type": "switch",
                 "value": true,

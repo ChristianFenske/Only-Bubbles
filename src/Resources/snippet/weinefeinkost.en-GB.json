@@ -143,6 +143,16 @@
             "existingTitle": "Welcome back",
             "eyebrow": "My account",
             "title": "Log in or create an account"
+        },
+        "search": {
+            "categories": "Categories",
+            "noResult": "No results for “%term%”",
+            "noResultHint": "Check the spelling or try a more general term.",
+            "producers": "Producers",
+            "products": "Products",
+            "resultsFor": "results for “%term%”",
+            "suggestions": "Suggestions",
+            "xOfY": "%shown% of %total%"
         }
     }
 }

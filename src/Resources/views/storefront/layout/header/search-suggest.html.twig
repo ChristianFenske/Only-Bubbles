@@ -1,0 +1,233 @@
+{% sw_extends '@Storefront/storefront/layout/header/search-suggest.html.twig' %}
+
+{% set wfDesign = theme_config('wf-checkout-design') %}
+
+{# W&F-Such-Dropdown (Handoff „Suche“, Zustand Ergebnisse).
+   Klassen js-search-result / js-result bleiben für die Shopware-Live-Suche (Tastatur, Klick).
+   Kategorien kommen aus WeineFeinkostTheme\Subscriber\SearchSuggestSubscriber. #}
+{% block layout_search_suggest %}
+    {% if wfDesign %}
+        {% set wfTerm = page.searchTerm|trim %}
+        {% set wfTermLower = wfTerm|lower %}
+        {% set wfTermLen = wfTerm|length %}
+        {% set wfTotal = page.searchResult.total %}
+        {% set wfProducts = page.searchResult.elements|slice(0, 6) %}
+        {% set wfSearchUrl = path('frontend.search.page') ~ '?search=' %}
+
+        {# Winzer der Treffer #}
+        {% set wfManAgg = page.searchResult.aggregations.get('manufacturer') %}
+        {% set wfManNames = {} %}
+        {% if wfManAgg and wfManAgg.entities is defined %}
+            {% for m in wfManAgg.entities %}
+                {% set wfManNames = wfManNames|merge({ (m.id): (m.translated.name ?: m.name) }) %}
+            {% endfor %}
+        {% endif %}
+        {% for product in wfProducts %}
+            {% if product.manufacturerId and wfManNames[product.manufacturerId] is not defined and product.manufacturer %}
+                {% set wfManNames = wfManNames|merge({ (product.manufacturerId): product.manufacturer.translated.name }) %}
+            {% endif %}
+        {% endfor %}
+
+        {# Suchvorschläge: ergänztes Wort aus den Produktnamen + typische Begriffe #}
+        {% set wfKeywords = ['Grand Cru', 'Premier Cru', 'Riesling', 'Spätburgunder', 'Rosé', 'Trocken', 'Reserva', 'Riserva', 'Brut', 'Blanc de Blancs'] %}
+        {% set wfWord = '' %}
+        {% for product in page.searchResult.elements %}
+            {% for w in product.translated.name|split(' ') %}
+                {% set w = w|trim(',.;:()"„“') %}
+                {% if wfWord == '' and wfTermLen > 0 and (w|lower) starts with wfTermLower and (w|length) > wfTermLen %}
+                    {% set wfWord = w %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        {% if wfWord == '' %}{% set wfWord = wfTerm|capitalize %}{% endif %}
+
+        {% set wfSuggestions = [] %}
+        {% for k in wfKeywords %}
+            {% if wfSuggestions|length < 4 and (k|lower) not in (wfWord|lower) %}
+                {% set wfHit = false %}
+                {% for product in page.searchResult.elements %}
+                    {% if (k|lower) in (product.translated.name|lower) %}{% set wfHit = true %}{% endif %}
+                {% endfor %}
+                {% if wfHit %}{% set wfSuggestions = wfSuggestions|merge([wfWord ~ ' ' ~ k]) %}{% endif %}
+            {% endif %}
+        {% endfor %}
+        {% if wfSuggestions|length < 4 and wfWord|lower != wfTermLower %}
+            {% set wfSuggestions = [wfWord]|merge(wfSuggestions) %}
+        {% endif %}
+
+        {% set wfCategories = page.searchResult.extensions.wfSuggest.categories ?? [] %}
+
+        <div class="search-suggest js-search-result wf-suggest-wrap">
+            <div class="wf-suggest{% if wfTotal == 0 %} is-empty{% endif %}">
+                {% if wfTotal == 0 %}
+                    {% block layout_search_suggest_no_result %}
+                        {% if wfDesign %}
+                            <div class="wf-suggest-none" id="search-suggest-result-info" role="status">
+                                <div class="wf-suggest-none-title">{{ 'wfTheme.search.noResult'|trans({'%term%': wfTerm})|sw_sanitize }}</div>
+                                <p>{{ 'wfTheme.search.noResultHint'|trans|sw_sanitize }}</p>
+                            </div>
+                        {% else %}
+                            {{ parent() }}
+                        {% endif %}
+                    {% endblock %}
+                {% else %}
+                    <div class="wf-suggest-grid">
+                        {# --- linke Spalte ------------------------------------------------ #}
+                        <aside class="wf-suggest-side">
+                            {% if wfSuggestions|length %}
+                                <div class="wf-suggest-section">
+                                    <div class="wf-suggest-label">{{ 'wfTheme.search.suggestions'|trans|sw_sanitize }}</div>
+                                    {% for s in wfSuggestions %}
+                                        <a class="wf-suggest-term" href="{{ wfSearchUrl ~ s|url_encode }}">
+                                            {% sw_icon 'search' style { size: 'xs' } %}
+                                            <span>
+                                                {%- if (s|lower) starts with wfTermLower -%}
+                                                    {{ s|slice(0, wfTermLen) }}<strong>{{ s|slice(wfTermLen) }}</strong>
+                                                {%- else -%}
+                                                    <strong>{{ s }}</strong>
+                                                {%- endif -%}
+                                            </span>
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            {% if wfCategories|length %}
+                                <div class="wf-suggest-section">
+                                    <div class="wf-suggest-label">{{ 'wfTheme.search.categories'|trans|sw_sanitize }}</div>
+                                    {% for c in wfCategories %}
+                                        <a class="wf-suggest-cat" href="{{ seoUrl('frontend.navigation.page', { navigationId: c.id }) }}">
+                                            <span>{{ c.name }}</span>
+                                            <span class="wf-suggest-count">{{ c.count }}</span>
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            {% if wfManNames|length %}
+                                <div class="wf-suggest-section">
+                                    <div class="wf-suggest-label">{{ 'wfTheme.search.producers'|trans|sw_sanitize }}</div>
+                                    <div class="wf-suggest-pills">
+                                        {% for name in wfManNames|slice(0, 6) %}
+                                            <a class="wf-suggest-pill" href="{{ wfSearchUrl ~ name|url_encode }}">{{ name }}</a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </aside>
+
+                        {# --- Produkte ------------------------------------------------------ #}
+                        <div class="wf-suggest-main">
+                            <div class="wf-suggest-main-head">
+                                <div class="wf-suggest-label">{{ 'wfTheme.search.products'|trans|sw_sanitize }}</div>
+                                <div class="wf-suggest-of">{{ 'wfTheme.search.xOfY'|trans({'%shown%': wfProducts|length, '%total%': wfTotal})|sw_sanitize }}</div>
+                            </div>
+
+                            <ul class="search-suggest-container wf-suggest-products"
+                                id="search-suggest-listbox"
+                                aria-label="{{ 'header.searchDropdownTitle'|trans|striptags }}"
+                                role="listbox">
+                                {% for product in wfProducts %}
+                                    {% set price = product.calculatedPrice %}
+                                    {% if product.calculatedPrices.count > 0 %}{% set price = product.calculatedPrices.last %}{% endif %}
+                                    {% set wfFrom = product.calculatedPrices.count > 1 %}
+                                    {% if product.variantListingConfig.displayParent and product.parentId === null %}
+                                        {% set wfFrom = wfFrom or price.unitPrice != product.calculatedCheapestPrice.unitPrice %}
+                                        {% set price = product.calculatedCheapestPrice %}
+                                    {% endif %}
+                                    {% set wfName = product.translated.name %}
+                                    {% set wfNameU = wfName|u %}
+                                    {% set wfPos = wfTermLen > 0 ? wfNameU.ignoreCase().indexOf(wfTerm) : null %}
+
+                                    {# Chips: Dosage/Lage aus dem Namen, Jahrgang, Flaschengröße #}
+                                    {% set wfChips = [] %}
+                                    {% for k in wfKeywords %}
+                                        {% if wfChips|length < 1 and (k|lower) in (wfName|lower) %}{% set wfChips = wfChips|merge([k]) %}{% endif %}
+                                    {% endfor %}
+                                    {% for w in wfName|split(' ') %}
+                                        {% if wfChips|length < 2 and w matches '/^(19|20)\\d\\d$/' %}{% set wfChips = wfChips|merge([w]) %}{% endif %}
+                                    {% endfor %}
+                                    {% if wfChips|length < 2 and product.purchaseUnit and product.unit %}
+                                        {% set wfChips = wfChips|merge([((product.purchaseUnit ~ '')|replace({'.': ','})) ~ ' ' ~ (product.unit.translated.shortCode ?: product.unit.translated.name)]) %}
+                                    {% endif %}
+
+                                    {% block layout_search_suggest_result_product %}
+                                        {% if wfDesign %}
+                                            <li class="search-suggest-product js-result" role="option">
+                                                <a href="{{ seoUrl('frontend.detail.page', { productId: product.id }) }}"
+                                                   title="{{ wfName }}"
+                                                   class="search-suggest-product-link wf-suggest-product">
+                                                    <span class="wf-suggest-img">
+                                                        {% if product.cover.media.url %}
+                                                            {% sw_thumbnails 'search-suggest-product-image-thumbnails' with {
+                                                                media: product.cover.media,
+                                                                sizes: { default: '100px' },
+                                                                attributes: { class: 'search-suggest-product-image', alt: (product.cover.media.translated.alt ?: wfName) }
+                                                            } %}
+                                                        {% endif %}
+                                                    </span>
+
+                                                    <span class="wf-suggest-info">
+                                                        {% if wfManNames[product.manufacturerId] is defined %}
+                                                            <span class="wf-suggest-producer">{{ wfManNames[product.manufacturerId] }}</span>
+                                                        {% endif %}
+                                                        <span class="wf-suggest-name">
+                                                            {%- if wfPos is not null -%}
+                                                                {{ wfNameU.slice(0, wfPos) }}<mark>{{ wfNameU.slice(wfPos, (wfTerm|u).length) }}</mark>{{ wfNameU.slice(wfPos + (wfTerm|u).length) }}
+                                                            {%- else -%}
+                                                                {{ wfName }}
+                                                            {%- endif -%}
+                                                        </span>
+                                                        {% if wfChips|length %}
+                                                            <span class="wf-suggest-chips">
+                                                                {% for chip in wfChips %}<span>{{ chip }}</span>{% endfor %}
+                                                            </span>
+                                                        {% endif %}
+                                                    </span>
+
+                                                    <span class="wf-suggest-price">
+                                                        <span class="wf-suggest-price-value">
+                                                            {% if wfFrom %}{{ 'listing.listingTextFrom'|trans|sw_sanitize }} {% endif %}{{ price.unitPrice|currency }}
+                                                        </span>
+                                                        {% if price.referencePrice is not null %}
+                                                            <span class="wf-suggest-price-ref">{{ price.referencePrice.price|currency }} / {% if price.referencePrice.referenceUnit != 1 %}{{ price.referencePrice.referenceUnit }} {% endif %}{{ price.referencePrice.unitName }}</span>
+                                                        {% endif %}
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        {% else %}
+                                            {{ parent() }}
+                                        {% endif %}
+                                    {% endblock %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
+                    {# --- Fußleiste: ganze Leiste ist der Link ---------------------------- #}
+                    {% block layout_search_suggest_result_total %}
+                        {% if wfDesign %}
+                            <div class="js-result search-suggest-total wf-suggest-foot" role="option">
+                                <a href="{{ wfSearchUrl ~ wfTerm|url_encode }}"
+                                   class="search-suggest-total-link"
+                                   title="{{ 'header.searchAllResults'|trans|striptags }}">
+                                    <span class="wf-suggest-foot-count" id="search-suggest-result-info">
+                                        <b>{{ wfTotal }}</b> {{ 'wfTheme.search.resultsFor'|trans({'%term%': wfTerm})|sw_sanitize }}
+                                    </span>
+                                    <span class="wf-suggest-foot-all">
+                                        {{ 'header.searchAllResults'|trans|sw_sanitize }}
+                                        <span class="wf-suggest-foot-arrow">{% sw_icon 'arrow-right' style { size: 'xs' } %}</span>
+                                    </span>
+                                </a>
+                            </div>
+                        {% else %}
+                            {{ parent() }}
+                        {% endif %}
+                    {% endblock %}
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
