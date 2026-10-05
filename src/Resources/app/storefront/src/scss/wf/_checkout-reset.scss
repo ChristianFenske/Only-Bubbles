@@ -11,7 +11,7 @@
     .confirm-address,
     .confirm-product,
     .confirm-payment-shipping,
-    .checkout-aside-summary,
+    .checkout-aside-summary:not(.wf-summary-card),
     .checkout-additional {
         border: 0 !important;
         border-radius: 0 !important;

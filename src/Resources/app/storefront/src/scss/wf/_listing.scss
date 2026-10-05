@@ -1,0 +1,28 @@
+// ===========================================================================
+// Produktkacheln: "In den Warenkorb" bleibt immer im Button
+// (Eltern-Theme: feste Höhe 40px -> bei schmalen Kacheln lief der Text heraus)
+// ===========================================================================
+
+.product-box .btn.btn-buy {
+    gap: 6px;
+    padding: 0 16px;
+    white-space: nowrap;
+
+    span.icon-shopping-cart { margin-right: 0; }
+}
+
+// Schmale Kacheln (Tablet / kleine Laptops): Icon weglassen, Text darf
+// zweizeilig werden – dann wächst der Button mit, statt dass der Text herausläuft
+@media (max-width: 1399px) {
+    .product-box .btn.btn-buy {
+        height: auto;
+        min-height: 40px;
+        padding: 6px 14px;
+        font-size: 13px;
+        line-height: 1.15;
+        text-align: center;
+        white-space: normal;
+
+        span.icon-shopping-cart { display: none; }
+    }
+}
