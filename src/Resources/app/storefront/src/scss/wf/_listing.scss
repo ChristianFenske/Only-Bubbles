@@ -34,10 +34,14 @@
     text-align: center;
 }
 
-// Streichpreis (UVP / alter Preis) sicher durchstreichen – Kacheln, Slider, Produktseite
-.list-price:not(.list-price-no-line-through) .list-price-price,
-.product-detail-list-price-wrapper .list-price-price {
-    text-decoration: line-through;
+// Streichpreis (UVP / alter Preis) immer durchstreichen – Kacheln, Slider, Produktseite.
+// Shopware lässt das Durchstreichen weg (.list-price-no-line-through), sobald die
+// Textbausteine listing.beforeListPrice / listing.afterListPrice belegt sind – auch
+// wenn sie nur ein Leerzeichen enthalten. Hier deshalb erzwungen.
+.list-price .list-price-price,
+.product-detail-list-price-wrapper .list-price-price,
+.product-detail-list-price-wrapper > span:not(.list-price-percentage):not(.visually-hidden) {
+    text-decoration: line-through !important;
 }
 
 // Produktseite, nicht lieferbarer Artikel (kein Kauf-Button, stattdessen "Benachrichtigen"):
