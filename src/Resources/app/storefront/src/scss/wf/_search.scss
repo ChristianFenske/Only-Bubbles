@@ -421,8 +421,6 @@
     .wf-suggest-foot-all { font-size: 0; gap: 0; }
 }
 
-// --- Suchergebnis-Seite: Hintergrund wie Kategorie-/Produktseiten -------------------------
-&.is-ctl-search .content-main { background: $wf-cream; }
 
 // Suchfelder im Seiteninhalt (z. B. Suchfeld im Bild auf einer Einkaufswelt):
 // keine Vorschläge, Enter sucht normal. Nur die Header-Suche zeigt das Dropdown.
