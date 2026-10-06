@@ -1,5 +1,5 @@
 // ===========================================================================
-// Produktkacheln: "In den Warenkorb" bleibt immer im Button
+// Produktkacheln + Newsletter: kleine Korrekturen am Eltern-Theme
 // (Eltern-Theme: feste Höhe 40px -> bei schmalen Kacheln lief der Text heraus)
 // ===========================================================================
 
@@ -25,4 +25,11 @@
 
         span.icon-shopping-cart { display: none; }
     }
+}
+
+// Newsletter-Bereich (Startseite): Überschrift sicher mittig
+// (Eltern-Theme zentriert nur per justify-self, das greift nicht in jedem Browser)
+.section-newsletter .card-body .card-title {
+    width: 100%;
+    text-align: center;
 }
