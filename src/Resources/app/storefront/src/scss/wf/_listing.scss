@@ -39,3 +39,12 @@
 .product-detail-list-price-wrapper .list-price-price {
     text-decoration: line-through;
 }
+
+// Produktseite, nicht lieferbarer Artikel (kein Kauf-Button, stattdessen "Benachrichtigen"):
+// Lieferstatus unten links unter Preis und MwSt.-Hinweis statt über dem Preis
+@media (min-width: 992px) {
+    .buy-widget-columns:not(:has(.btn-buy)) .product-detail-delivery-information {
+        top: auto;
+        bottom: 0;
+    }
+}
