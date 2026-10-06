@@ -1,5 +1,5 @@
 // ===========================================================================
-// Produktkacheln + Newsletter: kleine Korrekturen am Eltern-Theme
+// Produktkacheln, Streichpreis + Newsletter: kleine Korrekturen am Eltern-Theme
 // (Eltern-Theme: feste Höhe 40px -> bei schmalen Kacheln lief der Text heraus)
 // ===========================================================================
 
@@ -32,4 +32,10 @@
 .section-newsletter .card-body .card-title {
     width: 100%;
     text-align: center;
+}
+
+// Streichpreis (UVP / alter Preis) sicher durchstreichen – Kacheln, Slider, Produktseite
+.list-price:not(.list-price-no-line-through) .list-price-price,
+.product-detail-list-price-wrapper .list-price-price {
+    text-decoration: line-through;
 }
