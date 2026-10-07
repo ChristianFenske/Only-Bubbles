@@ -247,9 +247,25 @@
     }
 }
 
-// Blog-Beiträge (Acris Blog): kein Newsletter-Kasten
+// Magazin + Blog-Beiträge: kein Newsletter-Kasten (Klasse ob-magazin-page setzt base.html.twig)
 body[class*='blog'] .section-newsletter,
-body[class*='blog'] .ob-section-newsletter { display: none !important; }
+body[class*='blog'] .ob-section-newsletter,
+.ob-magazin-page .section-newsletter,
+.ob-magazin-page .ob-section-newsletter,
+.ob-magazin-page .cms-section:has(#cms-form-newsletter),
+.ob-magazin-page .cms-section:has(form[action*='newsletter']) { display: none !important; }
+
+// „Zurück zum Magazin“: Abstand wird per Skript an den Beitrag ausgerichtet
+.ob-blog-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: $ob-muted;
+    text-decoration: none;
+
+    &:hover { color: $ob-gold-600; }
+}
 
 // Einkaufswelten: Abschnitte nicht verschiebbar. overflow:hidden lässt sich per Trackpad/Auswahl
 // noch scrollen (z. B. Hero: Bootstrap-Zeile ist 20px breiter) – clip schneidet nur ab.

@@ -48,6 +48,39 @@
 {% block base_body_script %}
     {{ parent() }}
 
+    {# Magazin/Blog: Newsletter-Kasten ausblenden und „Zurück zum Magazin“ an den Beitrag ausrichten.
+       Erkennung über URL bzw. Linktext, weil das Blog-Plugin keine festen Klassen liefert. #}
+    <script>
+        (function () {
+            var back = null;
+            var links = document.querySelectorAll('a');
+            for (var i = 0; i < links.length; i++) {
+                if (/zur(ü|ue)ck zum magazin/i.test(links[i].textContent)) { back = links[i]; break; }
+            }
+            if (back || /magazin|blog/i.test(window.location.pathname)) {
+                document.body.classList.add('ob-magazin-page');
+            }
+            if (!back) { return; }
+
+            back.classList.add('ob-blog-back');
+            function align() {
+                back.style.marginLeft = '';
+                var start = back.getBoundingClientRect();
+                var imgs = document.querySelectorAll('img');
+                for (var j = 0; j < imgs.length; j++) {
+                    var r = imgs[j].getBoundingClientRect();
+                    if (r.width > 300 && r.top > start.top) {
+                        back.style.marginLeft = Math.max(0, r.left - start.left) + 'px';
+                        return;
+                    }
+                }
+            }
+            align();
+            window.addEventListener('load', align);
+            window.addEventListener('resize', align);
+        })();
+    </script>
+
     {% if activeRoute == 'frontend.detail.page' and page.product.cover.media.url is defined and page.product.cover.media.url %}
         {% set obStickyMedia = page.product.cover.media %}
         {% set obStickyThumb = obStickyMedia.thumbnails|filter(t => t.width >= 280)|sort((a, b) => a.width <=> b.width)|first %}
