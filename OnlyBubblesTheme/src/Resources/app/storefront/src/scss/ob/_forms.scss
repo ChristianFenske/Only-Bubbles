@@ -181,3 +181,6 @@
         .badge.badge { background-color: $ob-gold-600; }
     }
 }
+
+// Kontaktseite: große Überschrift („Wir sind für Sie da!“) mittig wie die Eyebrow darüber
+.cms-page:has(#cms-form-contact) .cms-element-text :is(h1, h2) { text-align: center; }
