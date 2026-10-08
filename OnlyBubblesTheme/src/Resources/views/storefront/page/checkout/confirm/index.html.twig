@@ -120,12 +120,20 @@
                        form="confirmOrderForm"
                        name="tos">
                 <label for="tos" class="checkout-confirm-tos-label custom-control-label">
-                    {{ (obShowGuarantee ? 'checkout.confirmTermsTextModalWithGuarantee' : 'checkout.confirmTermsTextModal')|trans({
+                    {# Eigener Text: AGB + Datenschutz (der Shopware-Baustein …WithGuarantee existiert in 6.7.10 nicht) #}
+                    {% set obPrivacyOpen = '<button type="button" class="btn btn-link-inline" aria-haspopup="dialog" data-ajax-modal="true" data-url="' ~ path(cmsPath, { id: config('core.basicInformation.privacyPage') }) ~ '">' %}
+                    {{ 'obTheme.checkout.tosText'|trans({
                         '%tosModalTagOpen%': tosModalTagOpen,
                         '%tosModalTagClose%': tosModalTagClose,
-                        '%legalGuaranteeNoticeModalTagOpen%': obGuaranteeOpen,
-                        '%legalGuaranteeNoticeModalTagClose%': '</button>',
+                        '%privacyModalTagOpen%': obPrivacyOpen,
+                        '%privacyModalTagClose%': '</button>',
                     })|raw }}
+                    {% if obShowGuarantee %}
+                        {{ 'obTheme.checkout.guaranteeText'|trans({
+                            '%legalGuaranteeNoticeModalTagOpen%': obGuaranteeOpen,
+                            '%legalGuaranteeNoticeModalTagClose%': '</button>',
+                        })|raw }}
+                    {% endif %}
                 </label>
             </div>
 

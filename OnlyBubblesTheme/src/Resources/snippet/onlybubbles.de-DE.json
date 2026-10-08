@@ -52,7 +52,9 @@
             "orderTitle": "Ihre Bestellung",
             "commentLabel": "Möchten Sie uns etwas zu Ihrer Bestellung mitteilen?",
             "commentPlaceholder": "z. B. Geschenkverpackung, Lieferhinweis …",
-            "addressEqual": "Entspricht der Lieferadresse"
+            "addressEqual": "Entspricht der Lieferadresse",
+            "tosText": "Ich habe die %tosModalTagOpen%AGB%tosModalTagClose% gelesen und bin mit ihnen einverstanden. Die %privacyModalTagOpen%Datenschutzhinweise%privacyModalTagClose% habe ich zur Kenntnis genommen.",
+            "guaranteeText": "Den %legalGuaranteeNoticeModalTagOpen%Hinweis zur gesetzlichen Gewährleistung%legalGuaranteeNoticeModalTagClose% habe ich zur Kenntnis genommen."
         },
         "finish": {
             "eyebrow": "Bestellung erfolgreich",

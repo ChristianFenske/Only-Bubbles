@@ -52,7 +52,9 @@
             "orderTitle": "Your order",
             "commentLabel": "Anything you would like to tell us about your order?",
             "commentPlaceholder": "e.g. gift wrapping, delivery note …",
-            "addressEqual": "Same as shipping address"
+            "addressEqual": "Same as shipping address",
+            "tosText": "I have read and accepted the %tosModalTagOpen%terms and conditions%tosModalTagClose%. I have taken note of the %privacyModalTagOpen%privacy policy%privacyModalTagClose%.",
+            "guaranteeText": "I have taken note of the %legalGuaranteeNoticeModalTagOpen%statutory warranty notice%legalGuaranteeNoticeModalTagClose%."
         },
         "finish": {
             "eyebrow": "Order successful",
