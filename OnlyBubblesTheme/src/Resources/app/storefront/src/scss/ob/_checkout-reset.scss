@@ -72,3 +72,12 @@
 
 // Bläschen in den dunklen Summenkarten (Warenkorb, Bestellseite) ausblenden
 .ob-summary-card .ob-bubbles-corner { display: none !important; }
+
+// Dunkle Summenkarte immer dunkel – auch wenn Eltern-Theme/Shopware die Zusammenfassung hell hinterlegen
+.ob-summary-card,
+.checkout-aside-summary.ob-summary-card {
+    border: 0 !important;
+    border-radius: $ob-radius-card !important;
+    background: $ob-ink !important;
+    color: $ob-on-dark;
+}
