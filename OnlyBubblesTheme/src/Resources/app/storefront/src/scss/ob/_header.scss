@@ -338,7 +338,7 @@ html { overflow-x: clip; }
 
 // Schmalere Bildschirme (z. B. MacBook) wie bei Lobenbergs:
 // 1350–1699px: Zeile 1 Logo links, Icons rechts; Zeile 2 Suchfeld links, Menü rechtsbündig.
-// 992–1349px: Menü weg -> Burger + Suche links, Logo mittig, Icons rechts (Offcanvas-Menü wie mobil).
+// 576–1349px (Laptop + Tablet): Menü weg -> Burger + Suche links, Logo mittig, Icons rechts (Offcanvas-Menü wie mobil).
 // Erst ab 1700px steht das Menü in der Header-Zeile.
 @media (min-width: 1350px) and (max-width: 1699px) {
     // Keine Trennlinie zwischen den beiden Zeilen; Header über der Menüzeile, damit das Suchfeld sichtbar ist
@@ -436,7 +436,7 @@ html { overflow-x: clip; }
     .nav-main nav.main-navigation-menu .main-navigation-link.root { font-size: 14px; padding: 8px 6px !important; }
 }
 
-@media (min-width: 992px) and (max-width: 1349px) {
+@media (min-width: 576px) and (max-width: 1349px) {
     .nav-main { display: none !important; }
 
     header.header-main .header-row {
@@ -447,6 +447,7 @@ html { overflow-x: clip; }
     // Icons rechts im Fluss (Eltern-Theme setzt sie hier absolut) – Logo ist absolut mittig
     header.header-main .header-row .header-actions-col {
         position: static !important;
+        top: auto !important;
         margin-left: auto;
     }
 
@@ -527,4 +528,9 @@ html { overflow-x: clip; }
         padding: 0 !important;
         transform: translate(-50%, -50%);
     }
+}
+
+// Handy: Merkzettel-Icon oben ausblenden (Platz für Logo, Suche, Konto, Warenkorb)
+@media (max-width: 575.98px) {
+    header.header-main .header-actions-col .col-auto:has(.header-wishlist) { display: none !important; }
 }
