@@ -145,6 +145,10 @@
 {% block wf_confirm_tos %}
     {% set cmsPath = 'frontend.cms.page' %}
     {% set wfShowGuarantee = config('core.cart.showLegalGuaranteeNotice') ? true : false %}
+    {# Textbaustein mit Gewährleistungs-Hinweis gibt es nicht in jedem Textbaustein-Set -> sonst wie bisher den Standardtext verwenden #}
+    {% if 'checkout.confirmTermsTextModalWithGuarantee'|trans == 'checkout.confirmTermsTextModalWithGuarantee' %}
+        {% set wfShowGuarantee = false %}
+    {% endif %}
     {% set wfGuaranteeOpen = '<button type="button" class="btn btn-link-inline" aria-haspopup="dialog" data-bs-toggle="modal" data-bs-target="#legalGuaranteeNoticeModal">' %}
     {% set tosModalTagOpen = '<button type="button" class="checkout-confirm-terms-modal btn btn-link-inline" aria-haspopup="dialog" data-ajax-modal="true" data-url="' ~ path(cmsPath, { id: config('core.basicInformation.tosPage') }) ~ '">' %}
     {% set tosModalTagClose = '</button>' %}
