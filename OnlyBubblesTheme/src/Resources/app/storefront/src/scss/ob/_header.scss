@@ -337,9 +337,10 @@ html { overflow-x: clip; }
 }
 
 // Schmalere Bildschirme (z. B. MacBook) wie bei Lobenbergs:
-// Zeile 1: Logo links, Icons rechts. Zeile 2: Suchfeld links, Menü rechtsbündig.
+// 1350–1699px: Zeile 1 Logo links, Icons rechts; Zeile 2 Suchfeld links, Menü rechtsbündig.
+// 992–1349px: Menü weg -> Burger + Suche links, Logo mittig, Icons rechts (Offcanvas-Menü wie mobil).
 // Erst ab 1700px steht das Menü in der Header-Zeile.
-@media (min-width: 992px) and (max-width: 1699px) {
+@media (min-width: 1350px) and (max-width: 1699px) {
     // Keine Trennlinie zwischen den beiden Zeilen; Header über der Menüzeile, damit das Suchfeld sichtbar ist
     header.header-main {
         z-index: 1000 !important;
@@ -431,6 +432,70 @@ html { overflow-x: clip; }
     }
 }
 
-@media (min-width: 992px) and (max-width: 1499px) {
+@media (min-width: 1350px) and (max-width: 1499px) {
     .nav-main nav.main-navigation-menu .main-navigation-link.root { font-size: 14px; padding: 8px 6px !important; }
+}
+
+@media (min-width: 992px) and (max-width: 1349px) {
+    .nav-main { display: none !important; }
+
+    header.header-main .header-row {
+        min-height: 84px;
+        align-items: center;
+    }
+
+    // Icons rechts im Fluss (Eltern-Theme setzt sie hier absolut) – Logo ist absolut mittig
+    header.header-main .header-row .header-actions-col {
+        position: static !important;
+        margin-left: auto;
+    }
+
+    header.header-main .header-row .header-actions-col > .row { position: static !important; }
+
+    // Burger links
+    header.header-main .header-actions-col .col.d-sm-none:has(.menu-button) {
+        position: absolute;
+        top: 78px; // Mitte der weißen Header-Zeile
+        left: 20px;
+        z-index: 2;
+        display: block !important;
+        flex: none;
+        width: auto;
+        transform: translateY(-50%);
+    }
+
+    header.header-main .menu-button .nav-main-toggle-btn {
+        display: grid;
+        place-items: center;
+        width: 46px;
+        height: 46px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: transparent;
+        color: $ob-ink;
+
+        .icon { width: 24px; height: 24px; color: $ob-ink; }
+
+        &:hover { background: $ob-sand; }
+    }
+
+    // Goldene Suche neben den Burger
+    header.header-main .header-actions-col .col-auto:has(.search-toggle) {
+        position: absolute;
+        top: 78px;
+        left: 76px;
+        z-index: 2;
+        transform: translateY(-50%);
+    }
+
+    // Logo mittig
+    header.header-main .header-row .header-logo-col {
+        position: absolute !important;
+        top: 78px !important;
+        left: 50% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        transform: translate(-50%, -50%);
+    }
 }
