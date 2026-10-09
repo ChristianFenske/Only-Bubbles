@@ -351,15 +351,18 @@ html { overflow-x: clip; }
     header.header-main .header-row .header-search-col {
         position: absolute !important;
         top: 120px !important; // Header-Höhe -> erste Zeile darunter
-        left: 28px !important;
+        left: 20px !important; // bündig mit dem Logo
         z-index: 1035;
-        width: 300px !important;
+        width: 260px !important;
         max-width: none !important;
         padding: 0 !important;
-        transform: translateY(4px);
+        transform: translateY(8px); // mittig zur Menüzeile
     }
 
     header.header-main .header-search-col .row > .col-sm-auto { display: none !important; }
+
+    header.header-main .header-search-col > .row { margin: 0 !important; }
+    header.header-main .header-search-col > .row > .col { padding: 0 !important; }
 
     header.header-main .header-search-col .collapse,
     header.header-main .header-search-col .collapse:not(.show) {
@@ -375,7 +378,14 @@ html { overflow-x: clip; }
         margin: 0 !important;
     }
 
-    .header-search #header-main-search-input { height: 44px; font-size: 15px; }
+    header.header-main .header-search #header-main-search-input {
+        height: 38px !important;
+        padding-left: 18px !important;
+        font-size: 14px !important;
+    }
+
+    header.header-main .header-search .header-search-btn,
+    header.header-main .header-search .header-close-btn { height: 38px !important; }
 
     header.header-main .header-actions-col .col-auto:has(.search-toggle) { display: none !important; }
 
@@ -404,7 +414,7 @@ html { overflow-x: clip; }
     .nav-main .container {
         max-width: none !important;
         padding-right: 20px !important;
-        padding-left: 352px !important; // Platz für das Suchfeld
+        padding-left: 308px !important; // Platz für das Suchfeld
     }
 
     .nav-main nav.main-navigation-menu {
