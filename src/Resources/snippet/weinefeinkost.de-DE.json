@@ -48,7 +48,8 @@
             "loginLink": "Hier einloggen",
             "orderTitle": "Ihre Bestellung",
             "positions": "{1} 1 Position|]1,Inf[ %count% Positionen",
-            "summary": "Zusammenfassung"
+            "summary": "Zusammenfassung",
+            "termsFull": "Ich habe die %tosModalTagOpen%AGB%tosModalTagClose% gelesen und bin mit ihnen einverstanden. Die %privacyModalTagOpen%Datenschutzhinweise%privacyModalTagClose% habe ich zur Kenntnis genommen. Den %legalGuaranteeNoticeModalTagOpen%Hinweis zur gesetzlichen Gewährleistung%legalGuaranteeNoticeModalTagClose% habe ich zur Kenntnis genommen."
         },
         "finish": {
             "continueShopping": "Weiter einkaufen",

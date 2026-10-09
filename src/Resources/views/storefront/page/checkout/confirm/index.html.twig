@@ -144,12 +144,19 @@
    in allen 6.7.x-Versionen gleich funktioniert. #}
 {% block wf_confirm_tos %}
     {% set cmsPath = 'frontend.cms.page' %}
-    {% set wfShowGuarantee = config('core.cart.showLegalGuaranteeNotice') ? true : false %}
-    {# Textbaustein mit Gewährleistungs-Hinweis gibt es nicht in jedem Textbaustein-Set -> sonst wie bisher den Standardtext verwenden #}
-    {% if 'checkout.confirmTermsTextModalWithGuarantee'|trans == 'checkout.confirmTermsTextModalWithGuarantee' %}
-        {% set wfShowGuarantee = false %}
-    {% endif %}
-    {% set wfGuaranteeOpen = '<button type="button" class="btn btn-link-inline" aria-haspopup="dialog" data-bs-toggle="modal" data-bs-target="#legalGuaranteeNoticeModal">' %}
+    {# Gewährleistungs-Hinweis als Dialog nur, wenn Shopware ihn anbietet (Einstellung + Dialog vorhanden),
+       sonst als normaler Text #}
+    {% set wfGuaranteeModal = config('core.cart.showLegalGuaranteeNotice')
+        and block('page_checkout_confirm_legal_guarantee_notice') is defined %}
+    {% set wfGuaranteeOpen = wfGuaranteeModal
+        ? '<button type="button" class="btn btn-link-inline" aria-haspopup="dialog" data-bs-toggle="modal" data-bs-target="#legalGuaranteeNoticeModal">'
+        : '<span>' %}
+    {% set wfGuaranteeClose = wfGuaranteeModal ? '</button>' : '</span>' %}
+    {% set wfPrivacyPage = config('core.basicInformation.privacyPage') %}
+    {% set wfPrivacyOpen = wfPrivacyPage
+        ? '<button type="button" class="btn btn-link-inline" aria-haspopup="dialog" data-ajax-modal="true" data-url="' ~ path(cmsPath, { id: wfPrivacyPage }) ~ '">'
+        : '<span>' %}
+    {% set wfPrivacyClose = wfPrivacyPage ? '</button>' : '</span>' %}
     {% set tosModalTagOpen = '<button type="button" class="checkout-confirm-terms-modal btn btn-link-inline" aria-haspopup="dialog" data-ajax-modal="true" data-url="' ~ path(cmsPath, { id: config('core.basicInformation.tosPage') }) ~ '">' %}
     {% set tosModalTagClose = '</button>' %}
 
@@ -165,11 +172,14 @@
                        form="confirmOrderForm"
                        name="tos">
                 <label for="tos" class="checkout-confirm-tos-label custom-control-label">
-                    {{ (wfShowGuarantee ? 'checkout.confirmTermsTextModalWithGuarantee' : 'checkout.confirmTermsTextModal')|trans({
+                    {# AGB + Datenschutzhinweise + gesetzliche Gewährleistung (wie bei Only Bubbles) #}
+                    {{ 'wfTheme.checkout.termsFull'|trans({
                         '%tosModalTagOpen%': tosModalTagOpen,
                         '%tosModalTagClose%': tosModalTagClose,
+                        '%privacyModalTagOpen%': wfPrivacyOpen,
+                        '%privacyModalTagClose%': wfPrivacyClose,
                         '%legalGuaranteeNoticeModalTagOpen%': wfGuaranteeOpen,
-                        '%legalGuaranteeNoticeModalTagClose%': '</button>',
+                        '%legalGuaranteeNoticeModalTagClose%': wfGuaranteeClose,
                     })|raw }}
                 </label>
             </div>

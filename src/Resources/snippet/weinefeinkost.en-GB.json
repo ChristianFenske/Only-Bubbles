@@ -48,7 +48,8 @@
             "loginLink": "Log in here",
             "orderTitle": "Your order",
             "positions": "{1} 1 item|]1,Inf[ %count% items",
-            "summary": "Summary"
+            "summary": "Summary",
+            "termsFull": "I have read and accept the %tosModalTagOpen%terms and conditions%tosModalTagClose%. I have taken note of the %privacyModalTagOpen%privacy policy%privacyModalTagClose%. I have taken note of the %legalGuaranteeNoticeModalTagOpen%notice on the legal guarantee%legalGuaranteeNoticeModalTagClose%."
         },
         "finish": {
             "continueShopping": "Continue shopping",
