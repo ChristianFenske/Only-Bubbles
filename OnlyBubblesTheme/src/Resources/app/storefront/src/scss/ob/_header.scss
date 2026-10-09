@@ -343,17 +343,20 @@ html { overflow-x: clip; }
     .nav-main.not-sticky,
     .nav-main.not-on-top {
         top: 0 !important;
-        margin-top: 0 !important;
+        margin-top: -18px !important; // näher an Logo/Icons, wirkt wie eine Header-Zeile
         margin-bottom: 0 !important;
-        border-top: 1px solid $ob-line;
+        border-top: 0;
         background: #fff;
         box-shadow: 0 10px 18px -16px rgba(40, 34, 26, .35);
     }
 
+    // Keine Trennlinie/Schatten zwischen Logo-Zeile und Menü
+    header.header-main { box-shadow: none !important; border-bottom: 0 !important; }
+
     .nav-main nav.main-navigation-menu {
         .navbar-nav { flex-wrap: wrap; justify-content: center; }
 
-        .main-navigation-menu-list > .nav-item { padding: 8px 0 !important; }
+        .main-navigation-menu-list > .nav-item { padding: 2px 0 10px !important; }
     }
 }
 

@@ -269,10 +269,15 @@ body[class*='blog'] .ob-section-newsletter,
 
 // Einkaufswelten: Abschnitte nicht verschiebbar. overflow:hidden lässt sich per Trackpad/Auswahl
 // noch scrollen (z. B. Hero: Bootstrap-Zeile ist 20px breiter) – clip schneidet nur ab.
-// Nur waagerecht abschneiden – nach unten dürfen Schatten (Produktkarten) auslaufen
-.cms-section {
-    overflow-x: clip !important;
-    overflow-y: visible !important;
+// Nur Desktop: waagerecht abschneiden, nach unten dürfen Schatten (Produktkarten) auslaufen.
+// flow-root hält das Layout wie bei overflow:hidden (eigener Formatierungskontext).
+// Handy/Tablet bleiben unverändert beim Eltern-Theme (overflow: hidden).
+@include media-breakpoint-up(lg) {
+    .cms-section {
+        display: flow-root;
+        overflow-x: clip !important;
+        overflow-y: visible !important;
+    }
 }
 
 // Hauptnavigation darf keinen eigenen Scrollbereich bilden
