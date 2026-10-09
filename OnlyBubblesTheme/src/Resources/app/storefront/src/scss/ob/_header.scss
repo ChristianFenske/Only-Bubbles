@@ -336,50 +336,65 @@ html { overflow-x: clip; }
     .nav-main.not-on-top { margin-top: -34px !important; }
 }
 
-// Schmalere Bildschirme (z. B. MacBook): Menü passt nicht zwischen Logo und Icons ->
-// eigene Zeile unter dem Header, mittig. Erst ab 1700px steht es in der Header-Zeile.
+// Schmalere Bildschirme (z. B. MacBook) wie bei Lobenbergs: Menü passt nicht in die Zeile ->
+// Burger + Suche links, Logo mittig, Icons rechts. Das Menü öffnet dann als Offcanvas (wie mobil).
+// Erst ab 1700px steht das Menü als Zeile im Header.
 @media (min-width: 992px) and (max-width: 1699px) {
-    .nav-main,
-    .nav-main.not-sticky,
-    .nav-main.not-on-top {
-        top: 0 !important;
-        margin-top: 0 !important;
-        margin-bottom: 0 !important;
-        border-top: 0;
-        background: #fff;
-        box-shadow: 0 10px 18px -16px rgba(40, 34, 26, .35);
+    .nav-main { display: none !important; }
+
+    header.header-main .header-row {
+        position: relative;
+        min-height: 84px;
+        align-items: center;
     }
 
-    .nav-main > .container,
-    .nav-main .container {
-        max-width: none !important;
-        padding-right: 28px !important;
-        padding-left: 28px !important;
+    // Icons bleiben rechts (Logo ist jetzt absolut mittig und nicht mehr im Fluss)
+    header.header-main .header-row .header-actions-col { margin-left: auto; }
+
+    // Burger
+    header.header-main .header-actions-col .col.d-sm-none:has(.menu-button) {
+        position: absolute;
+        top: 50%;
+        left: 20px;
+        z-index: 2;
+        display: block !important;
+        flex: none;
+        width: auto;
+        transform: translateY(-50%);
     }
 
-    // Keine Trennlinie/Schatten zwischen Logo-Zeile und Menü
-    header.header-main { box-shadow: none !important; border-bottom: 0 !important; }
-
-    .nav-main nav.main-navigation-menu {
-        // Menüpunkte über die ganze Breite verteilen (bündig mit Logo links und Icons rechts)
-        .navbar-collapse { justify-content: stretch !important; }
-
-        .navbar-nav {
-            flex: 1 1 auto;
-            flex-wrap: nowrap;
-            justify-content: space-between;
-            width: 100%;
-        }
-
-        .main-navigation-menu-list > .nav-item { padding: 4px 0 12px !important; }
+    // Suche (goldener Button) neben den Burger, wie bei Lobenbergs
+    header.header-main .header-actions-col .col-auto:has(.search-toggle) {
+        position: absolute;
+        top: 50%;
+        left: 76px;
+        z-index: 2;
+        transform: translateY(-50%);
     }
-}
 
-@media (min-width: 992px) and (max-width: 1199px) {
-    .nav-main nav.main-navigation-menu .main-navigation-link.root { font-size: 14px; }
+    header.header-main .menu-button .nav-main-toggle-btn {
+        display: grid;
+        place-items: center;
+        width: 46px;
+        height: 46px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: transparent;
+        color: $ob-ink;
 
-    // Sehr schmal: lieber umbrechen als überlaufen
-    .nav-main nav.main-navigation-menu .navbar-nav { flex-wrap: wrap; justify-content: center; }
+        .icon { width: 24px; height: 24px; color: $ob-ink; }
 
-    .nav-main nav.main-navigation-menu .navbar-nav > .nav-item { padding-right: 4px !important; padding-left: 4px !important; }
+        &:hover { background: $ob-sand; }
+    }
+
+    // Logo mittig
+    header.header-main .header-row .header-logo-col {
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        transform: translate(-50%, -50%);
+    }
 }
