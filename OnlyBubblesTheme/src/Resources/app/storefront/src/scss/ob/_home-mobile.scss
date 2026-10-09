@@ -110,3 +110,15 @@
         margin-left: 0 !important;
     }
 }
+
+// Handy/Tablet: Seite darf sich nicht seitlich verschieben lassen (iOS ignoriert overflow-x: clip
+// auf <html> bei älteren Versionen). Inhalt und Footer selbst begrenzen.
+@media (max-width: 991.98px) {
+    main.content-main,
+    .content-main,
+    footer.footer-main {
+        overflow-x: hidden;
+    }
+
+    body { position: relative; }
+}
