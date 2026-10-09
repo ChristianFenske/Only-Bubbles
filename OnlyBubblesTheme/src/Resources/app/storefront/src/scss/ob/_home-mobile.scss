@@ -9,13 +9,17 @@
 
         .cms-block.hidden-mobile { display: block !important; }
 
+        // 3 pro Reihe, letzte Reihe mittig
         .ob-icon-tiles {
-            display: grid !important;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            display: flex !important;
+            flex-wrap: wrap;
+            justify-content: center !important;
             gap: 8px !important;
         }
 
         .ob-icon-tile {
+            flex: 0 0 calc((100% - 16px) / 3) !important;
+            max-width: calc((100% - 16px) / 3);
             gap: 8px !important;
             padding: 12px 4px !important;
 
