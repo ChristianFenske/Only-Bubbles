@@ -489,6 +489,35 @@ html { overflow-x: clip; }
         transform: translateY(-50%);
     }
 
+    // Suche klappt als volle Zeile unter dem Header auf (goldener Button)
+    header.header-main .header-row .header-search-col {
+        position: absolute !important;
+        top: 120px !important;
+        left: 0 !important;
+        z-index: 1035;
+        width: 100% !important;
+        max-width: none !important;
+        padding: 0 !important;
+    }
+
+    header.header-main .header-search-col .row > .col-sm-auto { display: none !important; }
+    header.header-main .header-search-col > .row { margin: 0 !important; }
+    header.header-main .header-search-col > .row > .col { padding: 0 !important; }
+
+    header.header-main .header-search-col .collapse.show,
+    header.header-main .header-search-col .collapsing {
+        padding: 14px 20px 16px !important;
+        background: #fff !important;
+        box-shadow: 0 12px 20px -16px rgba(40, 34, 26, .35) !important;
+    }
+
+    header.header-main .header-search-col .header-search {
+        max-width: 640px !important;
+        margin: 0 auto !important;
+    }
+
+    header.header-main .header-search #header-main-search-input { height: 46px !important; }
+
     // Logo mittig
     header.header-main .header-row .header-logo-col {
         position: absolute !important;
