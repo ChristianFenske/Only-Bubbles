@@ -48,6 +48,17 @@
 {% block base_body_script %}
     {{ parent() }}
 
+    {# Bootstrap-Modals, die im Seiteninhalt stecken (z. B. Gewährleistungs-Hinweis in der Summenkarte),
+       beim Öffnen an <body> hängen – sonst liegt der Hintergrund darüber und das Fenster lässt sich nicht schließen. #}
+    <script>
+        document.addEventListener('show.bs.modal', function (event) {
+            var modal = event.target;
+            if (modal && modal.parentElement !== document.body) {
+                document.body.appendChild(modal);
+            }
+        });
+    </script>
+
     {# Magazin/Blog: Newsletter-Kasten ausblenden und „Zurück zum Magazin“ an den Beitrag ausrichten.
        Erkennung über URL bzw. Linktext, weil das Blog-Plugin keine festen Klassen liefert. #}
     <script>
