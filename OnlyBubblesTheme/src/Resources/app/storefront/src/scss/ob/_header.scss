@@ -350,11 +350,26 @@ html { overflow-x: clip; }
         box-shadow: 0 10px 18px -16px rgba(40, 34, 26, .35);
     }
 
+    .nav-main > .container,
+    .nav-main .container {
+        max-width: none !important;
+        padding-right: 28px !important;
+        padding-left: 28px !important;
+    }
+
     // Keine Trennlinie/Schatten zwischen Logo-Zeile und Menü
     header.header-main { box-shadow: none !important; border-bottom: 0 !important; }
 
     .nav-main nav.main-navigation-menu {
-        .navbar-nav { flex-wrap: wrap; justify-content: center; }
+        // Menüpunkte über die ganze Breite verteilen (bündig mit Logo links und Icons rechts)
+        .navbar-collapse { justify-content: stretch !important; }
+
+        .navbar-nav {
+            flex: 1 1 auto;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            width: 100%;
+        }
 
         .main-navigation-menu-list > .nav-item { padding: 4px 0 12px !important; }
     }
