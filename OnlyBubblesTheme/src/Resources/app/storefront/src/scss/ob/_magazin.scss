@@ -292,3 +292,54 @@ body[class*='blog'] .ob-section-newsletter,
 // Produkt-Badges (Sale, Tipp …): Abstand zwischen nebeneinanderstehenden Badges
 .product-badges { gap: 6px; }
 .product-badges .badge { margin-right: 0; }
+
+// Kategorieseiten: Unterkategorien als Pills (component/ob/subcategory-pills.html.twig)
+.ob-subcats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 22px;
+
+    .ob-subcat {
+        display: inline-flex;
+        align-items: center;
+        min-height: 40px;
+        padding: 0 18px;
+        border: 1px solid $ob-line-input;
+        border-radius: $ob-radius-pill;
+        background: #fff;
+        font-family: $ob-font-sans;
+        font-size: 14.5px;
+        color: $ob-ink;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: border-color .15s ease, background-color .15s ease, color .15s ease;
+
+        &:hover,
+        &:focus-visible {
+            border-color: $ob-gold-600;
+            background: #ecdcba;
+            color: #6b5226;
+        }
+
+        &.is-active {
+            border-color: $ob-ink;
+            background: $ob-ink;
+            color: $ob-cream;
+        }
+    }
+}
+
+@include media-breakpoint-down(md) {
+    // Handy: eine wischbare Zeile statt vieler Umbrüche
+    .ob-subcats {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        margin-right: -16px;
+        padding-right: 16px;
+        padding-bottom: 4px;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar { display: none; }
+    }
+}

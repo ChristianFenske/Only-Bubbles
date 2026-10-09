@@ -1,0 +1,9 @@
+{% sw_extends '@Storefront/storefront/element/cms-element-sidebar-filter.html.twig' %}
+
+{# Unterkategorien (z. B. Rebsorten) als Pills über den Filtern #}
+{% block element_sidebar_filter %}
+    {% if cmsPage is defined %}
+        {% sw_include '@OnlyBubblesTheme/storefront/component/ob/subcategory-pills.html.twig' %}
+    {% endif %}
+    {{ parent() }}
+{% endblock %}

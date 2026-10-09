@@ -154,6 +154,10 @@
             "resultsFor": "results for “%term%”",
             "noResult": "No results for “%term%”",
             "noResultHint": "Check the spelling or try a more general term."
+        },
+        "subcategories": {
+            "label": "Subcategories of %name%",
+            "all": "All"
         }
     }
 }

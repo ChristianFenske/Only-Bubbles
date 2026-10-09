@@ -1,0 +1,19 @@
+{# Unterkategorien als Pills (Daten: OnlyBubblesTheme\Subscriber\SubcategoryNavSubscriber) #}
+{% set obSub = page.extensions.obSubcategories ?? null %}
+{% if obSub and obSub.items|length > 1 %}
+    <nav class="ob-subcats" aria-label="{{ 'obTheme.subcategories.label'|trans({'%name%': obSub.parentName})|striptags }}">
+        <a class="ob-subcat{% if not obSub.activeId %} is-active{% endif %}"
+           href="{{ seoUrl('frontend.navigation.page', { navigationId: obSub.parentId }) }}"
+           {% if not obSub.activeId %}aria-current="page"{% endif %}>
+            {{ 'obTheme.subcategories.all'|trans|sw_sanitize }}
+        </a>
+        {% for item in obSub.items %}
+            {% set obActive = obSub.activeId == item.id %}
+            <a class="ob-subcat{% if obActive %} is-active{% endif %}"
+               href="{{ item.type == 'link' and item.externalLink ? item.externalLink : seoUrl('frontend.navigation.page', { navigationId: item.id }) }}"
+               {% if obActive %}aria-current="page"{% endif %}>
+                {{ item.name }}
+            </a>
+        {% endfor %}
+    </nav>
+{% endif %}

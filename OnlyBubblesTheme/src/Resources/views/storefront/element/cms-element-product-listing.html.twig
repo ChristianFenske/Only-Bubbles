@@ -1,0 +1,9 @@
+{% sw_extends '@Storefront/storefront/element/cms-element-product-listing.html.twig' %}
+
+{# Layouts ohne Filter-Element: Unterkategorien-Pills direkt über dem Listing #}
+{% block element_product_listing_wrapper %}
+    {% if cmsPage is defined and not cmsPage.getFirstElementOfType('sidebar-filter') %}
+        {% sw_include '@OnlyBubblesTheme/storefront/component/ob/subcategory-pills.html.twig' %}
+    {% endif %}
+    {{ parent() }}
+{% endblock %}

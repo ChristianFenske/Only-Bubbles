@@ -154,6 +154,10 @@
             "resultsFor": "Ergebnisse für „%term%“",
             "noResult": "Keine Treffer für „%term%“",
             "noResultHint": "Prüfen Sie die Schreibweise oder versuchen Sie einen allgemeineren Begriff."
+        },
+        "subcategories": {
+            "label": "Unterkategorien von %name%",
+            "all": "Alle"
         }
     }
 }
