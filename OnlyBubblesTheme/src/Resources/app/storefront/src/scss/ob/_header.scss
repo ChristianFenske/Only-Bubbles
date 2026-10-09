@@ -343,7 +343,7 @@ html { overflow-x: clip; }
     .nav-main.not-sticky,
     .nav-main.not-on-top {
         top: 0 !important;
-        margin-top: -18px !important; // näher an Logo/Icons, wirkt wie eine Header-Zeile
+        margin-top: 0 !important;
         margin-bottom: 0 !important;
         border-top: 0;
         background: #fff;
@@ -356,7 +356,7 @@ html { overflow-x: clip; }
     .nav-main nav.main-navigation-menu {
         .navbar-nav { flex-wrap: wrap; justify-content: center; }
 
-        .main-navigation-menu-list > .nav-item { padding: 2px 0 10px !important; }
+        .main-navigation-menu-list > .nav-item { padding: 4px 0 12px !important; }
     }
 }
 
