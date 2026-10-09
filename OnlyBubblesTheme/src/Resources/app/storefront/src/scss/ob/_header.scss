@@ -378,5 +378,8 @@ html { overflow-x: clip; }
 @media (min-width: 992px) and (max-width: 1199px) {
     .nav-main nav.main-navigation-menu .main-navigation-link.root { font-size: 14px; }
 
+    // Sehr schmal: lieber umbrechen als überlaufen
+    .nav-main nav.main-navigation-menu .navbar-nav { flex-wrap: wrap; justify-content: center; }
+
     .nav-main nav.main-navigation-menu .navbar-nav > .nav-item { padding-right: 4px !important; padding-left: 4px !important; }
 }
