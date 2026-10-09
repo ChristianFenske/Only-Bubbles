@@ -273,7 +273,19 @@
         }
     }, true);
 
+    /* Dialoge, die in der dunklen Summenkarte stecken (z. B. Gewährleistungs-Hinweis),
+       an <body> hängen – sonst liegt der abgedunkelte Hintergrund über dem Dialog
+       und er lässt sich nicht mehr schließen. */
+    function liftModals() {
+        document.querySelectorAll('.wf-summary-card .modal, .wf-checkout .modal').forEach(function (modal) {
+            if (modal.parentNode !== document.body) {
+                document.body.appendChild(modal);
+            }
+        });
+    }
+
     function start() {
+        liftModals();
         scan(document);
 
         // Nachgeladene Inhalte (z. B. Adress-Dialog im Checkout)

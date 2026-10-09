@@ -1,7 +1,7 @@
 {
     "name": "bitbrew/weine-feinkost-theme",
     "description": "Theme WeineFeinkostTheme plugin",
-    "version": "1.4.14",
+    "version": "1.4.15",
     "authors": [{
             "name": "Bitbrew"
         }
