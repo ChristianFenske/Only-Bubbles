@@ -338,7 +338,7 @@ html { overflow-x: clip; }
 
 // Schmalere Bildschirme (z. B. MacBook) wie bei Lobenbergs:
 // 1350–1699px: Zeile 1 Logo links, Icons rechts; Zeile 2 Suchfeld links, Menü rechtsbündig.
-// 576–1349px (Laptop + Tablet): Menü weg -> Burger + Suche links, Logo mittig, Icons rechts (Offcanvas-Menü wie mobil).
+// bis 1349px (Laptop, Tablet, Handy): Menü weg -> Burger + Suche links, Logo mittig, Icons rechts (Offcanvas-Menü wie mobil).
 // Erst ab 1700px steht das Menü in der Header-Zeile.
 @media (min-width: 1350px) and (max-width: 1699px) {
     // Keine Trennlinie zwischen den beiden Zeilen; Header über der Menüzeile, damit das Suchfeld sichtbar ist
@@ -436,7 +436,7 @@ html { overflow-x: clip; }
     .nav-main nav.main-navigation-menu .main-navigation-link.root { font-size: 14px; padding: 8px 6px !important; }
 }
 
-@media (min-width: 576px) and (max-width: 1349px) {
+@media (max-width: 1349px) {
     .nav-main { display: none !important; }
 
     header.header-main .header-row {
@@ -533,4 +533,28 @@ html { overflow-x: clip; }
 // Handy: Merkzettel-Icon oben ausblenden (Platz für Logo, Suche, Konto, Warenkorb)
 @media (max-width: 575.98px) {
     header.header-main .header-actions-col .col-auto:has(.header-wishlist) { display: none !important; }
+}
+
+// Handy: Suche nicht dauerhaft offen – goldener Such-Button oben links klappt sie auf (wie Lobenbergs)
+@media (max-width: 575.98px) {
+    header.header-main .search-toggle { display: block !important; }
+
+    header.header-main .header-actions-col .col-auto:has(.search-toggle) { display: block !important; }
+
+    // Konto + Warenkorb rechts
+    header.header-main .header-actions-col > .row { justify-content: flex-end; }
+
+    header.header-main .header-actions-col .col-auto:has(.account-menu),
+    header.header-main .header-actions-col .col-auto:has(.header-cart) { position: relative; top: -6px; }
+
+    header.header-main .header-search-col .collapse:not(.show) { display: none !important; }
+
+    header.header-main .menu-button .nav-main-toggle-btn { width: 40px; height: 40px; }
+
+    header.header-main .header-actions-col .col.d-sm-none:has(.menu-button) { left: 10px; }
+
+    header.header-main .header-actions-col .col-auto:has(.search-toggle) { left: 54px; }
+
+    header.header-main .header-search-col .collapse.show,
+    header.header-main .header-search-col .collapsing { padding: 12px 16px 14px !important; }
 }
