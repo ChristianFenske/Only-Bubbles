@@ -391,10 +391,10 @@ html { overflow-x: clip; }
     header.header-main .header-actions-col .col-auto:has(.search-toggle) { display: none !important; }
 
     // Dropdown links am Feld ausrichten statt mittig (sonst ragt es links aus dem Bild)
-    .ob-suggest-wrap {
-        left: 0;
-        transform: none;
-        width: min(1060px, calc(100vw - 56px));
+    header.header-main .ob-suggest-wrap {
+        left: 0 !important;
+        transform: none !important;
+        width: min(1060px, calc(100vw - 40px)) !important;
     }
 
     // --- Zeile 2 rechts: Menü rechtsbündig, endet unter den Icons
