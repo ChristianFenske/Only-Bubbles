@@ -75,6 +75,15 @@
     .nav-main:hover,
     .nav-main:focus-within { z-index: 1031; }
 
+    // Mega-Menü immer an der ganzen Menüzeile ausrichten (volle Breite), egal wie die Zeile aufgebaut ist
+    .nav-main > .container,
+    .nav-main nav.main-navigation-menu,
+    .nav-main .navbar-collapse,
+    .nav-main .main-navigation-menu-list,
+    .nav-main .main-navigation-menu-list > .nav-item { position: static !important; }
+
+    .nav-main { position: relative; }
+
     // Eltern-Theme (WeineFeinkost) setzt: position fixed; top 130px; width calc(100vw - 15px).
     // Only-Bubbles-Header ist 120px hoch -> Menü bündig darunter und über die volle Breite.
     // Eltern-Theme setzt position fixed (top 130px, Breite 100vw - 15px). Da der Header jetzt
@@ -341,6 +350,10 @@ html { overflow-x: clip; }
 // bis 1349px (Laptop, Tablet, Handy): Menü weg -> Burger + Suche links, Logo mittig, Icons rechts (Offcanvas-Menü wie mobil).
 // Erst ab 1700px steht das Menü in der Header-Zeile.
 @media (min-width: 1350px) and (max-width: 1699px) {
+    // Menüzeile bleibt auch beim Antippen (iPad = „hover“) unter dem Header, sonst verdeckt sie das Suchfeld
+    .nav-main:hover,
+    .nav-main:focus-within { z-index: 999 !important; }
+
     // Keine Trennlinie zwischen den beiden Zeilen; Header über der Menüzeile, damit das Suchfeld sichtbar ist
     header.header-main {
         z-index: 1000 !important;
