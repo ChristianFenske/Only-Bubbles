@@ -5055,8 +5055,10 @@ footer.footer-main {
 @import 'wf/keyframes';
 
 // Nichts darf die Seite breiter als das Fenster machen (sonst weißer Streifen rechts)
-html:has(> body.wf-design) {
+html:has(> body.wf-design),
+body.wf-design {
 	overflow-x: clip;
+	max-width: 100%;
 }
 
 body.wf-design {
