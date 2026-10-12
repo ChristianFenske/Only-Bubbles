@@ -342,3 +342,12 @@ body[class*='blog'] .ob-section-newsletter,
         &::-webkit-scrollbar { display: none; }
     }
 }
+
+// Produktseite: Hersteller-Button nicht abschneiden
+.is-ctl-product .wf-section.section-manufacturer .cms-section { overflow: visible !important; }
+.is-ctl-product .product-page .wf-section .manufacturertext-content { flex-wrap: wrap; }
+.is-ctl-product .product-page .wf-section .manufacturer-link { max-width: 100%; flex-shrink: 0; }
+.is-ctl-product .product-page .wf-section .manufacturer-link .readmore-btn {
+	width: auto !important; min-width: 179px; max-width: 100%;
+	padding: 0 28px; white-space: nowrap;
+}
