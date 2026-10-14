@@ -1,0 +1,9 @@
+{# Hinweis statt Preis: Produkt mit „Preis nach dem Login anzeigen“ #}
+<div class="ob-price-login{% if obCompact is defined and obCompact %} is-compact{% endif %}">
+    <p class="ob-price-login-text">{{ 'detail.showPriceAfterLoginText'|trans|sw_sanitize }}</p>
+    {% if not (obCompact is defined and obCompact) %}
+        <a class="btn btn-primary ob-price-login-btn" href="{{ path('frontend.account.login.page', { redirectTo: 'frontend.detail.page', redirectParameters: { productId: product.id }|json_encode }) }}">
+            {{ 'detail.showPriceAfterLoginButton'|trans|sw_sanitize }}
+        </a>
+    {% endif %}
+</div>
