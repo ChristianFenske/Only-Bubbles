@@ -10,8 +10,14 @@
         height: auto !important;
     }
 
+    // Bezugsrahmen für die Suchzeile ist der ganze Header (nicht die eingerückte Zeile),
+    // damit die Suche ohne Rand über die volle Breite geht
+    header.header-main > .container,
     header.header-main .header-row {
-        position: relative;
+        position: static !important;
+    }
+
+    header.header-main .header-row {
         display: grid !important;
         grid-template-columns: auto auto minmax(0, 1fr) auto auto auto;
         grid-template-areas: 'menu search logo account wishlist cart';
