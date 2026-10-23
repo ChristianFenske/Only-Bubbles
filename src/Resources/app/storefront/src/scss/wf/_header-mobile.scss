@@ -1,0 +1,144 @@
+// ===========================================================================
+// Header mobil + Tablet (< 992px) – Aufteilung wie bei Only Bubbles:
+// links Burger + Suche, Logo mittig, rechts Konto / Merkzettel / Warenkorb.
+// Die Suche klappt als volle Zeile unter dem Header auf (Such-Button).
+// Desktop (>= 992px) bleibt unverändert.
+// ===========================================================================
+
+@media (max-width: 991.98px) {
+    header.header-main {
+        height: auto !important;
+    }
+
+    header.header-main .header-row {
+        position: relative;
+        display: grid !important;
+        grid-template-columns: auto auto minmax(0, 1fr) auto auto auto;
+        grid-template-areas: 'menu search logo account wishlist cart';
+        align-items: center;
+        column-gap: 6px;
+        height: auto !important;
+        min-height: 72px;
+        margin: 0;
+        padding: 10px 0 !important;
+    }
+
+    // Spalten des Eltern-Themes auflösen: die einzelnen Buttons werden direkt Teil des Rasters
+    header.header-main .header-row > .header-actions-col,
+    header.header-main .header-row > .header-actions-col > .row {
+        display: contents !important;
+    }
+
+    header.header-main .header-row > [class*='col'] {
+        width: auto;
+        max-width: none;
+        padding: 0;
+    }
+
+    // --- Logo mittig -----------------------------------------------------------
+    header.header-main .header-row .header-logo-col {
+        grid-area: logo;
+        position: static !important;
+        top: auto !important;
+        justify-self: center;
+        width: auto !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        text-align: center;
+    }
+
+    header.header-main .header-logo-main-img {
+        max-width: 170px;
+        max-height: 48px;
+    }
+
+    // --- Buttons -----------------------------------------------------------------
+    header.header-main .header-actions-col .col,
+    header.header-main .header-actions-col .col-auto {
+        flex: none;
+        width: auto;
+        margin: 0 !important;
+    }
+
+    header.header-main .header-actions-col .col.d-sm-none:has(.menu-button) {
+        grid-area: menu;
+        display: block !important;
+    }
+
+    header.header-main .header-actions-col .col-auto:has(.search-toggle) {
+        grid-area: search;
+        display: block !important;
+    }
+
+    header.header-main .search-toggle { display: block !important; }
+
+    header.header-main .header-actions-col .col-auto:has(.account-menu) { grid-area: account; }
+    header.header-main .header-actions-col .col-auto:has(.header-wishlist) { grid-area: wishlist; }
+    header.header-main .header-actions-col .col-auto:has(.header-cart) { grid-area: cart; }
+
+    // Burger ohne Kreis, wie bei OB
+    header.header-main .menu-button .nav-main-toggle-btn {
+        position: static;
+        left: auto;
+        display: grid;
+        place-items: center;
+        width: 42px;
+        height: 42px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: transparent;
+
+        &:hover { background: $wf-sand; }
+    }
+
+    // Tablet-Burger in der Suchzeile entfällt (Burger steht jetzt links im Header)
+    header.header-main .header-search-col .row > .col-sm-auto { display: none !important; }
+
+    // --- Suche: volle Zeile unter dem Header, nur wenn aufgeklappt ----------------
+    header.header-main .header-row .header-search-col {
+        position: absolute !important;
+        top: 100% !important;
+        right: 0 !important;
+        left: 0 !important;
+        z-index: 1035;
+        width: auto !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    header.header-main .header-search-col > .row { margin: 0 !important; }
+    header.header-main .header-search-col > .row > .col { padding: 0 !important; }
+
+    header.header-main .header-search-col .collapse:not(.show) { display: none !important; }
+
+    header.header-main .header-search-col .collapse.show,
+    header.header-main .header-search-col .collapsing {
+        display: block;
+        padding: 12px 16px 14px !important;
+        background: #fff !important;
+        box-shadow: 0 12px 20px -16px rgba(33, 33, 33, .35) !important;
+    }
+
+    header.header-main .header-search-col .header-search {
+        max-width: 640px !important;
+        margin: 0 auto !important;
+    }
+
+    header.header-main .header-search #header-main-search-input { height: 46px !important; }
+}
+
+// Handy: Merkzettel oben ausblenden (Platz für Logo, Suche, Konto, Warenkorb)
+@media (max-width: 575.98px) {
+    header.header-main .header-actions-col .col-auto:has(.header-wishlist) { display: none !important; }
+
+    header.header-main .header-row {
+        grid-template-columns: auto auto minmax(0, 1fr) auto auto;
+        grid-template-areas: 'menu search logo account cart';
+        column-gap: 4px;
+    }
+
+    header.header-main .header-logo-main-img { max-width: 130px; }
+}
