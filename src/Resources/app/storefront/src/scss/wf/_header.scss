@@ -9,6 +9,11 @@
     // Lage (fixed unter dem Header, volle Breite) bleibt wie im W&F-Theme,
     // hier nur Optik: weiße Fläche, Linie, Schatten und Abdunklung der Seite.
     .main-navigation-menu .dropdown-menu.wf-mega {
+        // Eltern-Theme: Breite 100vw - 15px (Platz für Rollbalken) -> rechts blieb ein Streifen.
+        // left/right 0 füllt genau die sichtbare Fensterbreite, mit oder ohne Rollbalken.
+        right: 0 !important;
+        left: 0 !important;
+        width: auto !important;
         padding: 0;
         border: 0;
         border-bottom: 1px solid $wf-line;
