@@ -146,6 +146,7 @@
             "formTitle": "Ihre Angaben"
         },
         "search": {
+            "priceAfterLogin": "Preis nach Anmeldung",
             "priceOnRequest": "Preis auf Anfrage",
             "suggestions": "Suchvorschläge",
             "categories": "Kategorien",

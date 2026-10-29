@@ -183,8 +183,8 @@
                                             {% set obPriceLocked = not obLoggedIn and (obCf|filter((v, k) => v and ('login' in k|lower or 'anmeld' in k|lower or 'einlogg' in k|lower))|length > 0) %}
                                             {% set obOnRequest = (obCf|filter((v, k) => v and ('anfrage' in k|lower or 'request' in k|lower or 'inquiry' in k|lower))|length > 0) or price.unitPrice <= 0 %}
                                             {% if obPriceLocked or obOnRequest %}
-                                            <span class="ob-suggest-price">
-                                                <span class="ob-suggest-price-ref">{{ obPriceLocked ? 'detail.showPriceAfterLoginText'|trans|sw_sanitize : 'obTheme.search.priceOnRequest'|trans|sw_sanitize }}</span>
+                                            <span class="ob-suggest-price is-note">
+                                                <span class="ob-suggest-price-note">{{ obPriceLocked ? 'obTheme.search.priceAfterLogin'|trans|sw_sanitize : 'obTheme.search.priceOnRequest'|trans|sw_sanitize }}</span>
                                             </span>
                                             {% else %}
                                             <span class="ob-suggest-price">
