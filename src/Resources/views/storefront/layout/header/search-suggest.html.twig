@@ -185,6 +185,16 @@
                                                         {% endif %}
                                                     </span>
 
+                                                    {# Kein Preis bei "Preis nach Anmelden" (nicht eingeloggt) oder Preis auf Anfrage (0 €) #}
+                                                    {% set wfHidePrice = (product.customFields.show_price_after_login_checkbox ?? false) and not context.customer %}
+                                                    {% set wfOnRequest = price.unitPrice <= 0 %}
+                                                    {% if wfHidePrice or wfOnRequest %}
+                                                        <span class="wf-suggest-price wf-suggest-price-hidden">
+                                                            <span class="wf-suggest-price-ref">
+                                                                {{ wfHidePrice ? 'detail.showPriceAfterLoginText'|trans|sw_sanitize : 'wfTheme.search.priceOnRequest'|trans|sw_sanitize }}
+                                                            </span>
+                                                        </span>
+                                                    {% else %}
                                                     <span class="wf-suggest-price">
                                                         <span class="wf-suggest-price-value">
                                                             {% if wfFrom %}{{ 'listing.listingTextFrom'|trans|sw_sanitize }} {% endif %}{{ price.unitPrice|currency }}
@@ -193,6 +203,7 @@
                                                             <span class="wf-suggest-price-ref">{{ price.referencePrice.price|currency }} / {% if price.referencePrice.referenceUnit != 1 %}{{ price.referencePrice.referenceUnit }} {% endif %}{{ price.referencePrice.unitName }}</span>
                                                         {% endif %}
                                                     </span>
+                                                    {% endif %}
                                                 </a>
                                             </li>
                                         {% else %}

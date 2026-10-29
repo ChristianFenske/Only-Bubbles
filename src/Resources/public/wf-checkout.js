@@ -6,6 +6,7 @@
  * - Auge-Button an Passwortfeldern (Anmelden, Registrierung, Konto)
  * - Mega-Menü Länder/Regionen: Land wählen und suchen
  * - Suchfelder im Seiteninhalt ohne Vorschlags-Dropdown
+ * - Suchfeld bei jedem Seitenaufruf leeren
  */
 (function () {
     'use strict';
@@ -284,7 +285,19 @@
         });
     }
 
+    /* Suchfeld bei jedem Seitenaufruf leer: kein vorheriger Suchbegriff mehr im Feld
+       (auch nicht, wenn der Browser die Seite aus dem Zwischenspeicher zurückholt) */
+    function clearSearchFields() {
+        document.querySelectorAll('#header-main-search-input, input[name="search"]').forEach(function (input) {
+            input.value = '';
+            input.setAttribute('autocomplete', 'off');
+        });
+    }
+
+    window.addEventListener('pageshow', clearSearchFields);
+
     function start() {
+        clearSearchFields();
         liftModals();
         scan(document);
 

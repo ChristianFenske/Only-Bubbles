@@ -431,3 +431,16 @@
         display: none !important;
     }
 }
+
+// Ohne Preis ("Preis nach Anmelden" / "Preis auf Anfrage"): Hinweis darf umbrechen
+.wf-suggest-price-hidden {
+    max-width: 160px;
+    white-space: normal;
+    text-align: right;
+}
+
+// Suchfeld im Bild-Slider / in Einkaufswelten ausblenden – gesucht wird nur oben im Header
+.cms-section form:has(input[name='search']),
+.cms-element-image-slider form:has(input[name='search']) {
+    display: none !important;
+}

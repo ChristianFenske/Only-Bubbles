@@ -153,7 +153,8 @@
             "products": "Products",
             "resultsFor": "results for “%term%”",
             "suggestions": "Suggestions",
-            "xOfY": "%shown% of %total%"
+            "xOfY": "%shown% of %total%",
+            "priceOnRequest": "Price on request"
         }
     }
 }
