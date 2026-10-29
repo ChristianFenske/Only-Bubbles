@@ -186,12 +186,14 @@
                                                     </span>
 
                                                     {# Kein Preis bei "Preis nach Anmelden" (nicht eingeloggt) oder Preis auf Anfrage (0 €) #}
-                                                    {# translated.customFields enthält auch geerbte Werte (Varianten vom Hauptprodukt) #}
-                                                    {% set wfLoginPrice = (product.translated.customFields.show_price_after_login_checkbox ?? false)
-                                                        or (product.customFields.show_price_after_login_checkbox ?? false)
-                                                        or (product.parent.translated.customFields.show_price_after_login_checkbox ?? false) %}
+                                                    {# Wie bei Only Bubbles: jedes gesetzte Zusatzfeld, dessen Name "login"/"anmeld" enthält
+                                                       (z. B. Set „Preis-Anzeigen nach dem Anmelden“), bzw. "anfrage"/"request".
+                                                       translated.customFields enthält auch geerbte Werte (Varianten vom Hauptprodukt). #}
+                                                    {% set wfFields = (product.translated.customFields ?? {})|merge(product.customFields ?? {}) %}
+                                                    {% set wfLoginPrice = wfFields|filter((v, k) => v and ('login' in k|lower or 'anmeld' in k|lower))|length > 0 %}
+                                                    {% set wfRequestPrice = wfFields|filter((v, k) => v and ('anfrage' in k|lower or 'request' in k|lower))|length > 0 %}
                                                     {% set wfHidePrice = wfLoginPrice and not context.customer %}
-                                                    {% set wfOnRequest = price.unitPrice <= 0 %}
+                                                    {% set wfOnRequest = wfRequestPrice or price.unitPrice <= 0 %}
                                                     {% if wfHidePrice or wfOnRequest %}
                                                         <span class="wf-suggest-price wf-suggest-price-hidden">
                                                             <span class="wf-suggest-price-ref">
