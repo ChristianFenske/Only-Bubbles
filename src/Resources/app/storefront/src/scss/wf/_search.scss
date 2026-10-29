@@ -439,8 +439,8 @@
     text-align: right;
 }
 
-// Suchfeld im Bild-Slider / in Einkaufswelten ausblenden – gesucht wird nur oben im Header
-.cms-section form:has(input[name='search']),
-.cms-element-image-slider form:has(input[name='search']) {
+// Suchfeld im Bild-Slider (Startseite) samt Kasten/Schatten ausblenden – gesucht wird nur oben im Header
+.hero-banner-search-box,
+.cms-section form:has(input[name='search']) {
     display: none !important;
 }

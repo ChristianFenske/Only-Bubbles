@@ -186,7 +186,11 @@
                                                     </span>
 
                                                     {# Kein Preis bei "Preis nach Anmelden" (nicht eingeloggt) oder Preis auf Anfrage (0 €) #}
-                                                    {% set wfHidePrice = (product.customFields.show_price_after_login_checkbox ?? false) and not context.customer %}
+                                                    {# translated.customFields enthält auch geerbte Werte (Varianten vom Hauptprodukt) #}
+                                                    {% set wfLoginPrice = (product.translated.customFields.show_price_after_login_checkbox ?? false)
+                                                        or (product.customFields.show_price_after_login_checkbox ?? false)
+                                                        or (product.parent.translated.customFields.show_price_after_login_checkbox ?? false) %}
+                                                    {% set wfHidePrice = wfLoginPrice and not context.customer %}
                                                     {% set wfOnRequest = price.unitPrice <= 0 %}
                                                     {% if wfHidePrice or wfOnRequest %}
                                                         <span class="wf-suggest-price wf-suggest-price-hidden">
