@@ -59,6 +59,25 @@
         });
     </script>
 
+    {# Suchfeld im Header bei jedem Seitenaufruf leer – der vorige Suchbegriff soll nicht stehen bleiben
+       (auch nicht nach „Zurück“ im Browser oder beim erneuten Aufklappen der Suche). #}
+    <script>
+        (function () {
+            function clearSearch() {
+                document.querySelectorAll('.header-search-input').forEach(function (input) {
+                    if (document.activeElement !== input) { input.value = ''; }
+                });
+            }
+            clearSearch();
+            window.addEventListener('pageshow', clearSearch);
+            document.addEventListener('show.bs.collapse', function (event) {
+                if (event.target && event.target.querySelector && event.target.querySelector('.header-search-input')) {
+                    clearSearch();
+                }
+            });
+        })();
+    </script>
+
     {# Magazin/Blog: Newsletter-Kasten ausblenden und „Zurück zum Magazin“ an den Beitrag ausrichten.
        Erkennung über URL bzw. Linktext, weil das Blog-Plugin keine festen Klassen liefert. #}
     <script>

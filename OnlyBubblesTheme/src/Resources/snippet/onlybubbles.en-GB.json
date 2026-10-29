@@ -146,6 +146,7 @@
             "formTitle": "Your details"
         },
         "search": {
+            "priceOnRequest": "Price on request",
             "suggestions": "Suggestions",
             "categories": "Categories",
             "producers": "Producers",

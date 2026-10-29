@@ -3,7 +3,7 @@
 {# Preis nach dem Login: Zusatzfeld am Produkt (Set „Pries-Anzeigen nach dem Anmelden“) #}
 {% block buy_widget_price %}
     {% set obPriceLocked = not (context.customer and not context.customer.guest)
-        and ((product.translated.customFields ?? {})|merge(product.customFields ?? {})|filter((v, k) => v and ('login' in k|lower or 'anmeld' in k|lower))|length > 0) %}
+        and ((product.translated.customFields ?? {})|merge(product.customFields ?? {})|filter((v, k) => v and ('login' in k|lower or 'anmeld' in k|lower or 'einlogg' in k|lower))|length > 0) %}
     {% if obPriceLocked %}
         {% sw_include '@OnlyBubblesTheme/storefront/component/ob/price-login-hint.html.twig' %}
     {% else %}
@@ -13,18 +13,18 @@
 
 {% block buy_widget_price_unit %}
     {% set obPriceLocked = not (context.customer and not context.customer.guest)
-        and ((product.translated.customFields ?? {})|merge(product.customFields ?? {})|filter((v, k) => v and ('login' in k|lower or 'anmeld' in k|lower))|length > 0) %}
+        and ((product.translated.customFields ?? {})|merge(product.customFields ?? {})|filter((v, k) => v and ('login' in k|lower or 'anmeld' in k|lower or 'einlogg' in k|lower))|length > 0) %}
     {% if not obPriceLocked %}{{ parent() }}{% endif %}
 {% endblock %}
 
 {% block buy_widget_tax %}
     {% set obPriceLocked = not (context.customer and not context.customer.guest)
-        and ((product.translated.customFields ?? {})|merge(product.customFields ?? {})|filter((v, k) => v and ('login' in k|lower or 'anmeld' in k|lower))|length > 0) %}
+        and ((product.translated.customFields ?? {})|merge(product.customFields ?? {})|filter((v, k) => v and ('login' in k|lower or 'anmeld' in k|lower or 'einlogg' in k|lower))|length > 0) %}
     {% if not obPriceLocked %}{{ parent() }}{% endif %}
 {% endblock %}
 
 {% block buy_widget_buy_form %}
     {% set obPriceLocked = not (context.customer and not context.customer.guest)
-        and ((product.translated.customFields ?? {})|merge(product.customFields ?? {})|filter((v, k) => v and ('login' in k|lower or 'anmeld' in k|lower))|length > 0) %}
+        and ((product.translated.customFields ?? {})|merge(product.customFields ?? {})|filter((v, k) => v and ('login' in k|lower or 'anmeld' in k|lower or 'einlogg' in k|lower))|length > 0) %}
     {% if not obPriceLocked %}{{ parent() }}{% endif %}
 {% endblock %}

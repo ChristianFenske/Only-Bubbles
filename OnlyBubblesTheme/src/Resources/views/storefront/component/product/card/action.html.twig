@@ -2,7 +2,7 @@
 
 {% block component_product_box_action_inner %}
     {% set obPriceLocked = not (context.customer and not context.customer.guest)
-        and ((product.translated.customFields ?? {})|merge(product.customFields ?? {})|filter((v, k) => v and ('login' in k|lower or 'anmeld' in k|lower))|length > 0) %}
+        and ((product.translated.customFields ?? {})|merge(product.customFields ?? {})|filter((v, k) => v and ('login' in k|lower or 'anmeld' in k|lower or 'einlogg' in k|lower))|length > 0) %}
     {% if obPriceLocked %}
         <div class="product-action">
             <a class="btn btn-block btn-buy ob-price-login-btn" href="{{ path('frontend.account.login.page', { redirectTo: 'frontend.detail.page', redirectParameters: { productId: product.id }|json_encode }) }}">

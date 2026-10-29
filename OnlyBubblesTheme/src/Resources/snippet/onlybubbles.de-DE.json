@@ -146,6 +146,7 @@
             "formTitle": "Ihre Angaben"
         },
         "search": {
+            "priceOnRequest": "Preis auf Anfrage",
             "suggestions": "Suchvorschläge",
             "categories": "Kategorien",
             "producers": "Winzer",

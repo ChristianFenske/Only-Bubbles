@@ -361,5 +361,6 @@ body[class*='blog'] .ob-section-newsletter,
 	&.is-compact { padding: 0; margin: 0 0 8px; background: none; border: 0; }
 	&.is-compact .ob-price-login-text { margin: 0; font-size: 13px; color: #6b5226; }
 }
-.product-box .ob-price-login-btn { border-radius: 999px; white-space: normal; }
+.product-box .ob-price-login-btn { border-radius: 999px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.product-box .ob-price-login-info { display: flex; align-items: flex-start; }
 body:has(.ob-price-login:not(.is-compact)) .muto-sticky-buy-box { display: none !important; }

@@ -2,9 +2,11 @@
 
 {% block component_product_box_price_info %}
     {% set obPriceLocked = not (context.customer and not context.customer.guest)
-        and ((product.translated.customFields ?? {})|merge(product.customFields ?? {})|filter((v, k) => v and ('login' in k|lower or 'anmeld' in k|lower))|length > 0) %}
+        and ((product.translated.customFields ?? {})|merge(product.customFields ?? {})|filter((v, k) => v and ('login' in k|lower or 'anmeld' in k|lower or 'einlogg' in k|lower))|length > 0) %}
     {% if obPriceLocked %}
-        {% sw_include '@OnlyBubblesTheme/storefront/component/ob/price-login-hint.html.twig' with { obCompact: true } %}
+        <div class="product-price-info ob-price-login-info">
+            {% sw_include '@OnlyBubblesTheme/storefront/component/ob/price-login-hint.html.twig' with { obCompact: true } %}
+        </div>
     {% else %}
         {{ parent() }}
     {% endif %}
