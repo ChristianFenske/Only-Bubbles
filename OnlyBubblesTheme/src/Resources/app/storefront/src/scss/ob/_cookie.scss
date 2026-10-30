@@ -1,0 +1,106 @@
+// =============================================================================
+// Cookie-Hinweis (Shopware .cookie-permission-container) im Only-Bubbles-Stil:
+// schwebende dunkle Karte statt weißem Balken. display steuert Shopware per JS -> nicht setzen.
+// =============================================================================
+.cookie-permission-container {
+    left: 50% !important;
+    right: auto !important;
+    bottom: 20px !important;
+    width: min(1080px, calc(100vw - 32px)) !important;
+    padding: 18px 26px !important;
+    transform: translateX(-50%);
+    background: $ob-ink !important;
+    border: 1px solid $ob-on-dark-line !important;
+    border-radius: 20px;
+    box-shadow: 0 24px 60px rgba(20, 16, 10, .35);
+    color: $ob-on-dark;
+    font-family: $ob-font-sans;
+
+    > .container { max-width: none; padding: 0; }
+    .row { align-items: center; row-gap: 14px; }
+
+    .cookie-permission-content {
+        position: relative;
+        padding-left: 52px;
+        font-size: 14px;
+        line-height: 1.5;
+        color: $ob-on-dark;
+
+        // kleine Gold-Bläschen als Markenzeichen
+        &::before {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            width: 26px;
+            height: 26px;
+            transform: translateY(-50%);
+            background:
+                radial-gradient(circle at 30% 70%, $ob-gold-light 0 5px, transparent 5.5px),
+                radial-gradient(circle at 72% 62%, transparent 0 3px, $ob-gold-light 3.2px 4.2px, transparent 4.6px),
+                radial-gradient(circle at 58% 22%, $ob-gold-light 0 3px, transparent 3.5px);
+        }
+
+        a {
+            color: $ob-gold-light !important;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            &:hover { color: #fff !important; }
+        }
+    }
+
+    .cookie-permission-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: flex-end;
+    }
+
+    .cookie-permission-button { margin: 0 !important; }
+
+    .btn {
+        height: 42px;
+        padding: 0 22px !important;
+        border-radius: $ob-radius-pill !important;
+        border: 1px solid rgba(243, 238, 227, .35) !important;
+        background: transparent !important;
+        color: $ob-on-dark !important;
+        font-size: 14px;
+        font-weight: 500;
+        white-space: nowrap;
+        box-shadow: none !important;
+        transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+
+        &:hover, &:focus-visible {
+            background: rgba(243, 238, 227, .1) !important;
+            border-color: $ob-on-dark !important;
+            color: #fff !important;
+        }
+    }
+
+    // „Alle Cookies akzeptieren“ hervorheben
+    .js-cookie-accept-all-button .btn {
+        background: $ob-gold-light !important;
+        border-color: $ob-gold-light !important;
+        color: $ob-ink !important;
+        font-weight: 600;
+
+        &:hover, &:focus-visible {
+            background: #ecdcba !important;
+            border-color: #ecdcba !important;
+            color: $ob-ink !important;
+        }
+    }
+
+    @include media-breakpoint-down(md) {
+        bottom: 12px !important;
+        padding: 16px !important;
+        border-radius: 16px;
+
+        .row { --bs-gutter-x: 0; margin: 0; }
+        .cookie-permission-content { padding-left: 0; font-size: 13px; &::before { display: none; } }
+        .cookie-permission-actions { justify-content: stretch; }
+        .cookie-permission-button { flex: 1 1 100%; }
+        .btn { width: 100%; }
+    }
+}
