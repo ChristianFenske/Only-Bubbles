@@ -1,0 +1,15 @@
+{% sw_extends '@Storefront/storefront/element/cms-element-product-description-reviews.html.twig' %}
+
+{# Weine & Feinkost: Die Produktbeschreibung steht bereits im Theme-Abschnitt „Zum Wein“
+   (page/content/detail.html.twig -> #product-section). Im ausgeblendeten Shopware-Block
+   „Beschreibung & Bewertungen“ wird sie deshalb nicht ein zweites Mal ausgegeben
+   (sonst doppelter Text für Crawler, doppelte HTML-IDs, größere Seite).
+   Bewertungen bleiben unverändert. theme_config gibt es nur im W&F-Theme –
+   Only Bubbles (erbt diese Vorlage) bleibt unverändert. #}
+{% block element_product_description_reviews_tabs_content_description %}
+    {% if theme_config('wf-checkout-design') is not null %}
+        {# bewusst leer #}
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
