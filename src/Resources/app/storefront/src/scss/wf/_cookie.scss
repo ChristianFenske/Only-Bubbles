@@ -1,0 +1,107 @@
+// ===========================================================================
+// Cookie-Hinweis: schwebende Karte unten statt Balken über die ganze Breite
+// ===========================================================================
+
+.cookie-permission-container {
+    right: 16px !important;
+    bottom: 16px !important;
+    left: 16px !important;
+    width: auto !important;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 18px 22px !important;
+    border: 1px solid $wf-line;
+    border-radius: $wf-radius-card;
+    background: #fff !important;
+    box-shadow: 0 18px 44px rgba(33, 33, 33, .18);
+    font-family: $wf-font-sans;
+
+    > .container {
+        max-width: none;
+        padding: 0;
+    }
+
+    > .container > .row {
+        row-gap: 14px;
+        margin: 0;
+    }
+
+    .cookie-permission-content {
+        padding: 0 16px 0 0;
+        font-size: 14px;
+        line-height: 1.5;
+        color: $wf-ink;
+
+        a {
+            color: $wf-gold-600;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+    }
+
+    .cookie-permission-actions {
+        gap: 8px;
+        padding: 0 !important;
+
+        > span { margin: 0 !important; }
+    }
+
+    // alle Buttons als Pills
+    .cookie-permission-actions .btn {
+        min-height: 42px;
+        margin: 0 !important;
+        padding: 0 20px !important;
+        border: 1px solid $wf-line-input !important;
+        border-radius: $wf-radius-pill !important;
+        background: #fff !important;
+        font-size: 14px;
+        font-weight: 500;
+        color: $wf-ink !important;
+        white-space: nowrap;
+
+        &:hover {
+            border-color: $wf-gold-600 !important;
+            color: $wf-gold-700 !important;
+        }
+    }
+
+    // "Konfigurieren" als dezenter Textlink
+    .js-cookie-configuration-button .btn {
+        border-color: transparent !important;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+
+        &:hover { border-color: transparent !important; }
+    }
+
+    // "Alle Cookies akzeptieren" hervorgehoben
+    .js-cookie-accept-all-button .btn {
+        border-color: $wf-gold-600 !important;
+        background: $wf-gold-600 !important;
+        color: #fff !important;
+
+        &:hover {
+            border-color: $wf-gold-700 !important;
+            background: $wf-gold-700 !important;
+            color: #fff !important;
+        }
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .cookie-permission-container {
+        right: 10px !important;
+        bottom: 10px !important;
+        left: 10px !important;
+        padding: 16px !important;
+
+        .cookie-permission-content { padding: 0; }
+
+        .cookie-permission-actions {
+            justify-content: stretch !important;
+
+            > span { flex: 1 1 auto; }
+            .btn { width: 100%; }
+        }
+    }
+}
