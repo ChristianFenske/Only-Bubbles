@@ -364,3 +364,26 @@ body[class*='blog'] .ob-section-newsletter,
 .product-box .ob-price-login-btn { border-radius: 999px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .product-box .ob-price-login-info { display: flex; align-items: flex-start; }
 body:has(.ob-price-login:not(.is-compact)) .muto-sticky-buy-box { display: none !important; }
+
+// Produktseite Steckbrief: mehrzeilige Werte (Rebsorten) rechtsbündig wie die anderen,
+// Inhaltsangaben als eigene Zeile mit Linie (Klasse setzt das Skript in base.html.twig)
+.is-ctl-product .section-steckbrief {
+	.property-item { gap: 24px; align-items: baseline; }
+	.property-title { flex-shrink: 0; }
+	.property-value { text-align: right !important; margin-left: auto; }
+
+	.ob-steckbrief-extra {
+		display: flex !important;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 24px;
+		width: calc(50% - 30px);
+		margin-top: 0 !important;
+
+		> * { margin: 0 !important; }
+		> :not(.property-title) { text-align: right; font-size: 15px; }
+		.property-title { font-family: $ob-font-sans; font-size: 15px; font-weight: 600; }
+
+		@include media-breakpoint-down(md) { width: 100%; }
+	}
+}

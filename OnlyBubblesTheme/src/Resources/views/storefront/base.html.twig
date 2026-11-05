@@ -78,6 +78,33 @@
         })();
     </script>
 
+    {# Steckbrief: „Inhaltsangaben“ wie die übrigen Daten als Zeile mit Linie darstellen.
+       Das Eltern-Theme liefert dafür keine eigene Klasse -> Überschrift per Text finden. #}
+    <script>
+        (function () {
+            var sec = document.querySelector('#steckbrief-section, .section-steckbrief');
+            if (!sec) { return; }
+            var label = Array.prototype.find.call(sec.querySelectorAll('h1,h2,h3,h4,h5,h6,p,strong,b,span,div,dt'), function (el) {
+                return el.children.length === 0 && /^Inhaltsangaben?:?$/i.test(el.textContent.trim());
+            });
+            if (!label) { return; }
+            var box = label.parentElement, steps = 0;
+            while (box && box !== sec && box.textContent.trim() === label.textContent.trim() && steps < 3) {
+                label = box; box = box.parentElement; steps++;
+            }
+            if (!box || box === sec) { return; }
+            box.classList.add('ob-steckbrief-extra');
+            label.classList.add('property-title');
+            var row = sec.querySelector('.property-item');
+            if (row) {
+                var cs = getComputedStyle(row);
+                box.style.borderBottom = cs.borderBottomWidth + ' ' + cs.borderBottomStyle + ' ' + cs.borderBottomColor;
+                box.style.paddingTop = cs.paddingTop;
+                box.style.paddingBottom = cs.paddingBottom;
+            }
+        })();
+    </script>
+
     {# Magazin/Blog: Newsletter-Kasten ausblenden und „Zurück zum Magazin“ an den Beitrag ausrichten.
        Erkennung über URL bzw. Linktext, weil das Blog-Plugin keine festen Klassen liefert. #}
     <script>
