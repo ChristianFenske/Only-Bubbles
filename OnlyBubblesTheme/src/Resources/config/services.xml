@@ -14,5 +14,7 @@
             <argument type="service" id="logger"/>
             <tag name="kernel.event_subscriber"/>
         </service>
+
+        <service id="OnlyBubblesTheme\Controller\LlmsTxtController" public="true"/>
     </services>
 </container>

@@ -1,0 +1,41 @@
+# Only Bubbles
+
+> Der Onlineshop nur für Schaumwein: Winzerchampagner, Crémant, Winzersekt, Cava, Prosecco und Pét-Nat von über 80 Erzeugern, ausgewählt von Sommelier Janus.
+
+Jede Produktseite beschreibt Herkunft, Herstellung und Geschmack und enthält einen Steckbrief mit Rebsorten, Geschmacksangabe (z. B. herb, extra herb, naturherb) und Nährwerten. Zu jedem Erzeuger gibt es eine eigene Seite.
+
+## Schaumweine
+- [Champagne](https://only-bubbles.de/Champagne/)
+- [Blanc de Blancs](https://only-bubbles.de/Champagne/Blanc-de-Blancs/)
+- [Blanc de Noirs](https://only-bubbles.de/Champagne/Blanc-de-Noir/)
+- [Rosé-Champagner](https://only-bubbles.de/Champagne/Rose/)
+- [Grand Cru](https://only-bubbles.de/Champagne/Grand-Cru/)
+- [Jahrgangschampagner](https://only-bubbles.de/Champagne/Jahrgangschampagner/)
+- [Crémant](https://only-bubbles.de/Cremant/)
+- [Cava und Corpinnat](https://only-bubbles.de/Spanien/Cava-Corpinnat/)
+- [Prosecco](https://only-bubbles.de/Italien/Prosecco/)
+- [Lambrusco](https://only-bubbles.de/Italien/Lambrusco/)
+- [Deutscher Winzersekt](https://only-bubbles.de/Deutschland-OEsterreich/Deutscher-Winzersekt/)
+- [Pét-Nat und Ancestrale](https://only-bubbles.de/Pet-Nat-Ancestrale/)
+- [Alkoholfrei](https://only-bubbles.de/Alkoholfrei/)
+- [Neue Schaumweine](https://only-bubbles.de/Entdecken/Neue-Schaumweine/)
+- [Probierpakete](https://only-bubbles.de/Entdecken/Probierpakete/)
+- [Alle Winzer](https://only-bubbles.de/Winzer/)
+
+## Magazin
+- [Magazin](https://only-bubbles.de/Entdecken/Magazin/)
+- [Methode traditionnelle](https://only-bubbles.de/blog/Methode-traditionnelle-Was-zwischen-Grundwein-und-Korken-passiert)
+- [Autolyse](https://only-bubbles.de/blog/Autolyse-Woher-Brioche-Nuss-und-Cremigkeit-kommen)
+- [Tankgärung](https://only-bubbles.de/blog/Tankgaerung-Warum-Prosecco-anders-schmeckt-als-Champagner)
+- [Lagern, öffnen, servieren](https://only-bubbles.de/blog/schaumwein-lagern-servieren)
+
+## Service
+- [Über uns](https://only-bubbles.de/Service/UEber-uns/)
+- [Kontakt](https://only-bubbles.de/Service/Kontakt/)
+- [Versand und Zahlungsbedingungen](https://only-bubbles.de/Service/Versand-Zahlungsbedingungen/)
+- [Widerrufsbelehrung](https://only-bubbles.de/Service/Widerrufsbelehrung/)
+- [AGB](https://only-bubbles.de/Service/AGB/)
+- [Impressum](https://only-bubbles.de/Service/Impressum/)
+
+## Optional
+- [Sitemap](https://only-bubbles.de/sitemap.xml)
