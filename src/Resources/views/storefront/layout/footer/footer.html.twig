@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block layout_footer_navigation_column %}
-	<div class="col-md-2 footer-column js-footer-column type-{{ root.category.type }}">
+	<div class="col-md-2 footer-column js-footer-column type-{{ root.category.type }}" role="listitem">
 		{% block layout_footer_navigation_information_headline %}
 			{{ parent() }}
 		{% endblock %}
@@ -23,10 +23,10 @@
 {% block layout_footer_navigation_columns %}
 	{{ parent() }}
 	
-	<div class="col-md-2 footer-column js-footer-column partner-column">
+	<div class="col-md-2 footer-column js-footer-column partner-column" role="listitem">
 		<div class="footer-column-headline footer-headline js-footer-column-headline"
 			 id="collapseFooterTitlePartner"
-			 role="listitem">
+			 role="heading" aria-level="2">
 			<span>{{ 'footer.partnerLabel'|trans|sw_sanitize }}</span>
 			<button class="footer-column-toggle btn btn-link btn-link-inline js-collapse-footer-column-trigger"
 					data-bs-target="#collapseFooterPartner"
@@ -46,8 +46,7 @@
 		</div>
 		<div id="collapseFooterPartner"
 			 class="footer-column-content collapse js-footer-column-content"
-			 aria-labelledby="collapseFooterTitlePartner"
-			 role="listitem">
+			 aria-labelledby="collapseFooterTitlePartner">
 			<div class="partner-links footer-img-links">
 				<a class="wein-plus-link" href="{{ 'footer.weinPlusLink'|trans }}" title="{{ 'footer.weinPlusImgAlt'|trans }}">
 					<img src="{{ asset('bundles/weinefeinkosttheme/assets/images/wein_plus-logo.svg', 'asset') }}" alt="{{ 'footer.weinPlusImgAlt'|trans }}">
@@ -59,10 +58,10 @@
 		</div>
 	</div>
 	
-	<div class="col-md-2 footer-column js-footer-column payment-methods">
+	<div class="col-md-2 footer-column js-footer-column payment-methods" role="listitem">
 		<div class="footer-column-headline footer-headline js-footer-column-headline"
 			 id="collapseFooterTitlePaymentMethods"
-			 role="listitem">
+			 role="heading" aria-level="2">
 			<span>{{ 'footer.paymentMethodsLabel'|trans|sw_sanitize }}</span>
 			<button class="footer-column-toggle btn btn-link btn-link-inline js-collapse-footer-column-trigger"
 					data-bs-target="#collapseFooterPaymentMethods"
@@ -82,8 +81,7 @@
 		</div>
 		<div id="collapseFooterPaymentMethods"
 			 class="footer-column-content collapse js-footer-column-content"
-			 aria-labelledby="collapseFooterTitlePaymentMethods"
-			 role="listitem">
+			 aria-labelledby="collapseFooterTitlePaymentMethods">
 			<div class="partner-method-links footer-img-links">
 				<a class="payment-method-link" href="{{ path('frontend.navigation.page', { navigationId: '019c4d43f104704ba53f10c5df0eac11' }) }}" title="{{ 'footer.purchaseOnInvoice'|trans }}">
 					<img src="{{ asset('bundles/weinefeinkosttheme/assets/images/payment-rechnung.png', 'asset') }}" alt="{{ 'footer.purchaseOnInvoice'|trans }}">
@@ -101,10 +99,10 @@
 		</div>
 	</div>
 	
-	<div class="col-md-2 footer-column js-footer-column cartificates">
+	<div class="col-md-2 footer-column js-footer-column cartificates" role="listitem">
 		<div class="footer-column-headline footer-headline js-footer-column-headline"
 			 id="collapseFooterTitleCartificates"
-			 role="listitem">
+			 role="heading" aria-level="2">
 			<span>{{ 'footer.cartificatesLabel'|trans|sw_sanitize }}</span>
 			<button class="footer-column-toggle btn btn-link btn-link-inline js-collapse-footer-column-trigger"
 					data-bs-target="#collapseFooterCartificates"
@@ -124,8 +122,7 @@
 		</div>
 		<div id="collapseFooterCartificates"
 			 class="footer-column-content collapse js-footer-column-content"
-			 aria-labelledby="collapseFooterTitleCartificates"
-			 role="listitem">
+			 aria-labelledby="collapseFooterTitleCartificates">
 			<div class="cartificate-links footer-img-links">
 				<a class="cartificate-link" href="{{ asset('bundles/weinefeinkosttheme/assets/images/zertifikat-2024.png', 'asset') }}" title="zertifikat-2024.png" target="_blank">
 					<img src="{{ asset('bundles/weinefeinkosttheme/assets/images/zertifikat-2024.png', 'asset') }}" alt="zertifikat-2024.png">

@@ -1,0 +1,37 @@
+// ===========================================================================
+// W&F — weniger Layout-Verschiebung (CLS) auf Produktseiten
+// Solange der Galerie-Slider lädt (.is-loading), blendet Shopware die
+// Vorschaubilder unter dem Hauptbild aus. Erscheinen sie nach dem Start,
+// rutscht alles darunter (Kaufbereich, „Zum Wein / Zum Winzer / Steckbrief /
+// Zur Rebsorte“) nach unten. Hier wird ihr Platz vorab reserviert:
+// gleiche Abstände und Kachelgröße wie nach dem Start (siehe base.scss).
+// ===========================================================================
+
+.gallery-slider-row.is-loading .gallery-slider-thumbnails-col.is-underneath {
+    @media (min-width: 768px) {
+        display: block !important;
+        visibility: hidden;
+
+        .gallery-slider-thumbnails-container {
+            margin: 30px 30px 40px;
+            overflow: hidden;
+        }
+
+        .gallery-slider-thumbnails {
+            display: flex;
+            flex-wrap: nowrap;
+        }
+
+        .gallery-slider-thumbnails-item {
+            flex: 0 0 20%;
+            aspect-ratio: 1;
+            padding-right: 10px;
+            box-sizing: border-box;
+        }
+
+        .gallery-slider-thumbnails-controls {
+            display: none;
+        }
+    }
+}
+

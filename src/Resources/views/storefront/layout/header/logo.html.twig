@@ -1,0 +1,14 @@
+{% sw_extends '@Storefront/storefront/layout/header/logo.html.twig' %}
+
+{# Logo mit festen Maßen (width/height), damit der Browser den Platz vorab reserviert
+   und nichts verschiebt (CLS). Angezeigt wird es weiter in der Größe aus base.scss
+   (max. 208 × 60 px). Only Bubbles ersetzt den ganzen Logo-Block und ist nicht betroffen. #}
+{% block layout_header_logo_image_default %}
+    {% if theme_config('sw-logo-desktop') %}
+        <img src="{{ theme_config('sw-logo-desktop')|sw_encode_url }}"
+             alt="{{ 'header.logoLink'|trans|striptags }}"
+             width="208"
+             height="60"
+             class="img-fluid header-logo-main-img">
+    {% endif %}
+{% endblock %}

@@ -58,5 +58,9 @@
 			<argument type="service" id="logger"/>
 			<tag name="kernel.event_subscriber"/>
 		</service>
+		<!-- /llms.txt nur für weine-feinkost.de -->
+		<service id="WeineFeinkostTheme\Subscriber\LlmsTxtSubscriber">
+			<tag name="kernel.event_subscriber"/>
+		</service>
     </services>
 </container>

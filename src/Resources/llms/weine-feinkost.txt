@@ -1,0 +1,42 @@
+# Fenske’s Weine und Feinkost
+
+> Weinhandel in Wuppertal seit 1992. Rund 2.000 Weine, Spirituosen und Feinkost von über 500 Erzeugern, viele selbst importiert. Laden in Wuppertal und Onlineshop, versandkostenfrei ab 100 € Bestellwert.
+
+Jede Produktseite enthält eine ausführliche Beschreibung (Lage, Jahrgang, Ausbau, Verkostung, Empfehlung) und einen Steckbrief mit Rebsorte, Herkunft, Geschmacksangabe und Nährwerten. Einige seltene Weine (z. B. Domaine Armand Rousseau, Julian Haart) gibt es nur auf Anfrage per Mail an info@weine-feinkost.de.
+
+## Weine
+- [Alle Weine](https://www.weine-feinkost.de/Weine/Alle-Weine/)
+- [Sofort lieferbar](https://www.weine-feinkost.de/Weine/Sofort-Lieferbar/)
+- [Neue Weine](https://www.weine-feinkost.de/Weine/Neue-Weine/)
+- [Weißweine](https://www.weine-feinkost.de/Weine/Weissweine/)
+- [Rotweine](https://www.weine-feinkost.de/Weine/Rotweine/)
+- [Roséweine](https://www.weine-feinkost.de/Weine/Roseweine/)
+- [VDP Große Lagen](https://www.weine-feinkost.de/Weine/VDP-Grosse-Lagen/)
+- [Bioweine](https://www.weine-feinkost.de/Weine/Bioweine/)
+- [Naturweine](https://www.weine-feinkost.de/Weine/Naturweine/)
+- [Raritäten](https://www.weine-feinkost.de/Weine/Raritaeten/)
+- [Große Flaschen](https://www.weine-feinkost.de/Weine/Grosse-Flaschen/)
+- [Entalkoholisierte Weine](https://www.weine-feinkost.de/Weine/Entalkoholisierte-Weine/)
+- [Rebsorten](https://www.weine-feinkost.de/Rebsorten/)
+- [Länder und Regionen](https://www.weine-feinkost.de/LaenderRegionen/)
+
+## Weiteres Sortiment
+- [Feinkost](https://www.weine-feinkost.de/Feinkost/)
+- [Spirituosen](https://www.weine-feinkost.de/Spirituosen/)
+- [Angebote und Probierpakete](https://www.weine-feinkost.de/Angebote/)
+
+## Service
+- [Über uns](https://www.weine-feinkost.de/Shop-Service/UEber-uns/)
+- [Ladenlokal und Öffnungszeiten](https://www.weine-feinkost.de/Shop-Service/Unser-Ladenlokal-OEffnungszeiten/)
+- [Kontakt](https://www.weine-feinkost.de/Shop-Service/Kontakt/)
+- [Versand und Zahlungsbedingungen](https://www.weine-feinkost.de/Shop-Service/Versand-und-Zahlungsbedingungen/)
+- [Widerrufsbelehrung](https://www.weine-feinkost.de/Rechtliches/Widerrufsbelehrung/)
+- [AGB](https://www.weine-feinkost.de/Rechtliches/Allgemeine-Geschaeftsbedingungen-AGB/)
+- [Impressum](https://www.weine-feinkost.de/Rechtliches/Impressum/)
+
+## Magazin
+- [Unterwegs – Weinwissen, Reisen, Restaurants](https://www.weine-feinkost.de/unterwegs/)
+
+## Optional
+- [Sitemap](https://www.weine-feinkost.de/sitemap.xml)
+- [Schwestershop für Schaumwein: Only Bubbles](https://only-bubbles.de/)

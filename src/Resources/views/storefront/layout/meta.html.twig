@@ -1,0 +1,40 @@
+{% sw_extends '@Storefront/storefront/layout/meta.html.twig' %}
+
+{# Weniger Layout-Verschiebung (CLS) durch Webfonts – nur Weine & Feinkost.
+   Only Bubbles erbt diese Vorlage, hat aber keine W&F-Theme-Einstellungen
+   (theme_config ist dort null) und bleibt deshalb unverändert. #}
+{% block layout_head_stylesheet %}
+    {% set wfFontsOwn = theme_config('wf-checkout-design') is not null %}
+
+    {% if wfFontsOwn %}
+        {# Hauptschriften früh laden (gleiche URLs wie in den Schrift-Stylesheets) #}
+        <link rel="preload" href="{{ asset('assets/fonts/Roboto/Roboto-Regular.woff2', 'theme')|split('?')|first }}" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" href="{{ asset('assets/fonts/Roboto_Serif/RobotoSerif-Medium.woff2', 'theme')|split('?')|first }}" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" href="{{ asset('assets/fonts/icomoon/fonts/icomoon.ttf', 'theme')|split('?')|first }}?444cd4" as="font" type="font/ttf" crossorigin>
+    {% endif %}
+
+    {{ parent() }}
+
+    {% if wfFontsOwn %}
+        {# Dieselben Schriften mit font-display: optional. Später definierte @font-face-Regeln
+           haben Vorrang vor denen aus dem Theme-CSS: kommt eine Schrift nicht sofort,
+           bleibt die Ersatzschrift stehen, statt Menü und Überschriften zu verschieben. #}
+        {% set wfRoboto = [
+            ['Thin', 100, 'normal'], ['ThinItalic', 100, 'italic'],
+            ['Light', 300, 'normal'], ['LightItalic', 300, 'italic'],
+            ['Regular', 400, 'normal'], ['Italic', 400, 'italic'],
+            ['Medium', 500, 'normal'], ['MediumItalic', 500, 'italic'],
+            ['Bold', 700, 'normal'], ['BoldItalic', 700, 'italic'],
+            ['Black', 900, 'normal'], ['BlackItalic', 900, 'italic']
+        ] %}
+        {% set wfSerif = [['Light', 300], ['Regular', 400], ['Medium', 500]] %}
+        <style>
+            {% for f in wfRoboto %}
+            @font-face{font-family:'Roboto';src:url('{{ asset('assets/fonts/Roboto/Roboto-' ~ f[0] ~ '.woff2', 'theme')|split('?')|first }}') format('woff2'),url('{{ asset('assets/fonts/Roboto/Roboto-' ~ f[0] ~ '.woff', 'theme')|split('?')|first }}') format('woff');font-weight:{{ f[1] }};font-style:{{ f[2] }};font-display:optional}
+            {% endfor %}
+            {% for f in wfSerif %}
+            @font-face{font-family:'Roboto Serif';src:url('{{ asset('assets/fonts/Roboto_Serif/RobotoSerif-' ~ f[0] ~ '.woff2', 'theme')|split('?')|first }}') format('woff2'),url('{{ asset('assets/fonts/Roboto_Serif/RobotoSerif-' ~ f[0] ~ '.woff', 'theme')|split('?')|first }}') format('woff');font-weight:{{ f[1] }};font-style:normal;font-display:optional}
+            {% endfor %}
+        </style>
+    {% endif %}
+{% endblock %}
