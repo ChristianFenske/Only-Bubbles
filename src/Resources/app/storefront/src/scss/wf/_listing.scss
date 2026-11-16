@@ -52,3 +52,25 @@
         bottom: 0;
     }
 }
+
+// Produktseite (Ähnliche Artikel, Zubehör usw.): dort zeigt das Theme den Kauf-Button
+// rund mit Warenkorb-Icon und ohne Text. Die Tablet-Regel oben darf das Icon dort
+// nicht ausblenden – sonst bleibt ein leeres Oval.
+&.is-ctl-product .product-box .btn.btn-buy {
+    width: 72px;
+    height: 72px;
+    min-height: 0;
+    padding: 0;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    span.icon-shopping-cart {
+        display: inline-block;
+        font-size: 36px;
+        margin: 0;
+    }
+
+    span.btn-buy-label { display: none; }
+}
