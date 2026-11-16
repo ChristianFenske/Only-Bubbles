@@ -123,7 +123,7 @@
                   data-checkout-customer-storage="true"
                   data-checkout-customer-storage-options="{{ { customerId: context.customer.id }|json_encode }}"
                   data-form-preserver="true"
-                  data-form-preserver-options="{{ { ignoredElementNames: [constant('Shopware\\Core\\Checkout\\Order\\SalesChannel\\OrderService::CUSTOMER_COMMENT_KEY'), 'tos'] }|json_encode }}"
+                  data-form-preserver-options="{{ { ignoredElementNames: [constant('Shopware\\Core\\Checkout\\Order\\SalesChannel\\OrderService::CUSTOMER_COMMENT_KEY'), 'tos', 'revocation'] }|json_encode }}"
                   data-form-handler="true"
                   data-form-handler-options="{{ { formFieldSelector: null }|json_encode }}"
                   data-form-add-history="true"
@@ -208,18 +208,15 @@
     {% endif %}
 {% endblock %}
 
+{# Bestell-Button: immer über parent(), damit Zahlungs-Plugins (PayPal-Buttons, PayPal-Daten,
+   Rechnungskauf-Hinweis) ihren Teil hier einfügen können. Nur Optik wird angepasst. #}
 {% block page_checkout_confirm_form_submit %}
     {% if wfDesign %}
-        <div class="d-grid">
-            <button id="confirmFormSubmit"
-                    class="btn btn-primary btn-lg wf-btn-gold"
-                    form="confirmOrderForm"
-                    {% if page.cart.errors.blockResubmit %}disabled{% endif %}
-                    type="submit">
-                {% sw_icon 'lock-closed' style { size: 'xs' } %}
-                {{ 'checkout.confirmSubmit'|trans|sw_sanitize }}
-            </button>
-        </div>
+        {% set wfLockIcon %}{% sw_icon 'lock-closed' style { size: 'xs' } %}{% endset %}
+        {{ parent()|replace({
+            'class="btn btn-primary btn-lg"': 'class="btn btn-primary btn-lg wf-btn-gold"',
+            'type="submit">': 'type="submit">' ~ wfLockIcon
+        })|raw }}
     {% else %}
         {{ parent() }}
     {% endif %}
